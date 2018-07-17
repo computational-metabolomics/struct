@@ -1,0 +1,35 @@
+Package: struct
+Type: Package
+Title: Statistics in R Using Class Templates
+Version: 0.1.0
+Author: Dr Gavin Rhys Lloyd
+Maintainer: Dr Gavin Rhys Lloyd <g.r.lloyd@bham.ac.uk>
+Description: Defines a set of class templates for developing statistical workflows.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Collate: 
+    'generics.R'
+    'struct_class.R'
+    'chart_class.R'
+    'dataset_class.R'
+    'chartable_class.R'
+    'entity_class.R'
+    'output_class.R'
+    'parameter_class.R'
+    'model_class.R'
+    'stato_class.R'
+    'chart_stato.R'
+    'entity_stato_class.R'
+    'model_stato_class.R'
+    'model_list_class.R'
+    'metric_class.R'
+    'iterator_class.R'
+    'optimiser_class.R'
+    'resampler_class.R'
+    'struct.R'
+RoxygenNote: 6.0.1.9000
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Imports: methods
