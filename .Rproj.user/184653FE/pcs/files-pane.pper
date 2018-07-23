@@ -1,0 +1,13 @@
+{
+    "path" : "~/GitHub/struct/tests/testthat",
+    "sortOrder" : [
+        {
+            "ascending" : false,
+            "columnIndex" : 4
+        },
+        {
+            "ascending" : false,
+            "columnIndex" : 2
+        }
+    ]
+}

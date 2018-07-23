@@ -8,7 +8,7 @@ Description: Defines a set of class templates for developing statistical workflo
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Collate: 
+Collate:
     'generics.R'
     'struct_class.R'
     'chart_class.R'
@@ -30,6 +30,8 @@ Collate:
     'struct.R'
 RoxygenNote: 6.0.1.9000
 Suggests: knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
-Imports: methods
+Imports: methods, ontologyIndex
+biocViews: 

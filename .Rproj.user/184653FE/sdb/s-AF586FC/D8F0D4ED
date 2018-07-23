@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "context('Test creation of class objects')\n\nlibrary('struct')\nM=model()\n\ntest_that(\"model object can be created\",\n          {\n            expect_equal(is(M,'model'))\n          }\n)",
+    "created" : 1532343107801.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "4208808563",
+    "id" : "D8F0D4ED",
+    "lastKnownWriteTime" : 2820135313473544819,
+    "last_content_update" : 1532343376686,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

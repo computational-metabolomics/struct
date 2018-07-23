@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "#' model.list class\n#'\n#' A class for (ordered) lists of models\n#'\n#' @export model.list\n#' @include generics.R  parameter_class.R output_class.R chartable_class.R struct_class.R model_class.R model_stato_class.R\n\nmodel.list<-setClass(\n  \"model.list\",\n  contains = c('struct_class'),\n  slots=c(models='list')\n)\n\n\n#' @describeIn model.list train the model using input data\n#' @export\nsetMethod(f=\"train\",\n          signature=c(\"model.list\",\"dataset\"),\n          definition=function(M,D)\n          {\n            # for each model in the list\n            S=D # for first in list the input D is the data object\n            for (i in 1:length(M))\n            {\n              M[i]=train(M[i],S) # train the model on the output of the previous model\n              M[i]=predict(M[i],S) # apply the model to the output of the previous model\n              S=predicted(M[i]) # set the output of this model as the input for the next model\n            }\n            return(M)\n          }\n)\n\n#' @describeIn model.list apply the model to input data\n#' @export\nsetMethod(f=\"predict\",\n          signature=c(\"model.list\",'dataset'),\n          definition=function(M,D)\n          {\n            S=D # for the first model the input use the input data\n            for (i in 1:length(M))\n            {\n              M[i]=predict(M[i],S) # apply the model the output of the previous model\n              S=predicted(M[i]) # set the output of this model as the input to the next\n            }\n            return(M)\n          }\n)\n\n#' @export\nsetMethod(f= \"[\",\n  signature=\"model.list\",\n  definition=function(x,i){\n    return(x@models[[i]])\n  }\n)\n\n#' @export\nsetMethod(f= \"[<-\",\n          signature=\"model.list\",\n          definition=function(x,i,value){\n            if (!is(value,'model'))\n            {\n              stop('value must be a model')\n            }\n            x@models[[i]]=value\n            return(x)\n          }\n)\n\n#' @export\nsetMethod(f='models',\n          signature='model.list',\n          definition=function(ML){\n            return(ML@models)\n          }\n)\n\n#' @export\nsetMethod(f='models<-',\n          signature=c('model.list','list'),\n          definition=function(ML,value) {\n            # check that all items in list are models\n            ism=lapply(X=value,FUN=isClass,Class='model')\n            if (!all(unlist(ism))) {\n              stop('all items in list must be a model')\n            }\n            # if they are all models then add them to the object\n            ML@models=value\n            return(ML)\n          }\n)\n\n#' @export\nsetMethod(f='length',\n          signature='model.list',\n          definition=function(x) {\n            return(length(x@models))\n          }\n)\n\n#' @export\nsetMethod(f='show',\n          signature='model.list',\n          definition=function(object) {\n            cat('A model.list object containing:\\n')\n            if (length(object)==0)\n            {\n              cat('no models')\n              return()\n            }\n            for (i in 1:length(object))\n            {\n              cat('[',i,'] ',name(object[i]),'\\n',sep='')\n            }\n          }\n)\n\nsetClassUnion(\"model_OR_model.list\", c(\"model\", \"model.list\",\"model.stato\"))\n\n#' @export\nsetMethod(f=\"param.value<-\",\n          signature=c(\"model.list\",\"character\",'numeric'),\n          definition=function(obj,name,idx,value)\n          {\n             param.value(obj[idx],name)=value\n             return(obj)\n          }\n)\n",
+    "created" : 1532005723625.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3696310204",
+    "id" : "23EB44F9",
+    "lastKnownWriteTime" : 1532008450,
+    "last_content_update" : 1532008450950,
+    "path" : "~/GitHub/struct/R/model_list_class.R",
+    "project_path" : "R/model_list_class.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
