@@ -12,15 +12,15 @@ Collate:
     'generics.R'
     'struct_class.R'
     'chart_class.R'
-    'dataset_class.R'
+    'stato_class.R'
+    'chart_stato.R'
     'chartable_class.R'
+    'dataset_class.R'
     'entity_class.R'
+    'entity_stato_class.R'
     'output_class.R'
     'parameter_class.R'
     'model_class.R'
-    'stato_class.R'
-    'chart_stato.R'
-    'entity_stato_class.R'
     'model_stato_class.R'
     'model_list_class.R'
     'metric_class.R'
@@ -30,8 +30,7 @@ Collate:
     'struct.R'
 RoxygenNote: 6.0.1.9000
 Suggests: knitr,
-    rmarkdown,
-    testthat
+    rmarkdown
 VignetteBuilder: knitr
 Imports: methods, ontologyIndex
 biocViews: 

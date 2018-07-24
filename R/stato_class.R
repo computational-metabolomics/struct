@@ -2,7 +2,7 @@
 #'
 #' A base class in the \pkg{struct} package. Provides several fundamental methods for the STATO ontology and should not be called directly.
 #' @export stato
-#' @include generics.R model_class.R stato_class.R
+#' @include generics.R
 #' @importFrom ontologyIndex get_ontology
 
 stato<-setClass(

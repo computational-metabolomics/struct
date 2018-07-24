@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "#' chart_stato_class\n#'\n#' A base class in the \\pkg{struct} package for creating chart objects with STATO ids\n#' @export chart.stato\n#' @include generics.R struct_class.R chart_class.R stato_class.R\n\nchart.stato<-setClass(\n  \"chart.stato\",\n  contains=c('chart','stato')\n)\n\n\n",
+    "created" : 1532419740374.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3244445028",
+    "id" : "B3092628",
+    "lastKnownWriteTime" : 1532422356,
+    "last_content_update" : 1532422356393,
+    "path" : "~/GitHub/struct/R/chart_stato.R",
+    "project_path" : "R/chart_stato.R",
+    "properties" : {
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
