@@ -40,3 +40,4 @@ setMethod(f="show",
             cat('Name: ', name(object),'\nDescription: ',description(object),'\nType:',type(object))
           }
 )
+

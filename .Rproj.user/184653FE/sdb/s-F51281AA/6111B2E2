@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "#' chart_class\n#'\n#' A base class in the \\pkg{struct} package. should not be called directly.\n#' @export chart\n#' @include generics.R struct_class.R\n\nchart<-setClass(\n  \"chart\",\n  slots=c('opt'='list',\n          'fcn'='function'\n          ),\n  contains=c('struct_class')\n)\n\n\n#' @export\nsetMethod(f=\"chart.opt\",\n          signature=c(\"chart\"),\n          definition=function(obj)\n          {\n            return(obj@opt)\n          }\n)\n\n#' @export\nsetMethod(f=\"chart.opt<-\",\n          signature=c(\"chart\"),\n          definition=function(obj,value)\n          {\n            obj@opt=value\n            return(obj)\n          }\n)\n\n#' @export\nsetMethod(f=\"show\",\n          signature=c(\"chart\"),\n          definition=function(object)\n          {\n            cat('Name: ', name(object),'\\nDescription: ',description(object),'\\nType:',type(object))\n          }\n)\n\n",
+    "created" : 1532420229469.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "62833982",
+    "id" : "6111B2E2",
+    "lastKnownWriteTime" : 1532425964,
+    "last_content_update" : 1532426234381,
+    "path" : "~/GitHub/struct/R/chart_class.R",
+    "project_path" : "R/chart_class.R",
+    "properties" : {
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

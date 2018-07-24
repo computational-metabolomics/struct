@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\n\ndataset_boxplot_fcn=function(obj,opt) {\n\n  # assume obj is a dataset object\n  # get data\n  Xt=data(obj)\n  # column name\n  varn=opt$feature_to_plot\n  # get requested column\n  Xt=Xt[[opt$feature_to_plot]]\n\n  # meta data\n  SM=sample.meta(D)[ ,1]\n  # get color pallete using pmp\n  clrs=pmp::createClassAndColors(class = SM)\n  SM=clrs$class\n\n  #prep the plot\n  temp=data.frame(x=SM,y=Xt)\n\n  p<-ggplot(na.omit(temp), aes(x, y, color=x)) +\n    geom_boxplot() +\n    xlab(NULL) +\n    ylab(varn) +\n    ggtitle(varn) +\n    scale_colour_manual(values=clrs$manual_colors,name=opt$factor_name) +\n    theme_Publication(base_size = 12) +\n    theme(legend.position=\"none\")\n\n  if (opt$label_outliers) {\n    L=levels(SM)\n\n    outliers=numeric()\n    for (lvl in L) {\n      s=fivenum(Xt[SM==lvl])\n      rng=s[4]-s[2]\n      wsk=s[c(2,4)]+c(-1.5*rng,1.5*rng)\n      outliers=c(outliers,which((Xt>wsk[2] | Xt[SM==lvl]<wsk[1]) & SM==lvl))\n    }\n    outlier_df=temp[outliers,]\n    names=paste0('  ',rownames(data(D)))\n    p=p+geom_text(data=outlier_df,aes(x, y, color=x, label=names[outliers]),hjust='left')\n  }\n\n  return(p)\n}\n",
+    "created" : 1532423619803.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1961449851",
+    "id" : "ECC1743B",
+    "lastKnownWriteTime" : 1532433670,
+    "last_content_update" : 1532433670648,
+    "path" : "~/GitHub/struct/R/dataset_chart_fcns.R",
+    "project_path" : "R/dataset_chart_fcns.R",
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

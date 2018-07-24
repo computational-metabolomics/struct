@@ -15,6 +15,7 @@ Collate:
     'stato_class.R'
     'chart_stato.R'
     'chartable_class.R'
+    'dataset_chart_fcns.R'
     'dataset_class.R'
     'entity_class.R'
     'entity_stato_class.R'

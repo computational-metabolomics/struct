@@ -27,13 +27,10 @@ dataset<-setClass(
                  charts.boxplot=chart.stato(name='box and whisker plot',
                                             description='Boxplots showing the range of observed values for feature, separated by group.',
                                             type='boxplot',
-                                            fcn=dataset_boxplot_fcn
+                                            fcn=dataset_boxplot_fcn,
                                             opt=list(label_outliers=TRUE, # label outliers
                                                      feature_to_plot='V1',   #  feature to plot by label
-                                                     factor_name='factor',   # name of factor to appear on legend
-                                                     groups=factor(), # factor of groups
-                                                     feature_labels=character(), # feature labels
-                                                     sample_labels=character() # sample labels,
+                                                     factor_name='factor'   # name of factor to appear on legend
                                             ),
                                             stato.id='STATO:0000243')
 
@@ -114,4 +111,36 @@ setMethod(f="show",
           }
 )
 
+#' @import ggplot2 ggthemes
+#' @importFrom pmp createClassAndColors theme_Publication scale_colour_Publication
+#' @importFrom sp point.in.polygon
+#' @importFrom scales squish
+#' @export
+setMethod(f="chart.plot",
+          signature="dataset",
+          definition = function(obj,name,opt=NULL) {
+            # check if valid chart name
+            is.chart(obj,name) # error if not
 
+            # if opt is null get defaults for this chart
+            if (is.null(opt))
+            {
+              opt=chart.opt(obj,name)
+            }
+
+            cobj=chart.obj(obj,name)
+
+            return(cobj@fcn(obj,opt))
+          }
+
+)
+
+#' @export
+setMethod(f="chart.opt",
+          signature='dataset',
+          definition=function(obj,name)
+          {
+            x=chart.obj(obj,name)
+            return(x@opt)
+          }
+)
