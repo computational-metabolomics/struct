@@ -11,7 +11,7 @@ dataset_boxplot_fcn=function(obj,opt) {
   Xt=Xt[[opt$feature_to_plot]]
 
   # meta data
-  SM=sample.meta(D)[ ,1]
+  SM=sample.meta(obj)[ ,1]
   # get color pallete using pmp
   clrs=pmp::createClassAndColors(class = SM)
   SM=clrs$class
@@ -19,7 +19,7 @@ dataset_boxplot_fcn=function(obj,opt) {
   #prep the plot
   temp=data.frame(x=SM,y=Xt)
 
-  p<-ggplot(na.omit(temp), aes(x, y, color=x)) +
+  p<-ggplot(temp, aes(x, y, color=x)) +
     geom_boxplot() +
     xlab(NULL) +
     ylab(varn) +
@@ -30,18 +30,18 @@ dataset_boxplot_fcn=function(obj,opt) {
 
   if (opt$label_outliers) {
     L=levels(SM)
-
     outliers=numeric()
-    for (lvl in L) {
-      s=fivenum(Xt[SM==lvl])
-      rng=s[4]-s[2]
-      wsk=s[c(2,4)]+c(-1.5*rng,1.5*rng)
-      outliers=c(outliers,which((Xt>wsk[2] | Xt[SM==lvl]<wsk[1]) & SM==lvl))
-    }
+    for (l in L) {
+      IN=which(SM==l)
+      outliers=c(outliers,IN[which( Xt[IN]>(quantile(Xt[IN], 0.75) + 1.5*IQR(Xt[IN]))) ] )
+      outliers=c(outliers,IN[which( Xt[IN]<(quantile(Xt[IN], 0.25) - 1.5*IQR(Xt[IN]))) ] )
+      }
     outlier_df=temp[outliers,]
-    names=paste0('  ',rownames(data(D)))
-    p=p+geom_text(data=outlier_df,aes(x, y, color=x, label=names[outliers]),hjust='left')
+    outlier_df$out_label=paste0('  ',rownames(data(obj)))[outliers]
+    p=p+geom_text(data=outlier_df,aes(group=x,color=x,label=out_label),hjust='left')
   }
-
+  if (opt$show_counts) {
+    p=p+geom_text(stat="count",data=outlier_df,aes(group=x,color=x,label=..count..), y=min(Xt))
+  }
   return(p)
 }

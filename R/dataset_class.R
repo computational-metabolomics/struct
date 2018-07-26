@@ -30,7 +30,8 @@ dataset<-setClass(
                                             fcn=dataset_boxplot_fcn,
                                             opt=list(label_outliers=TRUE, # label outliers
                                                      feature_to_plot='V1',   #  feature to plot by label
-                                                     factor_name='factor'   # name of factor to appear on legend
+                                                     factor_name='factor',   # name of factor to appear on legend
+                                                     show_counts=TRUE
                                             ),
                                             stato.id='STATO:0000243')
 
@@ -111,7 +112,7 @@ setMethod(f="show",
           }
 )
 
-#' @import ggplot2 ggthemes
+#' @import ggplot2 ggthemes ggrepel
 #' @importFrom pmp createClassAndColors theme_Publication scale_colour_Publication
 #' @importFrom sp point.in.polygon
 #' @importFrom scales squish
