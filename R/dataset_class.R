@@ -19,13 +19,15 @@ dataset<-setClass(
           main.factor='character',
           sample.meta="data.frame",
           variable.meta="data.frame",
-          charts.boxplot="chart.stato"
+          charts.boxplot="chart.stato",
+          charts.mv_histogram="chart",
+          charts.mv_boxplot="chart"
   ),
   prototype=list(name="Dataset000",
                  description="an empty dataset object",
-                 charts='boxplot',
+                 charts=c('boxplot','mv_histogram','mv_boxplot'),
                  charts.boxplot=chart.stato(name='box and whisker plot',
-                                            description='Boxplots showing the range of observed values for feature, separated by group.',
+                                            description='Boxplots showing the range of observed values for feature, separated by group if a factor.',
                                             type='boxplot',
                                             fcn=dataset_boxplot_fcn,
                                             opt=list(label_outliers=TRUE, # label outliers
@@ -33,8 +35,21 @@ dataset<-setClass(
                                                      factor_name='factor',   # name of factor to appear on legend
                                                      show_counts=TRUE
                                             ),
-                                            stato.id='STATO:0000243')
+                                            stato.id='STATO:0000243'),
 
+                 charts.mv_histogram=chart(name='Missing values histogram',
+                                           description='a histogram of the % missing values per sample/feature',
+                                           type='histogram',
+                                           fcn=missing_value_histogram,
+                                           opt=list(by_sample=TRUE)),
+
+                 charts.mv_boxplot=chart(name='Missing values boxplot',
+                                           description='a histogram of the % missing values per sample/feature',
+                                           type='histogram',
+                                           fcn=missing_value_boxplot,
+                                           opt=list(by_sample=TRUE,
+                                                    factor_name='factor')
+                 )
   )
 
 )
