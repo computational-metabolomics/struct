@@ -48,7 +48,8 @@ dataset<-setClass(
                                            type='histogram',
                                            fcn=missing_value_boxplot,
                                            opt=list(by_sample=TRUE,
-                                                    factor_name='factor')
+                                                    factor_name='factor',
+                                                    show_counts=TRUE)
                  )
   )
 

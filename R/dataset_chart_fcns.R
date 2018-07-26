@@ -31,8 +31,8 @@ dataset_boxplot_fcn=function(obj,opt) {
   temp=data.frame(x=SM,y=Xt)
   p<-ggplot(temp, aes(x, y, color=x)) +
     geom_boxplot() +
-    xlab(NULL) +
-    ylab(varn) +
+    xlab(opt$factor) +
+    ylab('') +
     ggtitle(varn) +
     scale_colour_manual(values=clrs$manual_colors,name=opt$factor_name) +
     theme_Publication(base_size = 12) +
@@ -100,9 +100,6 @@ missing_value_boxplot=function(obj,opt) {
 
   L=levels(SM)
 
-
-
-
   if (opt$by_sample)
   {
     # count NS per sample
@@ -135,11 +132,24 @@ missing_value_boxplot=function(obj,opt) {
   p=ggplot (data=A, aes(x, y, color=x)) +
     geom_boxplot() +
      ggtitle(txt) +
-    xlab(NULL) +
+    xlab(opt$factor) +
     ylim (0,100)+
     scale_colour_manual(values=clrs$manual_colors,name=opt$factor_name) +
     theme_Publication(base_size = 12) +
     ylab ("missing values, %") +
-    coord_flip()
+    coord_flip()+
+    theme(legend.position="none")
+
+  if (opt$show_counts) {
+    L=levels(A$x)
+    num=numeric(length(L))
+    for (i in 1:length(L)) {
+      num[i]=sum(A$x==L[i])
+    }
+    newlabels=as.character(num)
+    newlabels=paste0(as.character(L),'\n(n = ',newlabels,')')
+    p=p+scale_x_discrete(labels=newlabels)
+  }
+
   return(p)
 }
