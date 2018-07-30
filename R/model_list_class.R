@@ -3,7 +3,7 @@
 #' A class for (ordered) lists of models
 #'
 #' @export model.list
-#' @include generics.R  parameter_class.R output_class.R chartable_class.R struct_class.R model_class.R model_stato_class.R
+#' @include generics.R  parameter_class.R output_class.R struct_class.R model_class.R model_stato_class.R
 
 model.list<-setClass(
   "model.list",

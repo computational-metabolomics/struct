@@ -2,19 +2,17 @@
 % Please edit documentation in R/generics.R
 \name{chart.plot}
 \alias{chart.plot}
-\title{plot a chart}
+\title{plot a chart for a dataset object}
 \usage{
-chart.plot(obj, name, opt = NULL)
+chart.plot(obj, dobj)
 }
 \arguments{
-\item{obj}{a model or iterator object from the *struct* class}
+\item{obj}{a chart object}
 
-\item{name}{name of chart to plot}
-
-\item{opt}{list of options for this chart}
+\item{dobj}{a dataset object}
 }
 \description{
-plot a chart
+plot a chart for a dataset object
 }
 \seealso{
 Other chart functions: \code{\link{chart.ids}},

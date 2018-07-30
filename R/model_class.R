@@ -4,12 +4,12 @@
 #' Also used for preprocessing steps that require application to test sets.
 #' not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
 #' @export model
-#' @include generics.R  parameter_class.R output_class.R chartable_class.R dataset_class.R
+#' @include generics.R  parameter_class.R output_class.R dataset_class.R
 
 
 model<-setClass(
   "model",
-  contains = c('struct_class','parameter_class','outputs_class','chartable_class'),
+  contains = c('struct_class','parameter_class','outputs_class'),
   slots=c(type='character',
           predicted='character',
           stato.id='character'

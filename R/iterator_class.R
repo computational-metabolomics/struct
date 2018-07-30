@@ -4,11 +4,11 @@
 #' not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
 #' @export iterator
 #' @inheritParams run
-#' @include generics.R  parameter_class.R output_class.R chartable_class.R model_class.R metric_class.R model_list_class.R
+#' @include generics.R  parameter_class.R output_class.R model_class.R metric_class.R model_list_class.R
 
 iterator<-setClass(
   "iterator",
-  contains = c('struct_class','parameter_class','outputs_class','chartable_class'),
+  contains = c('struct_class','parameter_class','outputs_class'),
   slots=c(type='character',
           models='ANY', # any here, but types enforced by e.g. resampler
           result='character')

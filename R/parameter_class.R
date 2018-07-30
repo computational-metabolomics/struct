@@ -96,10 +96,10 @@ setMethod(f='param.list',
           definition=function(obj)
           {
             L=list()
-            names=param.names(obj)
+            names=param.ids(obj)
             for (i in 1:length(names))
             {
-              L[[names[[i]]]]=param(obj,names[[i]])
+              L[[names[[i]]]]=param.value(obj,names[[i]])
             }
             return(L)
           }
@@ -113,7 +113,7 @@ setMethod(f='param.list<-',
             names=name(value)
             for (i in 1:length(names))
             {
-              param(obj,names[[i]])=value[[i]]
+              param.value(obj,names[[i]])=value[[i]]
             }
             return(obj)
           }

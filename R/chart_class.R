@@ -2,32 +2,17 @@
 #'
 #' A base class in the \pkg{struct} package. should not be called directly.
 #' @export chart
-#' @include generics.R struct_class.R
+#' @include generics.R struct_class.R parameter_class.R
 
 chart<-setClass(
   "chart",
-  slots=c('opt'='list',
-          'fcn'='function'
-          ),
-  contains=c('struct_class')
+  contains=c('struct_class','parameter_class')
 )
 
-
-#' @export
-setMethod(f="chart.opt",
-          signature=c("chart"),
+setMethod(f="chart.plot",
+          signature="chart",
           definition=function(obj)
           {
-            return(obj@opt)
-          }
-)
-
-#' @export
-setMethod(f="chart.opt<-",
-          signature=c("chart"),
-          definition=function(obj,value)
-          {
-            obj@opt=value
             return(obj)
           }
 )
