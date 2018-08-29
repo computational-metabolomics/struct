@@ -24,10 +24,11 @@ Collate:
     'model_list_class.R'
     'metric_class.R'
     'iterator_class.R'
+    'method_class.R'
     'optimiser_class.R'
     'resampler_class.R'
     'struct.R'
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.0
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

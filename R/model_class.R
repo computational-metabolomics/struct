@@ -11,8 +11,7 @@ model<-setClass(
   "model",
   contains = c('struct_class','parameter_class','outputs_class'),
   slots=c(type='character',
-          predicted='character',
-          stato.id='character'
+          predicted='character'
           )
   )
 

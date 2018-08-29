@@ -265,6 +265,20 @@ setGeneric("description",function(obj)standardGeneric("description"))
 setGeneric("description<-",function(obj,value)standardGeneric("description<-"))
 
 #################################
+###### method class generics ####
+#################################
+
+#' Apply a method
+#'
+#' Applies a method to the input dataset
+#' @param method a model object
+#' @param data a dataset object
+#' @family method functions
+#' @rdname method.apply
+#' @export
+setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
+
+#################################
 ###### model class generics #####
 #################################
 

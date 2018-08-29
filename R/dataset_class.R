@@ -16,7 +16,6 @@ dataset<-setClass(
   slots=c(name="character",
           description="character",
           data="data.frame",
-          main.factor='character',
           sample.meta="data.frame",
           variable.meta="data.frame"
   ),
