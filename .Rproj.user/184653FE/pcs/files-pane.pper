@@ -1,12 +1,8 @@
 {
-    "path" : "~/GitHub/struct/R",
+    "path" : "~/GitHub/struct",
     "sortOrder" : [
         {
-            "ascending" : false,
-            "columnIndex" : 4
-        },
-        {
-            "ascending" : false,
+            "ascending" : true,
             "columnIndex" : 2
         }
     ]
