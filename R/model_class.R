@@ -17,7 +17,7 @@ model<-setClass(
 
 #' @describeIn model train the model using input data
 #' @export
-setMethod(f="train",
+setMethod(f="model.train",
           signature=c("model","dataset"),
           definition=function(M,D)
           {
@@ -27,7 +27,7 @@ setMethod(f="train",
 
 #' @describeIn model apply the model to input data
 #' @export
-setMethod(f="predict",
+setMethod(f="model.predict",
           signature=c("model","dataset"),
           definition=function(M,D)
           {

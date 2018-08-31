@@ -13,6 +13,6 @@ predicted(M)
 returns the prediction output for a model. This is supplied as input to the next model when used in a model.list
 }
 \seealso{
-Other model functions: \code{\link{predicted.name}},
-  \code{\link{predict}}, \code{\link{train}}
+Other model functions: \code{\link{model.predict}},
+  \code{\link{model.train}}, \code{\link{predicted.name}}
 }

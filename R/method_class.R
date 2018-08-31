@@ -4,8 +4,6 @@
 #' not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
 #' @export method
 #' @include generics.R  parameter_class.R output_class.R dataset_class.R
-
-
 method<-setClass(
   "method",
   contains = c('struct_class','parameter_class','outputs_class'),
@@ -14,7 +12,7 @@ method<-setClass(
   )
 )
 
-#' @describeIn model train the model using input data
+#' @describeIn method train the model using input data
 #' @export
 setMethod(f="method.apply",
           signature=c("method","dataset"),
@@ -24,7 +22,7 @@ setMethod(f="method.apply",
           }
 )
 
-#' @describeIn model get prediction output from model
+#' @describeIn method get prediction output from model
 #' @export
 setMethod(f='predicted',
           signature=c('method'),
@@ -34,7 +32,7 @@ setMethod(f='predicted',
           }
 )
 
-#' @describeIn model get prediction output name for model
+#' @describeIn method get prediction output name for model
 #' @export
 setMethod(f='predicted.name',
           signature=c('method'),
@@ -44,7 +42,7 @@ setMethod(f='predicted.name',
           }
 )
 
-#' @describeIn model set prediction output from model
+#' @describeIn method set prediction output from model
 #' @export
 setMethod(f='predicted.name<-',
           signature=c('method','character'),

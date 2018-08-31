@@ -4,16 +4,16 @@
 \name{model-class}
 \alias{model-class}
 \alias{model}
-\alias{train,model,dataset-method}
-\alias{predict,model,dataset-method}
+\alias{model.train,model,dataset-method}
+\alias{model.predict,model,dataset-method}
 \alias{predicted,model-method}
 \alias{predicted.name,model-method}
 \alias{predicted.name<-,model,character-method}
 \title{model class}
 \usage{
-\S4method{train}{model,dataset}(M, D)
+\S4method{model.train}{model,dataset}(M, D)
 
-\S4method{predict}{model,dataset}(M, D)
+\S4method{model.predict}{model,dataset}(M, D)
 
 \S4method{predicted}{model}(M)
 
@@ -28,9 +28,9 @@ not intended to be called directly, this class should be inherited to provide fu
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{train}: train the model using input data
+\item \code{model.train}: train the model using input data
 
-\item \code{predict}: apply the model to input data
+\item \code{model.predict}: apply the model to input data
 
 \item \code{predicted}: get prediction output from model
 

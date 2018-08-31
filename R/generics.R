@@ -290,7 +290,7 @@ setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
 #' @family model functions
 #' @rdname train
 #' @export
-setGeneric("train",function(M,D)standardGeneric("train"))
+setGeneric("model.train",function(M,D)standardGeneric("model.train"))
 
 #' Apply a (trained) model to a dataset D to get a prediction
 #'
@@ -300,7 +300,7 @@ setGeneric("train",function(M,D)standardGeneric("train"))
 #' @family model functions
 #' @rdname predict
 #' @export
-setGeneric("predict",function(M,D)standardGeneric("predict"))
+setGeneric("model.predict",function(M,D)standardGeneric("model.predict"))
 
 #' get/set output name as prediction output for a model
 #'

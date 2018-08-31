@@ -14,7 +14,7 @@ model.list<-setClass(
 
 #' @describeIn model.list train the model using input data
 #' @export
-setMethod(f="train",
+setMethod(f="model.train",
           signature=c("model.list","dataset"),
           definition=function(M,D)
           {
@@ -22,8 +22,8 @@ setMethod(f="train",
             S=D # for first in list the input D is the data object
             for (i in 1:length(M))
             {
-              M[i]=train(M[i],S) # train the model on the output of the previous model
-              M[i]=predict(M[i],S) # apply the model to the output of the previous model
+              M[i]=model.train(M[i],S) # train the model on the output of the previous model
+              M[i]=model.predict(M[i],S) # apply the model to the output of the previous model
               S=predicted(M[i]) # set the output of this model as the input for the next model
             }
             return(M)
@@ -32,14 +32,14 @@ setMethod(f="train",
 
 #' @describeIn model.list apply the model to input data
 #' @export
-setMethod(f="predict",
+setMethod(f="model.predict",
           signature=c("model.list",'dataset'),
           definition=function(M,D)
           {
             S=D # for the first model the input use the input data
             for (i in 1:length(M))
             {
-              M[i]=predict(M[i],S) # apply the model the output of the previous model
+              M[i]=model.predict(M[i],S) # apply the model the output of the previous model
               S=predicted(M[i]) # set the output of this model as the input to the next
             }
             return(M)

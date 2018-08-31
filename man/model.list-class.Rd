@@ -4,21 +4,21 @@
 \name{model.list-class}
 \alias{model.list-class}
 \alias{model.list}
-\alias{train,model.list,dataset-method}
-\alias{predict,model.list,dataset-method}
+\alias{model.train,model.list,dataset-method}
+\alias{model.predict,model.list,dataset-method}
 \title{model.list class}
 \usage{
-\S4method{train}{model.list,dataset}(M, D)
+\S4method{model.train}{model.list,dataset}(M, D)
 
-\S4method{predict}{model.list,dataset}(M, D)
+\S4method{model.predict}{model.list,dataset}(M, D)
 }
 \description{
 A class for (ordered) lists of models
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{train}: train the model using input data
+\item \code{model.train}: train the model using input data
 
-\item \code{predict}: apply the model to input data
+\item \code{model.predict}: apply the model to input data
 }}
 

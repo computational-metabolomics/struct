@@ -15,6 +15,6 @@ predicted.name(M)
 get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.list
 }
 \seealso{
-Other model functions: \code{\link{predicted}},
-  \code{\link{predict}}, \code{\link{train}}
+Other model functions: \code{\link{model.predict}},
+  \code{\link{model.train}}, \code{\link{predicted}}
 }
