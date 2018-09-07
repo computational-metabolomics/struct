@@ -77,7 +77,7 @@ setMethod(f='result',
           signature=c('iterator'),
           definition=function(M)
           {
-            return(output(M,result.name(M)))
+            return(output.value(M,result.name(M)))
           }
 )
 
