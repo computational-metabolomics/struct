@@ -4,25 +4,25 @@
 \name{dataset-class}
 \alias{dataset-class}
 \alias{dataset}
-\alias{data,dataset-method}
-\alias{data<-,dataset-method}
-\alias{sample.meta,dataset-method}
-\alias{sample.meta<-,dataset-method}
-\alias{variable.meta,dataset-method}
-\alias{variable.meta<-,dataset-method}
+\alias{dataset.data,dataset-method}
+\alias{dataset.data<-,dataset-method}
+\alias{dataset.sample_meta,dataset-method}
+\alias{dataset.sample_meta<-,dataset-method}
+\alias{dataset.variable_meta,dataset-method}
+\alias{dataset.variable_meta<-,dataset-method}
 \title{dataset class}
 \usage{
-\S4method{data}{dataset}(obj)
+\S4method{dataset.data}{dataset}(obj)
 
-\S4method{data}{dataset}(obj) <- value
+\S4method{dataset.data}{dataset}(obj) <- value
 
-\S4method{sample.meta}{dataset}(obj)
+\S4method{dataset.sample_meta}{dataset}(obj)
 
-\S4method{sample.meta}{dataset}(obj) <- value
+\S4method{dataset.sample_meta}{dataset}(obj) <- value
 
-\S4method{variable.meta}{dataset}(obj)
+\S4method{dataset.variable_meta}{dataset}(obj)
 
-\S4method{variable.meta}{dataset}(obj) <- value
+\S4method{dataset.variable_meta}{dataset}(obj) <- value
 }
 \arguments{
 \item{obj}{a dataset object}

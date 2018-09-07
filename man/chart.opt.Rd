@@ -20,7 +20,6 @@ chart.opt(obj, name) <- value
 get/set the options for a chart
 }
 \seealso{
-Other chart functions: \code{\link{chart.ids}},
-  \code{\link{chart.name}}, \code{\link{chart.obj}},
-  \code{\link{chart.plot}}, \code{\link{is.chart}}
+Other chart functions: \code{\link{chart.names}},
+  \code{\link{chart.plot}}
 }

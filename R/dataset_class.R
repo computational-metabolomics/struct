@@ -16,8 +16,8 @@ dataset<-setClass(
   slots=c(name="character",
           description="character",
           data="data.frame",
-          sample.meta="data.frame",
-          variable.meta="data.frame"
+          sample_meta="data.frame",
+          variable_meta="data.frame"
   ),
   prototype=list(name="Dataset000",
                  description="an empty dataset object"
@@ -28,7 +28,7 @@ dataset<-setClass(
 #' @export
 #' @param obj a dataset object
 #' @rdname dataset
-setMethod(f="data",
+setMethod(f="dataset.data",
           signature=c("dataset"),
           definition=function(obj)
           {
@@ -38,7 +38,7 @@ setMethod(f="data",
 
 #' @export
 #' @rdname dataset
-setMethod(f="data<-",
+setMethod(f="dataset.data<-",
           signature=c("dataset"),
           definition=function(obj,value)
           {
@@ -49,42 +49,42 @@ setMethod(f="data<-",
 
 #' @export
 #' @rdname dataset
-setMethod(f="sample.meta",
+setMethod(f="dataset.sample_meta",
           signature=c("dataset"),
           definition=function(obj)
           {
-            return(obj@sample.meta)
+            return(obj@sample_meta)
           }
 )
 
 #' @export
 #' @rdname dataset
-setMethod(f="sample.meta<-",
+setMethod(f="dataset.sample_meta<-",
           signature=c("dataset"),
           definition=function(obj,value)
           {
-            obj@sample.meta=value
+            obj@sample_meta=value
             return(obj)
           }
 )
 
 #' @export
 #' @rdname dataset
-setMethod(f="variable.meta",
+setMethod(f="dataset.variable_meta",
           signature=c("dataset"),
           definition=function(obj)
           {
-            return(obj@variable.meta)
+            return(obj@variable_meta)
           }
 )
 
 #' @export
 #' @rdname dataset
-setMethod(f="variable.meta<-",
+setMethod(f="dataset.variable_meta<-",
           signature=c("dataset"),
           definition=function(obj,value)
           {
-            obj@variable.meta=value
+            obj@variable_meta=value
             return(obj)
           }
 )

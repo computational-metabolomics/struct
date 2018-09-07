@@ -157,12 +157,11 @@ setGeneric("output.list<-",function(obj,value)standardGeneric("output.list<-"))
 
 #' chart names
 #'
-#' return a list of valid parameter names for an object
-#' @param obj a model or iterator object from the *struct* class
-#' @return list of chart names
+#' return a list of valid charts for a struct object
+#' @param obj a object from the *struct* package
 #' @family chart functions
 #' @export
-setGeneric("chart.name",function(obj,name)standardGeneric("chart.name"))
+setGeneric("chart.names",function(obj)standardGeneric("chart.names"))
 
 #' plot a chart for an object
 #'
@@ -172,26 +171,6 @@ setGeneric("chart.name",function(obj,name)standardGeneric("chart.name"))
 #' @family chart functions
 #' @export
 setGeneric("chart.plot",function(obj,dobj)standardGeneric("chart.plot"))
-
-
-#' valid chart names for an object
-#'
-#' @param obj a model or iterator object from the *struct* class
-#' @param name name of chart to plot
-#' @rdname chart.ids
-#' @family chart functions
-#' @export
-setGeneric("chart.ids",function(obj)standardGeneric("chart.ids"))
-
-#' verify chart name
-#'
-#' verify that the name of chart is valid for an object
-#' @param obj a model or iterator object from the *struct* class
-#' @param name name of the chart as a string
-#' @return TRUE if chart name is valid, FALSE if not
-#' @family chart functions
-#' @export
-setGeneric("is.chart",function(obj,name)standardGeneric("is.chart"))
 
 #' get/set the options for a chart
 #'
@@ -206,20 +185,6 @@ setGeneric("chart.opt",function(obj,name)standardGeneric("chart.opt"))
 #' @rdname chart.opt
 #' @export
 setGeneric("chart.opt<-",function(obj,name,value)standardGeneric("chart.opt<-"))
-
-#' get/set chart object
-#'
-#' @param obj a model or iterator object from the *struct* class
-#' @param name name of chart to plot
-#' @rdname chart.obj
-#' @family chart functions
-#' @export
-setGeneric("chart.obj",function(obj,name)standardGeneric("chart.obj"))
-
-#' @rdname chart.obj
-#' @export
-setGeneric("chart.obj<-",function(obj,name,value)standardGeneric("chart.obj<-"))
-
 
 #####################################
 ###### struct class generics #####
@@ -353,37 +318,37 @@ setGeneric("models<-",function(ML,value)standardGeneric("models<-"))
 #' @rdname data
 #' @family dataset functions
 #' @export
-setGeneric("data",function(obj)standardGeneric("data"))
+setGeneric("dataset.data",function(obj)standardGeneric("dataset.data"))
 
 #' @export
 #' @rdname data
-setGeneric("data<-",function(obj,value)standardGeneric("data<-"))
+setGeneric("dataset.data<-",function(obj,value)standardGeneric("dataset.data<-"))
 
 #' get/set sample meta data for a dataset object
 #'
 #' @param obj a type object from the *struct* class
 #' @param value a data.frame of meta data
-#' @rdname sample.meta
+#' @rdname sample_meta
 #' @family dataset functions
 #' @export
-setGeneric("sample.meta",function(obj)standardGeneric("sample.meta"))
+setGeneric("dataset.sample_meta",function(obj)standardGeneric("dataset.sample_meta"))
 
 #' @export
-#' @rdname sample.meta
-setGeneric("sample.meta<-",function(obj,value)standardGeneric("sample.meta<-"))
+#' @rdname sample_meta
+setGeneric("dataset.sample_meta<-",function(obj,value)standardGeneric("dataset.sample_meta<-"))
 
 #' get/set variable meta data for a dataset object
 #'
 #' @param obj a type object from the *struct* class
 #' @param value a data.frame of meta data
-#' @rdname variable.meta
+#' @rdname variable_meta
 #' @family dataset functions
 #' @export
-setGeneric("variable.meta",function(obj)standardGeneric("variable.meta"))
+setGeneric("dataset.variable_meta",function(obj)standardGeneric("dataset.variable_meta"))
 
 #' @export
-#' @rdname variable.meta
-setGeneric("variable.meta<-",function(obj,value)standardGeneric("variable.meta<-"))
+#' @rdname variable_meta
+setGeneric("dataset.variable_meta<-",function(obj,value)standardGeneric("dataset.variable_meta<-"))
 
 ####################################
 ###### iterator class generics #####
