@@ -93,3 +93,12 @@ setMethod(f="chart.names",
             }
           }
 )
+
+#' @export
+setMethod(f="show",
+          signature=c("struct_class"),
+          definition=function(object)
+          {
+            cat('A ',class(object),' object\nName: ',name(object),'\nDescription: ',description(object),sep='')
+          }
+)

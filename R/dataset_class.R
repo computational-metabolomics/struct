@@ -89,13 +89,6 @@ setMethod(f="dataset.variable_meta<-",
           }
 )
 
-#' @export
-setMethod(f="show",
-          signature=c("dataset"),
-          definition=function(object)
-          {
-            cat('A dataset object\nName: ',name(object),'\nDescription: ',description(object),sep='')
-          }
-)
+
 
 
