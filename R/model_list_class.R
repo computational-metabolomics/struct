@@ -126,3 +126,27 @@ setMethod(f="param.value<-",
              return(obj)
           }
 )
+
+#' @export
+setMethod("+",
+          signature(e1='model',e2='model.list'),
+          definition=function(e1,e2) {
+            m=models(e2)
+            m=c(e1,m)
+            models(e2)=m
+            return(e2)
+          }
+)
+
+#' @export
+setMethod("+",
+          signature(e1='model.list',e2='model'),
+          definition=function(e1,e2) {
+            m=models(e1)
+            m=c(m,e2)
+            models(e1)=m
+            return(e1)
+          }
+)
+
+
