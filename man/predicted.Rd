@@ -10,7 +10,7 @@ predicted(M)
 \item{model}{a model object}
 }
 \description{
-returns the prediction output for a model. This is supplied as input to the next model when used in a model.list
+returns the prediction output for a model. This is supplied as input to the next model when used in a model.seq
 }
 \seealso{
 Other model functions: \code{\link{model.predict}},

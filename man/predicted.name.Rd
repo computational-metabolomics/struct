@@ -12,7 +12,7 @@ predicted.name(M)
 \item{value}{name of an output for this model}
 }
 \description{
-get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.list
+get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.seq
 }
 \seealso{
 Other model functions: \code{\link{model.predict}},

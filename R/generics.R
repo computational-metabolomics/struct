@@ -269,7 +269,7 @@ setGeneric("model.predict",function(M,D)standardGeneric("model.predict"))
 
 #' get/set output name as prediction output for a model
 #'
-#' get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.list
+#' get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.seq
 #' @param M a model object
 #' @param value name of an output for this model
 #' @family model functions
@@ -282,7 +282,7 @@ setGeneric("predicted.name<-",function(M,value)standardGeneric("predicted.name<-
 
 #' prediction output for a model
 #'
-#' returns the prediction output for a model. This is supplied as input to the next model when used in a model.list
+#' returns the prediction output for a model. This is supplied as input to the next model when used in a model.seq
 #' @param model a model object
 #' @family model functions
 #' @rdname predicted
@@ -290,15 +290,15 @@ setGeneric("predicted.name<-",function(M,value)standardGeneric("predicted.name<-
 setGeneric("predicted",function(M)standardGeneric("predicted"))
 
 ######################################
-###### model.list class generics #####
+###### model.seq class generics #####
 ######################################
 
-#' Get/set models of a model.list
+#' Get/set models of a model.seq
 #'
-#' Returns the list of models in a model.list object
-#' @param ML a model.list object
+#' Returns the list of models in a model.seq object
+#' @param ML a model.seq object
 #' @param value a list containing only model objects
-#' @family model.list functions
+#' @family model.seq functions
 #' @rdname models
 #' @export
 setGeneric("models",function(ML)standardGeneric("models"))
@@ -373,7 +373,7 @@ setGeneric("evaluate",function(I,MET)standardGeneric("evaluate"))
 
 #' get/set output name as prediction output for a model
 #'
-#' get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.list
+#' get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.seq
 #' @param M an iterator object
 #' @param value name of an output for iterator M
 #' @family iterator functions

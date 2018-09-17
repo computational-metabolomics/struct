@@ -1,21 +1,21 @@
-#' model.list class
+#' model.seq class
 #'
 #' A class for (ordered) lists of models
 #'
-#' @export model.list
+#' @export model.seq
 #' @include generics.R  parameter_class.R output_class.R struct_class.R model_class.R model_stato_class.R
 
-model.list<-setClass(
-  "model.list",
+model.seq<-setClass(
+  "model.seq",
   contains = c('struct_class'),
   slots=c(models='list')
 )
 
 
-#' @describeIn model.list train the model using input data
+#' @describeIn model.seq train the model using input data
 #' @export
 setMethod(f="model.train",
-          signature=c("model.list","dataset"),
+          signature=c("model.seq","dataset"),
           definition=function(M,D)
           {
             # for each model in the list
@@ -30,10 +30,10 @@ setMethod(f="model.train",
           }
 )
 
-#' @describeIn model.list apply the model to input data
+#' @describeIn model.seq apply the model to input data
 #' @export
 setMethod(f="model.predict",
-          signature=c("model.list",'dataset'),
+          signature=c("model.seq",'dataset'),
           definition=function(M,D)
           {
             S=D # for the first model the input use the input data
@@ -48,7 +48,7 @@ setMethod(f="model.predict",
 
 #' @export
 setMethod(f= "[",
-  signature="model.list",
+  signature="model.seq",
   definition=function(x,i){
     return(x@models[[i]])
   }
@@ -56,7 +56,7 @@ setMethod(f= "[",
 
 #' @export
 setMethod(f= "[<-",
-          signature="model.list",
+          signature="model.seq",
           definition=function(x,i,value){
             if (!is(value,'model'))
             {
@@ -69,7 +69,7 @@ setMethod(f= "[<-",
 
 #' @export
 setMethod(f='models',
-          signature='model.list',
+          signature='model.seq',
           definition=function(ML){
             return(ML@models)
           }
@@ -77,7 +77,7 @@ setMethod(f='models',
 
 #' @export
 setMethod(f='models<-',
-          signature=c('model.list','list'),
+          signature=c('model.seq','list'),
           definition=function(ML,value) {
             # check that all items in list are models
             ism=lapply(X=value,FUN=isClass,Class='model')
@@ -92,7 +92,7 @@ setMethod(f='models<-',
 
 #' @export
 setMethod(f='length',
-          signature='model.list',
+          signature='model.seq',
           definition=function(x) {
             return(length(x@models))
           }
@@ -100,9 +100,9 @@ setMethod(f='length',
 
 #' @export
 setMethod(f='show',
-          signature='model.list',
+          signature='model.seq',
           definition=function(object) {
-            cat('A model.list object containing:\n')
+            cat('A model.seq object containing:\n')
             if (length(object)==0)
             {
               cat('no models')
@@ -115,11 +115,11 @@ setMethod(f='show',
           }
 )
 
-setClassUnion("model_OR_model.list", c("model", "model.list","model.stato"))
+setClassUnion("model_OR_model.seq", c("model", "model.seq","model.stato"))
 
 #' @export
 setMethod(f="param.value<-",
-          signature=c("model.list","character",'numeric'),
+          signature=c("model.seq","character",'numeric'),
           definition=function(obj,name,idx,value)
           {
              param.value(obj[idx],name)=value
@@ -129,7 +129,7 @@ setMethod(f="param.value<-",
 
 #' @export
 setMethod("+",
-          signature(e1='model',e2='model.list'),
+          signature(e1='model',e2='model.seq'),
           definition=function(e1,e2) {
             m=models(e2)
             m=c(e1,m)
@@ -140,7 +140,7 @@ setMethod("+",
 
 #' @export
 setMethod("+",
-          signature(e1='model.list',e2='model'),
+          signature(e1='model.seq',e2='model'),
           definition=function(e1,e2) {
             m=models(e1)
             m=c(m,e2)

@@ -40,15 +40,15 @@ not intended to be called directly, this class should be inherited to provide fu
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{run}: run a model/model.list mutliple times for the input data
+\item \code{run}: run a model/model.seq mutliple times for the input data
 
-\item \code{evaluate}: evaluate the performance of a model/model.list  using the input metric
+\item \code{evaluate}: evaluate the performance of a model/model.seq  using the input metric
 
-\item \code{models}: get the model/model.list for an iterator object
+\item \code{models}: get the model/model.seq for an iterator object
 
-\item \code{models<-}: set the model/model.list to be run for multiple iterations
+\item \code{models<-}: set the model/model.seq to be run for multiple iterations
 
-\item \code{models<-}: set the model/model.list to be run for multiple iterations
+\item \code{models<-}: set the model/model.seq to be run for multiple iterations
 
 \item \code{result}: get prediction output from iterator
 

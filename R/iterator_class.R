@@ -15,7 +15,7 @@ iterator<-setClass(
 )
 
 
-#' @describeIn iterator run a model/model.list mutliple times for the input data
+#' @describeIn iterator run a model/model.seq mutliple times for the input data
 #' @export
 setMethod(f="run",
           signature=c("iterator","dataset",'metric'),
@@ -27,7 +27,7 @@ setMethod(f="run",
 )
 
 
-#' @describeIn iterator evaluate the performance of a model/model.list  using the input metric
+#' @describeIn iterator evaluate the performance of a model/model.seq  using the input metric
 #' @export
 setMethod(f="evaluate",
           signature=c("iterator","metric"),
@@ -37,7 +37,7 @@ setMethod(f="evaluate",
           }
 )
 
-#' @describeIn iterator get the model/model.list for an iterator object
+#' @describeIn iterator get the model/model.seq for an iterator object
 #' @export
 setMethod(f="models",
           signature=c("iterator"),
@@ -47,9 +47,9 @@ setMethod(f="models",
           }
 )
 
-setClassUnion("model_OR_iterator", c("model", "iterator","model.list"))
+setClassUnion("model_OR_iterator", c("model", "iterator","model.seq"))
 
-#' @describeIn iterator set the model/model.list to be run for multiple iterations
+#' @describeIn iterator set the model/model.seq to be run for multiple iterations
 #' @export
 setMethod(f="models<-",
           signature=c("iterator",'model_OR_iterator'),
@@ -60,7 +60,7 @@ setMethod(f="models<-",
           }
 )
 
-#' @describeIn iterator set the model/model.list to be run for multiple iterations
+#' @describeIn iterator set the model/model.seq to be run for multiple iterations
 #' @export
 setMethod(f="models<-",
           signature=c("iterator",'model_OR_iterator'),

@@ -169,7 +169,7 @@ setMethod(f="param.value<-",
           {
             M=models(obj)
             #if its an iterator, pass the request trhogh to the models
-            if(is(obj,'iterator') | is(obj,'model.list'))
+            if(is(obj,'iterator') | is(obj,'model.seq'))
             {
               param.value(M,name,idx)=value
             }

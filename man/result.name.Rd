@@ -12,7 +12,7 @@ result.name(M)
 \item{value}{name of an output for iterator M}
 }
 \description{
-get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.list
+get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.seq
 }
 \seealso{
 Other iterator functions: \code{\link{result}},
