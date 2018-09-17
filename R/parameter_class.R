@@ -110,10 +110,10 @@ setMethod(f='param.list<-',
           signature=c('parameter_class','list'),
           definition=function(obj,value)
           {
-            names=name(value)
-            for (i in 1:length(names))
+            namez=names(value)
+            for (i in 1:length(namez))
             {
-              param.value(obj,names[[i]])=value[[i]]
+              param.value(obj,namez[[i]])=value[[i]]
             }
             return(obj)
           }
