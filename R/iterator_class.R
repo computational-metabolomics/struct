@@ -90,3 +90,42 @@ setMethod(f='result.name',
             return(M@result)
           }
 )
+
+#' @export
+setMethod(f='*',
+          signature=c(e1='iterator',e2='model'),
+          definition=function(e1,e2)
+          {
+            if (is(models(e1),'iterator')) {
+              models(e1)=models(e1)*e2
+            } else {
+              models(e1)=e2
+            }
+            return(e1)
+          }
+)
+
+#' @export
+setMethod(f='*',
+          signature=c(e1='iterator',e2='model.seq'),
+          definition=function(e1,e2)
+          {
+            if (is(models(e1),'iterator')) {
+              models(e1)=models(e1)*e2
+            } else {
+              models(e1)=e2
+            }
+
+            return(e1)
+          }
+)
+
+#' @export
+setMethod(f='*',
+          signature=c(e1='iterator',e2='iterator'),
+          definition=function(e1,e2)
+          {
+            models(e1)=e2
+            return(e1)
+          }
+)
