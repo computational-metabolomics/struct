@@ -88,17 +88,17 @@ setMethod(f="stato.summary",
                 cat(stato.definition(output.obj(obj,i)),'\n\n')
               }
             }
-            cat('\nCharts:\n')
-            p=chart.ids(obj)
-            for (i in p)
-            {
-              if (is(chart.obj(obj,i),'stato'))
-              {
-                cat(stato.id(chart.obj(obj,i)),'\n')
-                cat(stato.name(chart.obj(obj,i)),'\n')
-                cat(stato.definition(chart.obj(obj,i)),'\n\n')
-              }
-            }
+#            cat('\nCharts:\n')
+#            p=chart.ids(obj)
+#            for (i in p)
+#            {
+#              if (is(chart.obj(obj,i),'stato'))
+#              {
+#                cat(stato.id(chart.obj(obj,i)),'\n')
+#                cat(stato.name(chart.obj(obj,i)),'\n')
+#                cat(stato.definition(chart.obj(obj,i)),'\n\n')
+#              }
+#            }
           }
 )
 
