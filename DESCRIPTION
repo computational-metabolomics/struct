@@ -26,6 +26,7 @@ Collate:
     'iterator_class.R'
     'method_class.R'
     'method_stato_class.R'
+    'method_seq_class.R'
     'optimiser_class.R'
     'resampler_class.R'
     'struct.R'

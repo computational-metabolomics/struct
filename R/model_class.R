@@ -66,11 +66,3 @@ setMethod(f='predicted.name<-',
           }
 )
 
-#' @export
-setMethod("+",
-          signature(e1='model',e2='model'),
-          definition=function(e1,e2) {
-            ML=model.seq(models=c(e1,e2))
-            return(ML)
-          }
-)

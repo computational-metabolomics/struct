@@ -460,3 +460,21 @@ setGeneric("stato.summary",function(obj)standardGeneric("stato.summary"))
 #' @family stato functions
 #' @export
 setGeneric("stato.pdf",function(obj,outpath,filename,outformat)standardGeneric("stato.pdf"))
+
+######################################
+###### method.seq class generics #####
+######################################
+
+#' Get/set methods of a method.seq
+#'
+#' Returns the list of method in a method.seq object
+#' @param ML a method.seq object
+#' @param value a list containing only method objects
+#' @family method.seq functions
+#' @rdname methods
+#' @export
+setGeneric("method.steps",function(ML)standardGeneric("method.steps"))
+
+#' @export
+#' @rdname methods
+setGeneric("method.steps<-",function(ML,value)standardGeneric("method.steps<-"))
