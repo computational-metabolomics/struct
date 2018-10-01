@@ -10,6 +10,7 @@
 \alias{dataset.sample_meta<-,dataset-method}
 \alias{dataset.variable_meta,dataset-method}
 \alias{dataset.variable_meta<-,dataset-method}
+\alias{summary,dataset-method}
 \title{dataset class}
 \usage{
 \S4method{dataset.data}{dataset}(obj)
@@ -23,6 +24,8 @@
 \S4method{dataset.variable_meta}{dataset}(obj)
 
 \S4method{dataset.variable_meta}{dataset}(obj) <- value
+
+\S4method{summary}{dataset}(object)
 }
 \arguments{
 \item{obj}{a dataset object}

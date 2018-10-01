@@ -9,6 +9,7 @@
 #' @slot variable.meta (data.frame) data frame of variable meta data
 #' @rdname dataset
 #' @include generics.R struct_class.R stato_class.R chart_class.R chart_stato.R
+#' @import crayon
 #'
 dataset<-setClass(
   "dataset",
@@ -82,13 +83,28 @@ setMethod(f="dataset.variable_meta",
 #' @rdname dataset
 setMethod(f="dataset.variable_meta<-",
           signature=c("dataset"),
-          definition=function(obj,value)
-          {
+          definition=function(obj,value) {
             obj@variable_meta=value
             return(obj)
           }
 )
 
-
-
-
+#' @export
+#' @rdname dataset
+setMethod(f="summary",
+          signature=c("dataset"),
+          definition=function(object) {
+            S=list()
+            S$name=name(object)
+            S$description=description(object)
+            S$type=type(object)
+            S$n.samples=nrow(dataset.data(object))
+            S$n.features=ncol(dataset.data(object))
+            S$n.levels=length(levels(dataset.sample_meta(object)[,1]))
+            cat(bold('A',class(object),'object from the struct package') %+%  '\n\n' %+% blue('Name: '),name(object),'\n' %+% blue('Description: '),description(object),'\n',sep='')
+            cat('\nConsists of ',S$n.samples,' samples and ',S$n.features,' features.\n',sep='')
+            cat('\nThere are ',S$n.levels, ' levels: ',sep='')
+            cat(green(levels(dataset.sample_meta(object)[,1])),sep=',')
+            cat(' in factor named "',green(names(dataset.sample_meta(object))[1]),'"',sep='')
+          }
+)
