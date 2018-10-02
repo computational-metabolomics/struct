@@ -4,7 +4,7 @@
 \alias{chart.plot}
 \title{plot a chart for an object}
 \usage{
-chart.plot(obj, dobj)
+chart.plot(obj, dobj, ...)
 }
 \arguments{
 \item{obj}{a chart object}
@@ -15,6 +15,5 @@ chart.plot(obj, dobj)
 plot a chart for an object
 }
 \seealso{
-Other chart functions: \code{\link{chart.names}},
-  \code{\link{chart.opt}}
+Other chart functions: \code{\link{chart.names}}
 }

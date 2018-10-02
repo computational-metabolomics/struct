@@ -4,11 +4,11 @@
 \name{metric-class}
 \alias{metric-class}
 \alias{metric}
-\alias{calculate,metric,factor,factor-method}
+\alias{calculate,metric-method}
 \alias{value,metric-method}
 \title{metric class}
 \usage{
-\S4method{calculate}{metric,factor,factor}(MET, Y, Yhat)
+\S4method{calculate}{metric}(MET, Y, Yhat)
 
 \S4method{value}{metric}(MET)
 }

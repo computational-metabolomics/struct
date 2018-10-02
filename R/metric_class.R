@@ -17,7 +17,7 @@ metric<-setClass(
 #' @describeIn metric calculate a metric
 #' @export
 setMethod(f="calculate",
-          signature=c('metric','factor','factor'),
+          signature=c('metric'),
           definition=function(MET,Y,Yhat)
           {
             return(MET)

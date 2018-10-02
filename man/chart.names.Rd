@@ -13,6 +13,5 @@ chart.names(obj)
 return a list of valid charts for a struct object
 }
 \seealso{
-Other chart functions: \code{\link{chart.opt}},
-  \code{\link{chart.plot}}
+Other chart functions: \code{\link{chart.plot}}
 }

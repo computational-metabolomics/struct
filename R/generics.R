@@ -170,21 +170,7 @@ setGeneric("chart.names",function(obj)standardGeneric("chart.names"))
 #' @rdname chart.plot
 #' @family chart functions
 #' @export
-setGeneric("chart.plot",function(obj,dobj)standardGeneric("chart.plot"))
-
-#' get/set the options for a chart
-#'
-#' @param obj a model or iterator object from the *struct* class
-#' @param name name of chart to plot
-#' @param opt list of options for this chart
-#' @rdname chart.opt
-#' @family chart functions
-#' @export
-setGeneric("chart.opt",function(obj,name)standardGeneric("chart.opt"))
-
-#' @rdname chart.opt
-#' @export
-setGeneric("chart.opt<-",function(obj,name,value)standardGeneric("chart.opt<-"))
+setGeneric("chart.plot",function(obj, dobj, ...)standardGeneric("chart.plot"))
 
 #####################################
 ###### struct class generics #####
@@ -405,7 +391,7 @@ setGeneric("result",function(M)standardGeneric("result"))
 #' @rdname metric
 #' @family metric functions
 #' @export
-setGeneric("calculate",function(MET,Y,Yhat)standardGeneric("calculate"))
+setGeneric("calculate",function(MET,...)standardGeneric("calculate"))
 
 #' get the value for a metric
 #'

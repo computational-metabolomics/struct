@@ -6,7 +6,7 @@
 \alias{value<-}
 \title{calculate a metric}
 \usage{
-calculate(MET, Y, Yhat)
+calculate(MET, ...)
 
 value(MET)
 
