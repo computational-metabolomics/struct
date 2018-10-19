@@ -6,9 +6,7 @@
 #'
 
 parameter_class<-setClass(
-  "parameter_class",
-  slots=c('params'="character"
-          )
+  "parameter_class"
 )
 
 ## initialise parameters on object creation
@@ -68,8 +66,10 @@ setMethod(f="param.ids",
           {
             s=slotNames(obj)
             t=strsplit(s,'\\.')
-            found=unlist(lapply(t,function(x) 'params' %in% x))
-            return(s[found])
+            found=unlist(lapply(t,function(x) {'params' %in% x}))
+            t=unlist(t[found])
+            t=t[t!='params']
+            return(t)
           }
 )
 

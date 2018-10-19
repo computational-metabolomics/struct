@@ -6,10 +6,7 @@
 #'
 
 outputs_class<-setClass(
-  "outputs_class",
-  slots=c('outputs'="character"
-  )
-)
+  "outputs_class")
 
 ## initialise outputs on object creation
 setMethod(f="initialize",
@@ -69,8 +66,10 @@ setMethod(f="output.ids",
           {
             s=slotNames(obj)
             t=strsplit(s,'\\.')
-            found=unlist(lapply(t,function(x) 'outputs' %in% x))
-            return(s[found])
+            found=unlist(lapply(t,function(x) {'outputs' %in% x}))
+            t=unlist(t[found])
+            t=t[t!='outputs']
+            return(t)
           }
 )
 
@@ -100,7 +99,7 @@ setMethod(f='output.list',
           definition=function(obj)
           {
             L=list()
-            names=output.names(obj)
+            names=output.ids(obj)
             for (i in 1:length(names))
             {
               L[[names[[i]]]]=output(obj,names[[i]])
