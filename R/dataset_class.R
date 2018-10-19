@@ -37,6 +37,23 @@ setMethod(f="dataset.data",
 )
 
 #' @export
+setMethod(f="$",
+          signature=c("dataset"),
+          definition=function(x,name)
+          {
+            s=slotNames(x)
+            if (name %in% s)
+            {
+              value=slot(x,name)
+              return(value)
+            } else {
+              stop(paste0('"',name,'" is not a valid slot for dataset objects'))
+            }
+          }
+)
+
+
+#' @export
 #' @rdname dataset
 setMethod(f="dataset.data<-",
           signature=c("dataset"),
@@ -44,6 +61,21 @@ setMethod(f="dataset.data<-",
           {
             obj@data=value
             return(obj)
+          }
+)
+
+#' @export
+setMethod(f="$<-",
+          signature(x='dataset'),
+          definition=function(x,name,value) {
+            s=slotNames(x)
+            if (name %in% s)
+            {
+              slot(x,name)=value
+              return(x)
+            } else {
+              stop(paste0('"',name,'" is not a valid slot for dataset objects'))
+            }
           }
 )
 
