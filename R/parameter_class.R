@@ -53,7 +53,7 @@ setMethod(f="is.param",
           signature=c("parameter_class"),
           definition=function(obj,name)
           {
-            valid=(obj@params)
+            valid=(param.ids(obj))
             if (name %in% valid)
             {return(TRUE)}
             else
@@ -66,7 +66,10 @@ setMethod(f="param.ids",
           signature=c("parameter_class"),
           definition=function(obj)
           {
-            return(obj@params)
+            s=slotNames(obj)
+            t=strsplit(s,'\\.')
+            found=unlist(lapply(t,function(x) 'params' %in% x))
+            return(s[found])
           }
 )
 
@@ -130,13 +133,23 @@ setMethod(f="param.value",
             if (is(p,'entity'))
             {
               value=value(p)
-
             }
             else
             {
               # otherwise just set it to the value
               value=slot(obj, paste("params",name,sep='.'))
             }
+            return(value)
+          }
+)
+
+#' @export
+setMethod(f="$",
+          signature(x='parameter_class'),
+
+          definition=function(x,name)
+          {
+            value=param.value(x,name)
             return(value)
           }
 )
@@ -163,6 +176,16 @@ setMethod(f="param.value<-",
 )
 
 #' @export
+setMethod(f="$<-",
+          signature=c(x="parameter_class"),
+          definition=function(x,name,value)
+          {
+            param.value(x,name)=value
+            return(x)
+          }
+)
+
+#' @export
 setMethod(f="param.value<-",
           signature=c("parameter_class","character",'numeric'),
           definition=function(obj,name,idx,value)
@@ -181,3 +204,4 @@ setMethod(f="param.value<-",
             return(obj)
           }
 )
+

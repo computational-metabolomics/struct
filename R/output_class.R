@@ -54,7 +54,7 @@ setMethod(f="is.output",
           signature=c("outputs_class"),
           definition=function(obj,name)
           {
-            valid=(obj@outputs)
+            valid=(output.ids(obj))
             if (name %in% valid)
             {return(TRUE)}
             else
@@ -67,7 +67,10 @@ setMethod(f="output.ids",
           signature=c("outputs_class"),
           definition=function(obj)
           {
-            return(obj@outputs)
+            s=slotNames(obj)
+            t=strsplit(s,'\\.')
+            found=unlist(lapply(t,function(x) 'outputs' %in% x))
+            return(s[found])
           }
 )
 
@@ -143,6 +146,17 @@ setMethod(f="output.value",
 )
 
 #' @export
+setMethod(f="$",
+          signature(x='outputs_class'),
+
+          definition=function(x,name)
+          {
+            value=output.value(x,name)
+            return(value)
+          }
+)
+
+#' @export
 setMethod(f="output.value<-",
           signature=c("outputs_class","character"),
           definition=function(obj,name,value)
@@ -160,5 +174,15 @@ setMethod(f="output.value<-",
               slot(obj, paste("outputs",name,sep='.'))=value
             }
             return(obj)
+          }
+)
+
+#' @export
+setMethod(f="$<-",
+          signature=c(x="outputs_class"),
+          definition=function(x,name,value)
+          {
+            output.value(x,name)=value
+            return(x)
           }
 )
