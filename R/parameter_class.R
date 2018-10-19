@@ -146,10 +146,15 @@ setMethod(f="param.value",
 #' @export
 setMethod(f="$",
           signature(x='parameter_class'),
-
           definition=function(x,name)
           {
-            value=param.value(x,name)
+            if (is.param(x,name)) {
+              value=param.value(x,name)
+            } else if (is.output(x,name)) {
+              value=output.value(x,name)
+            } else {
+              stop(paste0('"',name,'" is ot a valid param or output for ', class(x), ' objects.'))
+            }
             return(value)
           }
 )
