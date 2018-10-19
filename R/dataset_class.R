@@ -9,7 +9,6 @@
 #' @slot variable.meta (data.frame) data frame of variable meta data
 #' @rdname dataset
 #' @include generics.R struct_class.R stato_class.R chart_class.R chart_stato.R
-#' @import crayon
 #'
 dataset<-setClass(
   "dataset",
