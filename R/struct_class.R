@@ -72,12 +72,19 @@ setMethod(f="type<-",
 #' @export
 setMethod(f="chart.names",
           signature=c("struct_class"),
-          definition=function(obj)
+          definition=function(obj,ret='char')
           {
+            if (ret=='char') {
+              OUT=character(0)
+            } else if (ret=='obj') {
+              OUT=list()
+            } else {
+              stop('not a valid ret option. Try "char" or "obj"')
+            }
             x=showMethods(f=chart.plot,classes=class(obj)[1],printTo=FALSE)
-            cat('struct chart objects available for "',class(obj)[1],'" objects:\n',sep='')
+            #cat('struct chart objects available for "',class(obj)[1],'" objects:\n',sep='')
             if (x[2]=='<No methods>') {
-              cat(' !!No charts are available for this object!!\n')
+              #cat(' !!No charts are available for this object!!\n')
             } else {
 
               for (i in 2:length(x)) {
@@ -86,11 +93,15 @@ setMethod(f="chart.names",
                   a=a[seq(2, length(a), by=2)]
                   a=a[-which(a==class(obj)[1])]
                   if (is(eval(parse(text=paste0(a,'()'))),'chart')) {
-                    cat(' ',a,'\n',sep='')
+                    if (ret=='char') {
+                    OUT=c(OUT,a)
+                    } else
+                    OUT[[length(OUT)+1]]=eval(parse(text=paste0(a,'()')))
                   }
                 }
               }
             }
+            return(OUT)
           }
 )
 

@@ -4,7 +4,7 @@
 \alias{chart.names}
 \title{chart names}
 \usage{
-chart.names(obj)
+chart.names(obj, ...)
 }
 \arguments{
 \item{obj}{a object from the *struct* package}

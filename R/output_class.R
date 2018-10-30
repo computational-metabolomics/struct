@@ -187,7 +187,13 @@ setMethod(f="$<-",
           signature=c(x="outputs_class"),
           definition=function(x,name,value)
           {
-            output.value(x,name)=value
+            if (is.param(x,name)) {
+              param.value(x,name)=value
+            } else if (is.output(x,name)) {
+              output.value(x,name)=value
+            } else {
+              stop(paste0('"',name,'" is ot a valid param or output for ', class(x), ' objects.'))
+            }
             return(x)
           }
 )

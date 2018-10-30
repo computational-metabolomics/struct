@@ -41,7 +41,7 @@ setMethod(f="$",
           signature=c("dataset"),
           definition=function(x,name)
           {
-            s=slotNames(x)
+            s=c('data','sample_meta','variable_meta')
             if (name %in% s)
             {
               value=slot(x,name)
@@ -68,7 +68,7 @@ setMethod(f="dataset.data<-",
 setMethod(f="$<-",
           signature(x='dataset'),
           definition=function(x,name,value) {
-            s=slotNames(x)
+            s=c('data','sample_meta','variable_meta')
             if (name %in% s)
             {
               slot(x,name)=value

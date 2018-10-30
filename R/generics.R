@@ -161,7 +161,7 @@ setGeneric("output.list<-",function(obj,value)standardGeneric("output.list<-"))
 #' @param obj a object from the *struct* package
 #' @family chart functions
 #' @export
-setGeneric("chart.names",function(obj)standardGeneric("chart.names"))
+setGeneric("chart.names",function(obj,...)standardGeneric("chart.names"))
 
 #' plot a chart for an object
 #'
