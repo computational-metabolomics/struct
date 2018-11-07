@@ -33,11 +33,4 @@ setMethod(f="value<-",
           }
 )
 
-#' @export
-setMethod(f="show",
-          signature=c("entity"),
-          definition=function(object)
-          {
-            cat('Name: ', name(object),'\nDescription: ',description(object),'\nType:',type(object))
-          }
-)
+

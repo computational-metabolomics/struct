@@ -18,6 +18,7 @@ Collate:
     'dataset_class.R'
     'entity_class.R'
     'entity_stato_class.R'
+    'enum_class.R'
     'output_class.R'
     'model_class.R'
     'model_stato_class.R'
