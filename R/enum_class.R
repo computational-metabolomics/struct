@@ -33,7 +33,7 @@ setMethod(f="initialize",
 
 
 setMethod(f="value<-",
-          signature=c("entity"),
+          signature=c("enum"),
           definition=function(obj,value)
           {
             if (value %in% obj@list) {
