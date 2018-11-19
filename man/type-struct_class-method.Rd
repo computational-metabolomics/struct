@@ -10,6 +10,13 @@
 \arguments{
 \item{obj}{a struct object}
 }
+\value{
+the type assigned to the struct objects
+}
 \description{
 get the type of an object
+}
+\examples{
+S = struct_class()
+type(S)
 }

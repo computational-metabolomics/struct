@@ -18,6 +18,9 @@ type(obj) <- value
 
 \item{value}{a valid type string}
 }
+\value{
+modified struct object
+}
 \description{
 get/set type for an object
 }
@@ -26,8 +29,7 @@ get/set type for an object
 \item \code{struct_class}: set the type of an object
 }}
 
-\seealso{
-Other struct_class functions: \code{\link{description}},
-  \code{\link{name}}
+\examples{
+S = struct_class()
+type(S) = 'example'
 }
-\concept{struct_class functions}

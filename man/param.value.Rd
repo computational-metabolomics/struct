@@ -22,10 +22,3 @@ value of output
 \description{
 get/set the values for a parameter.
 }
-\seealso{
-Other parameter functions: \code{\link{is.param}},
-  \code{\link{output.name}}, \code{\link{param.ids}},
-  \code{\link{param.list}}, \code{\link{param.name}},
-  \code{\link{param.obj}}
-}
-\concept{parameter functions}

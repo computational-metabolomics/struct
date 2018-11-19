@@ -15,6 +15,17 @@
 
 \item{value}{value}
 }
+\value{
+(long) name of struct object
+
+modified struct object
+}
 \description{
 get the name of an object
+}
+\examples{
+S = struct_class()
+name(S)
+S = struct_class()
+name(S) = 'example'
 }

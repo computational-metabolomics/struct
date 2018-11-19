@@ -7,66 +7,98 @@
 #' @param M a model object
 #' @param D a dataset object
 #' @param value value
-#' @include generics.R  parameter_class.R output_class.R dataset_class.R
+#' @include generics.R    parameter_class.R output_class.R dataset_class.R
 #' @examples
 #' M = model()
 
 model<-setClass(
-  "model",
-  contains = c('struct_class','parameter_class','outputs_class'),
-  slots=c(type='character',
-          predicted='character'
-          )
-  )
+    "model",
+    contains = c('struct_class','parameter_class','outputs_class'),
+    slots=c(type='character',
+        predicted='character'
+    )
+)
 
 #' @describeIn model train the model using input data
 #' @export
+#' @examples
+#' D = dataset()
+#' M = model()
+#' M = model.train(M,D)
+#' @return trained model object
 setMethod(f="model.train",
-          signature=c("model","dataset"),
-          definition=function(M,D)
-          {
-            return(M)
-          }
+    signature=c("model","dataset"),
+    definition=function(M,D)
+    {
+        return(M)
+    }
 )
 
 #' @describeIn model apply the model to input data
 #' @export
+#' @examples
+#' D = dataset()
+#' M = model()
+#' M = model.train(M,D)
+#' M = model.predict(M,D)
+#' @return model object with test set results
 setMethod(f="model.predict",
-          signature=c("model","dataset"),
-          definition=function(M,D)
-          {
-            return(M)
-          }
+    signature=c("model","dataset"),
+    definition=function(M,D)
+    {
+        return(M)
+    }
 )
 
 #' @describeIn model get prediction output from model
 #' @export
+#' @examples
+#' \dontrun{
+#' D = dataset()
+#' M = model()
+#' M = model.train(M,D)
+#' M = model.predict(M,D)
+#' p = predicted(M)
+#' }
+#' @return the predicted output, as specified by predicted.name
 setMethod(f='predicted',
-          signature=c('model'),
-          definition=function(M)
-          {
-            return(output.value(M,predicted.name(M)))
-          }
+    signature=c('model'),
+    definition=function(M)
+    {
+        return(output.value(M,predicted.name(M)))
+    }
 )
 
 #' @describeIn model get prediction output name for model
 #' @export
+#' @examples
+#' \dontrun{
+#' M = model()
+#' predicted.name(M)
+#' }
+#' @return the id of the output returned by predicted()
 setMethod(f='predicted.name',
-          signature=c('model'),
-          definition=function(M)
-          {
-            return(M@predicted)
-          }
+    signature=c('model'),
+    definition=function(M)
+    {
+        return(M@predicted)
+    }
 )
 
 #' @describeIn model set prediction output from model
 #' @export
+#' @examples
+#' \dontrun{
+#' M = model()
+#' predicted.name(M)='example'
+#' }
+#' @return the modified model object
 setMethod(f='predicted.name<-',
-          signature=c('model','character'),
-          definition=function(M,value)
-          {
-            M@predicted=value
-            return(M)
-          }
+    signature=c('model','character'),
+    definition=function(M,value)
+    {
+        M@predicted=value
+        return(M)
+    }
 )
 

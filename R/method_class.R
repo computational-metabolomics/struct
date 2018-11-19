@@ -3,7 +3,7 @@
 #' A class for methods that are applied to datasets in a single step e.g. normalisation.
 #' not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
 #' @export method
-#' @include generics.R  parameter_class.R output_class.R dataset_class.R
+#' @include generics.R    parameter_class.R output_class.R dataset_class.R
 #' @param M a model object
 #' @param D a dataset object
 #' @param value value
@@ -11,52 +11,73 @@
 #' M = method()
 #'
 method<-setClass(
-  "method",
-  contains = c('struct_class','parameter_class','outputs_class'),
-  slots=c(type='character',
-          predicted='character'
-  )
+    "method",
+    contains = c('struct_class','parameter_class','outputs_class'),
+    slots=c(type='character',
+        predicted='character'
+    )
 )
 
 #' @describeIn method train the model using input data
 #' @export
+#' @examples
+#' D = dataset()
+#' M = method()
+#' M = method.apply(M,D)
 setMethod(f="method.apply",
-          signature=c("method","dataset"),
-          definition=function(M,D)
-          {
-            return(M)
-          }
+    signature=c("method","dataset"),
+    definition=function(M,D)
+    {
+        return(M)
+    }
 )
 
 #' @describeIn method get prediction output from model
 #' @export
+#' @examples
+#' \dontrun{
+#' D = dataset()
+#' M = method()
+#' M = method.apply(M,D)
+#' p = predicted(M)
+#' }
 setMethod(f='predicted',
-          signature=c('method'),
-          definition=function(M)
-          {
-            return(output.value(M,predicted.name(M)))
-          }
+    signature=c('method'),
+    definition=function(M)
+    {
+        return(output.value(M,predicted.name(M)))
+    }
 )
 
 #' @describeIn method get prediction output name for model
 #' @export
+#' @examples
+#' \dontrun{
+#' M = method()
+#' predicted.name(M)
+#' }
+#'
 setMethod(f='predicted.name',
-          signature=c('method'),
-          definition=function(M)
-          {
-            return(M@predicted)
-          }
+    signature=c('method'),
+    definition=function(M)
+    {
+        return(M@predicted)
+    }
 )
 
 #' @describeIn method set prediction output from method
 #' @export
+#' @examples
+#' M = method()
+#' predicted.name(M) = 'example'
+#'
 setMethod(f='predicted.name<-',
-          signature=c('method','character'),
-          definition=function(M,value)
-          {
-            M@predicted=value
-            return(M)
-          }
+    signature=c('method','character'),
+    definition=function(M,value)
+    {
+        M@predicted=value
+        return(M)
+    }
 )
 
 

@@ -14,4 +14,3 @@ method.apply(M, D)
 \description{
 Applies a method to the input dataset
 }
-\concept{method functions}

@@ -17,10 +17,3 @@ TRUE if parameter name is valid, FALSE if not
 \description{
 verify that the name of a paramater is valid for an object
 }
-\seealso{
-Other parameter functions: \code{\link{output.name}},
-  \code{\link{param.ids}}, \code{\link{param.list}},
-  \code{\link{param.name}}, \code{\link{param.obj}},
-  \code{\link{param.value}}
-}
-\concept{parameter functions}

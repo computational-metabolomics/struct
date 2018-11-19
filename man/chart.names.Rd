@@ -14,7 +14,3 @@ chart.names(obj, ...)
 \description{
 return a list of valid charts for a struct object
 }
-\seealso{
-Other chart functions: \code{\link{chart.plot}}
-}
-\concept{chart functions}

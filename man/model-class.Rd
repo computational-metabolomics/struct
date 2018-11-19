@@ -28,6 +28,17 @@
 
 \item{value}{value}
 }
+\value{
+trained model object
+
+model object with test set results
+
+the predicted output, as specified by predicted.name
+
+the id of the output returned by predicted()
+
+the modified model object
+}
 \description{
 A class for models that can be trained/applied to datasets e.g. PCA, PLS etc.
 Also used for preprocessing steps that require application to test sets.
@@ -48,4 +59,26 @@ not intended to be called directly, this class should be inherited to provide fu
 
 \examples{
 M = model()
+D = dataset()
+M = model()
+M = model.train(M,D)
+D = dataset()
+M = model()
+M = model.train(M,D)
+M = model.predict(M,D)
+\dontrun{
+D = dataset()
+M = model()
+M = model.train(M,D)
+M = model.predict(M,D)
+p = predicted(M)
+}
+\dontrun{
+M = model()
+predicted.name(M)
+}
+\dontrun{
+M = model()
+predicted.name(M)='example'
+}
 }

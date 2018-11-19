@@ -12,6 +12,15 @@
 
 \item{ret}{a string indicating whether to return a list of chart names (ret="char") or a list of chart objects (ret="obj"). The default is "char".}
 }
+\value{
+list of chart names (default), or chart objects
+}
 \description{
 print a list of chart objects associated with the input object
+}
+\examples{
+S = struct_class()
+chart.names(S)
+chart.names(S,'char')
+chart.names(S,'obj')
 }

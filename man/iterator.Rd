@@ -21,11 +21,3 @@ run an iterator object
 
 evaluate an iterator object
 }
-\seealso{
-Other iterator functions: \code{\link{result.name}},
-  \code{\link{result}}
-
-Other iterator functions: \code{\link{result.name}},
-  \code{\link{result}}
-}
-\concept{iterator functions}

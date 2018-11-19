@@ -22,9 +22,3 @@ value of output
 \description{
 get/set the values for an output.
 }
-\seealso{
-Other output functions: \code{\link{is.output}},
-  \code{\link{output.ids}}, \code{\link{output.list}},
-  \code{\link{output.obj}}
-}
-\concept{output functions}

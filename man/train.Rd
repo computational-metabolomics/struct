@@ -14,8 +14,3 @@ model.train(M, D)
 \description{
 Trains a model using the input dataset
 }
-\seealso{
-Other model functions: \code{\link{model.predict}},
-  \code{\link{predicted.name}}, \code{\link{predicted}}
-}
-\concept{model functions}

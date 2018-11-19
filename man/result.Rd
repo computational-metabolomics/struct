@@ -12,8 +12,3 @@ result(M)
 \description{
 returns the results of an iterator. This is used to control model flow.
 }
-\seealso{
-Other iterator functions: \code{\link{result.name}},
-  \code{\link{run}}
-}
-\concept{iterator functions}

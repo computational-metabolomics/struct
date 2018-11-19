@@ -45,4 +45,3 @@ display a stato summary of the object
 
 get a pdf of a stato object
 }
-\concept{stato functions}

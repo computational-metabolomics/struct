@@ -7,8 +7,8 @@
 #' obj = chart.stato() # create chart object
 
 chart.stato<-setClass(
-  "chart.stato",
-  contains=c('chart','stato')
+    "chart.stato",
+    contains=c('chart','stato')
 )
 
 

@@ -34,4 +34,10 @@ Not intended to be called directly, this class should be inherited to provide fu
 
 \examples{
 MET = metric()
+\dontrun{
+M = metric()
+calculate(M,Y,Yhat)
+}
+MET = metric()
+value(MET)
 }

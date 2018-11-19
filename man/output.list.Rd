@@ -20,9 +20,3 @@ list of output names
 \description{
 get a named list of outputs and thier current value for an object
 }
-\seealso{
-Other output functions: \code{\link{is.output}},
-  \code{\link{output.ids}}, \code{\link{output.obj}},
-  \code{\link{output.value}}
-}
-\concept{output functions}

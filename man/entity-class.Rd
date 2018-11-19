@@ -26,7 +26,7 @@ A base class in the \pkg{struct} package. should not be called directly.
 \itemize{
 \item \code{value}: get the value for an entity
 
-\item \code{value<-}: set the  value for an entity
+\item \code{value<-}: set the    value for an entity
 }}
 
 \examples{

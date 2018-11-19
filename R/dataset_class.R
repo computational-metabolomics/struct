@@ -18,17 +18,17 @@
 #' D = dataset()
 #'
 dataset<-setClass(
-  "dataset",
-  contains=c("struct_class"),
-  slots=c(name="character",
-          description="character",
-          data="data.frame",
-          sample_meta="data.frame",
-          variable_meta="data.frame"
-  ),
-  prototype=list(name="Dataset000",
-                 description="an empty dataset object"
-  )
+    "dataset",
+    contains=c("struct_class"),
+    slots=c(name="character",
+        description="character",
+        data="data.frame",
+        sample_meta="data.frame",
+        variable_meta="data.frame"
+    ),
+    prototype=list(name="Dataset000",
+        description="an empty dataset object"
+    )
 
 )
 
@@ -41,11 +41,11 @@ dataset<-setClass(
 #'
 #' @rdname dataset
 setMethod(f="dataset.data",
-          signature=c("dataset"),
-          definition=function(obj)
-          {
-            return(obj@data)
-          }
+    signature=c("dataset"),
+    definition=function(obj)
+    {
+        return(obj@data)
+    }
 )
 
 #' @rdname dataset
@@ -57,18 +57,18 @@ setMethod(f="dataset.data",
 #' V = D$variable_meta
 #'
 setMethod(f="$",
-          signature=c("dataset"),
-          definition=function(x,name)
-          {
-            s=c('data','sample_meta','variable_meta')
-            if (name %in% s)
-            {
-              value=slot(x,name)
-              return(value)
-            } else {
-              stop(paste0('"',name,'" is not a valid slot for dataset objects'))
-            }
-          }
+    signature=c("dataset"),
+    definition=function(x,name)
+    {
+        s=c('data','sample_meta','variable_meta')
+        if (name %in% s)
+        {
+            value=slot(x,name)
+            return(value)
+        } else {
+            stop(paste0('"',name,'" is not a valid slot for dataset objects'))
+        }
+    }
 )
 
 #' @export
@@ -78,12 +78,12 @@ setMethod(f="$",
 #' X = dataset.data(D) = iris[,1:4]
 #'
 setMethod(f="dataset.data<-",
-          signature=c("dataset"),
-          definition=function(obj,value)
-          {
-            obj@data=value
-            return(obj)
-          }
+    signature=c("dataset"),
+    definition=function(obj,value)
+    {
+        obj@data=value
+        return(obj)
+    }
 )
 
 #' @rdname dataset
@@ -95,17 +95,17 @@ setMethod(f="dataset.data<-",
 #' D$variable_meta=data.frame(sample_id = rownames(iris))
 #'
 setMethod(f="$<-",
-          signature(x='dataset'),
-          definition=function(x,name,value) {
-            s=c('data','sample_meta','variable_meta')
-            if (name %in% s)
-            {
-              slot(x,name)=value
-              return(x)
-            } else {
-              stop(paste0('"',name,'" is not a valid slot for dataset objects'))
-            }
-          }
+    signature(x='dataset'),
+    definition=function(x,name,value) {
+        s=c('data','sample_meta','variable_meta')
+        if (name %in% s)
+        {
+            slot(x,name)=value
+            return(x)
+        } else {
+            stop(paste0('"',name,'" is not a valid slot for dataset objects'))
+        }
+    }
 )
 
 #' get the sample_meta for a dataset object
@@ -118,11 +118,11 @@ setMethod(f="$<-",
 #' S = dataset.sample_meta(D)
 #'
 setMethod(f="dataset.sample_meta",
-          signature=c("dataset"),
-          definition=function(obj)
-          {
-            return(obj@sample_meta)
-          }
+    signature=c("dataset"),
+    definition=function(obj)
+    {
+        return(obj@sample_meta)
+    }
 )
 
 #' set the sample_meta for a dataset object
@@ -134,12 +134,12 @@ setMethod(f="dataset.sample_meta",
 #' D = dataset()
 #' dataset.sample_meta(D) = iris[,5,drop = FALSE]
 setMethod(f="dataset.sample_meta<-",
-          signature=c("dataset"),
-          definition=function(obj,value)
-          {
-            obj@sample_meta=value
-            return(obj)
-          }
+    signature=c("dataset"),
+    definition=function(obj,value)
+    {
+        obj@sample_meta=value
+        return(obj)
+    }
 )
 
 #' Get the variable_meta for a dataset object
@@ -151,11 +151,11 @@ setMethod(f="dataset.sample_meta<-",
 #' D = dataset()
 #' V = dataset.variable_meta(D)
 setMethod(f="dataset.variable_meta",
-          signature=c("dataset"),
-          definition=function(obj)
-          {
-            return(obj@variable_meta)
-          }
+    signature=c("dataset"),
+    definition=function(obj)
+    {
+        return(obj@variable_meta)
+    }
 )
 
 #' Set the variable_meta for a dataset object
@@ -169,11 +169,11 @@ setMethod(f="dataset.variable_meta",
 #' dataset.variable_meta(D)= df
 #'
 setMethod(f="dataset.variable_meta<-",
-          signature=c("dataset"),
-          definition=function(obj,value) {
-            obj@variable_meta=value
-            return(obj)
-          }
+    signature=c("dataset"),
+    definition=function(obj,value) {
+        obj@variable_meta=value
+        return(obj)
+    }
 )
 
 #' dataset summary
@@ -184,23 +184,23 @@ setMethod(f="dataset.variable_meta<-",
 #' @rdname dataset
 #' @examples
 #' D = dataset(data = iris[,1:4],
-#'             sample_meta = iris[,5,drop=FALSE])
+#'                         sample_meta = iris[,5,drop=FALSE])
 #' summary(D)
 #'
 setMethod(f="summary",
-          signature=c("dataset"),
-          definition=function(object) {
-            S=list()
-            S$name=name(object)
-            S$description=description(object)
-            S$type=type(object)
-            S$n.samples=nrow(dataset.data(object))
-            S$n.features=ncol(dataset.data(object))
-            S$n.levels=length(levels(dataset.sample_meta(object)[,1]))
-            cat(bold('A',class(object),'object from the struct package') %+%  '\n\n' %+% blue('Name: '),name(object),'\n' %+% blue('Description: '),description(object),'\n',sep='')
-            cat('\nConsists of ',S$n.samples,' samples and ',S$n.features,' features.\n',sep='')
-            cat('\nThere are ',S$n.levels, ' levels: ',sep='')
-            cat(green(levels(dataset.sample_meta(object)[,1])),sep=',')
-            cat(' in factor named "',green(names(dataset.sample_meta(object))[1]),'"',sep='')
-          }
+    signature=c("dataset"),
+    definition=function(object) {
+        S=list()
+        S$name=name(object)
+        S$description=description(object)
+        S$type=type(object)
+        S$n.samples=nrow(dataset.data(object))
+        S$n.features=ncol(dataset.data(object))
+        S$n.levels=length(levels(dataset.sample_meta(object)[,1]))
+        cat(bold('A',class(object),'object from the struct package') %+%    '\n\n' %+% blue('Name: '),name(object),'\n' %+% blue('Description: '),description(object),'\n',sep='')
+        cat('\nConsists of ',S$n.samples,' samples and ',S$n.features,' features.\n',sep='')
+        cat('\nThere are ',S$n.levels, ' levels: ',sep='')
+        cat(green(levels(dataset.sample_meta(object)[,1])),sep=',')
+        cat(' in factor named "',green(names(dataset.sample_meta(object))[1]),'"',sep='')
+    }
 )

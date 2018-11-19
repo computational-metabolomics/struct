@@ -20,10 +20,3 @@ list of parameter names
 \description{
 get/set a named list of parameters and thier current value for an object
 }
-\seealso{
-Other parameter functions: \code{\link{is.param}},
-  \code{\link{output.name}}, \code{\link{param.ids}},
-  \code{\link{param.name}}, \code{\link{param.obj}},
-  \code{\link{param.value}}
-}
-\concept{parameter functions}

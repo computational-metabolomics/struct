@@ -7,6 +7,6 @@
 #' M = model.stato()
 
 model.stato<-setClass(
-  "model.stato",
-  contains=c('model','stato')
+    "model.stato",
+    contains=c('model','stato')
 )

@@ -12,29 +12,37 @@
 #' MET = metric()
 
 metric<-setClass(
-  "metric",
-  contains = c('struct_class'),
-  slots=c(type='character',
-          value='numeric'
-  )
+    "metric",
+    contains = c('struct_class'),
+    slots=c(type='character',
+        value='numeric'
+    )
 )
 
 #' @describeIn metric calculate a metric
 #' @export
+#' @examples
+#' \dontrun{
+#' M = metric()
+#' calculate(M,Y,Yhat)
+#' }
 setMethod(f="calculate",
-          signature=c('metric'),
-          definition=function(MET,Y,Yhat)
-          {
-            return(MET)
-          }
+    signature=c('metric'),
+    definition=function(MET,Y,Yhat)
+    {
+        return(MET)
+    }
 )
 
 #' @describeIn metric get the caluclated value for a metric
 #' @export
+#' @examples
+#' MET = metric()
+#' value(MET)
 setMethod(f="value",
-          signature=c("metric"),
-          definition=function(MET)
-          {
-            return(MET@value)
-          }
+    signature=c("metric"),
+    definition=function(MET)
+    {
+        return(MET@value)
+    }
 )

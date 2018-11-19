@@ -15,9 +15,3 @@ list of output ids
 \description{
 return a list of valid output ids for an object
 }
-\seealso{
-Other output functions: \code{\link{is.output}},
-  \code{\link{output.list}}, \code{\link{output.obj}},
-  \code{\link{output.value}}
-}
-\concept{output functions}

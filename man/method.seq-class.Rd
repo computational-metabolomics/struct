@@ -84,4 +84,33 @@ A class for (ordered) lists of methods
 \examples{
 MS = method.seq()
 MS = method() + method()
+\dontrun{
+D = dataset()
+MS = method() + method()
+MS = method.apply(MS,D)
+}
+
+M = method()
+MS = method() + method()
+MS[2]
+
+M = method()
+MS = method() + method()
+MS[3] = M
+MS = method() + method()
+L = method.steps(MS)
+MS = method.seq()
+L = list(method(),method())
+L = method.steps(MS) = L
+MS = method() + method()
+length(MS) # 2
+MS = method() + method()
+show(MS)
+MS = model() + model()
+M = model()
+MS = M + MS # method added to front of sequence
+MS = model() + model()
+M = model()
+MS = MS + M # method added to end of sequence
+MS = model() + model()
 }

@@ -49,6 +49,29 @@
 
 \item{x}{parameter_class object}
 }
+\value{
+returns the parameter as an object (e.g. entity, enum)
+
+modified model object
+
+logical
+
+character list of parameter ids
+
+(long) name of parameter
+
+named list of parameter ids and values
+
+modified model object
+
+value of parameter
+
+value of parameter
+
+modified model object
+
+(long) name of parameter
+}
 \description{
 A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting parameters etc and should not be called directly.
 }
@@ -77,3 +100,50 @@ A base class in the \pkg{struct} package. Provides several fundamental methods f
 \item \code{$<-}: set the value for a parameter by id
 }}
 
+\examples{
+\dontrun{
+M = model()
+obj = param.obj(M,'example')
+}
+\dontrun{
+M = model()
+param.obj(M,'example') = entity()
+}
+\dontrun{
+M = model()
+is.param(M,'example')
+}
+\dontrun{
+M = model()
+param.ids(M)
+}
+\dontrun{
+M = model()
+param.name(M,'example')
+}
+\dontrun{
+M = model()
+L = param.list(M,'example')
+}
+\dontrun{
+M = model()
+L = list('example' = model())
+param.list(M,'example') = L
+}
+\dontrun{
+M = model()
+param.value(M,'example')
+}
+\dontrun{
+M = model()
+M$example
+}
+\dontrun{
+M = model()
+param.value(M,'example') = 10
+}
+\dontrun{
+M = model()
+M$example = 10
+}
+}

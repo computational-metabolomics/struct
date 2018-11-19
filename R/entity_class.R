@@ -10,12 +10,12 @@
 #' E = entity()
 #'
 entity<-setClass(
-  "entity",
-  slots=c('value'),
-  contains='struct_class',
-  prototype=list(name='name not provided',
-                 description='no description provided')
-  )
+    "entity",
+    slots=c('value'),
+    contains='struct_class',
+    prototype=list(name='name not provided',
+        description='no description provided')
+)
 
 
 #' @describeIn entity get the value for an entity
@@ -24,25 +24,25 @@ entity<-setClass(
 #' E = entity()
 #' v = value(E)
 setMethod(f="value",
-          signature=c("entity"),
-          definition=function(MET)
-          {
-            return(MET@value)
-          }
+    signature=c("entity"),
+    definition=function(MET)
+    {
+        return(MET@value)
+    }
 )
 
-#' @describeIn entity set the  value for an entity
+#' @describeIn entity set the    value for an entity
 #' @export
 #' @examples
 #' E = entity()
 #' value(E) = 10
 setMethod(f="value<-",
-          signature=c("entity"),
-          definition=function(obj,value)
-          {
-            obj@value=value
-            return(obj)
-          }
+    signature=c("entity"),
+    definition=function(obj,value)
+    {
+        obj@value=value
+        return(obj)
+    }
 )
 
 

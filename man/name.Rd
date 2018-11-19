@@ -17,8 +17,3 @@ name(obj) <- value
 \description{
 get/set name for an object
 }
-\seealso{
-Other struct_class functions: \code{\link{description}},
-  \code{\link{type}}
-}
-\concept{struct_class functions}

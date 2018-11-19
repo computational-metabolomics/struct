@@ -58,6 +58,29 @@
 
 \item{e2}{a model or model.seq object}
 }
+\value{
+model sequence
+
+model sequence
+
+model at the given index in the sequence
+
+model sequence with the model at index i replaced
+
+a list of models in the sequence
+
+a model sequence containing the input models
+
+the number of models in the sequence
+
+pritns a summary of the contents of a model sequence
+
+a model sequence with the additional model appended to the front of the sequence
+
+a model sequence with the additional model appended to the end of the sequence
+
+a model sequence
+}
 \description{
 A class for (ordered) lists of models
 }
@@ -89,4 +112,52 @@ A class for (ordered) lists of models
 \examples{
 MS = model.seq()
 MS = model() + model()
+\dontrun{
+MS = model() + model()
+MS = model.train(MS)
+}
+\dontrun{
+D= dataset()
+MS = model() + model()
+MS = model.train(MS)
+MS = model.predict(MS,D)
+}
+
+MS = model() + model()
+MS[2]
+
+
+MS = model() + model()
+MS[3] = model()
+
+
+MS = model() + model()
+L = models(MS)
+
+
+MS = model.seq()
+L = list(model(),model())
+models(MS) = L
+
+
+MS = model() + model()
+length(MS) # 2
+
+
+MS = model() + model()
+show(MS)
+
+
+MS = model() + model()
+M = model()
+MS = M + MS
+
+
+MS = model() + model()
+M = model()
+MS = MS + M
+
+
+MS = model() + model()
+
 }

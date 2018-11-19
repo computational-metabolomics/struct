@@ -8,7 +8,6 @@
 #' @param name name of parameter as a string
 #' @param value a valid value for the parameter being set
 #' @rdname param
-#' @family parameter functions
 #' @export
 setGeneric("param.obj",function(obj,name)standardGeneric("param.obj"))
 
@@ -22,7 +21,6 @@ setGeneric("param.obj<-",function(obj,name,value)standardGeneric("param.obj<-"))
 #' @param obj a model or iterator object from the *struct* class
 #' @param name name of parameter as a string
 #' @return TRUE if parameter name is valid, FALSE if not
-#' @family parameter functions
 #' @export
 setGeneric("is.param",function(obj,name)standardGeneric("is.param"))
 
@@ -31,7 +29,6 @@ setGeneric("is.param",function(obj,name)standardGeneric("is.param"))
 #' return a list of valid parameter ids for an object
 #' @param obj a model or iterator object from the *struct* class
 #' @return list of parameter ids
-#' @family parameter functions
 #' @export
 setGeneric("param.ids",function(obj)standardGeneric("param.ids"))
 
@@ -41,7 +38,6 @@ setGeneric("param.ids",function(obj)standardGeneric("param.ids"))
 #' @param obj a model or iterator object from the *struct* class
 #' @param name id of parameter
 #' @return name of parameter
-#' @family parameter functions
 #' @export
 setGeneric("param.name",function(obj,name)standardGeneric("param.name"))
 
@@ -51,7 +47,6 @@ setGeneric("param.name",function(obj,name)standardGeneric("param.name"))
 #' @param obj a model or iterator object from the *struct* class
 #' @param value a named list, where the name-value pairs should match valid parameters for the object
 #' @return list of parameter names
-#' @family parameter functions
 #' @rdname param.list
 #' @export
 setGeneric("param.list",function(obj)standardGeneric("param.list"))
@@ -67,7 +62,7 @@ setGeneric("param.list<-",function(obj,value)standardGeneric("param.list<-"))
 #' @param name of a parameter
 #' @param value value
 #' @return value of output
-#' @family parameter functions
+
 #' @rdname param.value
 #' @export
 setGeneric("param.value",function(obj,name)standardGeneric("param.value"))
@@ -85,7 +80,6 @@ setGeneric("param.value<-",function(obj,name,value)standardGeneric("param.value<
 #' return a list of valid output ids for an object
 #' @param obj a model or iterator object from the *struct* class
 #' @return list of output ids
-#' @family output functions
 #' @export
 setGeneric("output.ids",function(obj)standardGeneric("output.ids"))
 
@@ -96,7 +90,6 @@ setGeneric("output.ids",function(obj)standardGeneric("output.ids"))
 #' @param name name of an output
 #' @param value value
 #' @return value of output
-#' @family output functions
 #' @rdname output.value
 #' @export
 setGeneric("output.value",function(obj,name)standardGeneric("output.value"))
@@ -110,14 +103,13 @@ setGeneric("output.value<-",function(obj,name,value)standardGeneric("output.valu
 #' @param obj a model or iterator object from the *struct* class
 #' @param name name of output as a string
 #' @rdname outputs
-#' @family output functions
 #' @export
 setGeneric("output.obj",function(obj,name)standardGeneric("output.obj"))
 
 #' @export
 #' @param value a valid value for the parameter being set
 #' @rdname outputs
-#' @family output functions
+
 setGeneric("output.obj<-",function(obj,name,value)standardGeneric("output.obj<-"))
 
 #' verify output name
@@ -126,7 +118,6 @@ setGeneric("output.obj<-",function(obj,name,value)standardGeneric("output.obj<-"
 #' @param obj a model or iterator object from the *struct* class
 #' @param name name of the output as a string
 #' @return TRUE if output name is valid, FALSE if not
-#' @family output functions
 #' @export
 setGeneric("is.output",function(obj,name)standardGeneric("is.output"))
 
@@ -136,7 +127,6 @@ setGeneric("is.output",function(obj,name)standardGeneric("is.output"))
 #' @param obj a model or iterator object from the *struct* class
 #' @param name id of output
 #' @return list of parameter names
-#' @family parameter functions
 #' @export
 setGeneric("output.name",function(obj,name)standardGeneric("output.name"))
 
@@ -146,7 +136,6 @@ setGeneric("output.name",function(obj,name)standardGeneric("output.name"))
 #' @param obj a model or iterator object from the *struct* class
 #' @param value a named list of outputs for an object
 #' @return list of output names
-#' @family output functions
 #' @rdname output.list
 #' @export
 setGeneric("output.list",function(obj)standardGeneric("output.list"))
@@ -164,7 +153,6 @@ setGeneric("output.list<-",function(obj,value)standardGeneric("output.list<-"))
 #' return a list of valid charts for a struct object
 #' @param obj a object from the *struct* package
 #' @param ... optional inputs
-#' @family chart functions
 #' @export
 setGeneric("chart.names",function(obj,...)standardGeneric("chart.names"))
 
@@ -174,7 +162,7 @@ setGeneric("chart.names",function(obj,...)standardGeneric("chart.names"))
 #' @param dobj a struct object
 #' @param ... optional inputs
 #' @rdname chart.plot
-#' @family chart functions
+
 #' @export
 setGeneric("chart.plot",function(obj, dobj, ...)standardGeneric("chart.plot"))
 
@@ -187,7 +175,6 @@ setGeneric("chart.plot",function(obj, dobj, ...)standardGeneric("chart.plot"))
 #' @param obj an object from the \pkg{struct} class
 #' @param value a valid type string
 #' @rdname type
-#' @family struct_class functions
 #' @export
 setGeneric("type",function(obj)standardGeneric("type"))
 
@@ -200,7 +187,6 @@ setGeneric("type<-",function(obj,value)standardGeneric("type<-"))
 #' @param obj an object from the \pkg{struct} class
 #' @param value a valid string
 #' @rdname name
-#' @family struct_class functions
 #' @export
 setGeneric("name",function(obj)standardGeneric("name"))
 
@@ -213,7 +199,7 @@ setGeneric("name<-",function(obj,value)standardGeneric("name<-"))
 #' @param obj an object from the \pkg{struct} class
 #' @param value a valid string
 #' @rdname desc
-#' @family struct_class functions
+
 #' @export
 setGeneric("description",function(obj)standardGeneric("description"))
 
@@ -230,7 +216,6 @@ setGeneric("description<-",function(obj,value)standardGeneric("description<-"))
 #' Applies a method to the input dataset
 #' @param M a model object
 #' @param D a dataset object
-#' @family method functions
 #' @rdname method.apply
 #' @export
 setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
@@ -244,7 +229,6 @@ setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
 #' Trains a model using the input dataset
 #' @param M a model object
 #' @param D a dataset object
-#' @family model functions
 #' @rdname train
 #' @export
 setGeneric("model.train",function(M,D)standardGeneric("model.train"))
@@ -254,7 +238,7 @@ setGeneric("model.train",function(M,D)standardGeneric("model.train"))
 #' Apply a model using the input dataset. Requires that the model is trained first.
 #' @param M a model object
 #' @param D a dataset object
-#' @family model functions
+
 #' @rdname predict
 #' @export
 setGeneric("model.predict",function(M,D)standardGeneric("model.predict"))
@@ -264,7 +248,7 @@ setGeneric("model.predict",function(M,D)standardGeneric("model.predict"))
 #' get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.seq
 #' @param M a model object
 #' @param value name of an output for this model
-#' @family model functions
+
 #' @rdname predicted.name
 #' @export
 setGeneric("predicted.name",function(M)standardGeneric("predicted.name"))
@@ -278,7 +262,6 @@ setGeneric("predicted.name<-",function(M,value)standardGeneric("predicted.name<-
 #'
 #' returns the prediction output for a model. This is supplied as input to the next model when used in a model.seq
 #' @param M a model object
-#' @family model functions
 #' @rdname predicted
 #' @export
 setGeneric("predicted",function(M)standardGeneric("predicted"))
@@ -292,7 +275,6 @@ setGeneric("predicted",function(M)standardGeneric("predicted"))
 #' Returns the list of models in a model.seq object
 #' @param ML a model.seq object
 #' @param value a list containing only model objects
-#' @family model.seq functions
 #' @rdname models
 #' @export
 setGeneric("models",function(ML)standardGeneric("models"))
@@ -310,7 +292,6 @@ setGeneric("models<-",function(ML,value)standardGeneric("models<-"))
 #' @param obj a type object from the *struct* class
 #' @param value a data.frame of raw data
 #' @rdname data
-#' @family dataset functions
 #' @export
 setGeneric("dataset.data",function(obj)standardGeneric("dataset.data"))
 
@@ -323,7 +304,7 @@ setGeneric("dataset.data<-",function(obj,value)standardGeneric("dataset.data<-")
 #' @param obj a type object from the *struct* class
 #' @param value a data.frame of meta data
 #' @rdname sample_meta
-#' @family dataset functions
+
 #' @export
 setGeneric("dataset.sample_meta",function(obj)standardGeneric("dataset.sample_meta"))
 
@@ -336,7 +317,7 @@ setGeneric("dataset.sample_meta<-",function(obj,value)standardGeneric("dataset.s
 #' @param obj a type object from the *struct* class
 #' @param value a data.frame of meta data
 #' @rdname variable_meta
-#' @family dataset functions
+
 #' @export
 setGeneric("dataset.variable_meta",function(obj)standardGeneric("dataset.variable_meta"))
 
@@ -354,14 +335,12 @@ setGeneric("dataset.variable_meta<-",function(obj,value)standardGeneric("dataset
 #' @param D a dataset object
 #' @param MET a metric object
 #' @rdname iterator
-#' @family iterator functions
 #' @export
 setGeneric("run",function(I,D,MET)standardGeneric("run"))
 
 #' evaluate an iterator object
 #'
 #' @rdname iterator
-#' @family iterator functions
 #' @export
 setGeneric("evaluate",function(I,MET)standardGeneric("evaluate"))
 
@@ -370,7 +349,7 @@ setGeneric("evaluate",function(I,MET)standardGeneric("evaluate"))
 #' get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.seq
 #' @param M an iterator object
 #' @param value name of an output for iterator M
-#' @family iterator functions
+
 #' @rdname result.name
 #' @export
 setGeneric("result.name",function(M)standardGeneric("result.name"))
@@ -383,7 +362,6 @@ setGeneric("result.name<-",function(M,value)standardGeneric("result.name<-"))
 #'
 #' returns the results of an iterator. This is used to control model flow.
 #' @param M an iterator object
-#' @family iterator functions
 #' @rdname result
 #' @export
 setGeneric("result",function(M)standardGeneric("result"))
@@ -397,7 +375,6 @@ setGeneric("result",function(M)standardGeneric("result"))
 #' @param MET a metric object
 #' @param ... variable inputs depending on object
 #' @rdname metric
-#' @family metric functions
 #' @export
 setGeneric("calculate",function(MET,...)standardGeneric("calculate"))
 
@@ -405,7 +382,7 @@ setGeneric("calculate",function(MET,...)standardGeneric("calculate"))
 #'
 #' @return value the calculated value of a metric
 #' @rdname metric
-#' @family metric functions
+
 #' @export
 setGeneric("value",function(MET)standardGeneric("value"))
 
@@ -427,7 +404,6 @@ setGeneric("value<-",function(obj,value)standardGeneric("value<-"))
 #' @param filename file name
 #' @param outformat output format ("pdf" or "html")
 #' @rdname stato
-#' @family stato functions
 #' @export
 setGeneric("stato.id",function(obj)standardGeneric("stato.id"))
 
@@ -435,7 +411,6 @@ setGeneric("stato.id",function(obj)standardGeneric("stato.id"))
 #'
 #' @return name the stato name
 #' @rdname stato
-#' @family stato functions
 #' @export
 setGeneric("stato.name",function(obj)standardGeneric("stato.name"))
 
@@ -443,21 +418,18 @@ setGeneric("stato.name",function(obj)standardGeneric("stato.name"))
 #'
 #' @return def the stato description
 #' @rdname stato
-#' @family stato functions
 #' @export
 setGeneric("stato.definition",function(obj)standardGeneric("stato.definition"))
 
 #' display a stato summary of the object
 #'
 #' @rdname stato
-#' @family stato functions
 #' @export
 setGeneric("stato.summary",function(obj)standardGeneric("stato.summary"))
 
 #' get a pdf of a stato object
 #'
 #' @rdname stato
-#' @family stato functions
 #' @export
 setGeneric("stato.pdf",function(obj,outpath,filename,outformat)standardGeneric("stato.pdf"))
 
@@ -470,7 +442,6 @@ setGeneric("stato.pdf",function(obj,outpath,filename,outformat)standardGeneric("
 #' Returns the list of method in a method.seq object
 #' @param ML a method.seq object
 #' @param value a list containing only method objects
-#' @family method.seq functions
 #' @rdname methods
 #' @export
 setGeneric("method.steps",function(ML)standardGeneric("method.steps"))

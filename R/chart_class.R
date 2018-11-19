@@ -7,8 +7,8 @@
 #' @examples
 #' obj = chart() # create chart object
 chart<-setClass(
-  "chart",
-  contains=c('struct_class','parameter_class')
+    "chart",
+    contains=c('struct_class','parameter_class')
 )
 
 #' plot chart
@@ -20,11 +20,11 @@ chart<-setClass(
 #' @examples
 #' chart.plot(obj) # plot chart
 setMethod(f="chart.plot",
-          signature="chart",
-          definition=function(obj)
-          {
-            return(obj)
-          }
+    signature="chart",
+    definition=function(obj)
+    {
+        return(obj)
+    }
 )
 
 

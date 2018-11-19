@@ -7,6 +7,6 @@
 #' M = method.stato()
 
 method.stato<-setClass(
-  "method.stato",
-  contains=c('method','stato')
+    "method.stato",
+    contains=c('method','stato')
 )

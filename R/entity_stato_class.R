@@ -7,8 +7,8 @@
 #' E = entity.stato()
 
 entity.stato<-setClass(
-  "entity.stato",
-  contains=c('entity','stato')
+    "entity.stato",
+    contains=c('entity','stato')
 )
 
 

@@ -32,8 +32,10 @@ Collate:
     'resampler_class.R'
     'struct.R'
 RoxygenNote: 6.1.1
-Suggests: knitr,
-    rmarkdown
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
 Imports: methods, ontologyIndex, crayon
 biocViews: BasicWorkflow

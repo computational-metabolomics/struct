@@ -102,7 +102,7 @@ df = data.frame(sample_id = rownames(iris))
 dataset.variable_meta(D)= df
 
 D = dataset(data = iris[,1:4],
-            sample_meta = iris[,5,drop=FALSE])
+                        sample_meta = iris[,5,drop=FALSE])
 summary(D)
 
 }

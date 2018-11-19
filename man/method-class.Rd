@@ -43,4 +43,21 @@ not intended to be called directly, this class should be inherited to provide fu
 \examples{
 M = method()
 
+D = dataset()
+M = method()
+M = method.apply(M,D)
+\dontrun{
+D = dataset()
+M = method()
+M = method.apply(M,D)
+p = predicted(M)
+}
+\dontrun{
+M = method()
+predicted.name(M)
+}
+
+M = method()
+predicted.name(M) = 'example'
+
 }

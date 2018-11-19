@@ -8,7 +8,6 @@
 \alias{stato.name,stato-method}
 \alias{stato.definition,stato-method}
 \alias{stato.summary,stato-method}
-\alias{stato.pdf,stato-method}
 \title{stato_class}
 \usage{
 \S4method{stato.id}{stato}(obj)
@@ -18,18 +17,18 @@
 \S4method{stato.definition}{stato}(obj)
 
 \S4method{stato.summary}{stato}(obj)
-
-\S4method{stato.pdf}{stato}(obj, outpath, filename,
-  outformat = "html_document")
 }
 \arguments{
 \item{obj}{stato_class object}
+}
+\value{
+stato id
 
-\item{outpath}{file path}
+stato name
 
-\item{filename}{file name}
+stato definition
 
-\item{outformat}{format of report ("pdf" or "html")}
+summary of the stato object
 }
 \description{
 A base class in the \pkg{struct} package. Provides several fundamental methods for the STATO ontology and should not be called directly.
@@ -43,10 +42,24 @@ A base class in the \pkg{struct} package. Provides several fundamental methods f
 \item \code{stato.definition}: get the STATO definition for an object
 
 \item \code{stato.summary}: get the STATO definition for an object
-
-\item \code{stato.pdf}: create a pdf of the basic use for this object
 }}
 
 \examples{
 S = stato()
+\dontrun{
+M = model.stato()
+stato.id(M)
+}
+\dontrun{
+M = model()
+stato.name(M)
+}
+\dontrun{
+M = model()
+stato.definition(M)
+}
+\dontrun{
+M = model()
+stato.summary(M,'example')
+}
 }

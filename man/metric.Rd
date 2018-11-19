@@ -29,4 +29,3 @@ calculate a metric
 
 get the value for a metric
 }
-\concept{metric functions}

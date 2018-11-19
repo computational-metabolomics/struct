@@ -17,8 +17,3 @@ predicted.name(M) <- value
 \description{
 get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.seq
 }
-\seealso{
-Other model functions: \code{\link{model.predict}},
-  \code{\link{model.train}}, \code{\link{predicted}}
-}
-\concept{model functions}

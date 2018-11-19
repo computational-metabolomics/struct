@@ -10,6 +10,13 @@
 \arguments{
 \item{object}{a struct_class object}
 }
+\value{
+brief description of the struct object
+}
 \description{
 print a brief summary of a struct object
+}
+\examples{
+S = struct_class()
+show(S)
 }

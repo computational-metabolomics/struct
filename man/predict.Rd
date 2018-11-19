@@ -14,8 +14,3 @@ model.predict(M, D)
 \description{
 Apply a model using the input dataset. Requires that the model is trained first.
 }
-\seealso{
-Other model functions: \code{\link{model.train}},
-  \code{\link{predicted.name}}, \code{\link{predicted}}
-}
-\concept{model functions}

@@ -54,7 +54,7 @@ not intended to be called directly, this class should be inherited to provide fu
 \itemize{
 \item \code{run}: run a model/model.seq mutliple times for the input data
 
-\item \code{evaluate}: evaluate the performance of a model/model.seq  using the input metric
+\item \code{evaluate}: evaluate the performance of a model/model.seq    using the input metric
 
 \item \code{models}: get the model/model.seq for an iterator object
 

@@ -17,4 +17,3 @@ models(ML) <- value
 \description{
 Returns the list of models in a model.seq object
 }
-\concept{model.seq functions}

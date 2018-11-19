@@ -48,6 +48,29 @@
 
 \item{x}{object of class output_class}
 }
+\value{
+the output id as an (e.g entity) object
+
+the modified object
+
+logical
+
+character list of valid output ids for object M
+
+(long) name of output
+
+named list of output ids and current values
+
+named list of output ids and current values
+
+value of output
+
+value of output
+
+modified model object
+
+modified model object
+}
 \description{
 A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting outputs etc and should not be called directly.
 }
@@ -76,3 +99,49 @@ A base class in the \pkg{struct} package. Provides several fundamental methods f
 \item \code{$<-}: set the value of an output by id
 }}
 
+\examples{
+\dontrun{
+M = model()
+obj = output.obj(M,'example')
+}
+\dontrun{
+M = model()
+output.obj(M,'example') = entity()
+}
+\dontrun{
+M = model()
+is.output(M,'example') # FALSE
+}
+\dontrun{
+M = model()
+output.ids(M)
+}
+\dontrun{
+M = model()
+output.name(M,'example')
+}
+\dontrun{
+M = model()
+L = output.list(M)
+}
+\dontrun{
+M = model()
+L = output.list(M)
+}
+\dontrun{
+M = model()
+L = output.value(M,'example')
+}
+\dontrun{
+M = model()
+v = M$example
+}
+\dontrun{
+M = model()
+output.value(M,'example') = 10
+}
+\dontrun{
+M = model()
+M$example = 10
+}
+}

@@ -17,8 +17,3 @@ dataset.sample_meta(obj) <- value
 \description{
 get/set sample meta data for a dataset object
 }
-\seealso{
-Other dataset functions: \code{\link{dataset.data}},
-  \code{\link{dataset.variable_meta}}
-}
-\concept{dataset functions}

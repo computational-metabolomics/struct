@@ -16,7 +16,7 @@
 sets the value for an enum object
 }
 \examples{
-E = enum(list='hello world')
+E = enum(list=c('hello','world'))
 value(E) = 'hello' # value MUST be in the enum list
 
 }

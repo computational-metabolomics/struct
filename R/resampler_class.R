@@ -7,9 +7,9 @@
 #' R = resampler()
 
 resampler<-setClass(
-  "resampler",
-  contains = c('iterator'),
-  slots=c(models='model_OR_iterator')
+    "resampler",
+    contains = c('iterator'),
+    slots=c(models='model_OR_iterator')
 )
 
 

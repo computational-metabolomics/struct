@@ -19,10 +19,3 @@ param.obj(obj, name) <- value
 \description{
 get/set parameters for an object
 }
-\seealso{
-Other parameter functions: \code{\link{is.param}},
-  \code{\link{output.name}}, \code{\link{param.ids}},
-  \code{\link{param.list}}, \code{\link{param.name}},
-  \code{\link{param.value}}
-}
-\concept{parameter functions}

@@ -17,8 +17,3 @@ result.name(M) <- value
 \description{
 get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.seq
 }
-\seealso{
-Other iterator functions: \code{\link{result}},
-  \code{\link{run}}
-}
-\concept{iterator functions}

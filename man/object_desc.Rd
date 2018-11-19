@@ -15,6 +15,17 @@
 
 \item{value}{value}
 }
+\value{
+description assigned to the struct object
+
+modified struct object
+}
 \description{
 get the description of an object
+}
+\examples{
+S = struct_class()
+description(S)
+S = struct_class()
+description(S) = 'this is an example'
 }
