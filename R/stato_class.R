@@ -2,6 +2,10 @@
 #'
 #' A base class in the \pkg{struct} package. Provides several fundamental methods for the STATO ontology and should not be called directly.
 #' @export stato
+#' @param obj stato_class object
+#' @param outpath file path
+#' @param filename file name
+#' @param outformat format of report ("pdf" or "html")
 #' @include generics.R
 #' @importFrom ontologyIndex get_ontology
 

@@ -7,6 +7,8 @@
 #' @param ML a model sequence object
 #' @param M a model object
 #' @param value value
+#' @param e1 an iterator object
+#' @param e2 an iterator or a model object
 #' @include generics.R  parameter_class.R output_class.R model_class.R metric_class.R model_list_class.R
 
 iterator<-setClass(
@@ -94,9 +96,7 @@ setMethod(f='result.name',
           }
 )
 
-#' combine an interator with other model or interator objects
-#'
-#' makes the second input a child of the first input (parent), so that it can be executed multiple times by the parent iterator
+#' @describeIn iterator combine an interator with other model or interator objects
 #' @export
 setMethod(f='*',
           signature=c(e1='iterator',e2='model_OR_iterator'),

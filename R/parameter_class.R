@@ -2,6 +2,10 @@
 #'
 #' A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting parameters etc and should not be called directly.
 #' @export parameter_class
+#' @param obj parameter_class object
+#' @param name id of parameter
+#' @param x parameter_class object
+#' @param value value
 #' @include generics.R struct_class.R
 #'
 parameter_class<-setClass(

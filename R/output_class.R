@@ -2,6 +2,10 @@
 #'
 #' A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting outputs etc and should not be called directly.
 #' @export outputs_class
+#' @param obj a struct object with outputs
+#' @param name output id
+#' @param x object of class output_class
+#' @param value value
 #' @include generics.R struct_class.R entity_class.R
 #'
 outputs_class<-setClass(

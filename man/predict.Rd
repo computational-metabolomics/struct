@@ -7,9 +7,9 @@
 model.predict(M, D)
 }
 \arguments{
-\item{model}{a model object}
+\item{M}{a model object}
 
-\item{data}{a dataset object}
+\item{D}{a dataset object}
 }
 \description{
 Apply a model using the input dataset. Requires that the model is trained first.

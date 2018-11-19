@@ -39,6 +39,7 @@ setGeneric("param.ids",function(obj)standardGeneric("param.ids"))
 #'
 #' return a the name for a paramater, if available
 #' @param obj a model or iterator object from the *struct* class
+#' @param name id of parameter
 #' @return name of parameter
 #' @family parameter functions
 #' @export
@@ -64,6 +65,7 @@ setGeneric("param.list<-",function(obj,value)standardGeneric("param.list<-"))
 #' get/set the values for a parameter.
 #' @param obj a model or iterator object from the *struct* class
 #' @param name of a parameter
+#' @param value value
 #' @return value of output
 #' @family parameter functions
 #' @rdname param.value
@@ -72,7 +74,7 @@ setGeneric("param.value",function(obj,name)standardGeneric("param.value"))
 
 #' @rdname param.value
 #' @export
-setGeneric("param.value<-",function(obj,name,idx,value)standardGeneric("param.value<-"))
+setGeneric("param.value<-",function(obj,name,value)standardGeneric("param.value<-"))
 
 #####################################
 ###### output class generics #####
@@ -132,7 +134,7 @@ setGeneric("is.output",function(obj,name)standardGeneric("is.output"))
 #'
 #' return a list of valid parameter names for an object
 #' @param obj a model or iterator object from the *struct* class
-#' @param name
+#' @param name id of output
 #' @return list of parameter names
 #' @family parameter functions
 #' @export
@@ -240,8 +242,8 @@ setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
 #' Train a model
 #'
 #' Trains a model using the input dataset
-#' @param model a model object
-#' @param data a dataset object
+#' @param M a model object
+#' @param D a dataset object
 #' @family model functions
 #' @rdname train
 #' @export
@@ -250,8 +252,8 @@ setGeneric("model.train",function(M,D)standardGeneric("model.train"))
 #' Apply a (trained) model to a dataset D to get a prediction
 #'
 #' Apply a model using the input dataset. Requires that the model is trained first.
-#' @param model a model object
-#' @param data a dataset object
+#' @param M a model object
+#' @param D a dataset object
 #' @family model functions
 #' @rdname predict
 #' @export
@@ -275,7 +277,7 @@ setGeneric("predicted.name<-",function(M,value)standardGeneric("predicted.name<-
 #' prediction output for a model
 #'
 #' returns the prediction output for a model. This is supplied as input to the next model when used in a model.seq
-#' @param model a model object
+#' @param M a model object
 #' @family model functions
 #' @rdname predicted
 #' @export
@@ -420,6 +422,10 @@ setGeneric("value<-",function(obj,value)standardGeneric("value<-"))
 #' get the stato.id for an object
 #'
 #' @return id the stato id
+#' @param obj stato_class object
+#' @param outpath folder path
+#' @param filename file name
+#' @param outformat output format ("pdf" or "html")
 #' @rdname stato
 #' @family stato functions
 #' @export

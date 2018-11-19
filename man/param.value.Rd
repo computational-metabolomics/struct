@@ -7,12 +7,14 @@
 \usage{
 param.value(obj, name)
 
-param.value(obj, name, idx) <- value
+param.value(obj, name) <- value
 }
 \arguments{
 \item{obj}{a model or iterator object from the *struct* class}
 
 \item{name}{of a parameter}
+
+\item{value}{value}
 }
 \value{
 value of output

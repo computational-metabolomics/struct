@@ -39,6 +39,15 @@
 
 \S4method{$}{parameter_class}(x, name) <- value
 }
+\arguments{
+\item{obj}{parameter_class object}
+
+\item{name}{id of parameter}
+
+\item{value}{value}
+
+\item{x}{parameter_class object}
+}
 \description{
 A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting parameters etc and should not be called directly.
 }

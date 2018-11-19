@@ -12,7 +12,9 @@ output.value(obj, name) <- value
 \arguments{
 \item{obj}{a model or iterator object from the *struct* class}
 
-\item{name}{of an output}
+\item{name}{name of an output}
+
+\item{value}{value}
 }
 \value{
 value of output

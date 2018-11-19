@@ -39,6 +39,15 @@
 
 \S4method{$}{outputs_class}(x, name) <- value
 }
+\arguments{
+\item{obj}{a struct object with outputs}
+
+\item{name}{output id}
+
+\item{value}{value}
+
+\item{x}{object of class output_class}
+}
 \description{
 A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting outputs etc and should not be called directly.
 }

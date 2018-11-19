@@ -9,8 +9,6 @@
 }
 \arguments{
 \item{obj}{a struct object}
-
-\item{value}{value}
 }
 \description{
 get the type of an object

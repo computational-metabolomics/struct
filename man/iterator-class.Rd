@@ -11,6 +11,7 @@
 \alias{models<-,iterator,model_OR_iterator-method}
 \alias{result,iterator-method}
 \alias{result.name,iterator-method}
+\alias{*,iterator,model_OR_iterator-method}
 \title{iterator class}
 \usage{
 \S4method{run}{iterator,dataset,metric}(I, D, MET = NULL)
@@ -26,6 +27,8 @@
 \S4method{result}{iterator}(M)
 
 \S4method{result.name}{iterator}(M)
+
+\S4method{*}{iterator,model_OR_iterator}(e1, e2)
 }
 \arguments{
 \item{I}{an iterator object}
@@ -39,6 +42,10 @@
 \item{value}{value}
 
 \item{M}{a model object}
+
+\item{e1}{an iterator object}
+
+\item{e2}{an iterator or a model object}
 }
 \description{
 A class for iterative approaches that ivolve the training/prediction of a model multiple times.
@@ -59,5 +66,7 @@ not intended to be called directly, this class should be inherited to provide fu
 \item \code{result}: get prediction output from iterator
 
 \item \code{result.name}: get prediction output name for iterator
+
+\item \code{*}: combine an interator with other model or interator objects
 }}
 

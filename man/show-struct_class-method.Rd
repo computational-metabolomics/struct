@@ -7,6 +7,9 @@
 \usage{
 \S4method{show}{struct_class}(object)
 }
+\arguments{
+\item{object}{a struct_class object}
+}
 \description{
 print a brief summary of a struct object
 }

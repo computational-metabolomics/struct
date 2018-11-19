@@ -70,7 +70,6 @@ setMethod(f="description<-",
 #' get the type of an object
 #' @export
 #' @param obj a struct object
-#' @param value value
 setMethod(f="type",
           signature="struct_class",
           definition=function(obj)
@@ -135,6 +134,7 @@ setMethod(f="chart.names",
 #'
 #' print a brief summary of a struct object
 #' @export
+#' @param object a struct_class object
 setMethod(f="show",
           signature=c("struct_class"),
           definition=function(object)

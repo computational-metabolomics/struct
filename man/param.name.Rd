@@ -8,6 +8,8 @@ param.name(obj, name)
 }
 \arguments{
 \item{obj}{a model or iterator object from the *struct* class}
+
+\item{name}{id of parameter}
 }
 \value{
 name of parameter

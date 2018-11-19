@@ -22,6 +22,15 @@
 \S4method{stato.pdf}{stato}(obj, outpath, filename,
   outformat = "html_document")
 }
+\arguments{
+\item{obj}{stato_class object}
+
+\item{outpath}{file path}
+
+\item{filename}{file name}
+
+\item{outformat}{format of report ("pdf" or "html")}
+}
 \description{
 A base class in the \pkg{struct} package. Provides several fundamental methods for the STATO ontology and should not be called directly.
 }
