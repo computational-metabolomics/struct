@@ -9,3 +9,6 @@
 A special class of iterator for selecting optimal parameter values
 not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
 }
+\examples{
+OPT = optimiser()
+}

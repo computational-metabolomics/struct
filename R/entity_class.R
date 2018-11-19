@@ -6,6 +6,9 @@
 #' @param value value of the entity
 #' @param obj entity object
 #' @include generics.R struct_class.R
+#' @examples
+#' E = entity()
+#'
 entity<-setClass(
   "entity",
   slots=c('value'),
@@ -17,6 +20,9 @@ entity<-setClass(
 
 #' @describeIn entity get the value for an entity
 #' @export
+#' @examples
+#' E = entity()
+#' v = value(E)
 setMethod(f="value",
           signature=c("entity"),
           definition=function(MET)
@@ -27,6 +33,9 @@ setMethod(f="value",
 
 #' @describeIn entity set the  value for an entity
 #' @export
+#' @examples
+#' E = entity()
+#' value(E) = 10
 setMethod(f="value<-",
           signature=c("entity"),
           definition=function(obj,value)

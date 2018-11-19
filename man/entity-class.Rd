@@ -29,3 +29,11 @@ A base class in the \pkg{struct} package. should not be called directly.
 \item \code{value<-}: set the  value for an entity
 }}
 
+\examples{
+E = entity()
+
+E = entity()
+v = value(E)
+E = entity()
+value(E) = 10
+}

@@ -21,3 +21,4 @@ get/set the prediction output for a model. This determines which outputs from th
 Other iterator functions: \code{\link{result}},
   \code{\link{run}}
 }
+\concept{iterator functions}

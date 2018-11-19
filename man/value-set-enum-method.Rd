@@ -15,3 +15,8 @@
 \description{
 sets the value for an enum object
 }
+\examples{
+E = enum(list='hello world')
+value(E) = 'hello' # value MUST be in the enum list
+
+}

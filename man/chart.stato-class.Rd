@@ -8,3 +8,6 @@
 \description{
 A base class in the \pkg{struct} package for creating chart objects with STATO ids
 }
+\examples{
+obj = chart.stato() # create chart object
+}

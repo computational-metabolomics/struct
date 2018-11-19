@@ -28,3 +28,4 @@ Other iterator functions: \code{\link{result.name}},
 Other iterator functions: \code{\link{result.name}},
   \code{\link{result}}
 }
+\concept{iterator functions}

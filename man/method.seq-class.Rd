@@ -81,3 +81,7 @@ A class for (ordered) lists of methods
 \item \code{+}: create a method sequence by combining two methods.
 }}
 
+\examples{
+MS = method.seq()
+MS = method() + method()
+}

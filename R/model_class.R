@@ -8,7 +8,8 @@
 #' @param D a dataset object
 #' @param value value
 #' @include generics.R  parameter_class.R output_class.R dataset_class.R
-
+#' @examples
+#' M = model()
 
 model<-setClass(
   "model",

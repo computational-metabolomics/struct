@@ -2,7 +2,9 @@
 #'
 #' A class for resampling methods such as cross-validation. not intended to be called directly.
 #' @include generics.R iterator_class.R
-#' @export
+#' @export resampler
+#' @examples
+#' R = resampler()
 
 resampler<-setClass(
   "resampler",

@@ -47,3 +47,6 @@ A base class in the \pkg{struct} package. Provides several fundamental methods f
 \item \code{stato.pdf}: create a pdf of the basic use for this object
 }}
 
+\examples{
+S = stato()
+}

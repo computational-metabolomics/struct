@@ -13,6 +13,9 @@
 #' @param value value
 #' @export method.seq
 #' @include generics.R  parameter_class.R output_class.R struct_class.R method_class.R method_stato_class.R
+#' @examples
+#' MS = method.seq()
+#' MS = method() + method()
 
 method.seq<-setClass(
   "method.seq",

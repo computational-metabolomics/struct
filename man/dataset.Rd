@@ -47,8 +47,6 @@
 \description{
 an object for holding raw data and associated meta data
 
-get the data matrix from a dataset object
-
 Returns the sample meta data of a dataset object
 
 Sets the sample meta data of a dataset object
@@ -73,3 +71,38 @@ print a brief summary of the contents of a dataset object. Note that this is dif
 \item{\code{variable.meta}}{(data.frame) data frame of variable meta data}
 }}
 
+\examples{
+D = dataset()
+
+D = dataset()
+X = dataset.data(D)
+
+D = dataset()
+X = D$data
+S = D$sample_meta
+V = D$variable_meta
+
+D = dataset()
+X = dataset.data(D) = iris[,1:4]
+
+D = dataset()
+D$data = iris[,1:4]
+D$sample_meta = iris[,5,drop=FALSE]
+D$variable_meta=data.frame(sample_id = rownames(iris))
+
+D = dataset()
+S = dataset.sample_meta(D)
+
+D = dataset()
+dataset.sample_meta(D) = iris[,5,drop = FALSE]
+D = dataset()
+V = dataset.variable_meta(D)
+D = dataset()
+df = data.frame(sample_id = rownames(iris))
+dataset.variable_meta(D)= df
+
+D = dataset(data = iris[,1:4],
+            sample_meta = iris[,5,drop=FALSE])
+summary(D)
+
+}

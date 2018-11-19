@@ -7,7 +7,7 @@
 #' @param x object of class output_class
 #' @param value value
 #' @include generics.R struct_class.R entity_class.R
-#'
+
 outputs_class<-setClass(
   "outputs_class")
 

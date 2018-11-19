@@ -31,9 +31,9 @@ Collate:
     'optimiser_class.R'
     'resampler_class.R'
     'struct.R'
-RoxygenNote: 6.1.0.9000
+RoxygenNote: 6.1.1
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
 Imports: methods, ontologyIndex, crayon
-biocViews: 
+biocViews: BasicWorkflow

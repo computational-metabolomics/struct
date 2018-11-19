@@ -40,3 +40,7 @@ not intended to be called directly, this class should be inherited to provide fu
 \item \code{predicted.name<-}: set prediction output from method
 }}
 
+\examples{
+M = method()
+
+}

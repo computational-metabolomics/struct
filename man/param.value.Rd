@@ -28,3 +28,4 @@ Other parameter functions: \code{\link{is.param}},
   \code{\link{param.list}}, \code{\link{param.name}},
   \code{\link{param.obj}}
 }
+\concept{parameter functions}

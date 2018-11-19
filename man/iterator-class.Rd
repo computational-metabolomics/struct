@@ -8,7 +8,6 @@
 \alias{evaluate,iterator,metric-method}
 \alias{models,iterator-method}
 \alias{models<-,iterator,model_OR_iterator-method}
-\alias{models<-,iterator,model_OR_iterator-method}
 \alias{result,iterator-method}
 \alias{result.name,iterator-method}
 \alias{*,iterator,model_OR_iterator-method}
@@ -48,7 +47,7 @@
 \item{e2}{an iterator or a model object}
 }
 \description{
-A class for iterative approaches that ivolve the training/prediction of a model multiple times.
+A class for iterative approaches that involve the training/prediction of a model multiple times.
 not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
 }
 \section{Methods (by generic)}{
@@ -70,3 +69,12 @@ not intended to be called directly, this class should be inherited to provide fu
 \item \code{*}: combine an interator with other model or interator objects
 }}
 
+\examples{
+I = iterator()
+I = iterator() * model()
+D = dataset()
+MET = metric()
+I = iterator() * model()
+I = run(I,D,MET)
+
+}

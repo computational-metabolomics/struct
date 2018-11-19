@@ -8,3 +8,6 @@
 \description{
 A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting parameters etc and should not be called directly.
 }
+\examples{
+S = struct_class()
+}

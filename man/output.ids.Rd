@@ -20,3 +20,4 @@ Other output functions: \code{\link{is.output}},
   \code{\link{output.list}}, \code{\link{output.obj}},
   \code{\link{output.value}}
 }
+\concept{output functions}

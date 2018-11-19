@@ -19,3 +19,4 @@ plot a chart for an object
 \seealso{
 Other chart functions: \code{\link{chart.names}}
 }
+\concept{chart functions}

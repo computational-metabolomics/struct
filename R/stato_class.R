@@ -8,6 +8,8 @@
 #' @param outformat format of report ("pdf" or "html")
 #' @include generics.R
 #' @importFrom ontologyIndex get_ontology
+#' @examples
+#' S = stato()
 
 stato<-setClass(
   "stato",

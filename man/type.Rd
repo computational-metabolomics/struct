@@ -30,3 +30,4 @@ get/set type for an object
 Other struct_class functions: \code{\link{description}},
   \code{\link{name}}
 }
+\concept{struct_class functions}

@@ -14,6 +14,8 @@
 #' @param value a data.frame
 #' @rdname dataset
 #' @include generics.R struct_class.R stato_class.R chart_class.R chart_stato.R
+#' @examples
+#' D = dataset()
 #'
 dataset<-setClass(
   "dataset",
@@ -33,6 +35,10 @@ dataset<-setClass(
 #' get the data matrix from a dataset object
 #'
 #' @export
+#' @examples
+#' D = dataset()
+#' X = dataset.data(D)
+#'
 #' @rdname dataset
 setMethod(f="dataset.data",
           signature=c("dataset"),
@@ -44,6 +50,12 @@ setMethod(f="dataset.data",
 
 #' @rdname dataset
 #' @export
+#' @examples
+#' D = dataset()
+#' X = D$data
+#' S = D$sample_meta
+#' V = D$variable_meta
+#'
 setMethod(f="$",
           signature=c("dataset"),
           definition=function(x,name)
@@ -61,6 +73,10 @@ setMethod(f="$",
 
 #' @export
 #' @rdname dataset
+#' @examples
+#' D = dataset()
+#' X = dataset.data(D) = iris[,1:4]
+#'
 setMethod(f="dataset.data<-",
           signature=c("dataset"),
           definition=function(obj,value)
@@ -72,6 +88,12 @@ setMethod(f="dataset.data<-",
 
 #' @rdname dataset
 #' @export
+#' @examples
+#' D = dataset()
+#' D$data = iris[,1:4]
+#' D$sample_meta = iris[,5,drop=FALSE]
+#' D$variable_meta=data.frame(sample_id = rownames(iris))
+#'
 setMethod(f="$<-",
           signature(x='dataset'),
           definition=function(x,name,value) {
@@ -91,6 +113,10 @@ setMethod(f="$<-",
 #' Returns the sample meta data of a dataset object
 #' @export
 #' @rdname dataset
+#' @examples
+#' D = dataset()
+#' S = dataset.sample_meta(D)
+#'
 setMethod(f="dataset.sample_meta",
           signature=c("dataset"),
           definition=function(obj)
@@ -104,6 +130,9 @@ setMethod(f="dataset.sample_meta",
 #' Sets the sample meta data of a dataset object
 #' @export
 #' @rdname dataset
+#' @examples
+#' D = dataset()
+#' dataset.sample_meta(D) = iris[,5,drop = FALSE]
 setMethod(f="dataset.sample_meta<-",
           signature=c("dataset"),
           definition=function(obj,value)
@@ -118,6 +147,9 @@ setMethod(f="dataset.sample_meta<-",
 #' Returns the variable metadata of a dataset object
 #' @export
 #' @rdname dataset
+#' @examples
+#' D = dataset()
+#' V = dataset.variable_meta(D)
 setMethod(f="dataset.variable_meta",
           signature=c("dataset"),
           definition=function(obj)
@@ -131,6 +163,11 @@ setMethod(f="dataset.variable_meta",
 #' Sets the variable metadata of a dataset object
 #' @export
 #' @rdname dataset
+#' @examples
+#' D = dataset()
+#' df = data.frame(sample_id = rownames(iris))
+#' dataset.variable_meta(D)= df
+#'
 setMethod(f="dataset.variable_meta<-",
           signature=c("dataset"),
           definition=function(obj,value) {
@@ -145,6 +182,11 @@ setMethod(f="dataset.variable_meta<-",
 #' @export
 #' @import crayon
 #' @rdname dataset
+#' @examples
+#' D = dataset(data = iris[,1:4],
+#'             sample_meta = iris[,5,drop=FALSE])
+#' summary(D)
+#'
 setMethod(f="summary",
           signature=c("dataset"),
           definition=function(object) {

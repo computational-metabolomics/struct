@@ -16,3 +16,4 @@ returns the prediction output for a model. This is supplied as input to the next
 Other model functions: \code{\link{model.predict}},
   \code{\link{model.train}}, \code{\link{predicted.name}}
 }
+\concept{model functions}

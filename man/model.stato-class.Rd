@@ -8,3 +8,6 @@
 \description{
 A base class in the \pkg{struct} package. should not be called directly.
 }
+\examples{
+M = model.stato()
+}

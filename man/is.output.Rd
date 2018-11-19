@@ -22,3 +22,4 @@ Other output functions: \code{\link{output.ids}},
   \code{\link{output.list}}, \code{\link{output.obj}},
   \code{\link{output.value}}
 }
+\concept{output functions}

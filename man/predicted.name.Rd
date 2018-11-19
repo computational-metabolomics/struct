@@ -21,3 +21,4 @@ get/set the prediction output for a model. This determines which outputs from th
 Other model functions: \code{\link{model.predict}},
   \code{\link{model.train}}, \code{\link{predicted}}
 }
+\concept{model functions}

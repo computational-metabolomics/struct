@@ -23,3 +23,4 @@ Other parameter functions: \code{\link{is.param}},
   \code{\link{param.list}}, \code{\link{param.obj}},
   \code{\link{param.value}}
 }
+\concept{parameter functions}

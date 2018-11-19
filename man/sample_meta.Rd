@@ -21,3 +21,4 @@ get/set sample meta data for a dataset object
 Other dataset functions: \code{\link{dataset.data}},
   \code{\link{dataset.variable_meta}}
 }
+\concept{dataset functions}

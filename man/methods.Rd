@@ -17,3 +17,4 @@ method.steps(ML) <- value
 \description{
 Returns the list of method in a method.seq object
 }
+\concept{method.seq functions}

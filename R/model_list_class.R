@@ -13,6 +13,9 @@
 #' @param e2 a model or model.seq object
 #' @param value value
 #' @include generics.R  parameter_class.R output_class.R struct_class.R model_class.R model_stato_class.R
+#' @examples
+#' MS = model.seq()
+#' MS = model() + model()
 
 model.seq<-setClass(
   "model.seq",

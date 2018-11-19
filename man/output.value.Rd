@@ -27,3 +27,4 @@ Other output functions: \code{\link{is.output}},
   \code{\link{output.ids}}, \code{\link{output.list}},
   \code{\link{output.obj}}
 }
+\concept{output functions}

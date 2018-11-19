@@ -86,3 +86,7 @@ A class for (ordered) lists of models
 \item \code{+}: combine two models into a sequence
 }}
 
+\examples{
+MS = model.seq()
+MS = model() + model()
+}

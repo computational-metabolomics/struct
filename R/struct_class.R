@@ -4,6 +4,8 @@
 #' @export struct_class
 #' @import methods
 #' @include generics.R
+#' @examples
+#' S = struct_class()
 
 struct_class<-setClass(
   "struct_class",

@@ -35,7 +35,8 @@
 
 \S4method{$}{parameter_class}(x, name)
 
-\S4method{param.value}{parameter_class,character,missing}(obj, name) <- value
+\S4method{param.value}{parameter_class,character,missing}(obj,
+  name) <- value
 
 \S4method{$}{parameter_class}(x, name) <- value
 }

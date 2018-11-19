@@ -1,6 +1,6 @@
 #' iterator class
 #'
-#' A class for iterative approaches that ivolve the training/prediction of a model multiple times.
+#' A class for iterative approaches that involve the training/prediction of a model multiple times.
 #' not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
 #' @export iterator
 #' @inheritParams run
@@ -10,6 +10,9 @@
 #' @param e1 an iterator object
 #' @param e2 an iterator or a model object
 #' @include generics.R  parameter_class.R output_class.R model_class.R metric_class.R model_list_class.R
+#' @examples
+#' I = iterator()
+#' I = iterator() * model()
 
 iterator<-setClass(
   "iterator",
@@ -22,11 +25,17 @@ iterator<-setClass(
 
 #' @describeIn iterator run a model/model.seq mutliple times for the input data
 #' @export
+#' @examples
+#' D = dataset()
+#' MET = metric()
+#' I = iterator() * model()
+#' I = run(I,D,MET)
+#'
 setMethod(f="run",
           signature=c("iterator","dataset",'metric'),
           definition=function(I,D,MET=NULL)
           {
-            stop('the base iterator function was called, not the one defined for your specific iterator')
+            warning('the base iterator function was called, not the one defined for your specific iterator')
             return(I)
           }
 )

@@ -32,3 +32,6 @@ Not intended to be called directly, this class should be inherited to provide fu
 \item \code{value}: get the caluclated value for a metric
 }}
 
+\examples{
+MET = metric()
+}

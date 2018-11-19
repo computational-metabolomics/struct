@@ -7,6 +7,9 @@
 #' @param M a model object
 #' @param D a dataset object
 #' @param value value
+#' @examples
+#' M = method()
+#'
 method<-setClass(
   "method",
   contains = c('struct_class','parameter_class','outputs_class'),

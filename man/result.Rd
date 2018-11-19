@@ -16,3 +16,4 @@ returns the results of an iterator. This is used to control model flow.
 Other iterator functions: \code{\link{result.name}},
   \code{\link{run}}
 }
+\concept{iterator functions}
