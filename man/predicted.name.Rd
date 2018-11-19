@@ -2,9 +2,12 @@
 % Please edit documentation in R/generics.R
 \name{predicted.name}
 \alias{predicted.name}
+\alias{predicted.name<-}
 \title{get/set output name as prediction output for a model}
 \usage{
 predicted.name(M)
+
+predicted.name(M) <- value
 }
 \arguments{
 \item{M}{a model object}

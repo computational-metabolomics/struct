@@ -4,7 +4,6 @@
 #' @export outputs_class
 #' @include generics.R struct_class.R entity_class.R
 #'
-
 outputs_class<-setClass(
   "outputs_class")
 
@@ -25,6 +24,7 @@ setMethod(f="initialize",
           }
 )
 
+#' @describeIn outputs_class get an output as an object (if appropriate)
 #' @export
 setMethod(f="output.obj",
           signature=c("outputs_class","character"),
@@ -35,6 +35,7 @@ setMethod(f="output.obj",
           }
 )
 
+#' @describeIn outputs_class set the value of an output
 #' @export
 setMethod(f="output.obj<-",
           signature=c("outputs_class","character"),
@@ -46,6 +47,7 @@ setMethod(f="output.obj<-",
           }
 )
 
+#' @describeIn outputs_class check if a name is a valid output id for an object
 #' @export
 setMethod(f="is.output",
           signature=c("outputs_class"),
@@ -59,6 +61,7 @@ setMethod(f="is.output",
           }
 )
 
+#' @describeIn outputs_class list the valid output ids for an object
 #' @export
 setMethod(f="output.ids",
           signature=c("outputs_class"),
@@ -73,6 +76,7 @@ setMethod(f="output.ids",
           }
 )
 
+#' @describeIn outputs_class get the (long) name of an output id
 #' @export
 setMethod(f="output.name",
           signature=c("outputs_class",'character'),
@@ -93,7 +97,8 @@ setMethod(f="output.name",
           }
 )
 
-#'@export
+#' @describeIn outputs_class get the output values of an object as a named list
+#' @export
 setMethod(f='output.list',
           signature=c('outputs_class'),
           definition=function(obj)
@@ -102,13 +107,14 @@ setMethod(f='output.list',
             names=output.ids(obj)
             for (i in 1:length(names))
             {
-              L[[names[[i]]]]=output(obj,names[[i]])
+              L[[names[[i]]]]=output.value(obj,names[[i]])
             }
             return(L)
           }
 )
 
-#'@export
+#' @describeIn outputs_class set the output values of an object using a named list
+#' @export
 setMethod(f='output.list<-',
           signature=c('outputs_class','list'),
           definition=function(obj,value)
@@ -116,12 +122,13 @@ setMethod(f='output.list<-',
             names=name(value)
             for (i in 1:length(names))
             {
-              output(obj,names[[i]])=value[[i]]
+              output.value(obj,names[[i]])=value[[i]]
             }
             return(obj)
           }
 )
 
+#' @describeIn outputs_class get the value of an output by id
 #' @export
 setMethod(f="output.value",
           signature=c("outputs_class","character"),
@@ -144,6 +151,7 @@ setMethod(f="output.value",
           }
 )
 
+#' @describeIn outputs_class get the value of an output by id
 #' @export
 setMethod(f="$",
           signature(x='outputs_class'),
@@ -161,6 +169,7 @@ setMethod(f="$",
           }
 )
 
+#' @describeIn outputs_class set the value of an output by id
 #' @export
 setMethod(f="output.value<-",
           signature=c("outputs_class","character"),
@@ -182,6 +191,7 @@ setMethod(f="output.value<-",
           }
 )
 
+#' @describeIn outputs_class set the value of an output by id
 #' @export
 setMethod(f="$<-",
           signature=c(x="outputs_class"),

@@ -33,6 +33,12 @@
 \item{D}{a dataset object}
 
 \item{MET}{a metric object}
+
+\item{ML}{a model sequence object}
+
+\item{value}{value}
+
+\item{M}{a model object}
 }
 \description{
 A class for iterative approaches that ivolve the training/prediction of a model multiple times.

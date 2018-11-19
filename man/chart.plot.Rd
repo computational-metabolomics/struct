@@ -10,6 +10,8 @@ chart.plot(obj, dobj, ...)
 \item{obj}{a chart object}
 
 \item{dobj}{a struct object}
+
+\item{...}{optional inputs}
 }
 \description{
 plot a chart for an object

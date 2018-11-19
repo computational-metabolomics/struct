@@ -5,7 +5,9 @@
 \alias{dataset-class}
 \alias{dataset}
 \alias{dataset.data,dataset-method}
+\alias{$,dataset-method}
 \alias{dataset.data<-,dataset-method}
+\alias{$<-,dataset-method}
 \alias{dataset.sample_meta,dataset-method}
 \alias{dataset.sample_meta<-,dataset-method}
 \alias{dataset.variable_meta,dataset-method}
@@ -15,7 +17,11 @@
 \usage{
 \S4method{dataset.data}{dataset}(obj)
 
+\S4method{$}{dataset}(x, name)
+
 \S4method{dataset.data}{dataset}(obj) <- value
+
+\S4method{$}{dataset}(x, name) <- value
 
 \S4method{dataset.sample_meta}{dataset}(obj)
 
@@ -29,9 +35,29 @@
 }
 \arguments{
 \item{obj}{a dataset object}
+
+\item{x}{a dataset object}
+
+\item{name}{name of the slot to set (data, sample_meta or variable_meta for dataset objects)}
+
+\item{value}{a data.frame}
+
+\item{object}{a dataset object}
 }
 \description{
 an object for holding raw data and associated meta data
+
+get the data matrix from a dataset object
+
+Returns the sample meta data of a dataset object
+
+Sets the sample meta data of a dataset object
+
+Returns the variable metadata of a dataset object
+
+Sets the variable metadata of a dataset object
+
+print a brief summary of the contents of a dataset object. Note that this is different to the output from show(dataset), which summarieses the dataset object, not the contents..
 }
 \section{Slots}{
 

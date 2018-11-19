@@ -7,9 +7,9 @@
 method.apply(M, D)
 }
 \arguments{
-\item{method}{a model object}
+\item{M}{a model object}
 
-\item{data}{a dataset object}
+\item{D}{a dataset object}
 }
 \description{
 Applies a method to the input dataset

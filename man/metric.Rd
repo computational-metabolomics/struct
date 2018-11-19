@@ -15,9 +15,11 @@ value(obj) <- value
 \arguments{
 \item{MET}{a metric object}
 
-\item{Y}{= sample meta data e.g. of test data}
+\item{...}{variable inputs depending on object}
 
-\item{Yhat}{= predicted meta data after applying model to test data}
+\item{obj}{metric object}
+
+\item{value}{value}
 }
 \value{
 value the calculated value of a metric

@@ -2,9 +2,12 @@
 % Please edit documentation in R/generics.R
 \name{result.name}
 \alias{result.name}
+\alias{result.name<-}
 \title{get/set output name as prediction output for a model}
 \usage{
 result.name(M)
+
+result.name(M) <- value
 }
 \arguments{
 \item{M}{an iterator object}

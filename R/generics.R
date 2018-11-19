@@ -91,7 +91,8 @@ setGeneric("output.ids",function(obj)standardGeneric("output.ids"))
 #'
 #' get/set the values for an output.
 #' @param obj a model or iterator object from the *struct* class
-#' @param name of an output
+#' @param name name of an output
+#' @param value value
 #' @return value of output
 #' @family output functions
 #' @rdname output.value
@@ -131,6 +132,7 @@ setGeneric("is.output",function(obj,name)standardGeneric("is.output"))
 #'
 #' return a list of valid parameter names for an object
 #' @param obj a model or iterator object from the *struct* class
+#' @param name
 #' @return list of parameter names
 #' @family parameter functions
 #' @export
@@ -159,6 +161,7 @@ setGeneric("output.list<-",function(obj,value)standardGeneric("output.list<-"))
 #'
 #' return a list of valid charts for a struct object
 #' @param obj a object from the *struct* package
+#' @param ... optional inputs
 #' @family chart functions
 #' @export
 setGeneric("chart.names",function(obj,...)standardGeneric("chart.names"))
@@ -167,6 +170,7 @@ setGeneric("chart.names",function(obj,...)standardGeneric("chart.names"))
 #'
 #' @param obj a chart object
 #' @param dobj a struct object
+#' @param ... optional inputs
 #' @rdname chart.plot
 #' @family chart functions
 #' @export
@@ -222,8 +226,8 @@ setGeneric("description<-",function(obj,value)standardGeneric("description<-"))
 #' Apply a method
 #'
 #' Applies a method to the input dataset
-#' @param method a model object
-#' @param data a dataset object
+#' @param M a model object
+#' @param D a dataset object
 #' @family method functions
 #' @rdname method.apply
 #' @export
@@ -264,6 +268,8 @@ setGeneric("model.predict",function(M,D)standardGeneric("model.predict"))
 setGeneric("predicted.name",function(M)standardGeneric("predicted.name"))
 
 #' @export
+#' @inheritParams predicted.name
+#' @rdname predicted.name
 setGeneric("predicted.name<-",function(M,value)standardGeneric("predicted.name<-"))
 
 #' prediction output for a model
@@ -368,6 +374,7 @@ setGeneric("evaluate",function(I,MET)standardGeneric("evaluate"))
 setGeneric("result.name",function(M)standardGeneric("result.name"))
 
 #' @export
+#' @rdname result.name
 setGeneric("result.name<-",function(M,value)standardGeneric("result.name<-"))
 
 #' results output for an iterator
@@ -386,8 +393,7 @@ setGeneric("result",function(M)standardGeneric("result"))
 #' calculate a metric
 #'
 #' @param MET a metric object
-#' @param Y = sample meta data e.g. of test data
-#' @param Yhat = predicted meta data after applying model to test data
+#' @param ... variable inputs depending on object
 #' @rdname metric
 #' @family metric functions
 #' @export
@@ -402,6 +408,8 @@ setGeneric("calculate",function(MET,...)standardGeneric("calculate"))
 setGeneric("value",function(MET)standardGeneric("value"))
 
 #' @export
+#' @param obj metric object
+#' @param value value
 #' @rdname metric
 setGeneric("value<-",function(obj,value)standardGeneric("value<-"))
 

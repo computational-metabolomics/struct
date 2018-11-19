@@ -9,6 +9,11 @@ chart<-setClass(
   contains=c('struct_class','parameter_class')
 )
 
+#' plot chart
+#'
+#' plots a chart object
+#' @param obj a chart object
+#' @export
 setMethod(f="chart.plot",
           signature="chart",
           definition=function(obj)
@@ -17,12 +22,4 @@ setMethod(f="chart.plot",
           }
 )
 
-#' @export
-setMethod(f="show",
-          signature=c("chart"),
-          definition=function(object)
-          {
-            cat('Name: ', name(object),'\nDescription: ',description(object),'\nType:',type(object))
-          }
-)
 

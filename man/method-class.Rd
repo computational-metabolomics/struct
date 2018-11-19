@@ -18,6 +18,13 @@
 
 \S4method{predicted.name}{method,character}(M) <- value
 }
+\arguments{
+\item{M}{a model object}
+
+\item{D}{a dataset object}
+
+\item{value}{value}
+}
 \description{
 A class for methods that are applied to datasets in a single step e.g. normalisation.
 not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
@@ -30,6 +37,6 @@ not intended to be called directly, this class should be inherited to provide fu
 
 \item \code{predicted.name}: get prediction output name for model
 
-\item \code{predicted.name<-}: set prediction output from model
+\item \code{predicted.name<-}: set prediction output from method
 }}
 

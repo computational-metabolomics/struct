@@ -4,6 +4,9 @@
 #' Also used for preprocessing steps that require application to test sets.
 #' not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
 #' @export model
+#' @param M a model object
+#' @param D a dataset object
+#' @param value value
 #' @include generics.R  parameter_class.R output_class.R dataset_class.R
 
 

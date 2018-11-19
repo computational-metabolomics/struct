@@ -7,6 +7,11 @@
 #' @slot data (data.frame) matrix of data, samples in rows, variables/features in columns.
 #' @slot sample.meta (data.frame) data frame of sample meta data e.g. group membership
 #' @slot variable.meta (data.frame) data frame of variable meta data
+#' @param obj a dataset object
+#' @param object a dataset object
+#' @param x a dataset object
+#' @param name name of the slot to set (data, sample_meta or variable_meta for dataset objects)
+#' @param value a data.frame
 #' @rdname dataset
 #' @include generics.R struct_class.R stato_class.R chart_class.R chart_stato.R
 #'
@@ -25,8 +30,9 @@ dataset<-setClass(
 
 )
 
+#' get the data matrix from a dataset object
+#'
 #' @export
-#' @param obj a dataset object
 #' @rdname dataset
 setMethod(f="dataset.data",
           signature=c("dataset"),
@@ -36,6 +42,7 @@ setMethod(f="dataset.data",
           }
 )
 
+#' @rdname dataset
 #' @export
 setMethod(f="$",
           signature=c("dataset"),
@@ -52,7 +59,6 @@ setMethod(f="$",
           }
 )
 
-
 #' @export
 #' @rdname dataset
 setMethod(f="dataset.data<-",
@@ -64,6 +70,7 @@ setMethod(f="dataset.data<-",
           }
 )
 
+#' @rdname dataset
 #' @export
 setMethod(f="$<-",
           signature(x='dataset'),
@@ -79,6 +86,9 @@ setMethod(f="$<-",
           }
 )
 
+#' get the sample_meta for a dataset object
+#'
+#' Returns the sample meta data of a dataset object
 #' @export
 #' @rdname dataset
 setMethod(f="dataset.sample_meta",
@@ -89,6 +99,9 @@ setMethod(f="dataset.sample_meta",
           }
 )
 
+#' set the sample_meta for a dataset object
+#'
+#' Sets the sample meta data of a dataset object
 #' @export
 #' @rdname dataset
 setMethod(f="dataset.sample_meta<-",
@@ -100,6 +113,9 @@ setMethod(f="dataset.sample_meta<-",
           }
 )
 
+#' Get the variable_meta for a dataset object
+#'
+#' Returns the variable metadata of a dataset object
 #' @export
 #' @rdname dataset
 setMethod(f="dataset.variable_meta",
@@ -110,6 +126,9 @@ setMethod(f="dataset.variable_meta",
           }
 )
 
+#' Set the variable_meta for a dataset object
+#'
+#' Sets the variable metadata of a dataset object
 #' @export
 #' @rdname dataset
 setMethod(f="dataset.variable_meta<-",
@@ -120,7 +139,11 @@ setMethod(f="dataset.variable_meta<-",
           }
 )
 
+#' dataset summary
+#'
+#' print a brief summary of the contents of a dataset object. Note that this is different to the output from show(dataset), which summarieses the dataset object, not the contents..
 #' @export
+#' @import crayon
 #' @rdname dataset
 setMethod(f="summary",
           signature=c("dataset"),

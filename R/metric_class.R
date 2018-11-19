@@ -3,6 +3,9 @@
 #' A class for metrics to assess performance of e.g. models, iterators.
 #' Not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
 #' @export metric
+#' @param Y the true class labels
+#' @param Yhat the predicted class labels
+#' @param value value
 #' @include generics.R parameter_class.R output_class.R model_class.R iterator_class.R model_list_class.R
 #' @inheritParams calculate
 

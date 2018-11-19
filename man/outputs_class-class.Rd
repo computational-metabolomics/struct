@@ -4,7 +4,66 @@
 \name{outputs_class-class}
 \alias{outputs_class-class}
 \alias{outputs_class}
+\alias{output.obj,outputs_class,character-method}
+\alias{output.obj<-,outputs_class,character-method}
+\alias{is.output,outputs_class-method}
+\alias{output.ids,outputs_class-method}
+\alias{output.name,outputs_class,character-method}
+\alias{output.list,outputs_class-method}
+\alias{output.list<-,outputs_class,list-method}
+\alias{output.value,outputs_class,character-method}
+\alias{$,outputs_class-method}
+\alias{output.value<-,outputs_class,character-method}
+\alias{$<-,outputs_class-method}
 \title{outputs_class}
+\usage{
+\S4method{output.obj}{outputs_class,character}(obj, name)
+
+\S4method{output.obj}{outputs_class,character}(obj, name) <- value
+
+\S4method{is.output}{outputs_class}(obj, name)
+
+\S4method{output.ids}{outputs_class}(obj)
+
+\S4method{output.name}{outputs_class,character}(obj, name)
+
+\S4method{output.list}{outputs_class}(obj)
+
+\S4method{output.list}{outputs_class,list}(obj) <- value
+
+\S4method{output.value}{outputs_class,character}(obj, name)
+
+\S4method{$}{outputs_class}(x, name)
+
+\S4method{output.value}{outputs_class,character}(obj, name) <- value
+
+\S4method{$}{outputs_class}(x, name) <- value
+}
 \description{
 A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting outputs etc and should not be called directly.
 }
+\section{Methods (by generic)}{
+\itemize{
+\item \code{output.obj}: get an output as an object (if appropriate)
+
+\item \code{output.obj<-}: set the value of an output
+
+\item \code{is.output}: check if a name is a valid output id for an object
+
+\item \code{output.ids}: list the valid output ids for an object
+
+\item \code{output.name}: get the (long) name of an output id
+
+\item \code{output.list}: get the output values of an object as a named list
+
+\item \code{output.list<-}: set the output values of an object using a named list
+
+\item \code{output.value}: get the value of an output by id
+
+\item \code{$}: get the value of an output by id
+
+\item \code{output.value<-}: set the value of an output by id
+
+\item \code{$<-}: set the value of an output by id
+}}
+

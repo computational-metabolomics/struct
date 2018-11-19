@@ -15,9 +15,11 @@
 \arguments{
 \item{MET}{a metric object}
 
-\item{Y}{= sample meta data e.g. of test data}
+\item{Y}{the true class labels}
 
-\item{Yhat}{= predicted meta data after applying model to test data}
+\item{Yhat}{the predicted class labels}
+
+\item{value}{value}
 }
 \description{
 A class for metrics to assess performance of e.g. models, iterators.

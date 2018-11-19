@@ -5,15 +5,27 @@
 \alias{entity-class}
 \alias{entity}
 \alias{value,entity-method}
+\alias{value<-,entity-method}
 \title{entity_class}
 \usage{
 \S4method{value}{entity}(MET)
+
+\S4method{value}{entity}(obj) <- value
+}
+\arguments{
+\item{MET}{an entity object}
+
+\item{obj}{entity object}
+
+\item{value}{value of the entity}
 }
 \description{
 A base class in the \pkg{struct} package. should not be called directly.
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{value}: get the calculated value for an entity
+\item \code{value}: get the value for an entity
+
+\item \code{value<-}: set the  value for an entity
 }}
 

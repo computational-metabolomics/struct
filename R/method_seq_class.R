@@ -2,6 +2,15 @@
 #'
 #' A class for (ordered) lists of methods
 #'
+#' @param M a method object
+#' @param D a dataset object
+#' @param x a method.seq object
+#' @param i index
+#' @param ML a method.seq object
+#' @param object a method.seq object
+#' @param e1 a method or method.seq object
+#' @param e2 a method or method.seq object
+#' @param value value
 #' @export method.seq
 #' @include generics.R  parameter_class.R output_class.R struct_class.R method_class.R method_stato_class.R
 
@@ -29,7 +38,7 @@ setMethod(f="method.apply",
           }
 )
 
-
+#' @describeIn method.seq get method object by index in sequence
 #' @export
 setMethod(f= "[",
           signature="method.seq",
@@ -38,6 +47,7 @@ setMethod(f= "[",
           }
 )
 
+#' @describeIn method.seq set method by index in sequence
 #' @export
 setMethod(f= "[<-",
           signature="method.seq",
@@ -49,8 +59,9 @@ setMethod(f= "[<-",
             x@methods[[i]]=value
             return(x)
           }
-)
 
+)
+#' @describeIn method.seq get sequence of methods as list
 #' @export
 setMethod(f='method.steps',
           signature='method.seq',
@@ -59,6 +70,7 @@ setMethod(f='method.steps',
           }
 )
 
+#' @describeIn method.seq set the sequence of methods by inputting a list of methods
 #' @export
 setMethod(f='method.steps<-',
           signature=c('method.seq','list'),
@@ -74,6 +86,7 @@ setMethod(f='method.steps<-',
           }
 )
 
+#' @describeIn method.seq get the length of the method sequence
 #' @export
 setMethod(f='length',
           signature='method.seq',
@@ -82,6 +95,7 @@ setMethod(f='length',
           }
 )
 
+#' @describeIn method.seq print a brief summary of a method.seq object
 #' @export
 setMethod(f='show',
           signature='method.seq',
@@ -101,16 +115,7 @@ setMethod(f='show',
 
 setClassUnion("method_OR_method.seq", c("method", "method.seq","method.stato"))
 
-#' @export
-setMethod(f="param.value<-",
-          signature=c("method.seq","character",'numeric'),
-          definition=function(obj,name,idx,value)
-          {
-            param.value(obj[idx],name)=value
-            return(obj)
-          }
-)
-
+#' @describeIn method.seq add a method object to the (front) of a sequence.
 #' @export
 setMethod("+",
           signature(e1='method',e2='method.seq'),
@@ -122,6 +127,7 @@ setMethod("+",
           }
 )
 
+#' @describeIn method.seq add a method object to the (end) of a sequence.
 #' @export
 setMethod("+",
           signature(e1='method.seq',e2='method'),
@@ -133,6 +139,7 @@ setMethod("+",
           }
 )
 
+#' @describeIn method.seq create a method sequence by combining two methods.
 #' @export
 setMethod("+",
           signature(e1='method',e2='method'),

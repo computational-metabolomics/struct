@@ -21,6 +21,13 @@
 
 \S4method{predicted.name}{model,character}(M) <- value
 }
+\arguments{
+\item{M}{a model object}
+
+\item{D}{a dataset object}
+
+\item{value}{value}
+}
 \description{
 A class for models that can be trained/applied to datasets e.g. PCA, PLS etc.
 Also used for preprocessing steps that require application to test sets.

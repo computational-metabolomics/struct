@@ -2,6 +2,7 @@
 #'
 #' A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting parameters etc and should not be called directly.
 #' @export struct_class
+#' @import methods
 #' @include generics.R
 
 struct_class<-setClass(
@@ -12,7 +13,13 @@ struct_class<-setClass(
           )
 )
 
+#' name
+#'
+#' get the name of an object
+#' @rdname object_name
 #' @export
+#' @param obj a struct object
+#' @param value value
 setMethod(f="name",
           signature="struct_class",
           definition=function(obj)
@@ -21,6 +28,7 @@ setMethod(f="name",
           }
 )
 
+#' @rdname object_name
 #' @export
 setMethod(f="name<-",
           signature=c("struct_class"),
@@ -31,7 +39,13 @@ setMethod(f="name<-",
           }
 )
 
+#' description
+#'
+#' get the description of an object
+#' @rdname object_desc
 #' @export
+#' @param obj a struct object
+#' @param value value
 setMethod(f="description",
           signature="struct_class",
           definition=function(obj)
@@ -40,6 +54,7 @@ setMethod(f="description",
           }
 )
 
+#' @rdname object_desc
 #' @export
 setMethod(f="description<-",
           signature=c("struct_class"),
@@ -50,7 +65,12 @@ setMethod(f="description<-",
           }
 )
 
+#' type
+#'
+#' get the type of an object
 #' @export
+#' @param obj a struct object
+#' @param value value
 setMethod(f="type",
           signature="struct_class",
           definition=function(obj)
@@ -59,6 +79,7 @@ setMethod(f="type",
           }
 )
 
+#' @describeIn type set the type of an object
 #' @export
 setMethod(f="type<-",
           signature=c("struct_class"),
@@ -69,6 +90,11 @@ setMethod(f="type<-",
           }
 )
 
+#' chart names
+#'
+#' print a list of chart objects associated with the input object
+#' @param obj a chart object
+#' @param ret a string indicating whether to return a list of chart names (ret="char") or a list of chart objects (ret="obj"). The default is "char".
 #' @export
 setMethod(f="chart.names",
           signature=c("struct_class"),
@@ -105,6 +131,9 @@ setMethod(f="chart.names",
           }
 )
 
+#' object summary
+#'
+#' print a brief summary of a struct object
 #' @export
 setMethod(f="show",
           signature=c("struct_class"),

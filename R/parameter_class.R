@@ -4,7 +4,6 @@
 #' @export parameter_class
 #' @include generics.R struct_class.R
 #'
-
 parameter_class<-setClass(
   "parameter_class"
 )
@@ -26,6 +25,7 @@ setMethod(f="initialize",
           }
 )
 
+#' @describeIn parameter_class a parameter as an object (if appropriate)
 #' @export
 setMethod(f="param.obj",
           signature=c("parameter_class","character"),
@@ -36,6 +36,7 @@ setMethod(f="param.obj",
           }
 )
 
+#' @describeIn parameter_class set a parameter as an object
 #' @export
 setMethod(f="param.obj<-",
   signature=c("parameter_class","character"),
@@ -46,6 +47,7 @@ setMethod(f="param.obj<-",
   }
 )
 
+#' @describeIn parameter_class check if an id is valid for an object
 #' @export
 setMethod(f="is.param",
           signature=c("parameter_class"),
@@ -59,6 +61,7 @@ setMethod(f="is.param",
           }
 )
 
+#' @describeIn parameter_class list the valid ids for an object
 #' @export
 setMethod(f="param.ids",
           signature=c("parameter_class"),
@@ -73,6 +76,7 @@ setMethod(f="param.ids",
           }
 )
 
+#' @describeIn parameter_class get the (long) name of a parameter by id
 #' @export
 setMethod(f="param.name",
           signature=c("parameter_class",'character'),
@@ -93,6 +97,7 @@ setMethod(f="param.name",
           }
 )
 
+#' @describeIn parameter_class get a named list of parameter values for an object
 #'@export
 setMethod(f='param.list',
           signature=c('parameter_class'),
@@ -108,6 +113,7 @@ setMethod(f='param.list',
           }
 )
 
+#' @describeIn parameter_class set parameter values for an object using a named list
 #'@export
 setMethod(f='param.list<-',
           signature=c('parameter_class','list'),
@@ -122,6 +128,7 @@ setMethod(f='param.list<-',
           }
 )
 
+#' @describeIn parameter_class get the value for a parameter by id
 #' @export
 setMethod(f="param.value",
           signature=c("parameter_class","character"),
@@ -143,6 +150,7 @@ setMethod(f="param.value",
           }
 )
 
+#' @describeIn parameter_class get the value for a parameter by id
 #' @export
 setMethod(f="$",
           signature(x='parameter_class'),
@@ -159,6 +167,7 @@ setMethod(f="$",
           }
 )
 
+#' @describeIn parameter_class set the value for a parameter by id
 #' @export
 setMethod(f="param.value<-",
           signature=c("parameter_class","character","missing"),
@@ -180,6 +189,7 @@ setMethod(f="param.value<-",
           }
 )
 
+#' @describeIn parameter_class set the value for a parameter by id
 #' @export
 setMethod(f="$<-",
           signature=c(x="parameter_class"),
@@ -196,23 +206,4 @@ setMethod(f="$<-",
           }
 )
 
-#' @export
-setMethod(f="param.value<-",
-          signature=c("parameter_class","character",'numeric'),
-          definition=function(obj,name,idx,value)
-          {
-            M=models(obj)
-            #if its an iterator, pass the request trhogh to the models
-            if(is(obj,'iterator') | is(obj,'model.seq'))
-            {
-              param.value(M,name,idx)=value
-            }
-            else # must be model
-            {
-              param.value(M,name)=value
-            }
-            models(obj)=M
-            return(obj)
-          }
-)
 

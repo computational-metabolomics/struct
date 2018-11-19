@@ -6,11 +6,57 @@
 \alias{model.seq}
 \alias{model.train,model.seq,dataset-method}
 \alias{model.predict,model.seq,dataset-method}
+\alias{[,model.seq-method}
+\alias{[<-,model.seq-method}
+\alias{models,model.seq-method}
+\alias{models<-,model.seq,list-method}
+\alias{length,model.seq-method}
+\alias{show,model.seq-method}
+\alias{+,model,model.seq-method}
+\alias{+,model.seq,model-method}
+\alias{+,model,model-method}
 \title{model.seq class}
 \usage{
 \S4method{model.train}{model.seq,dataset}(M, D)
 
 \S4method{model.predict}{model.seq,dataset}(M, D)
+
+\S4method{[}{model.seq}(x, i)
+
+\S4method{[}{model.seq}(x, i) <- value
+
+\S4method{models}{model.seq}(ML)
+
+\S4method{models}{model.seq,list}(ML) <- value
+
+\S4method{length}{model.seq}(x)
+
+\S4method{show}{model.seq}(object)
+
+\S4method{+}{model,model.seq}(e1, e2)
+
+\S4method{+}{model.seq,model}(e1, e2)
+
+\S4method{+}{model,model}(e1, e2)
+}
+\arguments{
+\item{M}{a model object}
+
+\item{D}{a dataset object}
+
+\item{x}{a model.seq object}
+
+\item{i}{index}
+
+\item{value}{value}
+
+\item{ML}{a model.seq object}
+
+\item{object}{a model.seq object}
+
+\item{e1}{a model or model.seq object}
+
+\item{e2}{a model or model.seq object}
 }
 \description{
 A class for (ordered) lists of models
@@ -20,5 +66,23 @@ A class for (ordered) lists of models
 \item \code{model.train}: train the model using input data
 
 \item \code{model.predict}: apply the model to input data
+
+\item \code{[}: get model by index
+
+\item \code{[<-}: set model by index
+
+\item \code{models}: get a list of models in the sequence
+
+\item \code{models<-}: set the models in the sequence
+
+\item \code{length}: get the number of models in the sequence
+
+\item \code{show}: print a summary of the model.seq to the command line
+
+\item \code{+}: add a model to the (front) of a model sequence
+
+\item \code{+}: add a model to the (end) of a model sequence
+
+\item \code{+}: combine two models into a sequence
 }}
 

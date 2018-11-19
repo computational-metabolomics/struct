@@ -3,8 +3,6 @@
 #' A base class in the \pkg{struct} package. should not be called directly.
 #' @export enum
 #' @include generics.R struct_class.R
-
-
 enum<-setClass(
   "enum",
   slots=c('list'),
@@ -13,7 +11,6 @@ enum<-setClass(
                  description='no description provided')
 )
 
-## initialise parameters on object creation
 setMethod(f="initialize",
           signature="enum",
           definition=function(.Object,...)
@@ -31,7 +28,12 @@ setMethod(f="initialize",
           }
 )
 
-
+#' set the value of an enum object
+#'
+#' sets the value for an enum object
+#' @param obj an enum object
+#' @param value a valid value for the enum
+#' @export
 setMethod(f="value<-",
           signature=c("enum"),
           definition=function(obj,value)

@@ -8,6 +8,8 @@ chart.names(obj, ...)
 }
 \arguments{
 \item{obj}{a object from the *struct* package}
+
+\item{...}{optional inputs}
 }
 \description{
 return a list of valid charts for a struct object

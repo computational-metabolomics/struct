@@ -5,9 +5,55 @@
 \alias{method.seq-class}
 \alias{method.seq}
 \alias{method.apply,method.seq,dataset-method}
+\alias{[,method.seq-method}
+\alias{[<-,method.seq-method}
+\alias{method.steps,method.seq-method}
+\alias{method.steps<-,method.seq,list-method}
+\alias{length,method.seq-method}
+\alias{show,method.seq-method}
+\alias{+,method,method.seq-method}
+\alias{+,method.seq,method-method}
+\alias{+,method,method-method}
 \title{method.seq class}
 \usage{
 \S4method{method.apply}{method.seq,dataset}(M, D)
+
+\S4method{[}{method.seq}(x, i)
+
+\S4method{[}{method.seq}(x, i) <- value
+
+\S4method{method.steps}{method.seq}(ML)
+
+\S4method{method.steps}{method.seq,list}(ML) <- value
+
+\S4method{length}{method.seq}(x)
+
+\S4method{show}{method.seq}(object)
+
+\S4method{+}{method,method.seq}(e1, e2)
+
+\S4method{+}{method.seq,method}(e1, e2)
+
+\S4method{+}{method,method}(e1, e2)
+}
+\arguments{
+\item{M}{a method object}
+
+\item{D}{a dataset object}
+
+\item{x}{a method.seq object}
+
+\item{i}{index}
+
+\item{value}{value}
+
+\item{ML}{a method.seq object}
+
+\item{object}{a method.seq object}
+
+\item{e1}{a method or method.seq object}
+
+\item{e2}{a method or method.seq object}
 }
 \description{
 A class for (ordered) lists of methods
@@ -15,5 +61,23 @@ A class for (ordered) lists of methods
 \section{Methods (by generic)}{
 \itemize{
 \item \code{method.apply}: train the method using input data
+
+\item \code{[}: get method object by index in sequence
+
+\item \code{[<-}: set method by index in sequence
+
+\item \code{method.steps}: get sequence of methods as list
+
+\item \code{method.steps<-}: set the sequence of methods by inputting a list of methods
+
+\item \code{length}: get the length of the method sequence
+
+\item \code{show}: print a brief summary of a method.seq object
+
+\item \code{+}: add a method object to the (front) of a sequence.
+
+\item \code{+}: add a method object to the (end) of a sequence.
+
+\item \code{+}: create a method sequence by combining two methods.
 }}
 

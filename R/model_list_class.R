@@ -3,6 +3,15 @@
 #' A class for (ordered) lists of models
 #'
 #' @export model.seq
+#' @param M a model object
+#' @param D a dataset object
+#' @param x a model.seq object
+#' @param i index
+#' @param ML a model.seq object
+#' @param object a model.seq object
+#' @param e1 a model or model.seq object
+#' @param e2 a model or model.seq object
+#' @param value value
 #' @include generics.R  parameter_class.R output_class.R struct_class.R model_class.R model_stato_class.R
 
 model.seq<-setClass(
@@ -46,6 +55,7 @@ setMethod(f="model.predict",
           }
 )
 
+#' @describeIn model.seq get model by index
 #' @export
 setMethod(f= "[",
   signature="model.seq",
@@ -54,6 +64,7 @@ setMethod(f= "[",
   }
 )
 
+#' @describeIn model.seq set model by index
 #' @export
 setMethod(f= "[<-",
           signature="model.seq",
@@ -67,6 +78,7 @@ setMethod(f= "[<-",
           }
 )
 
+#' @describeIn model.seq get a list of models in the sequence
 #' @export
 setMethod(f='models',
           signature='model.seq',
@@ -75,6 +87,7 @@ setMethod(f='models',
           }
 )
 
+#' @describeIn model.seq set the models in the sequence
 #' @export
 setMethod(f='models<-',
           signature=c('model.seq','list'),
@@ -90,6 +103,7 @@ setMethod(f='models<-',
           }
 )
 
+#' @describeIn model.seq get the number of models in the sequence
 #' @export
 setMethod(f='length',
           signature='model.seq',
@@ -98,6 +112,7 @@ setMethod(f='length',
           }
 )
 
+#' @describeIn model.seq print a summary of the model.seq to the command line
 #' @export
 setMethod(f='show',
           signature='model.seq',
@@ -117,16 +132,7 @@ setMethod(f='show',
 
 setClassUnion("model_OR_model.seq", c("model", "model.seq","model.stato"))
 
-#' @export
-setMethod(f="param.value<-",
-          signature=c("model.seq","character",'numeric'),
-          definition=function(obj,name,idx,value)
-          {
-             param.value(obj[idx],name)=value
-             return(obj)
-          }
-)
-
+#' @describeIn model.seq add a model to the (front) of a model sequence
 #' @export
 setMethod("+",
           signature(e1='model',e2='model.seq'),
@@ -138,6 +144,7 @@ setMethod("+",
           }
 )
 
+#' @describeIn model.seq add a model to the (end) of a model sequence
 #' @export
 setMethod("+",
           signature(e1='model.seq',e2='model'),
@@ -149,6 +156,7 @@ setMethod("+",
           }
 )
 
+#' @describeIn model.seq combine two models into a sequence
 #' @export
 setMethod("+",
           signature(e1='model',e2='model'),
