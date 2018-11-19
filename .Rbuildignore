@@ -1,2 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.git$
+^\.Rhistory
+LICENSE
+^\README.md
