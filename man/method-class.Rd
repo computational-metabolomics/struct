@@ -41,18 +41,16 @@ not intended to be called directly, this class should be inherited to provide fu
 }}
 
 \examples{
-M = method()
+M = method() # create a method object
 
-D = dataset()
-M = method()
-M = method.apply(M,D)
+D = iris_dataset() # example dataset
+M = method.apply(M,D) # apply method to data
+
+p = predicted(M) # get the predicted output from the model
+
+
 \dontrun{
-D = dataset()
-M = method()
-M = method.apply(M,D)
-p = predicted(M)
-}
-\dontrun{
+
 M = method()
 predicted.name(M)
 }

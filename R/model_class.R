@@ -30,6 +30,7 @@ setMethod(f="model.train",
     signature=c("model","dataset"),
     definition=function(M,D)
     {
+        warning('no training implemented for this model')
         return(M)
     }
 )

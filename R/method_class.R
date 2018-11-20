@@ -8,7 +8,7 @@
 #' @param D a dataset object
 #' @param value value
 #' @examples
-#' M = method()
+#' M = method() # create a method object
 #'
 method<-setClass(
     "method",
@@ -21,13 +21,14 @@ method<-setClass(
 #' @describeIn method train the model using input data
 #' @export
 #' @examples
-#' D = dataset()
-#' M = method()
-#' M = method.apply(M,D)
+#' D = iris_dataset() # example dataset
+#' M = method.apply(M,D) # apply method to data
+#'
 setMethod(f="method.apply",
     signature=c("method","dataset"),
     definition=function(M,D)
     {
+        warning('no method implemented yet')
         return(M)
     }
 )
@@ -35,12 +36,8 @@ setMethod(f="method.apply",
 #' @describeIn method get prediction output from model
 #' @export
 #' @examples
-#' \dontrun{
-#' D = dataset()
-#' M = method()
-#' M = method.apply(M,D)
-#' p = predicted(M)
-#' }
+#' p = predicted(M) # get the predicted output from the model
+#'
 setMethod(f='predicted',
     signature=c('method'),
     definition=function(M)
@@ -52,7 +49,9 @@ setMethod(f='predicted',
 #' @describeIn method get prediction output name for model
 #' @export
 #' @examples
+#'
 #' \dontrun{
+#'
 #' M = method()
 #' predicted.name(M)
 #' }
