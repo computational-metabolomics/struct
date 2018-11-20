@@ -102,7 +102,7 @@ setMethod(f='method.steps<-',
     signature=c('method.seq','list'),
     definition=function(ML,value) {
         # check that all items in list are methods
-        ism=lapply(X=value,FUN=isClass,Class='method')
+        ism=lapply(X=value,FUN=is,class2='method')
         if (!all(unlist(ism))) {
             stop('all items in list must be a method')
         }
