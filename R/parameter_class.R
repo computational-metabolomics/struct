@@ -236,7 +236,7 @@ setMethod(f="$",
 #' }
 #' @return modified model object
 setMethod(f="param.value<-",
-    signature=c("parameter_class","character","missing"),
+    signature=c("parameter_class","character","ANY"),
     definition=function(obj,name,value)
     {
         p=slot(obj, paste("params",name,sep='.'))
@@ -277,5 +277,3 @@ setMethod(f="$<-",
         return(x)
     }
 )
-
-

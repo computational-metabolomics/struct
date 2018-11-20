@@ -13,7 +13,7 @@
 \alias{param.list<-,parameter_class,list-method}
 \alias{param.value,parameter_class,character-method}
 \alias{$,parameter_class-method}
-\alias{param.value<-,parameter_class,character,missing-method}
+\alias{param.value<-,parameter_class,character-method}
 \alias{$<-,parameter_class-method}
 \title{parameter_class}
 \usage{
@@ -35,8 +35,7 @@
 
 \S4method{$}{parameter_class}(x, name)
 
-\S4method{param.value}{parameter_class,character,missing}(obj,
-  name) <- value
+\S4method{param.value}{parameter_class,character}(obj, name) <- value
 
 \S4method{$}{parameter_class}(x, name) <- value
 }
