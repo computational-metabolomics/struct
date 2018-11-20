@@ -61,9 +61,9 @@ test_that('method objects',{
 
     TM = method.apply(TM)
 
-    expect_equal(TM$value_1,10)
-    expect_equal(TM$result,15)
-    expect_equal(predicted(TM),15)
+    expect_equal(TM$value_1,10) # check values assigned correctly
+    expect_equal(TM$result,15)  # check method.apply
+    expect_equal(predicted(TM),15) # check predicted()
 
 })
 
@@ -102,8 +102,48 @@ test_that('model objects',{
     TM = model.train(TM)
     TM = model.predict(TM)
 
-    expect_equal(TM$value_1,10)
-    expect_equal(TM$train_result,15)
-    expect_equal(TM$test_result,2)
-    expect_equal(predicted(TM),2)
+    expect_equal(TM$value_1,10) # check values assigned correctly
+    expect_equal(TM$train_result,15) # check model.train
+    expect_equal(TM$test_result,2) # check model.predict
+    expect_equal(predicted(TM),2) # check predicted()
+})
+
+# test method.seq objects
+test_that('method.seq objects',{
+    # a test dataset object
+    v=data.frame('sample_id'=rownames(iris))
+    rownames(v)=rownames(iris)
+    test_data = dataset(
+        name = 'Iris',
+        description = "Fisher's Iris data",
+        type='single_block',
+        data=iris[,1:4],
+        sample_meta=iris[,5,drop=FALSE],
+        variable_meta=v
+    )
+
+    # a test method object
+    test_method=setClass('test_method',
+        contains='method',
+        slots=c(
+            params.value_1='numeric',
+            outputs.result='dataset'
+        ),
+        prototype=list(predicted='result')
+    )
+
+    setMethod(f='method.apply',
+        signature=c('test_method','dataset'),
+        definition=function(M,D){
+            D$data=D$data+M$value_1
+            M$result = D
+            return(M)
+        })
+
+    MS = test_method(value_1=1) + test_method(value_1=2)
+    expect_identical(MS[1],test_method(value_1=1)) # check indexing
+
+    MS = method.apply(MS,test_data)
+    expect_identical(predicted(MS[2])$data,iris[,1:4]+3) # test method chain
+
 })
