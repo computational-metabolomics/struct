@@ -135,7 +135,7 @@ setMethod(f='models<-',
     signature=c('model.seq','list'),
     definition=function(ML,value) {
         # check that all items in list are models
-        ism=lapply(X=value,FUN=isClass,Class='model')
+        ism=lapply(X=value,FUN=is,class2='model')
         if (!all(unlist(ism))) {
             stop('all items in list must be a model')
         }
