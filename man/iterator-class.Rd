@@ -8,6 +8,7 @@
 \alias{evaluate,iterator,metric-method}
 \alias{models,iterator-method}
 \alias{models<-,iterator,model_OR_iterator-method}
+\alias{models<-,iterator,model_OR_iterator-method}
 \alias{result,iterator-method}
 \alias{result.name,iterator-method}
 \alias{*,iterator,model_OR_iterator-method}

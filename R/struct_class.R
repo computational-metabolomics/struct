@@ -149,7 +149,8 @@ setMethod(f="chart.names",
                 if (length(a)>0) {
                     a=a[seq(2, length(a), by=2)]
                     a=a[-which(a==class(obj)[1])]
-                    if (is(eval(parse(text=paste0(a,'()'))),'chart')) {
+
+                    if (extends(a,'chart')) {
                         if (ret=='char') {
                             OUT=c(OUT,a)
                         } else

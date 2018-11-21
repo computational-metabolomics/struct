@@ -30,6 +30,7 @@ setMethod(f="calculate",
     signature=c('metric'),
     definition=function(MET,Y,Yhat)
     {
+        warning('no calculation provided for this metric')
         return(MET)
     }
 )

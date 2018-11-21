@@ -2,7 +2,7 @@
 #' fishers iris data
 #'
 #' fishers iris data as a struct dataset object
-#' @export
+#' @export iris_dataset
 #' @return dataset object
 #' @examples
 #' D = iris_dataset()
@@ -20,3 +20,23 @@ iris_dataset=function() {
     )
     return(test_data)
 }
+
+
+
+
+#' internal use only
+#'
+#' internal use only
+#' @include model_class.R
+test_model=setClass('test_model',
+    contains='model',
+    slots=c(
+        params.value_1='numeric',
+        params.value_2='numeric',
+        outputs.result_1='dataset',
+        outputs.result_2='dataset'
+    ),
+    prototype=list(predicted='result_2')
+)
+
+

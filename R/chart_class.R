@@ -23,6 +23,7 @@ setMethod(f="chart.plot",
     signature="chart",
     definition=function(obj)
     {
+        warning('no chart defined')
         return(obj)
     }
 )
