@@ -47,8 +47,6 @@
 \description{
 an object for holding raw data and associated meta data
 
-get the data matrix from a dataset object
-
 Returns the sample meta data of a dataset object
 
 Sets the sample meta data of a dataset object

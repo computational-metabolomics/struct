@@ -356,7 +356,7 @@ setGeneric("result.name",function(M)standardGeneric("result.name"))
 
 #' @export
 #' @rdname result.name
-setGeneric("result.name<-",function(M,value)standardGeneric("result.name<-"))
+setGeneric("result.name<-",function(I,value)standardGeneric("result.name<-"))
 
 #' results output for an iterator
 #'

@@ -117,18 +117,21 @@ setMethod(f="param.name",
     signature=c("parameter_class",'character'),
     definition=function(obj,name)
     {
+
         p=slot(obj, paste("params",name,sep='.'))
         # if the parameter is an entity then get its name
         if (is(p,'entity'))
         {
             value=name(p)
+            return(value)
         }
         else
         {
             # otherwise just return the slot name
-            value=slot(obj, paste("params",name,sep='.'))
+            return(name)
+
         }
-        return(value)
+
     }
 )
 
@@ -216,14 +219,17 @@ setMethod(f="$",
     signature(x='parameter_class'),
     definition=function(x,name)
     {
+        if (is(x,'outputs_class')) {
+            if (is.output(x,name)) {
+                value=output.value(x,name)
+                return(value)
+            }
+        }
         if (is.param(x,name)) {
             value=param.value(x,name)
-        } else if (is.output(x,name)) {
-            value=output.value(x,name)
-        } else {
-            stop(paste0('"',name,'" is ot a valid param or output for ', class(x), ' objects.'))
+            return(value)
         }
-        return(value)
+        stop(paste0('"',name,'" is ot a valid param or output for ', class(x), ' objects.'))
     }
 )
 
@@ -255,6 +261,8 @@ setMethod(f="param.value<-",
     }
 )
 
+
+
 #' @describeIn parameter_class set the value for a parameter by id
 #' @export
 #' @examples
@@ -265,15 +273,20 @@ setMethod(f="param.value<-",
 #' @return (long) name of parameter
 setMethod(f="$<-",
     signature=c(x="parameter_class"),
-    definition=function(x,name,value)
-    {
+    definition=function(x,name,value) {
+        if (is(x,'outputs_class')) {
+            if (is.output(x,name)) {
+                output.value(x,name)=value
+                return(x)
+            }
+        }
+
         if (is.param(x,name)) {
             param.value(x,name)=value
-        } else if (is.output(x,name)) {
-            output.value(x,name)=value
-        } else {
-            stop(paste0('"',name,'" is ot a valid param or output for ', class(x), ' objects.'))
+            return(x)
         }
-        return(x)
+
+        # if we get here then error
+        stop(paste0('"',name,'" is not a valid param or output for ', class(x), ' objects.'))
     }
 )

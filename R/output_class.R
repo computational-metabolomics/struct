@@ -11,23 +11,6 @@
 outputs_class<-setClass(
     "outputs_class")
 
-## initialise outputs on object creation
-setMethod(f="initialize",
-    signature="outputs_class",
-    definition=function(.Object,...)
-    {
-        L=list(...)
-        if (length(L)>0)
-        {
-            for (i in 1:length(L))
-            {
-                output.value(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
-            }
-        }
-        return(.Object)
-    }
-)
-
 #' @describeIn outputs_class get an output as an object (if appropriate)
 #' @export
 #' @examples
@@ -125,7 +108,7 @@ setMethod(f="output.name",
         else
         {
             # otherwise just return the slot name
-            value=slot(obj, paste("outputs",name,sep='.'))
+            return(name)
         }
         return(value)
     }
@@ -164,10 +147,10 @@ setMethod(f='output.list<-',
     signature=c('outputs_class','list'),
     definition=function(obj,value)
     {
-        names=name(value)
-        for (i in 1:length(names))
+        namez=names(value)
+        for (i in 1:length(namez))
         {
-            output.value(obj,names[[i]])=value[[i]]
+            output.value(obj,namez[[i]])=value[[i]]
         }
         return(obj)
     }
@@ -215,14 +198,17 @@ setMethod(f="$",
 
     definition=function(x,name)
     {
-        if (is.param(x,name)) {
-            value=param.value(x,name)
-        } else if (is.output(x,name)) {
-            value=output.value(x,name)
-        } else {
-            stop(paste0('"',name,'" is ot a valid param or output for ', class(x), ' objects.'))
+        if (is(x,'parameter_class')) {
+            if (is.param(x,name)) {
+                value=param.value(x,name)
+                return(value)
+            }
         }
-        return(value)
+        if (is.output(x,name)) {
+            value=output.value(x,name)
+            return(value)
+        }
+        stop(paste0('"',name,'" is not a valid param or output for ', class(x), ' objects.'))
     }
 )
 
@@ -254,6 +240,8 @@ setMethod(f="output.value<-",
     }
 )
 
+
+
 #' @describeIn outputs_class set the value of an output by id
 #' @export
 #' @examples
@@ -266,14 +254,22 @@ setMethod(f="$<-",
     signature=c(x="outputs_class"),
     definition=function(x,name,value)
     {
-        if (is.param(x,name)) {
-            param.value(x,name)=value
-        } else if (is.output(x,name)) {
-            output.value(x,name)=value
-        } else {
-            stop(paste0('"',name,'" is ot a valid param or output for ', class(x), ' objects.'))
+        if (is(x,'parameter_class')) {
+            if (is.param(x,name)) {
+                param.value(x,name)=value
+                return(x)
+            }
         }
-        return(x)
+
+
+        if (is.output(x,name)) {
+            output.value(x,name)=value
+            return(x)
+        }
+
+        # if we get here then error
+        stop(paste0('"',name,'" is not a valid param or output for ', class(x), ' objects.'))
+
     }
 )
 

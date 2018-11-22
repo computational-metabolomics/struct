@@ -7,7 +7,7 @@
 \usage{
 result.name(M)
 
-result.name(M) <- value
+result.name(I) <- value
 }
 \arguments{
 \item{M}{an iterator object}

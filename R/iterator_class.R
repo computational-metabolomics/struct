@@ -47,6 +47,7 @@ setMethod(f="evaluate",
     signature=c("iterator","metric"),
     definition=function(I,MET)
     {
+        warning('no evaluate fcn for this object. Evaluate is depricated and may be removed in a future release')
         return(I)
     }
 )
@@ -74,14 +75,20 @@ setMethod(f="models<-",
     }
 )
 
-#' @describeIn iterator set the model/model.seq to be run for multiple iterations
+#' @describeIn iterator set result output from iterator
 #' @export
-setMethod(f="models<-",
-    signature=c("iterator",'model_OR_iterator'),
-    definition=function(ML,value)
+#' @examples
+#' \dontrun{
+#' I = iterator()
+#' result.name(I)='example'
+#' }
+#' @return the modified model object
+setMethod(f='result.name<-',
+    signature=c('iterator','character'),
+    definition=function(I,value)
     {
-        ML@models=value
-        return(ML)
+        I@result=value
+        return(I)
     }
 )
 

@@ -4,10 +4,13 @@
 #' fishers iris data as a struct dataset object
 #' @export iris_dataset
 #' @return dataset object
+#' @import datasets
+#' @importFrom utils data
 #' @examples
 #' D = iris_dataset()
 #' summary(D)
 iris_dataset=function() {
+    data(iris)
     v=data.frame('sample_id'=rownames(iris))
     rownames(v)=rownames(iris)
     test_data = dataset(

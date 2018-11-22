@@ -8,7 +8,7 @@
 \alias{evaluate,iterator,metric-method}
 \alias{models,iterator-method}
 \alias{models<-,iterator,model_OR_iterator-method}
-\alias{models<-,iterator,model_OR_iterator-method}
+\alias{result.name<-,iterator,character-method}
 \alias{result,iterator-method}
 \alias{result.name,iterator-method}
 \alias{*,iterator,model_OR_iterator-method}
@@ -22,7 +22,7 @@
 
 \S4method{models}{iterator,model_OR_iterator}(ML) <- value
 
-\S4method{models}{iterator,model_OR_iterator}(ML) <- value
+\S4method{result.name}{iterator,character}(I) <- value
 
 \S4method{result}{iterator}(M)
 
@@ -47,6 +47,9 @@
 
 \item{e2}{an iterator or a model object}
 }
+\value{
+the modified model object
+}
 \description{
 A class for iterative approaches that involve the training/prediction of a model multiple times.
 not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
@@ -61,7 +64,7 @@ not intended to be called directly, this class should be inherited to provide fu
 
 \item \code{models<-}: set the model/model.seq to be run for multiple iterations
 
-\item \code{models<-}: set the model/model.seq to be run for multiple iterations
+\item \code{result.name<-}: set result output from iterator
 
 \item \code{result}: get prediction output from iterator
 
@@ -78,4 +81,8 @@ MET = metric()
 I = iterator() * model()
 I = run(I,D,MET)
 
+\dontrun{
+I = iterator()
+result.name(I)='example'
+}
 }
