@@ -16,6 +16,21 @@ output.obj(obj, name) <- value
 
 \item{value}{a valid value for the parameter being set}
 }
+\value{
+object
+
+object
+}
 \description{
 get/set outputs for an object
+}
+\examples{
+\dontrun{
+
+x = output.obj(M,'value_1')
+}
+\dontrun{
+
+output.value(M,'value_1') = 10
+}
 }

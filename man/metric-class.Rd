@@ -23,7 +23,8 @@
 }
 \description{
 A class for metrics to assess performance of e.g. models, iterators.
-Not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
+Not intended to be called directly, this class should be inherited to provide
+functionality for method-specific classes.
 }
 \section{Methods (by generic)}{
 \itemize{

@@ -26,8 +26,9 @@
 \item{value}{value}
 }
 \description{
-A class for methods that are applied to datasets in a single step e.g. normalisation.
-not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
+A class for methods that are applied to datasets in a single step e.g.
+normalisation. Not intended to be called directly, this class should be
+inherited to provide functionality for method-specific classes.
 }
 \section{Methods (by generic)}{
 \itemize{
@@ -46,8 +47,10 @@ M = method() # create a method object
 D = iris_dataset() # example dataset
 M = method.apply(M,D) # apply method to data
 
-p = predicted(M) # get the predicted output from the model
+\dontrun{
 
+p = predicted(M) # get the predicted output from the model
+}
 
 \dontrun{
 

@@ -1,6 +1,7 @@
 #' stato_class
 #'
-#' A base class in the \pkg{struct} package. Provides several fundamental methods for the STATO ontology and should not be called directly.
+#' A base class in the \pkg{struct} package. Provides several fundamental
+#' methods for the STATO ontology and should not be called directly.
 #' @export stato
 #' @param obj stato_class object
 #' @include generics.R
@@ -74,8 +75,11 @@ statoOntology=new.env()
 
 stato.env=function()
 {
-    path.to.ontology=file.path(path.package('struct'),'/extdata/stato-reasoned.obo')
-    assign('ont',ontologyIndex::get_ontology(path.to.ontology,extract_tags = 'everything'),envir=statoOntology)
+    path.to.ontology=file.path(path.package('struct'),
+        '/extdata/stato-reasoned.obo')
+    assign('ont',ontologyIndex::get_ontology(path.to.ontology,
+        extract_tags = 'everything'),
+        envir=statoOntology)
 }
 
 #' @describeIn stato get the STATO definition for an object
@@ -115,17 +119,7 @@ setMethod(f="stato.summary",
                 cat(stato.definition(output.obj(obj,i)),'\n\n')
             }
         }
-        #                        cat('\nCharts:\n')
-        #                        p=chart.ids(obj)
-        #                        for (i in p)
-        #                        {
-        #                            if (is(chart.obj(obj,i),'stato'))
-        #                            {
-        #                                cat(stato.id(chart.obj(obj,i)),'\n')
-        #                                cat(stato.name(chart.obj(obj,i)),'\n')
-        #                                cat(stato.definition(chart.obj(obj,i)),'\n\n')
-        #                            }
-        #                        }
+
     }
 )
 

@@ -17,3 +17,9 @@ list of parameter names
 \description{
 return a list of valid parameter names for an object
 }
+\examples{
+\dontrun{
+
+output.name(M,'value_1')
+}
+}

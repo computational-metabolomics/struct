@@ -12,7 +12,8 @@
 #' @param e2 a method or method.seq object
 #' @param value value
 #' @export method.seq
-#' @include generics.R    parameter_class.R output_class.R struct_class.R method_class.R method_stato_class.R
+#' @include generics.R parameter_class.R output_class.R struct_class.R
+#' @include method_class.R method_stato_class.R
 #' @examples
 #' MS = method.seq()
 #' MS = method() + method()
@@ -39,10 +40,12 @@ setMethod(f="method.apply",
     {
         # for each method in the list
         S=D # for first in list the input D is the data object
-        for (i in 1:length(M))
+        for (i in seq_len(length(M)))
         {
-            M[i]=method.apply(M[i],S) # train the method on the output of the previous method
-            S=predicted(M[i]) # set the output of this method as the input for the next method
+            # train the method on the output of the previous method
+            M[i]=method.apply(M[i],S)
+            # set the output of this method as the input for the next method
+            S=predicted(M[i])
         }
         return(M)
     }
@@ -92,7 +95,8 @@ setMethod(f='method.steps',
     }
 )
 
-#' @describeIn method.seq set the sequence of methods by inputting a list of methods
+#' @describeIn method.seq set the sequence of methods by inputting a list of
+#' methods
 #' @export
 #' @examples
 #' MS = method.seq()
@@ -138,7 +142,7 @@ setMethod(f='show',
             cat('no methods')
             return()
         }
-        for (i in 1:length(object))
+        for (i in seq_len(length(object)))
         {
             cat('[',i,'] ',name(object[i]),'\n',sep='')
         }

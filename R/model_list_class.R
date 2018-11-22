@@ -12,7 +12,8 @@
 #' @param e1 a model or model.seq object
 #' @param e2 a model or model.seq object
 #' @param value value
-#' @include generics.R    parameter_class.R output_class.R struct_class.R model_class.R model_stato_class.R
+#' @include generics.R    parameter_class.R output_class.R struct_class.R
+#' @include model_class.R model_stato_class.R
 #' @examples
 #' MS = model.seq()
 #' MS = model() + model()
@@ -38,11 +39,14 @@ setMethod(f="model.train",
     {
         # for each model in the list
         S=D # for first in list the input D is the data object
-        for (i in 1:length(M))
+        for (i in seq_len(length(M)))
         {
-            M[i]=model.train(M[i],S) # train the model on the output of the previous model
-            M[i]=model.predict(M[i],S) # apply the model to the output of the previous model
-            S=predicted(M[i]) # set the output of this model as the input for the next model
+            # train the model on the output of the previous model
+            M[i]=model.train(M[i],S)
+            # apply the model to the output of the previous model
+            M[i]=model.predict(M[i],S)
+            # set the output of this model as the input for the next model
+            S=predicted(M[i])
         }
         return(M)
     }
@@ -63,10 +67,12 @@ setMethod(f="model.predict",
     definition=function(M,D)
     {
         S=D # for the first model the input use the input data
-        for (i in 1:length(M))
+        for (i in seq_len(length(M)))
         {
-            M[i]=model.predict(M[i],S) # apply the model the output of the previous model
-            S=predicted(M[i]) # set the output of this model as the input to the next
+            # apply the model the output of the previous model
+            M[i]=model.predict(M[i],S)
+            # set the output of this model as the input to the next
+            S=predicted(M[i])
         }
         return(M)
     }
@@ -177,7 +183,7 @@ setMethod(f='show',
             cat('no models')
             return()
         }
-        for (i in 1:length(object))
+        for (i in seq_len(length(object)))
         {
             cat('[',i,'] ',name(object[i]),'\n',sep='')
         }
@@ -194,7 +200,8 @@ setClassUnion("model_OR_model.seq", c("model", "model.seq","model.stato"))
 #' M = model()
 #' MS = M + MS
 #'
-#' @return a model sequence with the additional model appended to the front of the sequence
+#' @return a model sequence with the additional model appended to the front of
+#' the sequence
 setMethod("+",
     signature(e1='model',e2='model.seq'),
     definition=function(e1,e2) {
@@ -213,7 +220,8 @@ setMethod("+",
 #' M = model()
 #' MS = MS + M
 #'
-#' @return a model sequence with the additional model appended to the end of the sequence
+#' @return a model sequence with the additional model appended to the end of the
+#' sequence
 setMethod("+",
     signature(e1='model.seq',e2='model'),
     definition=function(e1,e2) {

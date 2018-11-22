@@ -68,7 +68,8 @@ A class for (ordered) lists of methods
 
 \item \code{method.steps}: get sequence of methods as list
 
-\item \code{method.steps<-}: set the sequence of methods by inputting a list of methods
+\item \code{method.steps<-}: set the sequence of methods by inputting a list of
+methods
 
 \item \code{length}: get the length of the method sequence
 

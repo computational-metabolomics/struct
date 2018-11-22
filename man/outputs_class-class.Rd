@@ -72,7 +72,8 @@ modified model object
 modified model object
 }
 \description{
-A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting outputs etc and should not be called directly.
+A base class in the \pkg{struct} package. Provides several fundamental
+methods for getting/setting outputs etc and should not be called directly.
 }
 \section{Methods (by generic)}{
 \itemize{
@@ -88,7 +89,8 @@ A base class in the \pkg{struct} package. Provides several fundamental methods f
 
 \item \code{output.list}: get the output values of an object as a named list
 
-\item \code{output.list<-}: set the output values of an object using a named list
+\item \code{output.list<-}: set the output values of an object using a named
+list
 
 \item \code{output.value}: get the value of an output by id
 

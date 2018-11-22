@@ -15,3 +15,8 @@ list of parameter ids
 \description{
 return a list of valid parameter ids for an object
 }
+\examples{
+M = test_model()
+param.ids(M)
+
+}

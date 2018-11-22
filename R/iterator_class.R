@@ -1,7 +1,8 @@
 #' iterator class
 #'
-#' A class for iterative approaches that involve the training/prediction of a model multiple times.
-#' not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
+#' A class for iterative approaches that involve the training/prediction of a
+#' model multiple times. Not intended to be called directly, this class should
+#' be inherited to provide functionality for method-specific classes.
 #' @export iterator
 #' @inheritParams run
 #' @param ML a model sequence object
@@ -9,7 +10,8 @@
 #' @param value value
 #' @param e1 an iterator object
 #' @param e2 an iterator or a model object
-#' @include generics.R    parameter_class.R output_class.R model_class.R metric_class.R model_list_class.R
+#' @include generics.R parameter_class.R output_class.R model_class.R
+#' @include metric_class.R model_list_class.R
 #' @examples
 #' I = iterator()
 #' I = iterator() * model()
@@ -35,19 +37,22 @@ setMethod(f="run",
     signature=c("iterator","dataset",'metric'),
     definition=function(I,D,MET=NULL)
     {
-        warning('the base iterator function was called, not the one defined for your specific iterator')
+        warning('the base iterator function was called, not the one defined for
+            your specific iterator')
         return(I)
     }
 )
 
 
-#' @describeIn iterator evaluate the performance of a model/model.seq    using the input metric
+#' @describeIn iterator evaluate the performance of a model/model.seq using
+#' the input metric
 #' @export
 setMethod(f="evaluate",
     signature=c("iterator","metric"),
     definition=function(I,MET)
     {
-        warning('no evaluate fcn for this object. Evaluate is depricated and may be removed in a future release')
+        warning('no evaluate fcn for this object. Evaluate is depricated and may
+            be removed in a future release')
         return(I)
     }
 )
@@ -64,7 +69,8 @@ setMethod(f="models",
 
 setClassUnion("model_OR_iterator", c("model", "iterator","model.seq"))
 
-#' @describeIn iterator set the model/model.seq to be run for multiple iterations
+#' @describeIn iterator set the model/model.seq to be run for multiple
+#' iterations
 #' @export
 setMethod(f="models<-",
     signature=c("iterator",'model_OR_iterator'),
@@ -112,7 +118,8 @@ setMethod(f='result.name',
     }
 )
 
-#' @describeIn iterator combine an interator with other model or interator objects
+#' @describeIn iterator combine an interator with other model or interator
+#' objects
 #' @export
 setMethod(f='*',
     signature=c(e1='iterator',e2='model_OR_iterator'),

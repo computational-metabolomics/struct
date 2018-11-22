@@ -16,7 +16,21 @@ output.list(obj) <- value
 }
 \value{
 list of output names
+
+object
+
+list
 }
 \description{
 get a named list of outputs and thier current value for an object
+}
+\examples{
+\dontrun{
+
+output.list(M)
+}
+\dontrun{
+
+output.list(M) = liist('value_1'=10)
+}
 }

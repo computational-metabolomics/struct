@@ -21,7 +21,7 @@ Collate:
     'enum_class.R'
     'output_class.R'
     'model_class.R'
-    'iris_dataset_obj.R'
+    'example_objects.R'
     'model_stato_class.R'
     'model_list_class.R'
     'metric_class.R'
@@ -38,5 +38,5 @@ Suggests:
     rmarkdown,
     testthat
 VignetteBuilder: knitr
-Imports: methods, ontologyIndex, crayon
+Imports: methods, ontologyIndex, crayon, datasets
 biocViews: BasicWorkflow

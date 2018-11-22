@@ -51,18 +51,21 @@
 the modified model object
 }
 \description{
-A class for iterative approaches that involve the training/prediction of a model multiple times.
-not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
+A class for iterative approaches that involve the training/prediction of a
+model multiple times. Not intended to be called directly, this class should
+be inherited to provide functionality for method-specific classes.
 }
 \section{Methods (by generic)}{
 \itemize{
 \item \code{run}: run a model/model.seq mutliple times for the input data
 
-\item \code{evaluate}: evaluate the performance of a model/model.seq    using the input metric
+\item \code{evaluate}: evaluate the performance of a model/model.seq using
+the input metric
 
 \item \code{models}: get the model/model.seq for an iterator object
 
-\item \code{models<-}: set the model/model.seq to be run for multiple iterations
+\item \code{models<-}: set the model/model.seq to be run for multiple
+iterations
 
 \item \code{result.name<-}: set result output from iterator
 
@@ -70,7 +73,8 @@ not intended to be called directly, this class should be inherited to provide fu
 
 \item \code{result.name}: get prediction output name for iterator
 
-\item \code{*}: combine an interator with other model or interator objects
+\item \code{*}: combine an interator with other model or interator
+objects
 }}
 
 \examples{

@@ -12,11 +12,21 @@ param.list(obj) <- value
 \arguments{
 \item{obj}{a model or iterator object from the *struct* class}
 
-\item{value}{a named list, where the name-value pairs should match valid parameters for the object}
+\item{value}{a named list}
 }
 \value{
 list of parameter names
+
+struct object
 }
 \description{
 get/set a named list of parameters and thier current value for an object
+}
+\examples{
+M = test_model()
+L = param.list(M)
+
+M = test_model()
+param.list(M)=list('value_1' = 15,'value_2' = 20)
+
 }

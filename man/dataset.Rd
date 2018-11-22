@@ -38,7 +38,8 @@
 
 \item{x}{a dataset object}
 
-\item{name}{name of the slot to set (data, sample_meta or variable_meta for dataset objects)}
+\item{name}{name of the slot to set (data, sample_meta or variable_meta for
+dataset objects)}
 
 \item{value}{a data.frame}
 
@@ -55,7 +56,9 @@ Returns the variable metadata of a dataset object
 
 Sets the variable metadata of a dataset object
 
-print a brief summary of the contents of a dataset object. Note that this is different to the output from show(dataset), which summarieses the dataset object, not the contents..
+Prints a brief summary of the contents of a dataset object. Note that this is
+different to the output from show(dataset), which summarieses the dataset
+object, not the contents..
 }
 \section{Slots}{
 
@@ -64,9 +67,11 @@ print a brief summary of the contents of a dataset object. Note that this is dif
 
 \item{\code{description}}{(character) brief description of the dataset}
 
-\item{\code{data}}{(data.frame) matrix of data, samples in rows, variables/features in columns.}
+\item{\code{data}}{(data.frame) of data, samples in rows, variables/features
+in columns.}
 
-\item{\code{sample.meta}}{(data.frame) data frame of sample meta data e.g. group membership}
+\item{\code{sample.meta}}{(data.frame) data frame of sample meta data e.g. group
+membership}
 
 \item{\code{variable.meta}}{(data.frame) data frame of variable meta data}
 }}

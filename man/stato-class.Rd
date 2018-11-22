@@ -31,7 +31,8 @@ stato definition
 summary of the stato object
 }
 \description{
-A base class in the \pkg{struct} package. Provides several fundamental methods for the STATO ontology and should not be called directly.
+A base class in the \pkg{struct} package. Provides several fundamental
+methods for the STATO ontology and should not be called directly.
 }
 \section{Methods (by generic)}{
 \itemize{

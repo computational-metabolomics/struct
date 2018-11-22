@@ -15,3 +15,9 @@ list of output ids
 \description{
 return a list of valid output ids for an object
 }
+\examples{
+\dontrun{
+
+output.ids(M)
+}
+}

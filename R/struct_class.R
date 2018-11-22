@@ -1,6 +1,7 @@
 #' struct_class
 #'
-#' A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting parameters etc and should not be called directly.
+#' A base class in the \pkg{struct} package. Provides several fundamental
+#' methods for getting/setting parameters etc and should not be called directly.
 #' @export struct_class
 #' @import methods
 #' @include generics.R
@@ -119,7 +120,9 @@ setMethod(f="type<-",
 #'
 #' print a list of chart objects associated with the input object
 #' @param obj a chart object
-#' @param ret a string indicating whether to return a list of chart names (ret="char") or a list of chart objects (ret="obj"). The default is "char".
+#' @param ret a string indicating whether to return a list of chart
+#' names (ret="char") or a list of chart objects (ret="obj").
+#' The default is "char".
 #' @export
 #' @examples
 #' S = struct_class()
@@ -139,9 +142,7 @@ setMethod(f="chart.names",
             stop('not a valid ret option. Try "char" or "obj"')
         }
         x=showMethods(f=chart.plot,classes=class(obj)[1],printTo=FALSE)
-        #cat('struct chart objects available for "',class(obj)[1],'" objects:\n',sep='')
         if (x[2]=='<No methods>') {
-            #cat(' !!No charts are available for this object!!\n')
         } else {
 
             for (i in 2:length(x)) {
@@ -154,7 +155,8 @@ setMethod(f="chart.names",
                         if (ret=='char') {
                             OUT=c(OUT,a)
                         } else
-                            OUT[[length(OUT)+1]]=eval(parse(text=paste0(a,'()')))
+                            OUT[[length(OUT)+1]]=eval(parse(text=paste0(a,
+                                '()')))
                     }
                 }
             }
@@ -176,6 +178,7 @@ setMethod(f="show",
     signature=c("struct_class"),
     definition=function(object)
     {
-        cat('A ',class(object),' object\nName: ',name(object),'\nDescription: ',description(object),sep='')
+        cat('A ',class(object),' object\nName: ',name(object),'\nDescription: ',
+            description(object),sep='')
     }
 )

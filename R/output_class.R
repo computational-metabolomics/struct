@@ -1,6 +1,7 @@
 #' outputs_class
 #'
-#' A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting outputs etc and should not be called directly.
+#' A base class in the \pkg{struct} package. Provides several fundamental
+#' methods for getting/setting outputs etc and should not be called directly.
 #' @export outputs_class
 #' @param obj a struct object with outputs
 #' @param name output id
@@ -128,7 +129,7 @@ setMethod(f='output.list',
     {
         L=list()
         names=output.ids(obj)
-        for (i in 1:length(names))
+        for (i in seq_len(length(names)))
         {
             L[[names[[i]]]]=output.value(obj,names[[i]])
         }
@@ -136,7 +137,8 @@ setMethod(f='output.list',
     }
 )
 
-#' @describeIn outputs_class set the output values of an object using a named list
+#' @describeIn outputs_class set the output values of an object using a named
+#' list
 #' @examples
 #' \dontrun{
 #' M = model()
@@ -148,7 +150,7 @@ setMethod(f='output.list<-',
     definition=function(obj,value)
     {
         namez=names(value)
-        for (i in 1:length(namez))
+        for (i in seq_len(length(namez)))
         {
             output.value(obj,namez[[i]])=value[[i]]
         }
@@ -208,7 +210,8 @@ setMethod(f="$",
             value=output.value(x,name)
             return(value)
         }
-        stop(paste0('"',name,'" is not a valid param or output for ', class(x), ' objects.'))
+        stop(paste0('"',name,'" is not a valid param or output for ', class(x),
+            ' objects.'))
     }
 )
 
@@ -268,7 +271,8 @@ setMethod(f="$<-",
         }
 
         # if we get here then error
-        stop(paste0('"',name,'" is not a valid param or output for ', class(x), ' objects.'))
+        stop(paste0('"',name,'" is not a valid param or output for ', class(x),
+            ' objects.'))
 
     }
 )

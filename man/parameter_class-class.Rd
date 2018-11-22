@@ -49,30 +49,17 @@
 \item{x}{parameter_class object}
 }
 \value{
-returns the parameter as an object (e.g. entity, enum)
-
-modified model object
-
-logical
-
-character list of parameter ids
-
-(long) name of parameter
-
-named list of parameter ids and values
-
-modified model object
-
-value of parameter
-
-value of parameter
-
-modified model object
-
-(long) name of parameter
+The return value varies depending on method used for this class
 }
 \description{
-A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting parameters etc and should not be called directly.
+A base class in the \pkg{struct} package. Should be inherited by other
+classes and not called directly.
+}
+\details{
+The parameter class is a mechanism for providing easily accessible
+slots in other classes such as methods and models. The idea is that params
+(and outputs) are slots intended to be accessed by the user without the
+developer needing to provide generic functions.
 }
 \section{Methods (by generic)}{
 \itemize{
@@ -86,9 +73,11 @@ A base class in the \pkg{struct} package. Provides several fundamental methods f
 
 \item \code{param.name}: get the (long) name of a parameter by id
 
-\item \code{param.list}: get a named list of parameter values for an object
+\item \code{param.list}: get a named list of parameter values for an
+object
 
-\item \code{param.list<-}: set parameter values for an object using a named list
+\item \code{param.list<-}: set parameter values for an object using a named
+list
 
 \item \code{param.value}: get the value for a parameter by id
 
@@ -100,49 +89,18 @@ A base class in the \pkg{struct} package. Provides several fundamental methods f
 }}
 
 \examples{
-\dontrun{
-M = model()
-obj = param.obj(M,'example')
-}
-\dontrun{
-M = model()
-param.obj(M,'example') = entity()
-}
-\dontrun{
-M = model()
-is.param(M,'example')
-}
-\dontrun{
-M = model()
-param.ids(M)
-}
-\dontrun{
-M = model()
-param.name(M,'example')
-}
-\dontrun{
-M = model()
-L = param.list(M,'example')
-}
-\dontrun{
-M = model()
-L = list('example' = model())
-param.list(M,'example') = L
-}
-\dontrun{
-M = model()
-param.value(M,'example')
-}
-\dontrun{
-M = model()
-M$example
-}
-\dontrun{
-M = model()
-param.value(M,'example') = 10
-}
-\dontrun{
-M = model()
-M$example = 10
-}
+# define a new class and inherit the parameter_class
+example_class = setClass(
+    'example_class',                     # name of the class
+    contains='parameter_class',          # inherit the parameter class
+    slots=c(params.example = 'numeric'), # specify a parameter
+    protoype=list(params.example = 10)   # initial value for parameter
+)
+
+# create an instance of the object
+M = example_class()
+
+# Methods for the parameter class can now be used on the object
+param.value(M,'example') # 10
+
 }

@@ -10,5 +10,6 @@ predicted(M)
 \item{M}{a model object}
 }
 \description{
-returns the prediction output for a model. This is supplied as input to the next model when used in a model.seq
+returns the prediction output for a model. This is supplied as input to the
+next model when used in a model.seq
 }

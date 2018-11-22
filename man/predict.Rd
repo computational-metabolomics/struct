@@ -12,5 +12,6 @@ model.predict(M, D)
 \item{D}{a dataset object}
 }
 \description{
-Apply a model using the input dataset. Requires that the model is trained first.
+Apply a model using the input dataset. Requires that the model is trained
+first.
 }

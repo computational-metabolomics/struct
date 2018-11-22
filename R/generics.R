@@ -2,26 +2,47 @@
 ###### parameter class generics #####
 #####################################
 
-#' get/set parameters for an object
+#' Get/set parameters for an object
 #'
+#' Gets or sets the object of a parameter e.g. to an entity() object.
 #' @param obj a model or iterator object from the *struct* class
 #' @param name name of parameter as a string
 #' @param value a valid value for the parameter being set
 #' @rdname param
 #' @export
+#' @return
+#' \describe{
+#' \item{\code{param.obj(M,name)}}{returns the named parameter as an object}
+#' \item{\code{param.obj(M,name)<-}}{sets the named parameter of an object}
+#' }
+#' @examples
+#' # get the parameter as an object
+#' M = test_model()
+#' obj = param.obj(M, 'value_1')
+#'
+#' # set a parameter as an object
+#' param.obj(M, 'value_1') = entity(value = 15)
+#'
 setGeneric("param.obj",function(obj,name)standardGeneric("param.obj"))
 
 #' @rdname param
 #' @export
+#' @examples
+#'
 setGeneric("param.obj<-",function(obj,name,value)standardGeneric("param.obj<-"))
 
-#' verify paramater name
+#' Verify parameter
 #'
-#' verify that the name of a paramater is valid for an object
+#' Verify that the name of a paramater is valid for an object
 #' @param obj a model or iterator object from the *struct* class
 #' @param name name of parameter as a string
 #' @return TRUE if parameter name is valid, FALSE if not
 #' @export
+#' @examples
+#' M = test_model()
+#' is.param(M,'value_1') # TRUE
+#' is.param(M,'alpha')   # FALSE
+#'
 setGeneric("is.param",function(obj,name)standardGeneric("is.param"))
 
 #' parameter identifiers
@@ -30,6 +51,10 @@ setGeneric("is.param",function(obj,name)standardGeneric("is.param"))
 #' @param obj a model or iterator object from the *struct* class
 #' @return list of parameter ids
 #' @export
+#' @examples
+#' M = test_model()
+#' param.ids(M)
+#'
 setGeneric("param.ids",function(obj)standardGeneric("param.ids"))
 
 #' parameter name
@@ -39,20 +64,33 @@ setGeneric("param.ids",function(obj)standardGeneric("param.ids"))
 #' @param name id of parameter
 #' @return name of parameter
 #' @export
+#' @examples
+#' M = test_model()
+#' param.name(M,'value_1')
+#'
 setGeneric("param.name",function(obj,name)standardGeneric("param.name"))
 
 #' parameter list
 #'
 #' get/set a named list of parameters and thier current value for an object
 #' @param obj a model or iterator object from the *struct* class
-#' @param value a named list, where the name-value pairs should match valid parameters for the object
+#' @param value a named list
 #' @return list of parameter names
 #' @rdname param.list
 #' @export
+#' @examples
+#' M = test_model()
+#' L = param.list(M)
+#'
 setGeneric("param.list",function(obj)standardGeneric("param.list"))
 
 #' @rdname param.list
 #' @export
+#' @return struct object
+#' @examples
+#' M = test_model()
+#' param.list(M)=list('value_1' = 15,'value_2' = 20)
+#'
 setGeneric("param.list<-",function(obj,value)standardGeneric("param.list<-"))
 
 #' parameter values
@@ -61,15 +99,24 @@ setGeneric("param.list<-",function(obj,value)standardGeneric("param.list<-"))
 #' @param obj a model or iterator object from the *struct* class
 #' @param name of a parameter
 #' @param value value
-#' @return value of output
-
+#' @return value of parameter
 #' @rdname param.value
 #' @export
+#' @examples
+#' M = test_model()
+#' param.value(M,'value_1')
+#'
 setGeneric("param.value",function(obj,name)standardGeneric("param.value"))
 
 #' @rdname param.value
 #' @export
-setGeneric("param.value<-",function(obj,name,value)standardGeneric("param.value<-"))
+#' @return struct object
+#' @examples
+#' M = test_model()
+#' param.value(M,'value_1') = 0.95
+#'
+setGeneric("param.value<-",
+    function(obj,name,value)standardGeneric("param.value<-"))
 
 #####################################
 ###### output class generics #####
@@ -81,6 +128,11 @@ setGeneric("param.value<-",function(obj,name,value)standardGeneric("param.value<
 #' @param obj a model or iterator object from the *struct* class
 #' @return list of output ids
 #' @export
+#' @examples
+#' \dontrun{
+#'
+#' output.ids(M)
+#' }
 setGeneric("output.ids",function(obj)standardGeneric("output.ids"))
 
 #' output values
@@ -92,11 +144,23 @@ setGeneric("output.ids",function(obj)standardGeneric("output.ids"))
 #' @return value of output
 #' @rdname output.value
 #' @export
+#' @examples
+#' \dontrun{
+#'
+#' output.value(M,'value_1')
+#' }
 setGeneric("output.value",function(obj,name)standardGeneric("output.value"))
 
 #' @rdname output.value
 #' @export
-setGeneric("output.value<-",function(obj,name,value)standardGeneric("output.value<-"))
+#' @return object
+#' @examples
+#' \dontrun{
+#'
+#' output.value(M,'value_1') = 10
+#' }
+setGeneric("output.value<-",
+    function(obj,name,value)standardGeneric("output.value<-"))
 
 #' get/set outputs for an object
 #'
@@ -104,13 +168,26 @@ setGeneric("output.value<-",function(obj,name,value)standardGeneric("output.valu
 #' @param name name of output as a string
 #' @rdname outputs
 #' @export
-setGeneric("output.obj",function(obj,name)standardGeneric("output.obj"))
+#' @return object
+#' @examples
+#' \dontrun{
+#'
+#' x = output.obj(M,'value_1')
+#' }
+setGeneric("output.obj",
+    function(obj,name)standardGeneric("output.obj"))
 
 #' @export
 #' @param value a valid value for the parameter being set
 #' @rdname outputs
-
-setGeneric("output.obj<-",function(obj,name,value)standardGeneric("output.obj<-"))
+#' @return object
+#' @examples
+#' \dontrun{
+#'
+#' output.value(M,'value_1') = 10
+#' }
+setGeneric("output.obj<-",
+    function(obj,name,value)standardGeneric("output.obj<-"))
 
 #' verify output name
 #'
@@ -119,6 +196,11 @@ setGeneric("output.obj<-",function(obj,name,value)standardGeneric("output.obj<-"
 #' @param name name of the output as a string
 #' @return TRUE if output name is valid, FALSE if not
 #' @export
+#' @examples
+#' \dontrun{
+#'
+#' is.input(M,'value_1')
+#' }
 setGeneric("is.output",function(obj,name)standardGeneric("is.output"))
 
 #' output names
@@ -128,6 +210,11 @@ setGeneric("is.output",function(obj,name)standardGeneric("is.output"))
 #' @param name id of output
 #' @return list of parameter names
 #' @export
+#' @examples
+#' \dontrun{
+#'
+#' output.name(M,'value_1')
+#' }
 setGeneric("output.name",function(obj,name)standardGeneric("output.name"))
 
 #' output list
@@ -138,10 +225,22 @@ setGeneric("output.name",function(obj,name)standardGeneric("output.name"))
 #' @return list of output names
 #' @rdname output.list
 #' @export
+#' @return object
+#' @examples
+#' \dontrun{
+#'
+#' output.list(M)
+#' }
 setGeneric("output.list",function(obj)standardGeneric("output.list"))
 
 #' @rdname output.list
 #' @export
+#' @return list
+#' @examples
+#' \dontrun{
+#'
+#' output.list(M) = liist('value_1'=10)
+#' }
 setGeneric("output.list<-",function(obj,value)standardGeneric("output.list<-"))
 
 #####################################
@@ -154,6 +253,13 @@ setGeneric("output.list<-",function(obj,value)standardGeneric("output.list<-"))
 #' @param obj a object from the *struct* package
 #' @param ... optional inputs
 #' @export
+#' @return list of chart names
+#' @examples
+#' \dontrun{
+#'
+#' D = dataset()
+#' chart.names(D)
+#' }
 setGeneric("chart.names",function(obj,...)standardGeneric("chart.names"))
 
 #' plot a chart for an object
@@ -162,7 +268,14 @@ setGeneric("chart.names",function(obj,...)standardGeneric("chart.names"))
 #' @param dobj a struct object
 #' @param ... optional inputs
 #' @rdname chart.plot
-
+#' @return plot
+#' @examples
+#' \dontrun{
+#'
+#' C=chart()
+#' chart.plot(C)
+#' p=chart.plot(C) # can return e.g. ggplot object
+#' }
 #' @export
 setGeneric("chart.plot",function(obj, dobj, ...)standardGeneric("chart.plot"))
 
@@ -235,7 +348,8 @@ setGeneric("model.train",function(M,D)standardGeneric("model.train"))
 
 #' Apply a (trained) model to a dataset D to get a prediction
 #'
-#' Apply a model using the input dataset. Requires that the model is trained first.
+#' Apply a model using the input dataset. Requires that the model is trained
+#' first.
 #' @param M a model object
 #' @param D a dataset object
 
@@ -245,7 +359,8 @@ setGeneric("model.predict",function(M,D)standardGeneric("model.predict"))
 
 #' get/set output name as prediction output for a model
 #'
-#' get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.seq
+#' get/set the prediction output for a model. This determines which outputs from
+#' this model are supplied as inputs to the next model when used in a model.seq
 #' @param M a model object
 #' @param value name of an output for this model
 
@@ -256,11 +371,13 @@ setGeneric("predicted.name",function(M)standardGeneric("predicted.name"))
 #' @export
 #' @inheritParams predicted.name
 #' @rdname predicted.name
-setGeneric("predicted.name<-",function(M,value)standardGeneric("predicted.name<-"))
+setGeneric("predicted.name<-",
+    function(M,value)standardGeneric("predicted.name<-"))
 
 #' prediction output for a model
 #'
-#' returns the prediction output for a model. This is supplied as input to the next model when used in a model.seq
+#' returns the prediction output for a model. This is supplied as input to the
+#' next model when used in a model.seq
 #' @param M a model object
 #' @rdname predicted
 #' @export
@@ -293,11 +410,13 @@ setGeneric("models<-",function(ML,value)standardGeneric("models<-"))
 #' @param value a data.frame of raw data
 #' @rdname data
 #' @export
-setGeneric("dataset.data",function(obj)standardGeneric("dataset.data"))
+setGeneric("dataset.data",
+    function(obj)standardGeneric("dataset.data"))
 
 #' @export
 #' @rdname data
-setGeneric("dataset.data<-",function(obj,value)standardGeneric("dataset.data<-"))
+setGeneric("dataset.data<-",
+    function(obj,value)standardGeneric("dataset.data<-"))
 
 #' get/set sample meta data for a dataset object
 #'
@@ -306,11 +425,13 @@ setGeneric("dataset.data<-",function(obj,value)standardGeneric("dataset.data<-")
 #' @rdname sample_meta
 
 #' @export
-setGeneric("dataset.sample_meta",function(obj)standardGeneric("dataset.sample_meta"))
+setGeneric("dataset.sample_meta",
+    function(obj)standardGeneric("dataset.sample_meta"))
 
 #' @export
 #' @rdname sample_meta
-setGeneric("dataset.sample_meta<-",function(obj,value)standardGeneric("dataset.sample_meta<-"))
+setGeneric("dataset.sample_meta<-",
+    function(obj,value)standardGeneric("dataset.sample_meta<-"))
 
 #' get/set variable meta data for a dataset object
 #'
@@ -319,11 +440,13 @@ setGeneric("dataset.sample_meta<-",function(obj,value)standardGeneric("dataset.s
 #' @rdname variable_meta
 
 #' @export
-setGeneric("dataset.variable_meta",function(obj)standardGeneric("dataset.variable_meta"))
+setGeneric("dataset.variable_meta",
+    function(obj)standardGeneric("dataset.variable_meta"))
 
 #' @export
 #' @rdname variable_meta
-setGeneric("dataset.variable_meta<-",function(obj,value)standardGeneric("dataset.variable_meta<-"))
+setGeneric("dataset.variable_meta<-",
+    function(obj,value)standardGeneric("dataset.variable_meta<-"))
 
 ####################################
 ###### iterator class generics #####
@@ -346,10 +469,12 @@ setGeneric("evaluate",function(I,MET)standardGeneric("evaluate"))
 
 #' get/set output name as prediction output for a model
 #'
-#' get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.seq
+#' get/set the prediction output for a model. This determines which outputs
+#' from this model are supplied as inputs to the next model when used in
+#' a model.seq
 #' @param M an iterator object
+#' @param I an iterator object
 #' @param value name of an output for iterator M
-
 #' @rdname result.name
 #' @export
 setGeneric("result.name",function(M)standardGeneric("result.name"))
@@ -431,7 +556,8 @@ setGeneric("stato.summary",function(obj)standardGeneric("stato.summary"))
 #'
 #' @rdname stato
 #' @export
-setGeneric("stato.pdf",function(obj,outpath,filename,outformat)standardGeneric("stato.pdf"))
+setGeneric("stato.pdf",
+    function(obj,outpath,filename,outformat)standardGeneric("stato.pdf"))
 
 ######################################
 ###### method.seq class generics #####

@@ -75,9 +75,11 @@ the number of models in the sequence
 
 pritns a summary of the contents of a model sequence
 
-a model sequence with the additional model appended to the front of the sequence
+a model sequence with the additional model appended to the front of
+the sequence
 
-a model sequence with the additional model appended to the end of the sequence
+a model sequence with the additional model appended to the end of the
+sequence
 
 a model sequence
 }

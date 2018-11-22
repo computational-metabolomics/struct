@@ -4,13 +4,16 @@
 #' @export dataset
 #' @slot name (character) name of the dataset
 #' @slot description (character) brief description of the dataset
-#' @slot data (data.frame) matrix of data, samples in rows, variables/features in columns.
-#' @slot sample.meta (data.frame) data frame of sample meta data e.g. group membership
+#' @slot data (data.frame) of data, samples in rows, variables/features
+#' in columns.
+#' @slot sample.meta (data.frame) data frame of sample meta data e.g. group
+#' membership
 #' @slot variable.meta (data.frame) data frame of variable meta data
 #' @param obj a dataset object
 #' @param object a dataset object
 #' @param x a dataset object
-#' @param name name of the slot to set (data, sample_meta or variable_meta for dataset objects)
+#' @param name name of the slot to set (data, sample_meta or variable_meta for
+#' dataset objects)
 #' @param value a data.frame
 #' @rdname dataset
 #' @include generics.R struct_class.R stato_class.R chart_class.R chart_stato.R
@@ -178,7 +181,9 @@ setMethod(f="dataset.variable_meta<-",
 
 #' dataset summary
 #'
-#' print a brief summary of the contents of a dataset object. Note that this is different to the output from show(dataset), which summarieses the dataset object, not the contents..
+#' Prints a brief summary of the contents of a dataset object. Note that this is
+#' different to the output from show(dataset), which summarieses the dataset
+#' object, not the contents..
 #' @export
 #' @import crayon
 #' @rdname dataset
@@ -197,10 +202,14 @@ setMethod(f="summary",
         S$n.samples=nrow(dataset.data(object))
         S$n.features=ncol(dataset.data(object))
         S$n.levels=length(levels(dataset.sample_meta(object)[,1]))
-        cat(bold('A',class(object),'object from the struct package') %+%    '\n\n' %+% blue('Name: '),name(object),'\n' %+% blue('Description: '),description(object),'\n',sep='')
-        cat('\nConsists of ',S$n.samples,' samples and ',S$n.features,' features.\n',sep='')
+        cat(bold('A',class(object),'object from the struct package') %+%
+                '\n\n' %+% blue('Name: '),name(object),'\n' %+%
+                blue('Description: '),description(object),'\n',sep='')
+        cat('\nConsists of ',S$n.samples,' samples and ',S$n.features,
+            ' features.\n',sep='')
         cat('\nThere are ',S$n.levels, ' levels: ',sep='')
         cat(green(levels(dataset.sample_meta(object)[,1])),sep=',')
-        cat(' in factor named "',green(names(dataset.sample_meta(object))[1]),'"',sep='')
+        cat(' in factor named "',green(names(dataset.sample_meta(object))[1]),
+            '"',sep='')
     }
 )

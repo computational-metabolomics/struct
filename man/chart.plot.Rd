@@ -13,6 +13,17 @@ chart.plot(obj, dobj, ...)
 
 \item{...}{optional inputs}
 }
+\value{
+plot
+}
 \description{
 plot a chart for an object
+}
+\examples{
+\dontrun{
+
+C=chart()
+chart.plot(C)
+p=chart.plot(C) # can return e.g. ggplot object
+}
 }

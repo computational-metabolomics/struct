@@ -1,12 +1,33 @@
 #' parameter_class
 #'
-#' A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting parameters etc and should not be called directly.
+#' A base class in the \pkg{struct} package. Should be inherited by other
+#' classes and not called directly.
+#'
+#' The parameter class is a mechanism for providing easily accessible
+#' slots in other classes such as methods and models. The idea is that params
+#' (and outputs) are slots intended to be accessed by the user without the
+#' developer needing to provide generic functions.
 #' @export parameter_class
 #' @param obj parameter_class object
 #' @param name id of parameter
 #' @param x parameter_class object
 #' @param value value
 #' @include generics.R struct_class.R
+#' @return The return value varies depending on method used for this class
+#' @examples
+#' # define a new class and inherit the parameter_class
+#' example_class = setClass(
+#'     'example_class',                     # name of the class
+#'     contains='parameter_class',          # inherit the parameter class
+#'     slots=c(params.example = 'numeric'), # specify a parameter
+#'     protoype=list(params.example = 10)   # initial value for parameter
+#' )
+#'
+#' # create an instance of the object
+#' M = example_class()
+#'
+#' # Methods for the parameter class can now be used on the object
+#' param.value(M,'example') # 10
 #'
 parameter_class<-setClass(
     "parameter_class"
@@ -20,7 +41,7 @@ setMethod(f="initialize",
         L=list(...)
         if (length(L)>0)
         {
-            for (i in 1:length(L))
+            for (i in seq_len(length(L)))
             {
                 param.value(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
             }
@@ -31,13 +52,6 @@ setMethod(f="initialize",
 
 #' @describeIn parameter_class a parameter as an object (if appropriate)
 #' @export
-#' @examples
-#' \dontrun{
-#' M = model()
-#' obj = param.obj(M,'example')
-#' }
-#' @return returns the parameter as an object (e.g. entity, enum)
-#'
 setMethod(f="param.obj",
     signature=c("parameter_class","character"),
     definition=function(obj,name)
@@ -49,12 +63,6 @@ setMethod(f="param.obj",
 
 #' @describeIn parameter_class set a parameter as an object
 #' @export
-#' @examples
-#' \dontrun{
-#' M = model()
-#' param.obj(M,'example') = entity()
-#' }
-#' @return modified model object
 setMethod(f="param.obj<-",
     signature=c("parameter_class","character"),
     definition=function(obj,name,value)
@@ -66,12 +74,6 @@ setMethod(f="param.obj<-",
 
 #' @describeIn parameter_class check if an id is valid for an object
 #' @export
-#' @examples
-#' \dontrun{
-#' M = model()
-#' is.param(M,'example')
-#' }
-#' @return logical
 setMethod(f="is.param",
     signature=c("parameter_class"),
     definition=function(obj,name)
@@ -86,12 +88,6 @@ setMethod(f="is.param",
 
 #' @describeIn parameter_class list the valid ids for an object
 #' @export
-#' @examples
-#' \dontrun{
-#' M = model()
-#' param.ids(M)
-#' }
-#' @return character list of parameter ids
 setMethod(f="param.ids",
     signature=c("parameter_class"),
     definition=function(obj)
@@ -107,12 +103,6 @@ setMethod(f="param.ids",
 
 #' @describeIn parameter_class get the (long) name of a parameter by id
 #' @export
-#' @examples
-#' \dontrun{
-#' M = model()
-#' param.name(M,'example')
-#' }
-#' @return (long) name of parameter
 setMethod(f="param.name",
     signature=c("parameter_class",'character'),
     definition=function(obj,name)
@@ -135,21 +125,16 @@ setMethod(f="param.name",
     }
 )
 
-#' @describeIn parameter_class get a named list of parameter values for an object
-#'@export
-#' @examples
-#' \dontrun{
-#' M = model()
-#' L = param.list(M,'example')
-#' }
-#' @return named list of parameter ids and values
+#' @describeIn parameter_class get a named list of parameter values for an
+#' object
+#' @export
 setMethod(f='param.list',
     signature=c('parameter_class'),
     definition=function(obj)
     {
         L=list()
         names=param.ids(obj)
-        for (i in 1:length(names))
+        for (i in seq_len(length(names)))
         {
             L[[names[[i]]]]=param.value(obj,names[[i]])
         }
@@ -157,21 +142,15 @@ setMethod(f='param.list',
     }
 )
 
-#' @describeIn parameter_class set parameter values for an object using a named list
-#'@export
-#' @examples
-#' \dontrun{
-#' M = model()
-#' L = list('example' = model())
-#' param.list(M,'example') = L
-#' }
-#' @return modified model object
+#' @describeIn parameter_class set parameter values for an object using a named
+#' list
+#' @export
 setMethod(f='param.list<-',
     signature=c('parameter_class','list'),
     definition=function(obj,value)
     {
         namez=names(value)
-        for (i in 1:length(namez))
+        for (i in seq_len(length(namez)))
         {
             param.value(obj,namez[[i]])=value[[i]]
         }
@@ -181,12 +160,6 @@ setMethod(f='param.list<-',
 
 #' @describeIn parameter_class get the value for a parameter by id
 #' @export
-#' @examples
-#' \dontrun{
-#' M = model()
-#' param.value(M,'example')
-#' }
-#' @return value of parameter
 setMethod(f="param.value",
     signature=c("parameter_class","character"),
     definition=function(obj,name)
@@ -209,12 +182,6 @@ setMethod(f="param.value",
 
 #' @describeIn parameter_class get the value for a parameter by id
 #' @export
-#' @examples
-#' \dontrun{
-#' M = model()
-#' M$example
-#' }
-#' @return value of parameter
 setMethod(f="$",
     signature(x='parameter_class'),
     definition=function(x,name)
@@ -229,18 +196,13 @@ setMethod(f="$",
             value=param.value(x,name)
             return(value)
         }
-        stop(paste0('"',name,'" is ot a valid param or output for ', class(x), ' objects.'))
+        stop(paste0('"',name,'" is ot a valid param or output for ', class(x),
+            ' objects.'))
     }
 )
 
 #' @describeIn parameter_class set the value for a parameter by id
 #' @export
-#' @examples
-#' \dontrun{
-#' M = model()
-#' param.value(M,'example') = 10
-#' }
-#' @return modified model object
 setMethod(f="param.value<-",
     signature=c("parameter_class","character","ANY"),
     definition=function(obj,name,value)
@@ -265,12 +227,6 @@ setMethod(f="param.value<-",
 
 #' @describeIn parameter_class set the value for a parameter by id
 #' @export
-#' @examples
-#' \dontrun{
-#' M = model()
-#' M$example = 10
-#' }
-#' @return (long) name of parameter
 setMethod(f="$<-",
     signature=c(x="parameter_class"),
     definition=function(x,name,value) {
@@ -287,6 +243,7 @@ setMethod(f="$<-",
         }
 
         # if we get here then error
-        stop(paste0('"',name,'" is not a valid param or output for ', class(x), ' objects.'))
+        stop(paste0('"',name,'" is not a valid param or output for ', class(x),
+            ' objects.'))
     }
 )

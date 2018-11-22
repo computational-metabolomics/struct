@@ -17,3 +17,9 @@ TRUE if output name is valid, FALSE if not
 \description{
 verify that the name of an output is valid for an object
 }
+\examples{
+\dontrun{
+
+is.input(M,'value_1')
+}
+}

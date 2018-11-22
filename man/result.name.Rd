@@ -12,8 +12,12 @@ result.name(I) <- value
 \arguments{
 \item{M}{an iterator object}
 
+\item{I}{an iterator object}
+
 \item{value}{name of an output for iterator M}
 }
 \description{
-get/set the prediction output for a model. This determines which outputs from this model are supplied as inputs to the next model when used in a model.seq
+get/set the prediction output for a model. This determines which outputs
+from this model are supplied as inputs to the next model when used in
+a model.seq
 }

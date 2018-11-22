@@ -18,7 +18,19 @@ output.value(obj, name) <- value
 }
 \value{
 value of output
+
+object
 }
 \description{
 get/set the values for an output.
+}
+\examples{
+\dontrun{
+
+output.value(M,'value_1')
+}
+\dontrun{
+
+output.value(M,'value_1') = 10
+}
 }

@@ -11,6 +11,16 @@ chart.names(obj, ...)
 
 \item{...}{optional inputs}
 }
+\value{
+list of chart names
+}
 \description{
 return a list of valid charts for a struct object
+}
+\examples{
+\dontrun{
+
+D = dataset()
+chart.names(D)
+}
 }
