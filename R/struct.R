@@ -1,4 +1,4 @@
-#' struct: Statistics in R Using Class Templates
+#' StRUCT: Statistics in R Using Class Templates
 #'
 #' This package defines classes for developing statistical workflows.
 #' The idea is that these classes can be extended using other packages, making
@@ -7,7 +7,7 @@
 #' @section Classes:
 #' The classes include a \strong{dataset} object to standardise input of data
 #' into methods, as well as a \strong{model} class for methods such as PLS, and
-#' an \strong{iterator} class for methods #' such as permutation testing and
+#' an \strong{iterator} class for methods such as permutation testing and
 #' cross validation.
 #'
 #' @docType package

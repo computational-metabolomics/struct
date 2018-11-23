@@ -497,23 +497,24 @@ setGeneric("result",function(M)standardGeneric("result"))
 
 #' calculate a metric
 #'
-#' @param MET a metric object
-#' @param ... variable inputs depending on object
+#' @param obj a metric object
+#' @param value value
+#' @param ... additional inputs depending on object
 #' @rdname metric
 #' @export
-setGeneric("calculate",function(MET,...)standardGeneric("calculate"))
+setGeneric("calculate",function(obj,...)standardGeneric("calculate"))
 
 #' get the value for a metric
 #'
 #' @return value the calculated value of a metric
 #' @rdname metric
-
 #' @export
-setGeneric("value",function(MET)standardGeneric("value"))
+setGeneric("value",function(obj)standardGeneric("value"))
 
+#' set the valye for a metric
+#'
 #' @export
 #' @param obj metric object
-#' @param value value
 #' @rdname metric
 setGeneric("value<-",function(obj,value)standardGeneric("value<-"))
 

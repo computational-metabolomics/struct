@@ -30,10 +30,10 @@ metric<-setClass(
 #' }
 setMethod(f="calculate",
     signature=c('metric'),
-    definition=function(MET,Y,Yhat)
+    definition=function(obj,Y,Yhat)
     {
         warning('no calculation provided for this metric')
-        return(MET)
+        return(obj)
     }
 )
 
@@ -44,8 +44,8 @@ setMethod(f="calculate",
 #' value(MET)
 setMethod(f="value",
     signature=c("metric"),
-    definition=function(MET)
+    definition=function(obj)
     {
-        return(MET@value)
+        return(obj@value)
     }
 )

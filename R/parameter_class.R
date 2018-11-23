@@ -8,9 +8,8 @@
 #' (and outputs) are slots intended to be accessed by the user without the
 #' developer needing to provide generic functions.
 #' @export parameter_class
-#' @param obj parameter_class object
+#' @param obj,x parameter_class object
 #' @param name id of parameter
-#' @param x parameter_class object
 #' @param value value
 #' @include generics.R struct_class.R
 #' @return The return value varies depending on method used for this class

@@ -8,12 +8,12 @@
 \alias{value,metric-method}
 \title{metric class}
 \usage{
-\S4method{calculate}{metric}(MET, Y, Yhat)
+\S4method{calculate}{metric}(obj, Y, Yhat)
 
-\S4method{value}{metric}(MET)
+\S4method{value}{metric}(obj)
 }
 \arguments{
-\item{MET}{a metric object}
+\item{obj}{a metric object}
 
 \item{Y}{the true class labels}
 

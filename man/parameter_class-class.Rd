@@ -40,13 +40,11 @@
 \S4method{$}{parameter_class}(x, name) <- value
 }
 \arguments{
-\item{obj}{parameter_class object}
+\item{obj, x}{parameter_class object}
 
 \item{name}{id of parameter}
 
 \item{value}{value}
-
-\item{x}{parameter_class object}
 }
 \value{
 The return value varies depending on method used for this class

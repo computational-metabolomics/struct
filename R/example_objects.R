@@ -32,24 +32,27 @@ iris_dataset=function() {
 #' @param M test_model object
 #' @param D dataset object
 #' @rdname test_model
-#' @include model_class.R
+#' @include model_class.R model_stato_class.R
 #' @examples
 #' M = test_model()
 #' M = test_model(value_1 = 10, value_2 = 20)
 test_model=setClass('test_model',
-    contains = 'model',
+    contains = 'model.stato',
     slots=c(
-        'params.value_1'='entity',
+        'params.value_1'='entity.stato',
         'params.value_2'='numeric',
         'outputs.result_1'='entity',
         'outputs.result_2'='numeric'
     ),
     prototype = list(
         name='A test model',
-        description='An example model object',
+        description='An example model object. Training adds value_1 counts to
+        a dataset, while prediction adds value_2 counts.',
         type='test',
-        params.value_1=entity(value=10,name='Value 1',type='numeric',
-            'description'='An example entity object'),
+        stato.id='OBI:0000011',
+        params.value_1=entity.stato(value=10,name='Value 1',type='numeric',
+            description='An example entity object',
+            stato.id='STATO:0000047'),
         params.value_2=20,
         outputs.result_1=entity(name='Result 1',type='dataset',
             description='An example entity object'),
@@ -66,7 +69,6 @@ test_model=setClass('test_model',
 #' @rdname test_model
 #' @examples
 #' D = iris_dataset()
-#' M = test_model()
 #' M = test_model(value_1 = 10, value_2 = 20)
 #' M = model.train(M,D)
 setMethod(f='model.train',
@@ -87,9 +89,8 @@ setMethod(f='model.train',
 #' @rdname test_model
 #' @examples
 #' D = iris_dataset()
-#' M = test_model()
 #' M = test_model(value_1 = 10, value_2 = 20)
-#' M = model.train(M,D)
+#' M = model.predict(M,D)
 setMethod(f='model.predict',
     signature=c('test_model','dataset'),
     definition = function(M,D) {

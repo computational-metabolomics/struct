@@ -1,7 +1,11 @@
 #' chart_stato_class
 #'
-#' A base class in the \pkg{struct} package for creating chart objects with
-#' STATO ids
+#' A base class in the \pkg{struct} package. Should not be called directly.
+#'
+#' Extends the \code{chart} class to include stato functionality.
+#' @seealso Refer to \code{\link{chart}} and \code{\link{stato}} for further
+#' info.
+#'
 #' @export chart.stato
 #' @include generics.R struct_class.R chart_class.R stato_class.R
 #' @examples

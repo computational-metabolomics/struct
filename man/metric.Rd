@@ -6,20 +6,20 @@
 \alias{value<-}
 \title{calculate a metric}
 \usage{
-calculate(MET, ...)
+calculate(obj, ...)
 
-value(MET)
+value(obj)
 
 value(obj) <- value
 }
 \arguments{
-\item{MET}{a metric object}
+\item{obj}{a metric object}
 
-\item{...}{variable inputs depending on object}
-
-\item{obj}{metric object}
+\item{...}{additional inputs depending on object}
 
 \item{value}{value}
+
+\item{obj}{metric object}
 }
 \value{
 value the calculated value of a metric
@@ -28,4 +28,6 @@ value the calculated value of a metric
 calculate a metric
 
 get the value for a metric
+
+set the valye for a metric
 }

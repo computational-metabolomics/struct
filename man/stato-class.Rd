@@ -22,17 +22,24 @@
 \item{obj}{stato_class object}
 }
 \value{
-stato id
-
-stato name
-
-stato definition
-
-summary of the stato object
+Value returned depends on the method used.
 }
 \description{
 A base class in the \pkg{struct} package. Provides several fundamental
-methods for the STATO ontology and should not be called directly.
+methods and should not be called directly.
+}
+\details{
+STATO is the statistical methods ontology. It contains concepts and
+properties related to statistical methods, probability distributions and
+other concepts related to statistical analysis, including relationships to
+study designs and plots (see \href{http://stato-ontology.org/}{http://stato-ontology.org/}).
+
+This class provides access to a version of the STATO ontology database that
+can be searched by ontology id to provide formal names and definitions for
+methods, models, iterators, metrics and charts.
+
+This class makes use of the \code{ontologyIndex} package to search a copy of
+the STATO database included in this package.
 }
 \section{Methods (by generic)}{
 \itemize{
@@ -46,21 +53,20 @@ methods for the STATO ontology and should not be called directly.
 }}
 
 \examples{
-S = stato()
-\dontrun{
-M = model.stato()
-stato.id(M)
-}
-\dontrun{
-M = model()
+# an example stato object
+M = test_model()
+
+# the stato id assigned to object M
+stato.id(M) # OBI:0000011
+
+# the name associated with that id
 stato.name(M)
-}
-\dontrun{
-M = model()
+
+# the STATO definition for that id
 stato.definition(M)
-}
-\dontrun{
-M = model()
-stato.summary(M,'example')
-}
+
+# a summary of the STATO database entry for the id, and any parameters or
+# outputs that also have stato ids.
+stato.summary(M)
+
 }

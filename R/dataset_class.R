@@ -1,24 +1,40 @@
-#' dataset class
+#' Dataset class
 #'
-#' an object for holding raw data and associated meta data
+#' An object for holding raw data and associated meta data
+#'
+#' The dataset object is intended to allow raw data and meta data to be kept
+#' together, but without needing to store them e.g. in the same data frame. This
+#' is conventient for statistical methods where the meta data is often required
+#' but not as part of the same matrix as the raw data.
+#'
 #' @export dataset
-#' @slot name (character) name of the dataset
-#' @slot description (character) brief description of the dataset
-#' @slot data (data.frame) of data, samples in rows, variables/features
+#' @slot name Name of the dataset
+#' @slot description Brief description of the dataset
+#' @slot type The type of dataset e.g. single_block
+#' @slot data A data.frame of data, samples in rows, variables/features
 #' in columns.
-#' @slot sample.meta (data.frame) data frame of sample meta data e.g. group
+#' @slot sample.meta A data.frame of sample meta data e.g. group
 #' membership
-#' @slot variable.meta (data.frame) data frame of variable meta data
-#' @param obj a dataset object
-#' @param object a dataset object
-#' @param x a dataset object
-#' @param name name of the slot to set (data, sample_meta or variable_meta for
+#' @slot variable.meta A data frame of variable meta data e.g. wavelength, mass
+#' @param obj,object,x A dataset object
+#' @param name The name of the slot to set (data, sample_meta or variable_meta for
 #' dataset objects)
-#' @param value a data.frame
-#' @rdname dataset
+#' @param value A data.frame
 #' @include generics.R struct_class.R stato_class.R chart_class.R chart_stato.R
 #' @examples
 #' D = dataset()
+#'
+#' # get the data from a dataset object
+#' dataset.data(D) # OR
+#' D$data
+#'
+#' # get the sample meta data from a dataset object
+#' dataset.sample_meta(D) # OR
+#' D$sample_meta
+#'
+#' # get the variable meta data from a dataset object
+#' dataset.variable_meta(D) # OR
+#' D$variable_meta
 #'
 dataset<-setClass(
     "dataset",
@@ -35,14 +51,8 @@ dataset<-setClass(
 
 )
 
-#' get the data matrix from a dataset object
-#'
+#' @describeIn dataset get the data matrix from a dataset object
 #' @export
-#' @examples
-#' D = dataset()
-#' X = dataset.data(D)
-#'
-#' @rdname dataset
 setMethod(f="dataset.data",
     signature=c("dataset"),
     definition=function(obj)
@@ -51,14 +61,8 @@ setMethod(f="dataset.data",
     }
 )
 
-#' @rdname dataset
+#' @describeIn dataset get data/sample_meta/variable_meta from a dataset object
 #' @export
-#' @examples
-#' D = dataset()
-#' X = D$data
-#' S = D$sample_meta
-#' V = D$variable_meta
-#'
 setMethod(f="$",
     signature=c("dataset"),
     definition=function(x,name)
@@ -74,12 +78,8 @@ setMethod(f="$",
     }
 )
 
+#' @describeIn dataset set the data for a dataset object
 #' @export
-#' @rdname dataset
-#' @examples
-#' D = dataset()
-#' X = dataset.data(D) = iris[,1:4]
-#'
 setMethod(f="dataset.data<-",
     signature=c("dataset"),
     definition=function(obj,value)
@@ -89,14 +89,8 @@ setMethod(f="dataset.data<-",
     }
 )
 
-#' @rdname dataset
+#' @describeIn dataset set the data/sample_meta/variable_meta for a dataset
 #' @export
-#' @examples
-#' D = dataset()
-#' D$data = iris[,1:4]
-#' D$sample_meta = iris[,5,drop=FALSE]
-#' D$variable_meta=data.frame(sample_id = rownames(iris))
-#'
 setMethod(f="$<-",
     signature(x='dataset'),
     definition=function(x,name,value) {
@@ -111,15 +105,8 @@ setMethod(f="$<-",
     }
 )
 
-#' get the sample_meta for a dataset object
-#'
-#' Returns the sample meta data of a dataset object
+#' @describeIn dataset get the sample meta data from a dataset object
 #' @export
-#' @rdname dataset
-#' @examples
-#' D = dataset()
-#' S = dataset.sample_meta(D)
-#'
 setMethod(f="dataset.sample_meta",
     signature=c("dataset"),
     definition=function(obj)
@@ -128,14 +115,8 @@ setMethod(f="dataset.sample_meta",
     }
 )
 
-#' set the sample_meta for a dataset object
-#'
-#' Sets the sample meta data of a dataset object
+#' @describeIn dataset get the sample meta data from a dataset object
 #' @export
-#' @rdname dataset
-#' @examples
-#' D = dataset()
-#' dataset.sample_meta(D) = iris[,5,drop = FALSE]
 setMethod(f="dataset.sample_meta<-",
     signature=c("dataset"),
     definition=function(obj,value)
@@ -145,14 +126,8 @@ setMethod(f="dataset.sample_meta<-",
     }
 )
 
-#' Get the variable_meta for a dataset object
-#'
-#' Returns the variable metadata of a dataset object
+#' @describeIn dataset get the variable meta data from a dataset object
 #' @export
-#' @rdname dataset
-#' @examples
-#' D = dataset()
-#' V = dataset.variable_meta(D)
 setMethod(f="dataset.variable_meta",
     signature=c("dataset"),
     definition=function(obj)
@@ -161,16 +136,8 @@ setMethod(f="dataset.variable_meta",
     }
 )
 
-#' Set the variable_meta for a dataset object
-#'
-#' Sets the variable metadata of a dataset object
+#' @describeIn dataset set the variable meta data from a dataset object
 #' @export
-#' @rdname dataset
-#' @examples
-#' D = dataset()
-#' df = data.frame(sample_id = rownames(iris))
-#' dataset.variable_meta(D)= df
-#'
 setMethod(f="dataset.variable_meta<-",
     signature=c("dataset"),
     definition=function(obj,value) {
@@ -179,19 +146,9 @@ setMethod(f="dataset.variable_meta<-",
     }
 )
 
-#' dataset summary
-#'
-#' Prints a brief summary of the contents of a dataset object. Note that this is
-#' different to the output from show(dataset), which summarieses the dataset
-#' object, not the contents..
+#' @describeIn dataset print a summary of the data set to the terminal
 #' @export
 #' @import crayon
-#' @rdname dataset
-#' @examples
-#' D = dataset(data = iris[,1:4],
-#'                         sample_meta = iris[,5,drop=FALSE])
-#' summary(D)
-#'
 setMethod(f="summary",
     signature=c("dataset"),
     definition=function(object) {

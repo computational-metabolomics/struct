@@ -6,9 +6,15 @@
 \alias{chart.stato}
 \title{chart_stato_class}
 \description{
-A base class in the \pkg{struct} package for creating chart objects with
-STATO ids
+A base class in the \pkg{struct} package. Should not be called directly.
+}
+\details{
+Extends the \code{chart} class to include stato functionality.
 }
 \examples{
 obj = chart.stato() # create chart object
+}
+\seealso{
+Refer to \code{\link{chart}} and \code{\link{stato}} for further
+info.
 }
