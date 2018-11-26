@@ -42,7 +42,7 @@ setMethod(f="value",
     }
 )
 
-#' @describeIn entity set the    value for an entity
+#' @describeIn entity set the value for an entity
 #' @export
 setMethod(f="value<-",
     signature=c("entity"),

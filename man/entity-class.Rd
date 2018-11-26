@@ -18,7 +18,7 @@
 \item{value}{Value of the entity}
 }
 \description{
-A base class in the \pkg{struct} package. should not be called directly.
+A base class in the \pkg{struct} package. Not normally called directly.
 }
 \details{
 An entity object is used to store information about a parameter or output.
@@ -32,7 +32,7 @@ can be extracted using \code{param.obj} and \code{output.obj}.
 \itemize{
 \item \code{value}: get the value for an entity
 
-\item \code{value<-}: set the    value for an entity
+\item \code{value<-}: set the value for an entity
 }}
 
 \examples{
