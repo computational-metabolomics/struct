@@ -30,7 +30,7 @@
 #' # define the chart.plot method for the example_chart
 #' setMethod('chart.plot',                     # name of the method
 #'     signature('example_chart','dataset'),   # the class for each input
-#'     definition = function(obj, dobj) {      # function definition (from template)
+#'     definition = function(obj, dobj) {  # function definition (from template)
 #'         p=hist(dobj$data[,obj$column])      # the plot
 #'         return(p)
 #'     }

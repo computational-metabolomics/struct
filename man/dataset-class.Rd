@@ -36,8 +36,8 @@
 \arguments{
 \item{obj, object, x}{A dataset object}
 
-\item{name}{The name of the slot to set (data, sample_meta or variable_meta for
-dataset objects)}
+\item{name}{The name of the slot to set (data, sample_meta or variable_meta
+for dataset objects)}
 
 \item{value}{A data.frame}
 }

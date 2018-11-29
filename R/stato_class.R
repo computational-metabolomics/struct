@@ -6,7 +6,8 @@
 #' STATO is the statistical methods ontology. It contains concepts and
 #' properties related to statistical methods, probability distributions and
 #' other concepts related to statistical analysis, including relationships to
-#' study designs and plots (see \href{http://stato-ontology.org/}{http://stato-ontology.org/}).
+#' study designs and plots (see \href{http://stato-ontology.org/}{
+#' http://stato-ontology.org/}).
 #'
 #' This class provides access to a version of the STATO ontology database that
 #' can be searched by ontology id to provide formal names and definitions for

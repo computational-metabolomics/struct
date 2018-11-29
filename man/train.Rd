@@ -11,6 +11,14 @@ model.train(M, D)
 
 \item{D}{a dataset object}
 }
+\value{
+Returns a modified model object
+}
 \description{
 Trains a model using the input dataset
+}
+\examples{
+M = test_model()
+M = model.train(M,iris_dataset())
+
 }

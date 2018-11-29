@@ -36,6 +36,7 @@ can be extracted using \code{param.obj} and \code{output.obj}.
 }}
 
 \examples{
+# Create a new entity object
 E = entity(
     name='example',
     description='this is an example',
@@ -43,6 +44,7 @@ E = entity(
     value=1
 )
 
+# Get/set the value of the entity object
 value(E)
 value(E) = 10
 

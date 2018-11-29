@@ -18,8 +18,6 @@ value(obj) <- value
 \item{...}{additional inputs depending on object}
 
 \item{value}{value}
-
-\item{obj}{metric object}
 }
 \value{
 value the calculated value of a metric
@@ -29,5 +27,5 @@ calculate a metric
 
 get the value for a metric
 
-set the valye for a metric
+set the value for a metric
 }

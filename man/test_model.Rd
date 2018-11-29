@@ -35,6 +35,7 @@ dataset
 \examples{
 M = test_model()
 M = test_model(value_1 = 10, value_2 = 20)
+
 D = iris_dataset()
 M = test_model(value_1 = 10, value_2 = 20)
 M = model.train(M,D)

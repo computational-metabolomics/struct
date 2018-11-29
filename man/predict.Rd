@@ -2,7 +2,7 @@
 % Please edit documentation in R/generics.R
 \name{model.predict}
 \alias{model.predict}
-\title{Apply a (trained) model to a dataset D to get a prediction}
+\title{Model prediction}
 \usage{
 model.predict(M, D)
 }
@@ -11,7 +11,15 @@ model.predict(M, D)
 
 \item{D}{a dataset object}
 }
+\value{
+Returns a modified model object
+}
 \description{
-Apply a model using the input dataset. Requires that the model is trained
+Apply a model using the input dataset. Assumes the model is trained
 first.
+}
+\examples{
+M = test_model()
+M = model.predict(M,iris_dataset())
+
 }

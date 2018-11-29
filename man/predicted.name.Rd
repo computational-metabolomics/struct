@@ -3,7 +3,7 @@
 \name{predicted.name}
 \alias{predicted.name}
 \alias{predicted.name<-}
-\title{get/set output name as prediction output for a model}
+\title{Predicted output name}
 \usage{
 predicted.name(M)
 
@@ -14,7 +14,20 @@ predicted.name(M) <- value
 
 \item{value}{name of an output for this model}
 }
+\value{
+\describe{
+\item{\code{predicted.name}}{returns the name of the predicted output}
+\item{\code{predicted.name<-}}{sets the name of the predicted output and
+returns the modified object}
+}
+}
 \description{
 get/set the prediction output for a model. This determines which outputs from
 this model are supplied as inputs to the next model when used in a model.seq
+}
+\examples{
+M = test_model()
+predicted.name(M)
+predicted.name(M) = 'result_2'
+
 }

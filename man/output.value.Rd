@@ -12,25 +12,23 @@ output.value(obj, name) <- value
 \arguments{
 \item{obj}{a model or iterator object from the *struct* class}
 
-\item{name}{name of an output}
+\item{name}{of an output}
 
 \item{value}{value}
 }
 \value{
 value of output
 
-object
+struct object
 }
 \description{
 get/set the values for an output.
 }
 \examples{
-\dontrun{
+M = test_model()
+output.value(M,'result_1')
 
-output.value(M,'value_1')
-}
-\dontrun{
+M = test_model()
+output.value(M,'result_1') = 0.95
 
-output.value(M,'value_1') = 10
-}
 }

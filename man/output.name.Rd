@@ -2,7 +2,7 @@
 % Please edit documentation in R/generics.R
 \name{output.name}
 \alias{output.name}
-\title{output names}
+\title{output name}
 \usage{
 output.name(obj, name)
 }
@@ -12,14 +12,13 @@ output.name(obj, name)
 \item{name}{id of output}
 }
 \value{
-list of parameter names
+name of output
 }
 \description{
-return a list of valid parameter names for an object
+return a the name for a output, if available
 }
 \examples{
-\dontrun{
+M = test_model()
+output.name(M,'result_1')
 
-output.name(M,'value_1')
-}
 }

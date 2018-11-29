@@ -3,7 +3,7 @@
 \name{name}
 \alias{name}
 \alias{name<-}
-\title{get/set name for an object}
+\title{Object Name}
 \usage{
 name(obj)
 
@@ -14,6 +14,19 @@ name(obj) <- value
 
 \item{value}{a valid string}
 }
+\value{
+\describe{
+\item{\code{name(obj)}}{returns the name of an object as a string}
+\item{\code{name(obj)<-}}{sets the name of an object and returns the modified
+object}
+}
+}
 \description{
-get/set name for an object
+Get/set the name of an object. This is the long name for an object, not the
+name of the class object.
+}
+\examples{
+M = test_model()
+name(M)
+name(M) = 'example object'
 }

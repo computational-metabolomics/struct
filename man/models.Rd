@@ -14,6 +14,19 @@ models(ML) <- value
 
 \item{value}{a list containing only model objects}
 }
+\value{
+\describe{
+\item{\code{models(ML)}}{returns a list of models in the model sequence}
+\item{\code{models(ML)<-}}{sets the list of models in the model sequence}
+}
+}
 \description{
 Returns the list of models in a model.seq object
+}
+\examples{
+# Create a model sequence
+ML = model.seq()
+models(ML) = list(test_model(), test_model())
+models(ML)
+
 }

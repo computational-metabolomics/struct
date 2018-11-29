@@ -5,7 +5,7 @@
 \alias{type}
 \alias{type<-}
 \alias{type<-,struct_class-method}
-\title{get/set type for an object}
+\title{Object Type}
 \usage{
 type(obj)
 
@@ -19,10 +19,18 @@ type(obj) <- value
 \item{value}{a valid type string}
 }
 \value{
+\describe{
+\item{\code{type(obj)}}{returns the type of an object as a string}
+\item{\code{type(obj)<-}}{sets the type of an object and returns the modified
+object}
+}
+
 modified struct object
 }
 \description{
-get/set type for an object
+Get/set the type of a object. Can be used to specify e.g. where a model
+is for classification or for regression, or a dataset is single or multi
+block for example.
 }
 \section{Methods (by class)}{
 \itemize{
@@ -30,6 +38,10 @@ get/set type for an object
 }}
 
 \examples{
+M = test_model()
+type(M)
+type(M) = 'example'
+
 S = struct_class()
 type(S) = 'example'
 }

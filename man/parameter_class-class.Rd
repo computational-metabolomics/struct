@@ -92,7 +92,7 @@ example_class = setClass(
     'example_class',                     # name of the class
     contains='parameter_class',          # inherit the parameter class
     slots=c(params.example = 'numeric'), # specify a parameter
-    protoype=list(params.example = 10)   # initial value for parameter
+    prototype=list(params.example = 10)   # initial value for parameter
 )
 
 # create an instance of the object

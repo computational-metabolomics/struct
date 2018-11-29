@@ -11,6 +11,14 @@ method.apply(M, D)
 
 \item{D}{a dataset object}
 }
+\value{
+Returns a modified method object
+}
 \description{
 Applies a method to the input dataset
+}
+\examples{
+M = test_method()
+M = method.apply(M,iris_dataset())
+
 }

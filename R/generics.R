@@ -2,13 +2,13 @@
 ###### parameter class generics #####
 #####################################
 
-#' Get/set parameters for an object
+#' Parameter objects
 #'
 #' Gets or sets the object of a parameter e.g. to an entity() object.
 #' @param obj a model or iterator object from the *struct* class
 #' @param name name of parameter as a string
 #' @param value a valid value for the parameter being set
-#' @rdname param
+#' @rdname param.obj
 #' @export
 #' @return
 #' \describe{
@@ -18,17 +18,15 @@
 #' @examples
 #' # get the parameter as an object
 #' M = test_model()
-#' obj = param.obj(M, 'value_1')
+#' obj = param.obj(M, 'value_0')
 #'
 #' # set a parameter as an object
-#' param.obj(M, 'value_1') = entity(value = 15)
+#' param.obj(M, 'value_0') = entity(value = 15)
 #'
 setGeneric("param.obj",function(obj,name)standardGeneric("param.obj"))
 
-#' @rdname param
+#' @rdname param.obj
 #' @export
-#' @examples
-#'
 setGeneric("param.obj<-",function(obj,name,value)standardGeneric("param.obj<-"))
 
 #' Verify parameter
@@ -122,125 +120,120 @@ setGeneric("param.value<-",
 ###### output class generics #####
 #####################################
 
-#' output identifiers
+#' Output identifiers
 #'
 #' return a list of valid output ids for an object
 #' @param obj a model or iterator object from the *struct* class
 #' @return list of output ids
 #' @export
 #' @examples
-#' \dontrun{
-#'
+#' M = test_model()
 #' output.ids(M)
-#' }
+#'
 setGeneric("output.ids",function(obj)standardGeneric("output.ids"))
 
 #' output values
 #'
 #' get/set the values for an output.
 #' @param obj a model or iterator object from the *struct* class
-#' @param name name of an output
+#' @param name of an output
 #' @param value value
 #' @return value of output
 #' @rdname output.value
 #' @export
 #' @examples
-#' \dontrun{
+#' M = test_model()
+#' output.value(M,'result_1')
 #'
-#' output.value(M,'value_1')
-#' }
 setGeneric("output.value",function(obj,name)standardGeneric("output.value"))
 
 #' @rdname output.value
 #' @export
-#' @return object
+#' @return struct object
 #' @examples
-#' \dontrun{
+#' M = test_model()
+#' output.value(M,'result_1') = 0.95
 #'
-#' output.value(M,'value_1') = 10
-#' }
 setGeneric("output.value<-",
     function(obj,name,value)standardGeneric("output.value<-"))
 
-#' get/set outputs for an object
+#' Output objects
 #'
+#' Gets or sets the object of an output e.g. to an entity() object.
 #' @param obj a model or iterator object from the *struct* class
 #' @param name name of output as a string
-#' @rdname outputs
+#' @param value a valid value for the output being set
+#' @rdname output.obj
 #' @export
-#' @return object
-#' @examples
-#' \dontrun{
-#'
-#' x = output.obj(M,'value_1')
+#' @return
+#' \describe{
+#' \item{\code{output.obj(M,name)}}{returns the named output as an object}
+#' \item{\code{output.obj(M,name)<-}}{sets the named output of an object}
 #' }
+#' @examples
+#' # get the output as an object
+#' M = test_model()
+#' obj = output.obj(M, 'result_1')
+#'
+#' # set a output as an object
+#' output.obj(M, 'result_1') = entity(value = 15)
+#'
 setGeneric("output.obj",
     function(obj,name)standardGeneric("output.obj"))
 
 #' @export
-#' @param value a valid value for the parameter being set
-#' @rdname outputs
-#' @return object
-#' @examples
-#' \dontrun{
-#'
-#' output.value(M,'value_1') = 10
-#' }
+#' @rdname output.obj
 setGeneric("output.obj<-",
     function(obj,name,value)standardGeneric("output.obj<-"))
 
-#' verify output name
+#' Verify output
 #'
-#' verify that the name of an output is valid for an object
+#' Verify that the name of a output is valid for an object
 #' @param obj a model or iterator object from the *struct* class
-#' @param name name of the output as a string
+#' @param name name of output as a string
 #' @return TRUE if output name is valid, FALSE if not
 #' @export
 #' @examples
-#' \dontrun{
+#' M = test_model()
+#' is.output(M,'result_1') # TRUE
+#' is.output(M,'result_0')   # FALSE
 #'
-#' is.input(M,'value_1')
-#' }
 setGeneric("is.output",function(obj,name)standardGeneric("is.output"))
 
-#' output names
+#' output name
 #'
-#' return a list of valid parameter names for an object
+#' return a the name for a output, if available
 #' @param obj a model or iterator object from the *struct* class
 #' @param name id of output
-#' @return list of parameter names
+#' @return name of output
 #' @export
 #' @examples
-#' \dontrun{
+#' M = test_model()
+#' output.name(M,'result_1')
 #'
-#' output.name(M,'value_1')
-#' }
 setGeneric("output.name",function(obj,name)standardGeneric("output.name"))
 
 #' output list
 #'
-#' get a named list of outputs and thier current value for an object
+#' get/set a named list of outputs and their current value for an object
 #' @param obj a model or iterator object from the *struct* class
-#' @param value a named list of outputs for an object
+#' @param value a named list
 #' @return list of output names
 #' @rdname output.list
 #' @export
-#' @return object
 #' @examples
-#' \dontrun{
+#' M = test_model()
+#' L = output.list(M)
 #'
-#' output.list(M)
-#' }
 setGeneric("output.list",function(obj)standardGeneric("output.list"))
 
 #' @rdname output.list
 #' @export
-#' @return list
+#' @return struct object
 #' @examples
-#' \dontrun{
+#' M = test_model()
+#' output.list(M)=list('result_1' = dataset(),'result_2' = dataset())
 #'
-#' output.list(M) = liist('value_1'=10)
-#' }
 setGeneric("output.list<-",function(obj,value)standardGeneric("output.list<-"))
 
 #####################################
@@ -249,33 +242,38 @@ setGeneric("output.list<-",function(obj,value)standardGeneric("output.list<-"))
 
 #' chart names
 #'
-#' return a list of valid charts for a struct object
+#' Returns a list of valid charts for a struct object
+#'
+#' The chart.names method searches chart objects that specify the input object
+#' type as an input.
+#'
+#' Optional input \code{ret = 'char'} is the default and will return a character
+#' vector of object names. \code{ret = 'obj'} will return a list containing the
+#' named chart objects.
 #' @param obj a object from the *struct* package
-#' @param ... optional inputs
+#' @param ... optional inputs (see details)
 #' @export
 #' @return list of chart names
 #' @examples
-#' \dontrun{
+#' M = test_model()
+#' chart.names(M) # 'example_chart'
+#' chart.names(M,'char') # as above
+#' chart.names(M,'obj') # returns a list of chart objects
 #'
-#' D = dataset()
-#' chart.names(D)
-#' }
 setGeneric("chart.names",function(obj,...)standardGeneric("chart.names"))
 
-#' plot a chart for an object
+#' chart.plot
 #'
+#' Plots a chart object
 #' @param obj a chart object
 #' @param dobj a struct object
 #' @param ... optional inputs
 #' @rdname chart.plot
-#' @return plot
+#' @return a plot object
 #' @examples
-#' \dontrun{
-#'
-#' C=chart()
+#' C = example_chart()
 #' chart.plot(C)
-#' p=chart.plot(C) # can return e.g. ggplot object
-#' }
+#'
 #' @export
 setGeneric("chart.plot",function(obj, dobj, ...)standardGeneric("chart.plot"))
 
@@ -283,36 +281,69 @@ setGeneric("chart.plot",function(obj, dobj, ...)standardGeneric("chart.plot"))
 ###### struct class generics #####
 #####################################
 
-#' get/set type for an object
+#' Object Type
 #'
+#' Get/set the type of a object. Can be used to specify e.g. where a model
+#' is for classification or for regression, or a dataset is single or multi
+#' block for example.
 #' @param obj an object from the \pkg{struct} class
 #' @param value a valid type string
 #' @rdname type
 #' @export
+#' @return
+#' \describe{
+#' \item{\code{type(obj)}}{returns the type of an object as a string}
+#' \item{\code{type(obj)<-}}{sets the type of an object and returns the modified
+#' object}
+#' }
+#' @examples
+#' M = test_model()
+#' type(M)
+#' type(M) = 'example'
+#'
 setGeneric("type",function(obj)standardGeneric("type"))
 
 #' @export
 #' @rdname type
 setGeneric("type<-",function(obj,value)standardGeneric("type<-"))
 
-#' get/set name for an object
+#' Object Name
 #'
+#' Get/set the name of an object. This is the long name for an object, not the
+#' name of the class object.
 #' @param obj an object from the \pkg{struct} class
 #' @param value a valid string
 #' @rdname name
+#' @return
+#' \describe{
+#' \item{\code{name(obj)}}{returns the name of an object as a string}
+#' \item{\code{name(obj)<-}}{sets the name of an object and returns the modified
+#' object}
+#' }
 #' @export
+#' @examples
+#' M = test_model()
+#' name(M)
+#' name(M) = 'example object'
 setGeneric("name",function(obj)standardGeneric("name"))
 
 #' @export
 #' @rdname name
 setGeneric("name<-",function(obj,value)standardGeneric("name<-"))
 
-#' get/set description for an object
+#' Object Description
 #'
+#' Get/set the description of an object.
 #' @param obj an object from the \pkg{struct} class
 #' @param value a valid string
 #' @rdname desc
-
+#' @return
+#' \describe{
+#' \item{\code{description(obj)}}{returns the description of an object as a
+#' string}
+#' \item{\code{description(obj)<-}}{sets the description of an object and
+#' returns the modified object}
+#' }
 #' @export
 setGeneric("description",function(obj)standardGeneric("description"))
 
@@ -329,8 +360,13 @@ setGeneric("description<-",function(obj,value)standardGeneric("description<-"))
 #' Applies a method to the input dataset
 #' @param M a model object
 #' @param D a dataset object
+#' @return Returns a modified method object
 #' @rdname method.apply
 #' @export
+#' @examples
+#' M = test_method()
+#' M = method.apply(M,iris_dataset())
+#'
 setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
 
 #################################
@@ -342,45 +378,70 @@ setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
 #' Trains a model using the input dataset
 #' @param M a model object
 #' @param D a dataset object
+#' @return Returns a modified model object
 #' @rdname train
 #' @export
+#' @examples
+#' M = test_model()
+#' M = model.train(M,iris_dataset())
+#'
 setGeneric("model.train",function(M,D)standardGeneric("model.train"))
 
-#' Apply a (trained) model to a dataset D to get a prediction
+#' Model prediction
 #'
-#' Apply a model using the input dataset. Requires that the model is trained
+#' Apply a model using the input dataset. Assumes the model is trained
 #' first.
 #' @param M a model object
 #' @param D a dataset object
-
+#' @return Returns a modified model object
 #' @rdname predict
 #' @export
+#' @examples
+#' M = test_model()
+#' M = model.predict(M,iris_dataset())
+#'
 setGeneric("model.predict",function(M,D)standardGeneric("model.predict"))
 
-#' get/set output name as prediction output for a model
+#' Predicted output name
 #'
 #' get/set the prediction output for a model. This determines which outputs from
 #' this model are supplied as inputs to the next model when used in a model.seq
 #' @param M a model object
 #' @param value name of an output for this model
-
+#' @return
+#' \describe{
+#' \item{\code{predicted.name}}{returns the name of the predicted output}
+#' \item{\code{predicted.name<-}}{sets the name of the predicted output and
+#' returns the modified object}
+#' }
 #' @rdname predicted.name
 #' @export
+#' @examples
+#' M = test_model()
+#' predicted.name(M)
+#' predicted.name(M) = 'result_2'
+#'
 setGeneric("predicted.name",function(M)standardGeneric("predicted.name"))
 
 #' @export
-#' @inheritParams predicted.name
 #' @rdname predicted.name
 setGeneric("predicted.name<-",
     function(M,value)standardGeneric("predicted.name<-"))
 
-#' prediction output for a model
+#' Prediction output
 #'
 #' returns the prediction output for a model. This is supplied as input to the
 #' next model when used in a model.seq
 #' @param M a model object
+#' @return The value returned varies depending on the output.
 #' @rdname predicted
 #' @export
+#' @examples
+#' M = test_model()
+#' M = model.train(M, iris_dataset())
+#' M = model.predict(M, iris_dataset())
+#' predicted(M)
+#'
 setGeneric("predicted",function(M)standardGeneric("predicted"))
 
 ######################################
@@ -392,8 +453,19 @@ setGeneric("predicted",function(M)standardGeneric("predicted"))
 #' Returns the list of models in a model.seq object
 #' @param ML a model.seq object
 #' @param value a list containing only model objects
+#' @return
+#' \describe{
+#' \item{\code{models(ML)}}{returns a list of models in the model sequence}
+#' \item{\code{models(ML)<-}}{sets the list of models in the model sequence}
+#' }
 #' @rdname models
 #' @export
+#' @examples
+#' # Create a model sequence
+#' ML = model.seq()
+#' models(ML) = list(test_model(), test_model())
+#' models(ML)
+#'
 setGeneric("models",function(ML)standardGeneric("models"))
 
 #' @export
@@ -404,12 +476,25 @@ setGeneric("models<-",function(ML,value)standardGeneric("models<-"))
 ###### dataset class generics #####
 ###################################
 
-#' get/set data for a dataset object
+#' Dataset object data
 #'
 #' @param obj a type object from the *struct* class
 #' @param value a data.frame of raw data
 #' @rdname data
+#' @return
+#' \describe{
+#' \item{\code{dataset.data(obj)}}{returns a data.frame of raw data}
+#' \item{\code{dataset.data(obj)<-}}{sets the raw data of a dataset object}
+#' }
 #' @export
+#' @examples
+#' # iris dataset
+#' D = iris_dataset()
+#' # original raw data
+#' X = dataset.data(D)
+#' # modify the raw dataset
+#' dataset.data(D) = X + 1
+#'
 setGeneric("dataset.data",
     function(obj)standardGeneric("dataset.data"))
 
@@ -418,12 +503,23 @@ setGeneric("dataset.data",
 setGeneric("dataset.data<-",
     function(obj,value)standardGeneric("dataset.data<-"))
 
-#' get/set sample meta data for a dataset object
+#' Sample meta data
 #'
+#' get/set sample meta data for a dataset object
 #' @param obj a type object from the *struct* class
 #' @param value a data.frame of meta data
 #' @rdname sample_meta
-
+#' @return
+#' \describe{
+#' \item{\code{dataset.sample_meta(obj)}}{returns a data.frame of meta data}
+#' \item{\code{dataset.sample_meta(obj)<-}}{sets the meta data of a dataset
+#' object}
+#' }
+#' @examples
+#' # iris dataset
+#' D = iris_dataset()
+#' X = dataset.sample_meta(D)
+#' dataset.sample_meta(D) = X
 #' @export
 setGeneric("dataset.sample_meta",
     function(obj)standardGeneric("dataset.sample_meta"))
@@ -433,13 +529,25 @@ setGeneric("dataset.sample_meta",
 setGeneric("dataset.sample_meta<-",
     function(obj,value)standardGeneric("dataset.sample_meta<-"))
 
-#' get/set variable meta data for a dataset object
+#' Variable meta data
 #'
+#' get/set variable meta data for a dataset object
 #' @param obj a type object from the *struct* class
 #' @param value a data.frame of meta data
 #' @rdname variable_meta
-
+#' @return
+#' \describe{
+#' \item{\code{dataset.variable_meta(obj)}}{returns a data.frame of meta data}
+#' \item{\code{dataset.variable_meta(obj)<-}}{sets the meta data of a dataset
+#' object}
+#' }
 #' @export
+#' @examples
+#' # iris dataset
+#' D = iris_dataset()
+#' X = dataset.variable_meta(D)
+#' dataset.variable_meta(D) = X
+#'
 setGeneric("dataset.variable_meta",
     function(obj)standardGeneric("dataset.variable_meta"))
 
@@ -511,10 +619,9 @@ setGeneric("calculate",function(obj,...)standardGeneric("calculate"))
 #' @export
 setGeneric("value",function(obj)standardGeneric("value"))
 
-#' set the valye for a metric
+#' set the value for a metric
 #'
 #' @export
-#' @param obj metric object
 #' @rdname metric
 setGeneric("value<-",function(obj,value)standardGeneric("value<-"))
 

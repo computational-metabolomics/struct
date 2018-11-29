@@ -10,8 +10,8 @@
 #' summary(D)
 iris_dataset=function() {
     iris=datasets::iris
-    v=data.frame('sample_id'=rownames(iris))
-    rownames(v)=rownames(iris)
+    v=data.frame('feature_id'=colnames(iris))
+    rownames(v)=colnames(iris)
     test_data = dataset(
         name = 'Iris',
         description = "Fisher's Iris data",
@@ -28,7 +28,6 @@ iris_dataset=function() {
 #' An example model for testing
 #' @export test_model
 #' @return dataset object
-#' @import datasets
 #' @param M test_model object
 #' @param D dataset object
 #' @rdname test_model
@@ -36,13 +35,15 @@ iris_dataset=function() {
 #' @examples
 #' M = test_model()
 #' M = test_model(value_1 = 10, value_2 = 20)
+#'
 test_model=setClass('test_model',
     contains = 'model.stato',
     slots=c(
+        'params.value_0'='entity',
         'params.value_1'='entity.stato',
         'params.value_2'='numeric',
         'outputs.result_1'='entity',
-        'outputs.result_2'='numeric'
+        'outputs.result_2'='dataset'
     ),
     prototype = list(
         name='A test model',
@@ -50,13 +51,15 @@ test_model=setClass('test_model',
         a dataset, while prediction adds value_2 counts.',
         type='test',
         stato.id='OBI:0000011',
+        params.value_0=entity(name='Value 0',value=0,type='numeric'),
         params.value_1=entity.stato(value=10,name='Value 1',type='numeric',
-            description='An example entity object',
+            description='An example entity.stato object',
             stato.id='STATO:0000047'),
         params.value_2=20,
         outputs.result_1=entity(name='Result 1',type='dataset',
             description='An example entity object'),
-        outputs.result_2=2
+        outputs.result_2=dataset(),
+        predicted='result_1'
     )
 )
 
@@ -74,8 +77,9 @@ test_model=setClass('test_model',
 setMethod(f='model.train',
     signature=c('test_model','dataset'),
     definition = function(M,D) {
-        D=D$data+M$value_1
+        D$data = D$data + M$value_1
         M$result_1=D
+        return(M)
     }
 )
 
@@ -85,7 +89,6 @@ setMethod(f='model.train',
 #' dataset
 #' @export
 #' @return dataset object
-#' @import datasets
 #' @rdname test_model
 #' @examples
 #' D = iris_dataset()
@@ -94,10 +97,95 @@ setMethod(f='model.train',
 setMethod(f='model.predict',
     signature=c('test_model','dataset'),
     definition = function(M,D) {
-        D=D$data+M$value_2
+        D$data = D$data + M$value_2
         M$result_2=D
+        return(M)
     }
 )
 
 
+#' example chart object
+#'
+#' an example of a chart object for documentation purposes
+#' @export example_chart
+#' @rdname chart.xample
+#' @examples
+#' C = example_chart()
+#' chart.plot(C,test_model())
+#' @importFrom graphics plot
+#' @importFrom stats runif
+example_chart<-setClass(
+    "example_chart",
+    contains=c('chart')
+)
 
+#' @param obj a chart object
+#' @param dobj a test_model object
+#' @rdname chart.xample
+#' @export
+setMethod(f="chart.plot",
+    signature=c("example_chart","test_model"),
+    definition=function(obj,dobj)
+    {
+        p = plot(runif(n = 10),runif(n = 10))
+        return(p)
+    }
+)
+
+#' Example method
+#'
+#' An example model for testing
+#' @export test_method
+#' @return test method object
+#' @param M test_method object
+#' @param D dataset object
+#' @rdname test_method
+#' @include method_class.R method_stato_class.R
+#' @examples
+#' M = test_method()
+#' M = test_method(value_1 = 10, value_2 = 20)
+#'
+test_method=setClass('test_method',
+    contains = 'method.stato',
+    slots=c(
+        'params.value_0'='entity',
+        'params.value_1'='entity.stato',
+        'params.value_2'='numeric',
+        'outputs.result_1'='entity',
+        'outputs.result_2'='dataset'
+    ),
+    prototype = list(
+        name='A test model',
+        description='An example method object. Adds value_1 counts to
+        a dataset.',
+        type='test',
+        stato.id='OBI:0000011',
+        params.value_0=entity(name='Value 0',value=0,type='numeric'),
+        params.value_1=entity.stato(value=10,name='Value 1',type='numeric',
+            description='An example entity.stato object',
+            stato.id='STATO:0000047'),
+        params.value_2=20,
+        outputs.result_1=entity(name='Result 1',type='dataset',
+            description='An example entity object'),
+        outputs.result_2=dataset()
+    )
+)
+
+#' method.apply example
+#'
+#' applies the example method, which adds value_1 to the raw data of a dataset
+#' @export
+#' @return dataset object
+#' @rdname test_method
+#' @examples
+#' D = iris_dataset()
+#' M = test_method(value_1 = 10, value_2 = 20)
+#' M = method.apply(M,D)
+#'
+setMethod(f='method.apply',
+    signature=c('test_method','dataset'),
+    definition = function(M,D) {
+        D$data = D$data + M$value_1
+        M$result_1=D
+    }
+)

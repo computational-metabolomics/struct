@@ -4,10 +4,10 @@
 \name{chart-class}
 \alias{chart-class}
 \alias{chart}
-\alias{chart.plot,chart-method}
+\alias{chart.plot,chart,ANY-method}
 \title{chart_class}
 \usage{
-\S4method{chart.plot}{chart}(obj)
+\S4method{chart.plot}{chart,ANY}(obj)
 }
 \arguments{
 \item{obj}{a chart object}
@@ -43,7 +43,7 @@ example_chart = setClass('example_chart',
 # define the chart.plot method for the example_chart
 setMethod('chart.plot',                     # name of the method
     signature('example_chart','dataset'),   # the class for each input
-    definition = function(obj, dobj) {      # function definition (from template)
+    definition = function(obj, dobj) {  # function definition (from template)
         p=hist(dobj$data[,obj$column])      # the plot
         return(p)
     }

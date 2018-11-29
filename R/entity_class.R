@@ -14,6 +14,7 @@
 #' @param value Value of the entity
 #' @include generics.R struct_class.R
 #' @examples
+#' # Create a new entity object
 #' E = entity(
 #'     name='example',
 #'     description='this is an example',
@@ -21,6 +22,7 @@
 #'     value=1
 #' )
 #'
+#' # Get/set the value of the entity object
 #' value(E)
 #' value(E) = 10
 #'

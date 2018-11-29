@@ -3,7 +3,7 @@
 \name{description}
 \alias{description}
 \alias{description<-}
-\title{get/set description for an object}
+\title{Object Description}
 \usage{
 description(obj)
 
@@ -14,6 +14,14 @@ description(obj) <- value
 
 \item{value}{a valid string}
 }
+\value{
+\describe{
+\item{\code{description(obj)}}{returns the description of an object as a
+string}
+\item{\code{description(obj)<-}}{sets the description of an object and
+returns the modified object}
+}
+}
 \description{
-get/set description for an object
+Get/set the description of an object.
 }

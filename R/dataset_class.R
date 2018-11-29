@@ -17,8 +17,8 @@
 #' membership
 #' @slot variable.meta A data frame of variable meta data e.g. wavelength, mass
 #' @param obj,object,x A dataset object
-#' @param name The name of the slot to set (data, sample_meta or variable_meta for
-#' dataset objects)
+#' @param name The name of the slot to set (data, sample_meta or variable_meta
+#' for dataset objects)
 #' @param value A data.frame
 #' @include generics.R struct_class.R stato_class.R chart_class.R chart_stato.R
 #' @examples
