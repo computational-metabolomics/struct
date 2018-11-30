@@ -4,7 +4,7 @@
 \alias{calculate}
 \alias{value}
 \alias{value<-}
-\title{calculate a metric}
+\title{Calculate metric}
 \usage{
 calculate(obj, ...)
 
@@ -23,7 +23,7 @@ value(obj) <- value
 value the calculated value of a metric
 }
 \description{
-calculate a metric
+Calculate metric
 
 get the value for a metric
 

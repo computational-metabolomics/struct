@@ -15,7 +15,7 @@
 #' in columns.
 #' @slot sample.meta A data.frame of sample meta data e.g. group
 #' membership
-#' @slot variable.meta A data frame of variable meta data e.g. wavelength, mass
+#' @slot variable.meta A data frame of variable meta data
 #' @param obj,object,x A dataset object
 #' @param name The name of the slot to set (data, sample_meta or variable_meta
 #' for dataset objects)
@@ -115,7 +115,7 @@ setMethod(f="dataset.sample_meta",
     }
 )
 
-#' @describeIn dataset get the sample meta data from a dataset object
+#' @describeIn dataset set the sample meta data for a dataset
 #' @export
 setMethod(f="dataset.sample_meta<-",
     signature=c("dataset"),
@@ -136,7 +136,7 @@ setMethod(f="dataset.variable_meta",
     }
 )
 
-#' @describeIn dataset set the variable meta data from a dataset object
+#' @describeIn dataset set the variable meta data for a dataset
 #' @export
 setMethod(f="dataset.variable_meta<-",
     signature=c("dataset"),

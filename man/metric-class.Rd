@@ -6,11 +6,14 @@
 \alias{metric}
 \alias{calculate,metric-method}
 \alias{value,metric-method}
+\alias{value<-,metric-method}
 \title{metric class}
 \usage{
 \S4method{calculate}{metric}(obj, Y, Yhat)
 
 \S4method{value}{metric}(obj)
+
+\S4method{value}{metric}(obj) <- value
 }
 \arguments{
 \item{obj}{a metric object}
@@ -31,6 +34,8 @@ functionality for method-specific classes.
 \item \code{calculate}: calculate a metric
 
 \item \code{value}: get the caluclated value for a metric
+
+\item \code{value<-}: set the caluclated value for a metric
 }}
 
 \examples{
@@ -41,4 +46,6 @@ calculate(M,Y,Yhat)
 }
 MET = metric()
 value(MET)
+MET = metric()
+value(MET)=10
 }

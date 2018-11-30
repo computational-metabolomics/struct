@@ -3,7 +3,7 @@
 \name{run}
 \alias{run}
 \alias{evaluate}
-\title{run an iterator object}
+\title{Run iterator}
 \usage{
 run(I, D, MET)
 
@@ -16,8 +16,35 @@ evaluate(I, MET)
 
 \item{MET}{a metric object}
 }
-\description{
-run an iterator object
+\value{
+Modified iterator object
 
-evaluate an iterator object
+Modified iterator object
+}
+\description{
+Runs an iterator, applying the chosen model multiple times.
+
+Evaluates an iterator by e.g. averaging over all iterations. May be
+deprecated in a future release as \code{evaluate} is applied by \code{run}
+anyway.
+}
+\details{
+Running an iterator will apply the iterator a number of times to a dataset.
+For example, in cross-validation the same model is applied multiple times to
+the same data, splitting it into training and test sets. The input metric
+object can be calculated and collected for each iteration as an output.
+}
+\examples{
+D = iris_dataset() # get some data
+MET = metric()  # use a metric
+I = test_iterator() # initialise iterator
+models(I) = test_model() # set the model
+I = run(I,D,MET) # run
+
+D = iris_dataset() # get some data
+MET = metric()  # use a metric
+I = test_iterator() # initialise iterator
+models(I) = test_model() # set the model
+I = run(I,D,MET) # run
+I = evaluate(I,MET) # evaluate
 }

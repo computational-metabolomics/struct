@@ -16,8 +16,21 @@ result.name(I) <- value
 
 \item{value}{name of an output for iterator M}
 }
+\value{
+\describe{
+\item{\code{result.name(M)}}{returns the name of the output for this iterator
+(equivalent to \code{predicted} for model objects)}
+\item{\code{result.name(I)<-}}{sets the default output for an iterator}
+}
+}
 \description{
 get/set the prediction output for a model. This determines which outputs
 from this model are supplied as inputs to the next model when used in
 a model.seq
+}
+\examples{
+I = test_iterator() # initialise iterator
+result.name(I)
+result.name(I) = 'result_1'
+
 }

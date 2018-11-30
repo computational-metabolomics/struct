@@ -36,7 +36,8 @@ Collate:
 RoxygenNote: 6.1.1
 Suggests: 
     testthat,
-    rstudioapi
+    rstudioapi,
+    rmarkdown
 VignetteBuilder: knitr
 Imports: methods, ontologyIndex, crayon, datasets,graphics, stats, utils, knitr
-biocViews: Metabolomics, Statistics, ReprodicubleResearch
+biocViews: WorkflowStep

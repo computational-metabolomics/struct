@@ -62,11 +62,11 @@ but not as part of the same matrix as the raw data.
 
 \item \code{dataset.sample_meta}: get the sample meta data from a dataset object
 
-\item \code{dataset.sample_meta<-}: get the sample meta data from a dataset object
+\item \code{dataset.sample_meta<-}: set the sample meta data for a dataset
 
 \item \code{dataset.variable_meta}: get the variable meta data from a dataset object
 
-\item \code{dataset.variable_meta<-}: set the variable meta data from a dataset object
+\item \code{dataset.variable_meta<-}: set the variable meta data for a dataset
 
 \item \code{summary}: print a summary of the data set to the terminal
 }}
@@ -86,7 +86,7 @@ in columns.}
 \item{\code{sample.meta}}{A data.frame of sample meta data e.g. group
 membership}
 
-\item{\code{variable.meta}}{A data frame of variable meta data e.g. wavelength, mass}
+\item{\code{variable.meta}}{A data frame of variable meta data}
 }}
 
 \examples{

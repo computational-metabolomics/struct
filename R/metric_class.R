@@ -49,3 +49,54 @@ setMethod(f="value",
         return(obj@value)
     }
 )
+
+#' @describeIn metric set the caluclated value for a metric
+#' @export
+#' @examples
+#' MET = metric()
+#' value(MET)=10
+setMethod(f="value<-",
+    signature=c("metric"),
+    definition=function(obj)
+    {
+        return(obj)
+    }
+)
+
+
+#' Example metric
+#'
+#' An example metric for testing
+#' @export test_metric
+#' @return test metric object
+#' @param obj metric object
+#' @rdname test_metric
+#' @include metric_class.R
+#' @examples
+#' MET = test_metric()
+#'
+test_metric<-setClass(
+    "test_metric",
+    contains='metric',
+    prototype = list(name='example metric')
+)
+
+#' calculate metric example
+#'
+#' calculates a metric, which just returns a value of 3.142
+#' @export
+#' @return dataset object
+#' @rdname test_metric
+#' @examples
+#' MET = test_metric()
+#' MET = calculate(MET)
+#'
+setMethod(f="calculate",
+    signature=c('test_metric'),
+    definition=function(obj)
+    {
+        value(obj)=3.142
+        return(obj)
+    }
+)
+

@@ -560,19 +560,44 @@ setGeneric("dataset.variable_meta<-",
 ###### iterator class generics #####
 ####################################
 
-#' run an iterator object
+#' Run iterator
 #'
+#' Runs an iterator, applying the chosen model multiple times.
+#'
+#' Running an iterator will apply the iterator a number of times to a dataset.
+#' For example, in cross-validation the same model is applied multiple times to
+#' the same data, splitting it into training and test sets. The input metric
+#' object can be calculated and collected for each iteration as an output.
 #' @param I an iterator object
 #' @param D a dataset object
 #' @param MET a metric object
 #' @rdname iterator
 #' @export
+#' @return Modified iterator object
+#' @examples
+#' D = iris_dataset() # get some data
+#' MET = metric()  # use a metric
+#' I = test_iterator() # initialise iterator
+#' models(I) = test_model() # set the model
+#' I = run(I,D,MET) # run
+#'
 setGeneric("run",function(I,D,MET)standardGeneric("run"))
 
-#' evaluate an iterator object
+#' Evaluate an iterator
 #'
+#' Evaluates an iterator by e.g. averaging over all iterations. May be
+#' deprecated in a future release as \code{evaluate} is applied by \code{run}
+#' anyway.
 #' @rdname iterator
 #' @export
+#' @return Modified iterator object
+#' @examples
+#' D = iris_dataset() # get some data
+#' MET = metric()  # use a metric
+#' I = test_iterator() # initialise iterator
+#' models(I) = test_model() # set the model
+#' I = run(I,D,MET) # run
+#' I = evaluate(I,MET) # evaluate
 setGeneric("evaluate",function(I,MET)standardGeneric("evaluate"))
 
 #' get/set output name as prediction output for a model
@@ -585,25 +610,46 @@ setGeneric("evaluate",function(I,MET)standardGeneric("evaluate"))
 #' @param value name of an output for iterator M
 #' @rdname result.name
 #' @export
+#' @return
+#' \describe{
+#' \item{\code{result.name(M)}}{returns the name of the output for this iterator
+#' (equivalent to \code{predicted} for model objects)}
+#' \item{\code{result.name(I)<-}}{sets the default output for an iterator}
+#' }
+#' @examples
+#' I = test_iterator() # initialise iterator
+#' result.name(I)
+#' result.name(I) = 'result_1'
+#'
 setGeneric("result.name",function(M)standardGeneric("result.name"))
 
 #' @export
 #' @rdname result.name
 setGeneric("result.name<-",function(I,value)standardGeneric("result.name<-"))
 
-#' results output for an iterator
+#' Iterator result
 #'
-#' returns the results of an iterator. This is used to control model flow.
+#' Returns the results of an iterator. This is used to control model flow in a
+#' similar way to \code{predict} for model and model.seq objects.
 #' @param M an iterator object
 #' @rdname result
 #' @export
+#' @return the returned output varies with the algorithm implemented
+#' @examples
+#' D = iris_dataset() # get some data
+#' MET = metric()  # use a metric
+#' I = test_iterator() # initialise iterator
+#' models(I) = test_model() # set the model
+#' I = run(I,D,MET) # run
+#' result(I)
+#'
 setGeneric("result",function(M)standardGeneric("result"))
 
 ####################################
 ###### metric class generics #####
 ####################################
 
-#' calculate a metric
+#' Calculate metric
 #'
 #' @param obj a metric object
 #' @param value value
