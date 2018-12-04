@@ -75,7 +75,7 @@ model_template=setClass('model_template', # replace model_template (both places)
     contains = c('model','stato'),        # 'stato' is optional
 ```
 
-The `contains` option  tells R which aspects of StRUCT to include in the new
+The `contains` option  tells R which aspects of `struct` to include in the new
 model.
 
 ***
@@ -83,21 +83,23 @@ model.
 ### Slots for parameters and outputs
 
 After defining the name of your new class and specifying that it contains the 
-`model` or `model.stato` class, the *slots* are defined. Slots are just
-variables that are associated with the object. It is here that you 
-specify the input parameters and outputs for your class. Input parameters should
-have `params.` appended and outputs should have `outputs.` appended. 
+`model` and (optionally) the `stato` class, the *slots* are defined. Slots are 
+variables that are associated with the object that are intended to be accessable
+by the user. It is here that you specify the input parameters and outputs for 
+your class. Input parameters should have `params.` appended and outputs should 
+have `outputs.` appended. 
 
-Default slots like `name`, `description` and `type` are inherited (provided by 
-StRUCT) and do not need to be specified. 
+Default slots like `name`, `description` and `type` are inherited (i.e. provided 
+by `struct`) and do not need to be specified. 
 
-A `type` should be indicated for each slot e.g. `numeric`. Some special types
-are available in StRUCT, namely `entity` and `enum`, and we recommend you use
+A type should be indicated for each slot e.g. `numeric`. Some special types
+are available in `struct`, namely `entity` and `enum`, and we recommend you use
 these where possible because they allow you to provide additonal information
-(`name`, `description` etc) about the parameter/output as part of the object.
+(`name`, `description` etc) about the parameters/outputs.
 
-To use StRUCT `entity` objects for parameters and/or outputs, specify `entity` 
-as the type. 
+To use `entity` objects for parameters and/or outputs, specify `entity` 
+as the type. If you want to enable STATO functionality for your parameters then 
+you can specify `entity.stato` as the type.
 
 ```{r eval=FALSE,purl=FALSE}
     slots=c(
@@ -128,25 +130,26 @@ define default values for parameters. It is recommended that the `name`,
 ```
 
 
-`.stato` objects can also have a `stato.id` assigned in the protoype list. It 
+STATO objects can also have a `stato.id` assigned in the protoype list. It 
 must be assigned when the class is defined, as no mechanism is provided for 
-changing it by the user (other than using @ which is discouraged). STATO names 
-and definitions can then be extracted from the STATO database based on the 
-supplied id. To search for a relevant ID see http://stato-ontology.org/
+changing it by the user (other than using @ which is discouraged). 
+
+STATO names and definitions can then be extracted from the STATO database based 
+on the supplied id. To search for a relevant ID see http://stato-ontology.org/
 
 ```{r, eval=FALSE,purl=FALSE}
-        ## This is slot is only required for model.stato objects
+        ## This is slot is only required for stato objects
         stato.id='OBI:0000011',
 ```
 
 ***
 
-#### Parameter and output protoypes
+#### Parameter and Output protoypes
 
 Setting an input parameter to an `entity` object allows default slots for this 
 parameter so that you can be more descriptive about what it does without using 
 lengthy slot names. The `type` slot allows you to specify that the entity should
-be of a specific R type e.g. 'numeric'. Note that any slot without a prototype
+be of a specific type e.g. 'numeric'. Note that any slot without a prototype
 will be initialised as NULL or a vector or zero length of the appropriate class
 e.g `numeric(0)`.
 
@@ -159,7 +162,8 @@ e.g `numeric(0)`.
 ***
 
 A stato.id can be set for `entity.stato` objects enabling STATO integration for 
-parameters and outputs as well as model objects.
+parameters and outputs as well as model objects. It is a good idea to set 
+`name`, `description` and `stato.id` slots here, when the object is defined.
 
 ```{r, eval=FALSE, purl=FALSE}
         # entity.stato objects can have a stato.id
@@ -170,10 +174,11 @@ parameters and outputs as well as model objects.
 
 ***
 
-Parameters dont have to be entities, but this is not recommended.
+Parameters dont have to be entities, but this is not recommended as there is no
+mechanism for providing long names and descriptions for these parameters.
 
 ```{r,eval=FALSE,purl=FALSE}
-        params.value_2=20,
+        params.value_2 = 20,
 ```
 
 ***
@@ -196,7 +201,7 @@ Outputs can be included in the prototype, and we recommend `entity` or
 ## Defining new methods for your model object
 
 Model objects have a `model.train` and a `model.predict` function predefined by 
-StRUCT, but by default it prints a warning that the method hasnt been 
+`struct`, but by default it prints a warning that the method hasnt been 
 implemented yet. You can override the default using the `setMethod` function. 
 There are a number of inputs for `setMethod` as described in the following 
 steps.
@@ -206,7 +211,7 @@ this will direct R to use the correct `model.train` or `model.predict` function
 for your new model object.
 
 ```{r,eval=FALSE,purl=FALSE}
-setMethod(f='model.train', # dont change this line
+setMethod(f='model.train',                   # dont change this line
     signature=c('model_template','dataset'), # replace model_template with... 
                                              # ...your new model name
 ```
@@ -226,6 +231,9 @@ expected by other StRUCT objects.
 
 ```
 
+In the definition M is the model object, so that you can access parameter values
+and D is the input dataset object, containing the data to train the model with.
+
 ***
 
 Similarly, a `model.predict` method is provided so that you can apply your 
@@ -237,6 +245,7 @@ setMethod(f='model.predict',                 # dont change this line
                                              # ...your new model name
     definition = function(M,D) {             # dont change this line
         ## do something here ##
+        # M is the model object
         return(M)                            # make sure you return the model 
     }
 )
@@ -247,7 +256,7 @@ setMethod(f='model.predict',                 # dont change this line
 
 # Complete object
 
-The final model object will look something like this:
+The final model object will look something like this working example:
 
 ```{r}
 model_template=setClass('model_template', # replace model_template with ...
