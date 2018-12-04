@@ -25,6 +25,9 @@
 
 \item{value}{value}
 }
+\value{
+a method object
+}
 \description{
 A class for methods that are applied to datasets in a single step e.g.
 normalisation. Not intended to be called directly, this class should be

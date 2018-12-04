@@ -10,6 +10,7 @@
 #'
 #' @export enum
 #' @include entity_class.R
+#' @return an enum object
 #' @examples
 #' # Create a new enum object
 #' E = enum(

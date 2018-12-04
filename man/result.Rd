@@ -19,8 +19,8 @@ similar way to \code{predict} for model and model.seq objects.
 \examples{
 D = iris_dataset() # get some data
 MET = metric()  # use a metric
-I = test_iterator() # initialise iterator
-models(I) = test_model() # set the model
+I = example_iterator() # initialise iterator
+models(I) = example_model() # set the model
 I = run(I,D,MET) # run
 result(I)
 

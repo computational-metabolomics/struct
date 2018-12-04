@@ -26,7 +26,7 @@ get/set the prediction output for a model. This determines which outputs from
 this model are supplied as inputs to the next model when used in a model.seq
 }
 \examples{
-M = test_model()
+M = example_model()
 predicted.name(M)
 predicted.name(M) = 'result_2'
 

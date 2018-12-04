@@ -20,7 +20,8 @@
 #' @param name The name of the slot to set (data, sample_meta or variable_meta
 #' for dataset objects)
 #' @param value A data.frame
-#' @include generics.R struct_class.R stato_class.R chart_class.R chart_stato.R
+#' @include generics.R struct_class.R stato_class.R chart_class.R
+#' @return The returned value depends on the method used
 #' @examples
 #' D = dataset()
 #'

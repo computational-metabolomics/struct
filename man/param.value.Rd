@@ -25,10 +25,10 @@ struct object
 get/set the values for a parameter.
 }
 \examples{
-M = test_model()
+M = example_model()
 param.value(M,'value_1')
 
-M = test_model()
+M = example_model()
 param.value(M,'value_1') = 0.95
 
 }

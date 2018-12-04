@@ -26,7 +26,7 @@ vector of object names. \code{ret = 'obj'} will return a list containing the
 named chart objects.
 }
 \examples{
-M = test_model()
+M = example_model()
 chart.names(M) # 'example_chart'
 chart.names(M,'char') # as above
 chart.names(M,'obj') # returns a list of chart objects

@@ -16,7 +16,7 @@ list of parameter ids
 return a list of valid parameter ids for an object
 }
 \examples{
-M = test_model()
+M = example_model()
 param.ids(M)
 
 }

@@ -55,7 +55,7 @@ the STATO database included in this package.
 
 \examples{
 # an example stato object
-M = test_model()
+M = example_model()
 
 # the stato id assigned to object M
 stato.id(M) # OBI:0000011

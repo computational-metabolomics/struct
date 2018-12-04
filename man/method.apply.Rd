@@ -18,7 +18,7 @@ Returns a modified method object
 Applies a method to the input dataset
 }
 \examples{
-M = test_method()
+M = example_method()
 M = method.apply(M,iris_dataset())
 
 }

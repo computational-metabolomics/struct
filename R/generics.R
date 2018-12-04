@@ -17,7 +17,7 @@
 #' }
 #' @examples
 #' # get the parameter as an object
-#' M = test_model()
+#' M = example_model()
 #' obj = param.obj(M, 'value_0')
 #'
 #' # set a parameter as an object
@@ -37,7 +37,7 @@ setGeneric("param.obj<-",function(obj,name,value)standardGeneric("param.obj<-"))
 #' @return TRUE if parameter name is valid, FALSE if not
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' is.param(M,'value_1') # TRUE
 #' is.param(M,'alpha')   # FALSE
 #'
@@ -50,7 +50,7 @@ setGeneric("is.param",function(obj,name)standardGeneric("is.param"))
 #' @return list of parameter ids
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' param.ids(M)
 #'
 setGeneric("param.ids",function(obj)standardGeneric("param.ids"))
@@ -63,7 +63,7 @@ setGeneric("param.ids",function(obj)standardGeneric("param.ids"))
 #' @return name of parameter
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' param.name(M,'value_1')
 #'
 setGeneric("param.name",function(obj,name)standardGeneric("param.name"))
@@ -77,7 +77,7 @@ setGeneric("param.name",function(obj,name)standardGeneric("param.name"))
 #' @rdname param.list
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' L = param.list(M)
 #'
 setGeneric("param.list",function(obj)standardGeneric("param.list"))
@@ -86,7 +86,7 @@ setGeneric("param.list",function(obj)standardGeneric("param.list"))
 #' @export
 #' @return struct object
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' param.list(M)=list('value_1' = 15,'value_2' = 20)
 #'
 setGeneric("param.list<-",function(obj,value)standardGeneric("param.list<-"))
@@ -101,7 +101,7 @@ setGeneric("param.list<-",function(obj,value)standardGeneric("param.list<-"))
 #' @rdname param.value
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' param.value(M,'value_1')
 #'
 setGeneric("param.value",function(obj,name)standardGeneric("param.value"))
@@ -110,7 +110,7 @@ setGeneric("param.value",function(obj,name)standardGeneric("param.value"))
 #' @export
 #' @return struct object
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' param.value(M,'value_1') = 0.95
 #'
 setGeneric("param.value<-",
@@ -127,7 +127,7 @@ setGeneric("param.value<-",
 #' @return list of output ids
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' output.ids(M)
 #'
 setGeneric("output.ids",function(obj)standardGeneric("output.ids"))
@@ -142,7 +142,7 @@ setGeneric("output.ids",function(obj)standardGeneric("output.ids"))
 #' @rdname output.value
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' output.value(M,'result_1')
 #'
 setGeneric("output.value",function(obj,name)standardGeneric("output.value"))
@@ -151,7 +151,7 @@ setGeneric("output.value",function(obj,name)standardGeneric("output.value"))
 #' @export
 #' @return struct object
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' output.value(M,'result_1') = 0.95
 #'
 setGeneric("output.value<-",
@@ -172,7 +172,7 @@ setGeneric("output.value<-",
 #' }
 #' @examples
 #' # get the output as an object
-#' M = test_model()
+#' M = example_model()
 #' obj = output.obj(M, 'result_1')
 #'
 #' # set a output as an object
@@ -194,7 +194,7 @@ setGeneric("output.obj<-",
 #' @return TRUE if output name is valid, FALSE if not
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' is.output(M,'result_1') # TRUE
 #' is.output(M,'result_0')   # FALSE
 #'
@@ -208,7 +208,7 @@ setGeneric("is.output",function(obj,name)standardGeneric("is.output"))
 #' @return name of output
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' output.name(M,'result_1')
 #'
 setGeneric("output.name",function(obj,name)standardGeneric("output.name"))
@@ -222,7 +222,7 @@ setGeneric("output.name",function(obj,name)standardGeneric("output.name"))
 #' @rdname output.list
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' L = output.list(M)
 #'
 setGeneric("output.list",function(obj)standardGeneric("output.list"))
@@ -231,7 +231,7 @@ setGeneric("output.list",function(obj)standardGeneric("output.list"))
 #' @export
 #' @return struct object
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' output.list(M)=list('result_1' = dataset(),'result_2' = dataset())
 #'
 setGeneric("output.list<-",function(obj,value)standardGeneric("output.list<-"))
@@ -255,7 +255,7 @@ setGeneric("output.list<-",function(obj,value)standardGeneric("output.list<-"))
 #' @export
 #' @return list of chart names
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' chart.names(M) # 'example_chart'
 #' chart.names(M,'char') # as above
 #' chart.names(M,'obj') # returns a list of chart objects
@@ -297,7 +297,7 @@ setGeneric("chart.plot",function(obj, dobj, ...)standardGeneric("chart.plot"))
 #' object}
 #' }
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' type(M)
 #' type(M) = 'example'
 #'
@@ -322,7 +322,7 @@ setGeneric("type<-",function(obj,value)standardGeneric("type<-"))
 #' }
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' name(M)
 #' name(M) = 'example object'
 setGeneric("name",function(obj)standardGeneric("name"))
@@ -345,6 +345,10 @@ setGeneric("name<-",function(obj,value)standardGeneric("name<-"))
 #' returns the modified object}
 #' }
 #' @export
+#' @examples
+#' M = example_model()
+#' description(M)
+#' description(M) = 'this is an example'
 setGeneric("description",function(obj)standardGeneric("description"))
 
 #' @export
@@ -364,7 +368,7 @@ setGeneric("description<-",function(obj,value)standardGeneric("description<-"))
 #' @rdname method.apply
 #' @export
 #' @examples
-#' M = test_method()
+#' M = example_method()
 #' M = method.apply(M,iris_dataset())
 #'
 setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
@@ -382,7 +386,7 @@ setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
 #' @rdname train
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' M = model.train(M,iris_dataset())
 #'
 setGeneric("model.train",function(M,D)standardGeneric("model.train"))
@@ -397,7 +401,7 @@ setGeneric("model.train",function(M,D)standardGeneric("model.train"))
 #' @rdname predict
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' M = model.predict(M,iris_dataset())
 #'
 setGeneric("model.predict",function(M,D)standardGeneric("model.predict"))
@@ -417,7 +421,7 @@ setGeneric("model.predict",function(M,D)standardGeneric("model.predict"))
 #' @rdname predicted.name
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' predicted.name(M)
 #' predicted.name(M) = 'result_2'
 #'
@@ -437,7 +441,7 @@ setGeneric("predicted.name<-",
 #' @rdname predicted
 #' @export
 #' @examples
-#' M = test_model()
+#' M = example_model()
 #' M = model.train(M, iris_dataset())
 #' M = model.predict(M, iris_dataset())
 #' predicted(M)
@@ -463,7 +467,7 @@ setGeneric("predicted",function(M)standardGeneric("predicted"))
 #' @examples
 #' # Create a model sequence
 #' ML = model.seq()
-#' models(ML) = list(test_model(), test_model())
+#' models(ML) = list(example_model(), example_model())
 #' models(ML)
 #'
 setGeneric("models",function(ML)standardGeneric("models"))
@@ -577,8 +581,8 @@ setGeneric("dataset.variable_meta<-",
 #' @examples
 #' D = iris_dataset() # get some data
 #' MET = metric()  # use a metric
-#' I = test_iterator() # initialise iterator
-#' models(I) = test_model() # set the model
+#' I = example_iterator() # initialise iterator
+#' models(I) = example_model() # set the model
 #' I = run(I,D,MET) # run
 #'
 setGeneric("run",function(I,D,MET)standardGeneric("run"))
@@ -594,8 +598,8 @@ setGeneric("run",function(I,D,MET)standardGeneric("run"))
 #' @examples
 #' D = iris_dataset() # get some data
 #' MET = metric()  # use a metric
-#' I = test_iterator() # initialise iterator
-#' models(I) = test_model() # set the model
+#' I = example_iterator() # initialise iterator
+#' models(I) = example_model() # set the model
 #' I = run(I,D,MET) # run
 #' I = evaluate(I,MET) # evaluate
 setGeneric("evaluate",function(I,MET)standardGeneric("evaluate"))
@@ -617,7 +621,7 @@ setGeneric("evaluate",function(I,MET)standardGeneric("evaluate"))
 #' \item{\code{result.name(I)<-}}{sets the default output for an iterator}
 #' }
 #' @examples
-#' I = test_iterator() # initialise iterator
+#' I = example_iterator() # initialise iterator
 #' result.name(I)
 #' result.name(I) = 'result_1'
 #'
@@ -638,8 +642,8 @@ setGeneric("result.name<-",function(I,value)standardGeneric("result.name<-"))
 #' @examples
 #' D = iris_dataset() # get some data
 #' MET = metric()  # use a metric
-#' I = test_iterator() # initialise iterator
-#' models(I) = test_model() # set the model
+#' I = example_iterator() # initialise iterator
+#' models(I) = example_model() # set the model
 #' I = run(I,D,MET) # run
 #' result(I)
 #'
@@ -656,6 +660,10 @@ setGeneric("result",function(M)standardGeneric("result"))
 #' @param ... additional inputs depending on object
 #' @rdname metric
 #' @export
+#' @examples
+#' MET = metric()
+#' calculate(MET)
+#'
 setGeneric("calculate",function(obj,...)standardGeneric("calculate"))
 
 #' get the value for a metric
@@ -684,6 +692,13 @@ setGeneric("value<-",function(obj,value)standardGeneric("value<-"))
 #' @param outformat output format ("pdf" or "html")
 #' @rdname stato
 #' @export
+#' @examples
+#' M = example_model()
+#' stato.id(M)
+#' stato.name(M)
+#' stato.definition(M)
+#' stato.summary(M)
+#'
 setGeneric("stato.id",function(obj)standardGeneric("stato.id"))
 
 #' get the stato name for an object
@@ -706,13 +721,6 @@ setGeneric("stato.definition",function(obj)standardGeneric("stato.definition"))
 #' @export
 setGeneric("stato.summary",function(obj)standardGeneric("stato.summary"))
 
-#' get a pdf of a stato object
-#'
-#' @rdname stato
-#' @export
-setGeneric("stato.pdf",
-    function(obj,outpath,filename,outformat)standardGeneric("stato.pdf"))
-
 ######################################
 ###### method.seq class generics #####
 ######################################
@@ -723,7 +731,17 @@ setGeneric("stato.pdf",
 #' @param ML a method.seq object
 #' @param value a list containing only method objects
 #' @rdname methods
+#' @return
+#' \describe{
+#' \item{\code{method.steps(ML)}}{returns a list of methods}
+#' \item{\code{method.steps(ML)<-}}{sets the list of methods for a sequence}
+#' }
 #' @export
+#' @examples
+#' ML = example_model() + example_model()
+#' method.steps(ML)
+#' method.steps(ML) = list(example_model(),example_model())
+#'
 setGeneric("method.steps",function(ML)standardGeneric("method.steps"))
 
 #' @export

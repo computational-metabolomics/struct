@@ -23,10 +23,10 @@ struct object
 get/set a named list of parameters and thier current value for an object
 }
 \examples{
-M = test_model()
+M = example_model()
 L = param.list(M)
 
-M = test_model()
+M = example_model()
 param.list(M)=list('value_1' = 15,'value_2' = 20)
 
 }

@@ -18,7 +18,7 @@ name of parameter
 return a the name for a paramater, if available
 }
 \examples{
-M = test_model()
+M = example_model()
 param.name(M,'value_1')
 
 }

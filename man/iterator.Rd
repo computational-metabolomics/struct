@@ -37,14 +37,14 @@ object can be calculated and collected for each iteration as an output.
 \examples{
 D = iris_dataset() # get some data
 MET = metric()  # use a metric
-I = test_iterator() # initialise iterator
-models(I) = test_model() # set the model
+I = example_iterator() # initialise iterator
+models(I) = example_model() # set the model
 I = run(I,D,MET) # run
 
 D = iris_dataset() # get some data
 MET = metric()  # use a metric
-I = test_iterator() # initialise iterator
-models(I) = test_model() # set the model
+I = example_iterator() # initialise iterator
+models(I) = example_model() # set the model
 I = run(I,D,MET) # run
 I = evaluate(I,MET) # evaluate
 }

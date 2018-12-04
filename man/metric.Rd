@@ -29,3 +29,8 @@ get the value for a metric
 
 set the value for a metric
 }
+\examples{
+MET = metric()
+calculate(MET)
+
+}

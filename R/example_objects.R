@@ -26,18 +26,18 @@ iris_dataset=function() {
 #' Example model
 #'
 #' An example model for testing
-#' @export test_model
+#' @export example_model
 #' @return dataset object
-#' @param M test_model object
+#' @param M example_model object
 #' @param D dataset object
-#' @rdname test_model
-#' @include model_class.R model_stato_class.R
+#' @rdname example_model
+#' @include model_class.R
 #' @examples
-#' M = test_model()
-#' M = test_model(value_1 = 10, value_2 = 20)
+#' M = example_model()
+#' M = example_model(value_1 = 10, value_2 = 20)
 #'
-test_model=setClass('test_model',
-    contains = 'model.stato',
+example_model=setClass('example_model',
+    contains = c('model','stato'),
     slots=c(
         'params.value_0'='entity',
         'params.value_1'='entity.stato',
@@ -69,13 +69,13 @@ test_model=setClass('test_model',
 #' @export
 #' @return dataset object
 #' @import datasets
-#' @rdname test_model
+#' @rdname example_model
 #' @examples
 #' D = iris_dataset()
-#' M = test_model(value_1 = 10, value_2 = 20)
+#' M = example_model(value_1 = 10, value_2 = 20)
 #' M = model.train(M,D)
 setMethod(f='model.train',
-    signature=c('test_model','dataset'),
+    signature=c('example_model','dataset'),
     definition = function(M,D) {
         D$data = D$data + M$value_1
         M$result_1=D
@@ -89,13 +89,13 @@ setMethod(f='model.train',
 #' dataset
 #' @export
 #' @return dataset object
-#' @rdname test_model
+#' @rdname example_model
 #' @examples
 #' D = iris_dataset()
-#' M = test_model(value_1 = 10, value_2 = 20)
+#' M = example_model(value_1 = 10, value_2 = 20)
 #' M = model.predict(M,D)
 setMethod(f='model.predict',
-    signature=c('test_model','dataset'),
+    signature=c('example_model','dataset'),
     definition = function(M,D) {
         D$data = D$data + M$value_2
         M$result_2=D
@@ -108,10 +108,11 @@ setMethod(f='model.predict',
 #'
 #' an example of a chart object for documentation purposes
 #' @export example_chart
-#' @rdname chart.xample
+#' @rdname chart.example
+#' @return a chart object
 #' @examples
 #' C = example_chart()
-#' chart.plot(C,test_model())
+#' chart.plot(C,example_model())
 #' @importFrom graphics plot
 #' @importFrom stats runif
 example_chart<-setClass(
@@ -120,11 +121,11 @@ example_chart<-setClass(
 )
 
 #' @param obj a chart object
-#' @param dobj a test_model object
-#' @rdname chart.xample
+#' @param dobj a example_model object
+#' @rdname chart.example
 #' @export
 setMethod(f="chart.plot",
-    signature=c("example_chart","test_model"),
+    signature=c("example_chart","example_model"),
     definition=function(obj,dobj)
     {
         p = plot(runif(n = 10),runif(n = 10))
@@ -135,18 +136,18 @@ setMethod(f="chart.plot",
 #' Example method
 #'
 #' An example model for testing
-#' @export test_method
+#' @export example_method
 #' @return test method object
-#' @param M test_method object
+#' @param M example_method object
 #' @param D dataset object
-#' @rdname test_method
-#' @include method_class.R method_stato_class.R
+#' @rdname example_method
+#' @include method_class.R
 #' @examples
-#' M = test_method()
-#' M = test_method(value_1 = 10, value_2 = 20)
+#' M = example_method()
+#' M = example_method(value_1 = 10, value_2 = 20)
 #'
-test_method=setClass('test_method',
-    contains = 'method.stato',
+example_method=setClass('example_method',
+    contains = c('method','stato'),
     slots=c(
         'params.value_0'='entity',
         'params.value_1'='entity.stato',
@@ -176,14 +177,14 @@ test_method=setClass('test_method',
 #' applies the example method, which adds value_1 to the raw data of a dataset
 #' @export
 #' @return dataset object
-#' @rdname test_method
+#' @rdname example_method
 #' @examples
 #' D = iris_dataset()
-#' M = test_method(value_1 = 10, value_2 = 20)
+#' M = example_method(value_1 = 10, value_2 = 20)
 #' M = method.apply(M,D)
 #'
 setMethod(f='method.apply',
-    signature=c('test_method','dataset'),
+    signature=c('example_method','dataset'),
     definition = function(M,D) {
         D$data = D$data + M$value_1
         M$result_1=D

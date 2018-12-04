@@ -38,7 +38,7 @@ block for example.
 }}
 
 \examples{
-M = test_model()
+M = example_model()
 type(M)
 type(M) = 'example'
 

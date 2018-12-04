@@ -13,6 +13,7 @@
 #' @param obj An entity object
 #' @param value Value of the entity
 #' @include generics.R struct_class.R
+#' @return and entity object
 #' @examples
 #' # Create a new entity object
 #' E = entity(

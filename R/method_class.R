@@ -8,6 +8,7 @@
 #' @param M a model object
 #' @param D a dataset object
 #' @param value value
+#' @return a method object
 #' @examples
 #' M = method() # create a method object
 #'

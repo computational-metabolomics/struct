@@ -16,7 +16,7 @@ list of output ids
 return a list of valid output ids for an object
 }
 \examples{
-M = test_model()
+M = example_model()
 output.ids(M)
 
 }

@@ -27,7 +27,7 @@ Gets or sets the object of a parameter e.g. to an entity() object.
 }
 \examples{
 # get the parameter as an object
-M = test_model()
+M = example_model()
 obj = param.obj(M, 'value_0')
 
 # set a parameter as an object

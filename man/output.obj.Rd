@@ -27,7 +27,7 @@ Gets or sets the object of an output e.g. to an entity() object.
 }
 \examples{
 # get the output as an object
-M = test_model()
+M = example_model()
 obj = output.obj(M, 'result_1')
 
 # set a output as an object

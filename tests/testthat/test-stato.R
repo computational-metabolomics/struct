@@ -2,7 +2,7 @@
 test_that('stato object',{
 
     test_class=setClass('test_Class',
-        contains='model.stato',
+        contains=c('model','stato'),
         slots=c(params.value_1='entity.stato',
              outputs.value_1='entity.stato'),
         prototype=list(stato.id='OBI:0200201',

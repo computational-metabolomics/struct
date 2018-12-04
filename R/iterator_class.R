@@ -141,18 +141,18 @@ setMethod(f='*',
 #' Example iterator
 #'
 #' An example iterator for testing
-#' @export test_iterator
+#' @export example_iterator
 #' @return test iterator object
-#' @param I test_iterator object
+#' @param I example_iterator object
 #' @param D dataset object
 #' @param MET metric object
-#' @rdname test_iterator
+#' @rdname example_iterator
 #' @include generics.R parameter_class.R output_class.R model_class.R
 #' @include metric_class.R model_list_class.R
 #' @examples
-#' I = test_iterator()
+#' I = example_iterator()
 #'
-test_iterator=setClass('test_iterator',
+example_iterator=setClass('example_iterator',
     contains='iterator',
     slots=c(
         params.value_1='numeric',
@@ -168,17 +168,17 @@ test_iterator=setClass('test_iterator',
 #' runs the example iterator, which just returns a value of 3.142
 #' @export
 #' @return dataset object
-#' @rdname test_iterator
+#' @rdname example_iterator
 #' @include generics.R parameter_class.R output_class.R model_class.R
 #' @include metric_class.R model_list_class.R
 #' @examples
-#' I = test_iterator()
+#' I = example_iterator()
 #' D = iris_dataset()
 #' MET = metric()
 #' I = run(I,D,MET)
 #'
 setMethod(f='run',
-    signature=c('test_iterator','dataset','metric'),
+    signature=c('example_iterator','dataset','metric'),
     definition=function(I,D,MET){
         I$result_1 = 3.142
         calculate(MET)

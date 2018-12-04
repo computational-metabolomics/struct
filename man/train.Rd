@@ -18,7 +18,7 @@ Returns a modified model object
 Trains a model using the input dataset
 }
 \examples{
-M = test_model()
+M = example_model()
 M = model.train(M,iris_dataset())
 
 }

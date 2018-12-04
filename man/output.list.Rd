@@ -23,10 +23,10 @@ struct object
 get/set a named list of outputs and their current value for an object
 }
 \examples{
-M = test_model()
+M = example_model()
 L = output.list(M)
 
-M = test_model()
+M = example_model()
 output.list(M)=list('result_1' = dataset(),'result_2' = dataset())
 
 }

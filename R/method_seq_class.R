@@ -13,7 +13,8 @@
 #' @param value value
 #' @export method.seq
 #' @include generics.R parameter_class.R output_class.R struct_class.R
-#' @include method_class.R method_stato_class.R
+#' @include method_class.R
+#' @return a method.seq object
 #' @examples
 #' MS = method.seq()
 #' MS = method() + method()
@@ -149,7 +150,7 @@ setMethod(f='show',
     }
 )
 
-setClassUnion("method_OR_method.seq", c("method", "method.seq","method.stato"))
+setClassUnion("method_OR_method.seq", c("method", "method.seq"))
 
 #' @describeIn method.seq add a method object to the (front) of a sequence.
 #' @export

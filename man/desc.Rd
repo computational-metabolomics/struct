@@ -25,3 +25,8 @@ returns the modified object}
 \description{
 Get/set the description of an object.
 }
+\examples{
+M = example_model()
+description(M)
+description(M) = 'this is an example'
+}

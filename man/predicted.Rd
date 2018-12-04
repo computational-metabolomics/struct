@@ -17,7 +17,7 @@ returns the prediction output for a model. This is supplied as input to the
 next model when used in a model.seq
 }
 \examples{
-M = test_model()
+M = example_model()
 M = model.train(M, iris_dataset())
 M = model.predict(M, iris_dataset())
 predicted(M)

@@ -26,7 +26,7 @@ Returns the list of models in a model.seq object
 \examples{
 # Create a model sequence
 ML = model.seq()
-models(ML) = list(test_model(), test_model())
+models(ML) = list(example_model(), example_model())
 models(ML)
 
 }

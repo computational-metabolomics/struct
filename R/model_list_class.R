@@ -12,8 +12,8 @@
 #' @param e1 a model or model.seq object
 #' @param e2 a model or model.seq object
 #' @param value value
-#' @include generics.R    parameter_class.R output_class.R struct_class.R
-#' @include model_class.R model_stato_class.R
+#' @include generics.R parameter_class.R output_class.R struct_class.R
+#' @include model_class.R
 #' @examples
 #' MS = model.seq()
 #' MS = model() + model()
@@ -190,7 +190,7 @@ setMethod(f='show',
     }
 )
 
-setClassUnion("model_OR_model.seq", c("model", "model.seq","model.stato"))
+setClassUnion("model_OR_model.seq", c("model", "model.seq"))
 
 #' @describeIn model.seq add a model to the (front) of a model sequence
 #' @export

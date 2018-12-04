@@ -25,10 +25,10 @@ struct object
 get/set the values for an output.
 }
 \examples{
-M = test_model()
+M = example_model()
 output.value(M,'result_1')
 
-M = test_model()
+M = example_model()
 output.value(M,'result_1') = 0.95
 
 }

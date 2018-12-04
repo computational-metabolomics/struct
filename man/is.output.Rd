@@ -18,7 +18,7 @@ TRUE if output name is valid, FALSE if not
 Verify that the name of a output is valid for an object
 }
 \examples{
-M = test_model()
+M = example_model()
 is.output(M,'result_1') # TRUE
 is.output(M,'result_0')   # FALSE
 

@@ -14,6 +14,9 @@
 
 \item{value}{value of the enum}
 }
+\value{
+an enum object
+}
 \description{
 A base class in the \pkg{struct} package. Not normally called directly.
 }

@@ -29,7 +29,7 @@ from this model are supplied as inputs to the next model when used in
 a model.seq
 }
 \examples{
-I = test_iterator() # initialise iterator
+I = example_iterator() # initialise iterator
 result.name(I)
 result.name(I) = 'result_1'
 

@@ -17,6 +17,9 @@
 
 \item{value}{Value of the entity}
 }
+\value{
+and entity object
+}
 \description{
 A base class in the \pkg{struct} package. Not normally called directly.
 }

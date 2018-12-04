@@ -26,7 +26,7 @@ Get/set the name of an object. This is the long name for an object, not the
 name of the class object.
 }
 \examples{
-M = test_model()
+M = example_model()
 name(M)
 name(M) = 'example object'
 }

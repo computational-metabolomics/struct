@@ -19,7 +19,7 @@ Apply a model using the input dataset. Assumes the model is trained
 first.
 }
 \examples{
-M = test_model()
+M = example_model()
 M = model.predict(M,iris_dataset())
 
 }

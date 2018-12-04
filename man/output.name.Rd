@@ -18,7 +18,7 @@ name of output
 return a the name for a output, if available
 }
 \examples{
-M = test_model()
+M = example_model()
 output.name(M,'result_1')
 
 }

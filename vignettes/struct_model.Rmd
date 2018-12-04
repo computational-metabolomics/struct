@@ -72,7 +72,7 @@ the following steps.
 ```{r,eval=FALSE,purl=FALSE}
 model_template=setClass('model_template', # replace model_template (both places) 
                                           # with your new model name
-    contains = 'model.stato',     # can be 'model' or 'model.stato'
+    contains = c('model','stato'),        # 'stato' is optional
 ```
 
 The `contains` option  tells R which aspects of StRUCT to include in the new
@@ -252,7 +252,7 @@ The final model object will look something like this:
 ```{r}
 model_template=setClass('model_template', # replace model_template with ...
                                           # ...your new model name
-    contains = 'model.stato',     # can be 'model' or 'model.stato'
+    contains = c('model','stato'),       # stato is optional
     slots=c(                      # define your parameters and outputs here
         'params.value_0'='entity',
         'params.value_1'='entity.stato',

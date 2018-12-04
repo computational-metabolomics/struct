@@ -18,7 +18,7 @@ TRUE if parameter name is valid, FALSE if not
 Verify that the name of a paramater is valid for an object
 }
 \examples{
-M = test_model()
+M = example_model()
 is.param(M,'value_1') # TRUE
 is.param(M,'alpha')   # FALSE
 

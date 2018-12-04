@@ -23,7 +23,7 @@
 #' @return Value returned depends on the method used.
 #' @examples
 #' # an example stato object
-#' M = test_model()
+#' M = example_model()
 #'
 #' # the stato id assigned to object M
 #' stato.id(M) # OBI:0000011

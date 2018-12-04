@@ -55,6 +55,9 @@
 
 \item{e2}{a method or method.seq object}
 }
+\value{
+a method.seq object
+}
 \description{
 A class for (ordered) lists of methods
 }

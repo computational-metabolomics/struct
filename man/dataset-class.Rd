@@ -41,6 +41,9 @@ for dataset objects)}
 
 \item{value}{A data.frame}
 }
+\value{
+The returned value depends on the method used
+}
 \description{
 An object for holding raw data and associated meta data
 }

@@ -10,6 +10,7 @@
 #' @include generics.R parameter_class.R output_class.R model_class.R
 #' @include iterator_class.R model_list_class.R
 #' @inheritParams calculate
+#' @return a metric object
 #' @examples
 #' MET = metric()
 
