@@ -371,7 +371,7 @@ setGeneric("description<-",function(obj,value)standardGeneric("description<-"))
 #' M = example_method()
 #' M = method.apply(M,iris_dataset())
 #'
-setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
+setGeneric("method.apply",function(M,D, ...)standardGeneric("method.apply"))
 
 #################################
 ###### model class generics #####
@@ -664,7 +664,7 @@ setGeneric("result",function(M)standardGeneric("result"))
 #' MET = metric()
 #' calculate(MET)
 #'
-setGeneric("calculate",function(obj,...)standardGeneric("calculate"))
+setGeneric("calculate",function(obj, ...)standardGeneric("calculate"))
 
 #' get the value for a metric
 #'

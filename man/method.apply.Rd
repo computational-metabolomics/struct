@@ -4,7 +4,7 @@
 \alias{method.apply}
 \title{Apply a method}
 \usage{
-method.apply(M, D)
+method.apply(M, D, ...)
 }
 \arguments{
 \item{M}{a model object}
