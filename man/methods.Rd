@@ -24,8 +24,8 @@ method.steps(ML) <- value
 Returns the list of method in a method.seq object
 }
 \examples{
-ML = example_model() + example_model()
+ML = example_method() + example_method()
 method.steps(ML)
-method.steps(ML) = list(example_model(),example_model())
+method.steps(ML) = list(example_method(),example_method())
 
 }
