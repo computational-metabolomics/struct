@@ -17,12 +17,6 @@ stato.summary(obj)
 }
 \arguments{
 \item{obj}{stato_class object}
-
-\item{outpath}{folder path}
-
-\item{filename}{file name}
-
-\item{outformat}{output format ("pdf" or "html")}
 }
 \value{
 id the stato id
