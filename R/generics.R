@@ -371,7 +371,7 @@ setGeneric("description<-",function(obj,value)standardGeneric("description<-"))
 #' M = example_method()
 #' M = method.apply(M,iris_dataset())
 #'
-setGeneric("method.apply",function(M,D, ...)standardGeneric("method.apply"))
+setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
 
 #################################
 ###### model class generics #####
@@ -405,6 +405,20 @@ setGeneric("model.train",function(M,D)standardGeneric("model.train"))
 #' M = model.predict(M,iris_dataset())
 #'
 setGeneric("model.predict",function(M,D)standardGeneric("model.predict"))
+
+#' Reverse preprocessing
+#'
+#' Reverse the effect of a preprocessing step on a dataset.
+#' @param M a model object
+#' @param D a dataset object
+#' @return Returns a modified dataset object
+#' @rdname preprocess.reverse
+#' @export
+#' @examples
+#' M = example_model()
+#' D = preprocess.reverse(M,iris_dataset())
+#'
+setGeneric("preprocess.reverse",function(M,D)standardGeneric("preprocess.reverse"))
 
 #' Predicted output name
 #'
@@ -687,9 +701,6 @@ setGeneric("value<-",function(obj,value)standardGeneric("value<-"))
 #'
 #' @return id the stato id
 #' @param obj stato_class object
-#' @param outpath folder path
-#' @param filename file name
-#' @param outformat output format ("pdf" or "html")
 #' @rdname stato
 #' @export
 #' @examples
@@ -738,9 +749,9 @@ setGeneric("stato.summary",function(obj)standardGeneric("stato.summary"))
 #' }
 #' @export
 #' @examples
-#' ML = example_model() + example_model()
+#' ML = example_method() + example_method()
 #' method.steps(ML)
-#' method.steps(ML) = list(example_model(),example_model())
+#' method.steps(ML) = list(example_method(),example_method())
 #'
 setGeneric("method.steps",function(ML)standardGeneric("method.steps"))
 

@@ -28,6 +28,7 @@ Collate:
     'iterator_class.R'
     'method_seq_class.R'
     'optimiser_class.R'
+    'preprocess_class.R'
     'resampler_class.R'
     'struct.R'
     'struct_templates.R'
