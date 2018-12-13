@@ -412,13 +412,13 @@ setGeneric("model.predict",function(M,D)standardGeneric("model.predict"))
 #' @param M a model object
 #' @param D a dataset object
 #' @return Returns a modified dataset object
-#' @rdname preprocess.reverse
+#' @rdname model.reverse
 #' @export
 #' @examples
 #' M = example_model()
-#' D = preprocess.reverse(M,iris_dataset())
+#' D = model.reverse(M,iris_dataset())
 #'
-setGeneric("preprocess.reverse",function(M,D)standardGeneric("preprocess.reverse"))
+setGeneric("model.reverse",function(M,D)standardGeneric("model.reverse"))
 
 #' Predicted output name
 #'

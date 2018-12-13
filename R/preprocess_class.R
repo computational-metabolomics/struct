@@ -22,9 +22,9 @@ preprocess<-setClass(
 #' @examples
 #' D = dataset()
 #' M = model()
-#' D2 = preprocess.reverse(M,D)
+#' D2 = model.reverse(M,D)
 #' @return dataset object
-setMethod(f="preprocess.reverse",
+setMethod(f="model.reverse",
     signature=c("preprocess","dataset"),
     definition=function(M,D)
     {

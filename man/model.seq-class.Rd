@@ -15,6 +15,7 @@
 \alias{+,model,model.seq-method}
 \alias{+,model.seq,model-method}
 \alias{+,model,model-method}
+\alias{predicted,model.seq-method}
 \title{model.seq class}
 \usage{
 \S4method{model.train}{model.seq,dataset}(M, D)
@@ -38,6 +39,8 @@
 \S4method{+}{model.seq,model}(e1, e2)
 
 \S4method{+}{model,model}(e1, e2)
+
+\S4method{predicted}{model.seq}(M)
 }
 \arguments{
 \item{M}{a model object}
@@ -82,6 +85,8 @@ a model sequence with the additional model appended to the end of the
 sequence
 
 a model sequence
+
+the predicted output of the last model in the sequence
 }
 \description{
 A class for (ordered) lists of models
@@ -109,6 +114,8 @@ A class for (ordered) lists of models
 \item \code{+}: add a model to the (end) of a model sequence
 
 \item \code{+}: combine two models into a sequence
+
+\item \code{predicted}: get prediction output from model.seq
 }}
 
 \examples{
@@ -162,4 +169,11 @@ MS = MS + M
 
 MS = model() + model()
 
+\dontrun{
+D = dataset()
+M = model()
+M = model.train(M,D)
+M = model.predict(M,D)
+p = predicted(M)
+}
 }

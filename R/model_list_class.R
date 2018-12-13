@@ -67,13 +67,31 @@ setMethod(f="model.predict",
     definition=function(M,D)
     {
         S=D # for the first model the input use the input data
-        for (i in seq_len(length(M)))
+        L=length(M) # number of models
+        for (i in seq_len(L))
         {
             # apply the model the output of the previous model
             M[i]=model.predict(M[i],S)
+            # keep the previous output
+            penultimate=S
             # set the output of this model as the input to the next
             S=predicted(M[i])
         }
+
+        # if regression, reverse the processing to get predictions
+        # on the same scale as the input data
+        if (type(M[L])=='regression') {
+            # put the predictions into the penultimate dataset object
+            penultimate$sample_meta[,M[L]$factor_name]=S
+            # apply the reverse models (only works if all are preprocess models)
+            for (k in seq(L-1,1,-1)) {
+                penultimate=model.reverse(M[k],penultimate)
+            }
+            # put the update predictions into the last model
+            pred=predicted.name(M[L]) # name of predicted output
+            output.value(M[L],pred)=as.data.frame(penultimate$sample_meta[,M[L]$factor_name])
+        }
+
         return(M)
     }
 )
@@ -247,3 +265,23 @@ setMethod("+",
     }
 )
 
+#' @describeIn model.seq get prediction output from model.seq
+#' @export
+#' @examples
+#' \dontrun{
+#' D = dataset()
+#' M = model()
+#' M = model.train(M,D)
+#' M = model.predict(M,D)
+#' p = predicted(M)
+#' }
+#' @return the predicted output of the last model in the sequence
+setMethod(f='predicted',
+    signature=c('model.seq'),
+    definition=function(M)
+    {
+        # return the predicted ooutput from the last model
+        L=length(M)
+        return(output.value(M[L],predicted.name(M[L])))
+    }
+)
