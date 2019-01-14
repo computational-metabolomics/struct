@@ -136,6 +136,42 @@ setMethod(f='*',
     }
 )
 
+#' @describeIn iterator get model by index
+#' @export
+#' @examples
+#'
+#' MS = model() + model()
+#' I = iterator() * MS
+#' I[2] # returns the second model() object
+#'
+#' @return model at the given index in the sequence
+setMethod(f= "[",
+    signature="iterator",
+    definition=function(x,i){
+            return(models(x)[i])
+    }
+)
+
+#' @describeIn iterator set model by index
+#' @export
+#' @examples
+#'
+#' MS = model() + model()
+#' I = iterator() * MS
+#' I[2] = model() # sets the second model to model()
+#'
+#' @return model sequence with the model at index i replaced
+setMethod(f= "[<-",
+    signature="iterator",
+    definition=function(x,i,value){
+        if (!is(value,'model'))
+        {
+            stop('value must be a model')
+        }
+        models(x)[i]=value
+        return(x)
+    }
+)
 
 
 #' Example iterator

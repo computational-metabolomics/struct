@@ -12,6 +12,8 @@
 \alias{result,iterator-method}
 \alias{result.name,iterator-method}
 \alias{*,iterator,model_OR_iterator-method}
+\alias{[,iterator-method}
+\alias{[<-,iterator-method}
 \title{iterator class}
 \usage{
 \S4method{run}{iterator,dataset,metric}(I, D, MET = NULL)
@@ -29,6 +31,10 @@
 \S4method{result.name}{iterator}(M)
 
 \S4method{*}{iterator,model_OR_iterator}(e1, e2)
+
+\S4method{[}{iterator}(x, i)
+
+\S4method{[}{iterator}(x, i) <- value
 }
 \arguments{
 \item{I}{an iterator object}
@@ -49,6 +55,10 @@
 }
 \value{
 the modified model object
+
+model at the given index in the sequence
+
+model sequence with the model at index i replaced
 }
 \description{
 A class for iterative approaches that involve the training/prediction of a
@@ -75,6 +85,10 @@ iterations
 
 \item \code{*}: combine an interator with other model or interator
 objects
+
+\item \code{[}: get model by index
+
+\item \code{[<-}: set model by index
 }}
 
 \examples{
@@ -89,4 +103,14 @@ I = run(I,D,MET)
 I = iterator()
 result.name(I)='example'
 }
+
+MS = model() + model()
+I = iterator() * MS
+I[2] # returns the second model() object
+
+
+MS = model() + model()
+I = iterator() * MS
+I[2] = model() # sets the second model to model()
+
 }
