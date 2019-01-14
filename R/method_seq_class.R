@@ -52,6 +52,27 @@ setMethod(f="method.apply",
     }
 )
 
+#' @describeIn method.seq get prediction output from method.seq
+#' @export
+#' @examples
+#' \dontrun{
+#' D = dataset()
+#' M = method()
+#' M = method.train(M,D)
+#' M = method.predict(M,D)
+#' p = predicted(M)
+#' }
+#' @return the predicted output of the last method in the sequence
+setMethod(f='predicted',
+    signature=c('method.seq'),
+    definition=function(M)
+    {
+        # return the predicted output from the last model
+        L=length(M)
+        return(output.value(M[L],predicted.name(M[L])))
+    }
+)
+
 #' @describeIn method.seq get method object by index in sequence
 #' @export
 #' @examples
