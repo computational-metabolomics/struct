@@ -362,8 +362,8 @@ setGeneric("description<-",function(obj,value)standardGeneric("description<-"))
 #' Apply a method
 #'
 #' Applies a method to the input dataset
-#' @param M a model object
-#' @param D a dataset object
+#' @param M a method object
+#' @param D another object used by the first
 #' @return Returns a modified method object
 #' @rdname method.apply
 #' @export
