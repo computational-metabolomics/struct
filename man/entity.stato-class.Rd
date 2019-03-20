@@ -4,7 +4,17 @@
 \name{entity.stato-class}
 \alias{entity.stato-class}
 \alias{entity.stato}
-\title{stato_entity_class}
+\title{entity.stato class}
 \description{
-A base class in the \pkg{struct} package. should not be called directly.
+A base class in the \pkg{struct} package. Should not be called directly.
+}
+\details{
+Extends the \code{entity} class to include stato functionality.
+}
+\examples{
+E = entity.stato()
+}
+\seealso{
+Refer to \code{\link{entity}} and \code{\link{stato}} for further
+info.
 }

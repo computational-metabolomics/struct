@@ -3,7 +3,7 @@
 \name{dataset.data}
 \alias{dataset.data}
 \alias{dataset.data<-}
-\title{get/set data for a dataset object}
+\title{Dataset object data}
 \usage{
 dataset.data(obj)
 
@@ -14,6 +14,21 @@ dataset.data(obj) <- value
 
 \item{value}{a data.frame of raw data}
 }
+\value{
+\describe{
+\item{\code{dataset.data(obj)}}{returns a data.frame of raw data}
+\item{\code{dataset.data(obj)<-}}{sets the raw data of a dataset object}
+}
+}
 \description{
-get/set data for a dataset object
+Dataset object data
+}
+\examples{
+# iris dataset
+D = iris_dataset()
+# original raw data
+X = dataset.data(D)
+# modify the raw dataset
+dataset.data(D) = X + 1
+
 }

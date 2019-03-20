@@ -3,7 +3,7 @@
 \name{dataset.sample_meta}
 \alias{dataset.sample_meta}
 \alias{dataset.sample_meta<-}
-\title{get/set sample meta data for a dataset object}
+\title{Sample meta data}
 \usage{
 dataset.sample_meta(obj)
 
@@ -14,6 +14,19 @@ dataset.sample_meta(obj) <- value
 
 \item{value}{a data.frame of meta data}
 }
+\value{
+\describe{
+\item{\code{dataset.sample_meta(obj)}}{returns a data.frame of meta data}
+\item{\code{dataset.sample_meta(obj)<-}}{sets the meta data of a dataset
+object}
+}
+}
 \description{
 get/set sample meta data for a dataset object
+}
+\examples{
+# iris dataset
+D = iris_dataset()
+X = dataset.sample_meta(D)
+dataset.sample_meta(D) = X
 }

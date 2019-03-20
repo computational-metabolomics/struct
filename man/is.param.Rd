@@ -2,7 +2,7 @@
 % Please edit documentation in R/generics.R
 \name{is.param}
 \alias{is.param}
-\title{verify paramater name}
+\title{Verify parameter}
 \usage{
 is.param(obj, name)
 }
@@ -15,5 +15,11 @@ is.param(obj, name)
 TRUE if parameter name is valid, FALSE if not
 }
 \description{
-verify that the name of a paramater is valid for an object
+Verify that the name of a paramater is valid for an object
+}
+\examples{
+M = example_model()
+is.param(M,'value_1') # TRUE
+is.param(M,'alpha')   # FALSE
+
 }

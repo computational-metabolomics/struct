@@ -2,13 +2,24 @@
 % Please edit documentation in R/generics.R
 \name{predicted}
 \alias{predicted}
-\title{prediction output for a model}
+\title{Prediction output}
 \usage{
 predicted(M)
 }
 \arguments{
 \item{M}{a model object}
 }
+\value{
+The value returned varies depending on the output.
+}
 \description{
-returns the prediction output for a model. This is supplied as input to the next model when used in a model.seq
+returns the prediction output for a model. This is supplied as input to the
+next model when used in a model.seq
+}
+\examples{
+M = example_model()
+M = model.train(M, iris_dataset())
+M = model.predict(M, iris_dataset())
+predicted(M)
+
 }

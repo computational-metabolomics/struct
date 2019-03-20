@@ -9,8 +9,26 @@ chart.names(obj, ...)
 \arguments{
 \item{obj}{a object from the *struct* package}
 
-\item{...}{optional inputs}
+\item{...}{optional inputs (see details)}
+}
+\value{
+list of chart names
 }
 \description{
-return a list of valid charts for a struct object
+Returns a list of valid charts for a struct object
+}
+\details{
+The chart.names method searches chart objects that specify the input object
+type as an input.
+
+Optional input \code{ret = 'char'} is the default and will return a character
+vector of object names. \code{ret = 'obj'} will return a list containing the
+named chart objects.
+}
+\examples{
+M = example_model()
+chart.names(M) # 'example_chart'
+chart.names(M,'char') # as above
+chart.names(M,'obj') # returns a list of chart objects
+
 }

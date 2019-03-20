@@ -8,9 +8,12 @@
 \alias{evaluate,iterator,metric-method}
 \alias{models,iterator-method}
 \alias{models<-,iterator,model_OR_iterator-method}
+\alias{result.name<-,iterator,character-method}
 \alias{result,iterator-method}
 \alias{result.name,iterator-method}
 \alias{*,iterator,model_OR_iterator-method}
+\alias{[,iterator-method}
+\alias{[<-,iterator-method}
 \title{iterator class}
 \usage{
 \S4method{run}{iterator,dataset,metric}(I, D, MET = NULL)
@@ -21,13 +24,17 @@
 
 \S4method{models}{iterator,model_OR_iterator}(ML) <- value
 
-\S4method{models}{iterator,model_OR_iterator}(ML) <- value
+\S4method{result.name}{iterator,character}(I) <- value
 
 \S4method{result}{iterator}(M)
 
 \S4method{result.name}{iterator}(M)
 
 \S4method{*}{iterator,model_OR_iterator}(e1, e2)
+
+\S4method{[}{iterator}(x, i)
+
+\S4method{[}{iterator}(x, i) <- value
 }
 \arguments{
 \item{I}{an iterator object}
@@ -46,27 +53,42 @@
 
 \item{e2}{an iterator or a model object}
 }
+\value{
+the modified model object
+
+model at the given index in the sequence
+
+model sequence with the model at index i replaced
+}
 \description{
-A class for iterative approaches that involve the training/prediction of a model multiple times.
-not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
+A class for iterative approaches that involve the training/prediction of a
+model multiple times. Not intended to be called directly, this class should
+be inherited to provide functionality for method-specific classes.
 }
 \section{Methods (by generic)}{
 \itemize{
 \item \code{run}: run a model/model.seq mutliple times for the input data
 
-\item \code{evaluate}: evaluate the performance of a model/model.seq    using the input metric
+\item \code{evaluate}: evaluate the performance of a model/model.seq using
+the input metric
 
 \item \code{models}: get the model/model.seq for an iterator object
 
-\item \code{models<-}: set the model/model.seq to be run for multiple iterations
+\item \code{models<-}: set the model/model.seq to be run for multiple
+iterations
 
-\item \code{models<-}: set the model/model.seq to be run for multiple iterations
+\item \code{result.name<-}: set result output from iterator
 
 \item \code{result}: get prediction output from iterator
 
 \item \code{result.name}: get prediction output name for iterator
 
-\item \code{*}: combine an interator with other model or interator objects
+\item \code{*}: combine an interator with other model or interator
+objects
+
+\item \code{[}: get model by index
+
+\item \code{[<-}: set model by index
 }}
 
 \examples{
@@ -76,5 +98,19 @@ D = dataset()
 MET = metric()
 I = iterator() * model()
 I = run(I,D,MET)
+
+\dontrun{
+I = iterator()
+result.name(I)='example'
+}
+
+MS = model() + model()
+I = iterator() * MS
+I[2] # returns the second model() object
+
+
+MS = model() + model()
+I = iterator() * MS
+I[2] = model() # sets the second model to model()
 
 }

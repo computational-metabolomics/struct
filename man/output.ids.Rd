@@ -2,7 +2,7 @@
 % Please edit documentation in R/generics.R
 \name{output.ids}
 \alias{output.ids}
-\title{output identifiers}
+\title{Output identifiers}
 \usage{
 output.ids(obj)
 }
@@ -14,4 +14,9 @@ list of output ids
 }
 \description{
 return a list of valid output ids for an object
+}
+\examples{
+M = example_model()
+output.ids(M)
+
 }

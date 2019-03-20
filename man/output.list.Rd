@@ -12,11 +12,21 @@ output.list(obj) <- value
 \arguments{
 \item{obj}{a model or iterator object from the *struct* class}
 
-\item{value}{a named list of outputs for an object}
+\item{value}{a named list}
 }
 \value{
 list of output names
+
+struct object
 }
 \description{
-get a named list of outputs and thier current value for an object
+get/set a named list of outputs and their current value for an object
+}
+\examples{
+M = example_model()
+L = output.list(M)
+
+M = example_model()
+output.list(M)=list('result_1' = dataset(),'result_2' = dataset())
+
 }

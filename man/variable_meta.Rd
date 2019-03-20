@@ -3,7 +3,7 @@
 \name{dataset.variable_meta}
 \alias{dataset.variable_meta}
 \alias{dataset.variable_meta<-}
-\title{get/set variable meta data for a dataset object}
+\title{Variable meta data}
 \usage{
 dataset.variable_meta(obj)
 
@@ -14,6 +14,20 @@ dataset.variable_meta(obj) <- value
 
 \item{value}{a data.frame of meta data}
 }
+\value{
+\describe{
+\item{\code{dataset.variable_meta(obj)}}{returns a data.frame of meta data}
+\item{\code{dataset.variable_meta(obj)<-}}{sets the meta data of a dataset
+object}
+}
+}
 \description{
 get/set variable meta data for a dataset object
+}
+\examples{
+# iris dataset
+D = iris_dataset()
+X = dataset.variable_meta(D)
+dataset.variable_meta(D) = X
+
 }

@@ -10,7 +10,9 @@
 \arguments{
 \item{obj}{a chart object}
 
-\item{ret}{a string indicating whether to return a list of chart names (ret="char") or a list of chart objects (ret="obj"). The default is "char".}
+\item{ret}{a string indicating whether to return a list of chart
+names (ret="char") or a list of chart objects (ret="obj").
+The default is "char".}
 }
 \value{
 list of chart names (default), or chart objects

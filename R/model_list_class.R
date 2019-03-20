@@ -12,7 +12,8 @@
 #' @param e1 a model or model.seq object
 #' @param e2 a model or model.seq object
 #' @param value value
-#' @include generics.R    parameter_class.R output_class.R struct_class.R model_class.R model_stato_class.R
+#' @include generics.R parameter_class.R output_class.R struct_class.R
+#' @include model_class.R
 #' @examples
 #' MS = model.seq()
 #' MS = model() + model()
@@ -38,11 +39,14 @@ setMethod(f="model.train",
     {
         # for each model in the list
         S=D # for first in list the input D is the data object
-        for (i in 1:length(M))
+        for (i in seq_len(length(M)))
         {
-            M[i]=model.train(M[i],S) # train the model on the output of the previous model
-            M[i]=model.predict(M[i],S) # apply the model to the output of the previous model
-            S=predicted(M[i]) # set the output of this model as the input for the next model
+            # train the model on the output of the previous model
+            M[i]=model.train(M[i],S)
+            # apply the model to the output of the previous model
+            M[i]=model.predict(M[i],S)
+            # set the output of this model as the input for the next model
+            S=predicted(M[i])
         }
         return(M)
     }
@@ -63,11 +67,31 @@ setMethod(f="model.predict",
     definition=function(M,D)
     {
         S=D # for the first model the input use the input data
-        for (i in 1:length(M))
+        L=length(M) # number of models
+        for (i in seq_len(L))
         {
-            M[i]=model.predict(M[i],S) # apply the model the output of the previous model
-            S=predicted(M[i]) # set the output of this model as the input to the next
+            # apply the model the output of the previous model
+            M[i]=model.predict(M[i],S)
+            # keep the previous output
+            penultimate=S
+            # set the output of this model as the input to the next
+            S=predicted(M[i])
         }
+
+        # if regression, reverse the processing to get predictions
+        # on the same scale as the input data
+        if (type(M[L])=='regression') {
+            # put the predictions into the penultimate dataset object
+            penultimate$sample_meta[,M[L]$factor_name]=S
+            # apply the reverse models (only works if all are preprocess models)
+            for (k in seq(L-1,1,-1)) {
+                penultimate=model.reverse(M[k],penultimate)
+            }
+            # put the update predictions into the last model
+            pred=predicted.name(M[L]) # name of predicted output
+            output.value(M[L],pred)=as.data.frame(penultimate$sample_meta[,M[L]$factor_name])
+        }
+
         return(M)
     }
 )
@@ -135,7 +159,7 @@ setMethod(f='models<-',
     signature=c('model.seq','list'),
     definition=function(ML,value) {
         # check that all items in list are models
-        ism=lapply(X=value,FUN=isClass,Class='model')
+        ism=lapply(X=value,FUN=is,class2='model')
         if (!all(unlist(ism))) {
             stop('all items in list must be a model')
         }
@@ -177,14 +201,14 @@ setMethod(f='show',
             cat('no models')
             return()
         }
-        for (i in 1:length(object))
+        for (i in seq_len(length(object)))
         {
             cat('[',i,'] ',name(object[i]),'\n',sep='')
         }
     }
 )
 
-setClassUnion("model_OR_model.seq", c("model", "model.seq","model.stato"))
+setClassUnion("model_OR_model.seq", c("model", "model.seq"))
 
 #' @describeIn model.seq add a model to the (front) of a model sequence
 #' @export
@@ -194,7 +218,8 @@ setClassUnion("model_OR_model.seq", c("model", "model.seq","model.stato"))
 #' M = model()
 #' MS = M + MS
 #'
-#' @return a model sequence with the additional model appended to the front of the sequence
+#' @return a model sequence with the additional model appended to the front of
+#' the sequence
 setMethod("+",
     signature(e1='model',e2='model.seq'),
     definition=function(e1,e2) {
@@ -213,7 +238,8 @@ setMethod("+",
 #' M = model()
 #' MS = MS + M
 #'
-#' @return a model sequence with the additional model appended to the end of the sequence
+#' @return a model sequence with the additional model appended to the end of the
+#' sequence
 setMethod("+",
     signature(e1='model.seq',e2='model'),
     definition=function(e1,e2) {
@@ -239,3 +265,23 @@ setMethod("+",
     }
 )
 
+#' @describeIn model.seq get prediction output from model.seq
+#' @export
+#' @examples
+#' \dontrun{
+#' D = dataset()
+#' M = model()
+#' M = model.train(M,D)
+#' M = model.predict(M,D)
+#' p = predicted(M)
+#' }
+#' @return the predicted output of the last model in the sequence
+setMethod(f='predicted',
+    signature=c('model.seq'),
+    definition=function(M)
+    {
+        # return the predicted ooutput from the last model
+        L=length(M)
+        return(output.value(M[L],predicted.name(M[L])))
+    }
+)

@@ -5,7 +5,6 @@
 \alias{stato.name}
 \alias{stato.definition}
 \alias{stato.summary}
-\alias{stato.pdf}
 \title{get the stato.id for an object}
 \usage{
 stato.id(obj)
@@ -15,17 +14,9 @@ stato.name(obj)
 stato.definition(obj)
 
 stato.summary(obj)
-
-stato.pdf(obj, outpath, filename, outformat)
 }
 \arguments{
 \item{obj}{stato_class object}
-
-\item{outpath}{folder path}
-
-\item{filename}{file name}
-
-\item{outformat}{output format ("pdf" or "html")}
 }
 \value{
 id the stato id
@@ -42,6 +33,12 @@ get the stato name for an object
 get the stato name for an object
 
 display a stato summary of the object
+}
+\examples{
+M = example_model()
+stato.id(M)
+stato.name(M)
+stato.definition(M)
+stato.summary(M)
 
-get a pdf of a stato object
 }

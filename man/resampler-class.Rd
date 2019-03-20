@@ -6,7 +6,8 @@
 \alias{resampler}
 \title{resampler class}
 \description{
-A class for resampling methods such as cross-validation. not intended to be called directly.
+A class for resampling methods such as cross-validation. not intended to be
+called directly.
 }
 \examples{
 R = resampler()

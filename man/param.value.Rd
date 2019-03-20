@@ -17,8 +17,18 @@ param.value(obj, name) <- value
 \item{value}{value}
 }
 \value{
-value of output
+value of parameter
+
+struct object
 }
 \description{
 get/set the values for a parameter.
+}
+\examples{
+M = example_model()
+param.value(M,'value_1')
+
+M = example_model()
+param.value(M,'value_1') = 0.95
+
 }

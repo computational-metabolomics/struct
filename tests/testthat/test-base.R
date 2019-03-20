@@ -12,18 +12,36 @@ test_that('struct objects can be created and modified',{
     # description
     expect_equal({description(test_object)},"test_desc") #get
     expect_equal({description(test_object)='cabbage';description(test_object)},'cabbage') #set
+    # show
+    expect_output(show(test_object),'A struct_class object')
 })
 
-
-# test dataset object
-test_that('dataset objects',{
-    # a test dataset object
-    test_data=iris_dataset()
-
-    expect_identical(test_data$data,iris[,1:4])
-    expect_identical(dataset.data(test_data),iris[,1:4])
-    expect_identical(test_data$sample_meta,iris[,5,drop=FALSE])
-    expect_identical(dataset.sample_meta(test_data),iris[,5,drop=FALSE])
+# test metric object
+test_that('metric object',{
+    M=metric()
+    expect_warning(calculate(M,1,1))
+    # return value
+    expect_equal(value(M),numeric(0))
 })
 
+# test entity
+test_that('entity object',{
+    E=entity()
+    value(E)=1
+    expect_equal(value(E),1)
+})
 
+# test enum
+test_that('enum object',{
+    E=enum(list=c('hello','world'),value='hello')
+    # check object creation
+    expect_equal(value(E),'hello')
+    # check use first value if value = NULL
+    E=enum(list=c('hello','world'),value=NULL)
+    expect_equal(value(E),'hello')
+    # check throws error if value not in list
+    expect_error({value(E)='banana'},'not a valid choice for this enum')
+    # check assign value
+    value(E)='world'
+    expect_equal(value(E),'world')
+})

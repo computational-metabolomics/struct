@@ -2,18 +2,24 @@
 % Please edit documentation in R/generics.R
 \name{is.output}
 \alias{is.output}
-\title{verify output name}
+\title{Verify output}
 \usage{
 is.output(obj, name)
 }
 \arguments{
 \item{obj}{a model or iterator object from the *struct* class}
 
-\item{name}{name of the output as a string}
+\item{name}{name of output as a string}
 }
 \value{
 TRUE if output name is valid, FALSE if not
 }
 \description{
-verify that the name of an output is valid for an object
+Verify that the name of a output is valid for an object
+}
+\examples{
+M = example_model()
+is.output(M,'result_1') # TRUE
+is.output(M,'result_0')   # FALSE
+
 }

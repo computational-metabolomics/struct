@@ -2,7 +2,7 @@
 % Please edit documentation in R/generics.R
 \name{chart.plot}
 \alias{chart.plot}
-\title{plot a chart for an object}
+\title{chart.plot}
 \usage{
 chart.plot(obj, dobj, ...)
 }
@@ -13,6 +13,14 @@ chart.plot(obj, dobj, ...)
 
 \item{...}{optional inputs}
 }
+\value{
+a plot object
+}
 \description{
-plot a chart for an object
+Plots a chart object
+}
+\examples{
+C = example_chart()
+chart.plot(C)
+
 }

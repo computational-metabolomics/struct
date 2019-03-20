@@ -12,7 +12,9 @@
 #' @param e2 a method or method.seq object
 #' @param value value
 #' @export method.seq
-#' @include generics.R    parameter_class.R output_class.R struct_class.R method_class.R method_stato_class.R
+#' @include generics.R parameter_class.R output_class.R struct_class.R
+#' @include method_class.R
+#' @return a method.seq object
 #' @examples
 #' MS = method.seq()
 #' MS = method() + method()
@@ -39,12 +41,35 @@ setMethod(f="method.apply",
     {
         # for each method in the list
         S=D # for first in list the input D is the data object
-        for (i in 1:length(M))
+        for (i in seq_len(length(M)))
         {
-            M[i]=method.apply(M[i],S) # train the method on the output of the previous method
-            S=predicted(M[i]) # set the output of this method as the input for the next method
+            # train the method on the output of the previous method
+            M[i]=method.apply(M[i],S)
+            # set the output of this method as the input for the next method
+            S=predicted(M[i])
         }
         return(M)
+    }
+)
+
+#' @describeIn method.seq get prediction output from method.seq
+#' @export
+#' @examples
+#' \dontrun{
+#' D = dataset()
+#' M = method()
+#' M = method.train(M,D)
+#' M = method.predict(M,D)
+#' p = predicted(M)
+#' }
+#' @return the predicted output of the last method in the sequence
+setMethod(f='predicted',
+    signature=c('method.seq'),
+    definition=function(M)
+    {
+        # return the predicted output from the last model
+        L=length(M)
+        return(output.value(M[L],predicted.name(M[L])))
     }
 )
 
@@ -92,7 +117,8 @@ setMethod(f='method.steps',
     }
 )
 
-#' @describeIn method.seq set the sequence of methods by inputting a list of methods
+#' @describeIn method.seq set the sequence of methods by inputting a list of
+#' methods
 #' @export
 #' @examples
 #' MS = method.seq()
@@ -138,14 +164,14 @@ setMethod(f='show',
             cat('no methods')
             return()
         }
-        for (i in 1:length(object))
+        for (i in seq_len(length(object)))
         {
             cat('[',i,'] ',name(object[i]),'\n',sep='')
         }
     }
 )
 
-setClassUnion("method_OR_method.seq", c("method", "method.seq","method.stato"))
+setClassUnion("method_OR_method.seq", c("method", "method.seq"))
 
 #' @describeIn method.seq add a method object to the (front) of a sequence.
 #' @export

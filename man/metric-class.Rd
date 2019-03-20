@@ -6,14 +6,17 @@
 \alias{metric}
 \alias{calculate,metric-method}
 \alias{value,metric-method}
+\alias{value<-,metric-method}
 \title{metric class}
 \usage{
-\S4method{calculate}{metric}(MET, Y, Yhat)
+\S4method{calculate}{metric}(obj, Y, Yhat)
 
-\S4method{value}{metric}(MET)
+\S4method{value}{metric}(obj)
+
+\S4method{value}{metric}(obj) <- value
 }
 \arguments{
-\item{MET}{a metric object}
+\item{obj}{a metric object}
 
 \item{Y}{the true class labels}
 
@@ -21,15 +24,21 @@
 
 \item{value}{value}
 }
+\value{
+a metric object
+}
 \description{
 A class for metrics to assess performance of e.g. models, iterators.
-Not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
+Not intended to be called directly, this class should be inherited to provide
+functionality for method-specific classes.
 }
 \section{Methods (by generic)}{
 \itemize{
 \item \code{calculate}: calculate a metric
 
 \item \code{value}: get the caluclated value for a metric
+
+\item \code{value<-}: set the caluclated value for a metric
 }}
 
 \examples{
@@ -40,4 +49,6 @@ calculate(M,Y,Yhat)
 }
 MET = metric()
 value(MET)
+MET = metric()
+value(MET)=10
 }

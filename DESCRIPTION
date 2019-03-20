@@ -14,29 +14,29 @@ Collate:
     'parameter_class.R'
     'chart_class.R'
     'stato_class.R'
-    'chart_stato.R'
     'dataset_class.R'
     'entity_class.R'
     'entity_stato_class.R'
     'enum_class.R'
-    'iris_dataset_obj.R'
+    'enum_stato_class.R'
     'output_class.R'
+    'method_class.R'
     'model_class.R'
-    'model_stato_class.R'
+    'example_objects.R'
     'model_list_class.R'
     'metric_class.R'
     'iterator_class.R'
-    'method_class.R'
-    'method_stato_class.R'
     'method_seq_class.R'
     'optimiser_class.R'
+    'preprocess_class.R'
     'resampler_class.R'
     'struct.R'
+    'struct_templates.R'
 RoxygenNote: 6.1.1
 Suggests: 
-    knitr,
-    rmarkdown,
-    testthat
+    testthat,
+    rstudioapi,
+    rmarkdown
 VignetteBuilder: knitr
-Imports: methods, ontologyIndex, crayon
-biocViews: BasicWorkflow
+Imports: methods, ontologyIndex, crayon, datasets,graphics, stats, utils, knitr
+biocViews: WorkflowStep

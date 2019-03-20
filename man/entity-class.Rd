@@ -6,34 +6,49 @@
 \alias{entity}
 \alias{value,entity-method}
 \alias{value<-,entity-method}
-\title{entity_class}
+\title{Entity objects}
 \usage{
-\S4method{value}{entity}(MET)
+\S4method{value}{entity}(obj)
 
 \S4method{value}{entity}(obj) <- value
 }
 \arguments{
-\item{MET}{an entity object}
+\item{obj}{An entity object}
 
-\item{obj}{entity object}
-
-\item{value}{value of the entity}
+\item{value}{Value of the entity}
+}
+\value{
+and entity object
 }
 \description{
-A base class in the \pkg{struct} package. should not be called directly.
+A base class in the \pkg{struct} package. Not normally called directly.
+}
+\details{
+An entity object is used to store information about a parameter or output.
+The standard 'name','description' and 'type' slots are included, along with
+'value' for storing the value of the parameter.
+
+Entity objects are usually defined in the prototype of another object, but
+can be extracted using \code{param.obj} and \code{output.obj}.
 }
 \section{Methods (by generic)}{
 \itemize{
 \item \code{value}: get the value for an entity
 
-\item \code{value<-}: set the    value for an entity
+\item \code{value<-}: set the value for an entity
 }}
 
 \examples{
-E = entity()
+# Create a new entity object
+E = entity(
+    name='example',
+    description='this is an example',
+    type='numeric',
+    value=1
+)
 
-E = entity()
-v = value(E)
-E = entity()
+# Get/set the value of the entity object
+value(E)
 value(E) = 10
+
 }

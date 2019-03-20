@@ -2,7 +2,8 @@
 #'
 #' A class for models that can be trained/applied to datasets e.g. PCA, PLS etc.
 #' Also used for preprocessing steps that require application to test sets.
-#' not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
+#' not intended to be called directly, this class should be inherited to provide
+#' functionality for method-specific classes.
 #' @export model
 #' @param M a model object
 #' @param D a dataset object

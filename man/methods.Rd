@@ -14,6 +14,18 @@ method.steps(ML) <- value
 
 \item{value}{a list containing only method objects}
 }
+\value{
+\describe{
+\item{\code{method.steps(ML)}}{returns a list of methods}
+\item{\code{method.steps(ML)<-}}{sets the list of methods for a sequence}
+}
+}
 \description{
 Returns the list of method in a method.seq object
+}
+\examples{
+ML = example_method() + example_method()
+method.steps(ML)
+method.steps(ML) = list(example_method(),example_method())
+
 }

@@ -1,10 +1,29 @@
-#' enum_class
+#' Enum objects
 #'
-#' A base class in the \pkg{struct} package. should not be called directly.
+#' A base class in the \pkg{struct} package. Not normally called directly.
+#'
+#' An enum object is a special type of entity object that ensures the value must
+#' be one from a list of allowed values.
+#'
+#' Enum objects are usually defined in the prototype of another object, but
+#' can be extracted using \code{param.obj} and \code{output.obj}.
+#'
 #' @export enum
-#' @include generics.R struct_class.R
-#' #' @examples
-#' E = enum()
+#' @include entity_class.R
+#' @return an enum object
+#' @examples
+#' # Create a new enum object
+#' E = enum(
+#'     name='example',
+#'     description='this is an example',
+#'     type='character',
+#'     value='hello',
+#'     list=c('hello','world')
+#' )
+#'
+#' # Get/set the value of the entity object
+#' value(E)
+#' value(E) = 'world'
 #'
 enum<-setClass(
     "enum",
@@ -31,16 +50,10 @@ setMethod(f="initialize",
     }
 )
 
-#' set the value of an enum object
-#'
-#' sets the value for an enum object
+#' @describeIn enum set the value for an enum
 #' @param obj an enum object
-#' @param value a valid value for the enum
+#' @param value value of the enum
 #' @export
-#' @examples
-#' E = enum(list=c('hello','world'))
-#' value(E) = 'hello' # value MUST be in the enum list
-#'
 setMethod(f="value<-",
     signature=c("enum"),
     definition=function(obj,value)

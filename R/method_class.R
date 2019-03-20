@@ -1,12 +1,14 @@
 #' method class
 #'
-#' A class for methods that are applied to datasets in a single step e.g. normalisation.
-#' not intended to be called directly, this class should be inherited to provide functionality for method-specific classes.
+#' A class for methods that are applied to datasets in a single step e.g.
+#' normalisation. Not intended to be called directly, this class should be
+#' inherited to provide functionality for method-specific classes.
 #' @export method
 #' @include generics.R    parameter_class.R output_class.R dataset_class.R
 #' @param M a model object
 #' @param D a dataset object
 #' @param value value
+#' @return a method object
 #' @examples
 #' M = method() # create a method object
 #'
@@ -36,8 +38,10 @@ setMethod(f="method.apply",
 #' @describeIn method get prediction output from model
 #' @export
 #' @examples
-#' p = predicted(M) # get the predicted output from the model
+#' \dontrun{
 #'
+#' p = predicted(M) # get the predicted output from the model
+#' }
 setMethod(f='predicted',
     signature=c('method'),
     definition=function(M)

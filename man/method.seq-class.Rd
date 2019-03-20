@@ -5,6 +5,7 @@
 \alias{method.seq-class}
 \alias{method.seq}
 \alias{method.apply,method.seq,dataset-method}
+\alias{predicted,method.seq-method}
 \alias{[,method.seq-method}
 \alias{[<-,method.seq-method}
 \alias{method.steps,method.seq-method}
@@ -17,6 +18,8 @@
 \title{method.seq class}
 \usage{
 \S4method{method.apply}{method.seq,dataset}(M, D)
+
+\S4method{predicted}{method.seq}(M)
 
 \S4method{[}{method.seq}(x, i)
 
@@ -55,6 +58,11 @@
 
 \item{e2}{a method or method.seq object}
 }
+\value{
+a method.seq object
+
+the predicted output of the last method in the sequence
+}
 \description{
 A class for (ordered) lists of methods
 }
@@ -62,13 +70,16 @@ A class for (ordered) lists of methods
 \itemize{
 \item \code{method.apply}: train the method using input data
 
+\item \code{predicted}: get prediction output from method.seq
+
 \item \code{[}: get method object by index in sequence
 
 \item \code{[<-}: set method by index in sequence
 
 \item \code{method.steps}: get sequence of methods as list
 
-\item \code{method.steps<-}: set the sequence of methods by inputting a list of methods
+\item \code{method.steps<-}: set the sequence of methods by inputting a list of
+methods
 
 \item \code{length}: get the length of the method sequence
 
@@ -90,6 +101,13 @@ MS = method() + method()
 MS = method.apply(MS,D)
 }
 
+\dontrun{
+D = dataset()
+M = method()
+M = method.train(M,D)
+M = method.predict(M,D)
+p = predicted(M)
+}
 M = method()
 MS = method() + method()
 MS[2]

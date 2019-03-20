@@ -1,13 +1,31 @@
-#' entity_class
+#' Entity objects
 #'
-#' A base class in the \pkg{struct} package. should not be called directly.
+#' A base class in the \pkg{struct} package. Not normally called directly.
+#'
+#' An entity object is used to store information about a parameter or output.
+#' The standard 'name','description' and 'type' slots are included, along with
+#' 'value' for storing the value of the parameter.
+#'
+#' Entity objects are usually defined in the prototype of another object, but
+#' can be extracted using \code{param.obj} and \code{output.obj}.
+#'
 #' @export entity
-#' @param MET an entity object
-#' @param value value of the entity
-#' @param obj entity object
+#' @param obj An entity object
+#' @param value Value of the entity
 #' @include generics.R struct_class.R
+#' @return and entity object
 #' @examples
-#' E = entity()
+#' # Create a new entity object
+#' E = entity(
+#'     name='example',
+#'     description='this is an example',
+#'     type='numeric',
+#'     value=1
+#' )
+#'
+#' # Get/set the value of the entity object
+#' value(E)
+#' value(E) = 10
 #'
 entity<-setClass(
     "entity",
@@ -17,25 +35,18 @@ entity<-setClass(
         description='no description provided')
 )
 
-
 #' @describeIn entity get the value for an entity
 #' @export
-#' @examples
-#' E = entity()
-#' v = value(E)
 setMethod(f="value",
     signature=c("entity"),
-    definition=function(MET)
+    definition=function(obj)
     {
-        return(MET@value)
+        return(obj@value)
     }
 )
 
-#' @describeIn entity set the    value for an entity
+#' @describeIn entity set the value for an entity
 #' @export
-#' @examples
-#' E = entity()
-#' value(E) = 10
 setMethod(f="value<-",
     signature=c("entity"),
     definition=function(obj,value)

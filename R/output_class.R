@@ -1,6 +1,7 @@
 #' outputs_class
 #'
-#' A base class in the \pkg{struct} package. Provides several fundamental methods for getting/setting outputs etc and should not be called directly.
+#' A base class in the \pkg{struct} package. Provides several fundamental
+#' methods for getting/setting outputs etc and should not be called directly.
 #' @export outputs_class
 #' @param obj a struct object with outputs
 #' @param name output id
@@ -10,23 +11,6 @@
 
 outputs_class<-setClass(
     "outputs_class")
-
-## initialise outputs on object creation
-setMethod(f="initialize",
-    signature="outputs_class",
-    definition=function(.Object,...)
-    {
-        L=list(...)
-        if (length(L)>0)
-        {
-            for (i in 1:length(L))
-            {
-                output.value(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
-            }
-        }
-        return(.Object)
-    }
-)
 
 #' @describeIn outputs_class get an output as an object (if appropriate)
 #' @export
@@ -125,7 +109,7 @@ setMethod(f="output.name",
         else
         {
             # otherwise just return the slot name
-            value=slot(obj, paste("outputs",name,sep='.'))
+            return(name)
         }
         return(value)
     }
@@ -145,7 +129,7 @@ setMethod(f='output.list',
     {
         L=list()
         names=output.ids(obj)
-        for (i in 1:length(names))
+        for (i in seq_len(length(names)))
         {
             L[[names[[i]]]]=output.value(obj,names[[i]])
         }
@@ -153,7 +137,8 @@ setMethod(f='output.list',
     }
 )
 
-#' @describeIn outputs_class set the output values of an object using a named list
+#' @describeIn outputs_class set the output values of an object using a named
+#' list
 #' @examples
 #' \dontrun{
 #' M = model()
@@ -164,10 +149,10 @@ setMethod(f='output.list<-',
     signature=c('outputs_class','list'),
     definition=function(obj,value)
     {
-        names=name(value)
-        for (i in 1:length(names))
+        namez=names(value)
+        for (i in seq_len(length(namez)))
         {
-            output.value(obj,names[[i]])=value[[i]]
+            output.value(obj,namez[[i]])=value[[i]]
         }
         return(obj)
     }
@@ -215,14 +200,18 @@ setMethod(f="$",
 
     definition=function(x,name)
     {
-        if (is.param(x,name)) {
-            value=param.value(x,name)
-        } else if (is.output(x,name)) {
-            value=output.value(x,name)
-        } else {
-            stop(paste0('"',name,'" is ot a valid param or output for ', class(x), ' objects.'))
+        if (is(x,'parameter_class')) {
+            if (is.param(x,name)) {
+                value=param.value(x,name)
+                return(value)
+            }
         }
-        return(value)
+        if (is.output(x,name)) {
+            value=output.value(x,name)
+            return(value)
+        }
+        stop(paste0('"',name,'" is not a valid param or output for ', class(x),
+            ' objects.'))
     }
 )
 
@@ -254,6 +243,8 @@ setMethod(f="output.value<-",
     }
 )
 
+
+
 #' @describeIn outputs_class set the value of an output by id
 #' @export
 #' @examples
@@ -266,14 +257,23 @@ setMethod(f="$<-",
     signature=c(x="outputs_class"),
     definition=function(x,name,value)
     {
-        if (is.param(x,name)) {
-            param.value(x,name)=value
-        } else if (is.output(x,name)) {
-            output.value(x,name)=value
-        } else {
-            stop(paste0('"',name,'" is ot a valid param or output for ', class(x), ' objects.'))
+        if (is(x,'parameter_class')) {
+            if (is.param(x,name)) {
+                param.value(x,name)=value
+                return(x)
+            }
         }
-        return(x)
+
+
+        if (is.output(x,name)) {
+            output.value(x,name)=value
+            return(x)
+        }
+
+        # if we get here then error
+        stop(paste0('"',name,'" is not a valid param or output for ', class(x),
+            ' objects.'))
+
     }
 )
 

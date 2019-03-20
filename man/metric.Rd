@@ -4,20 +4,18 @@
 \alias{calculate}
 \alias{value}
 \alias{value<-}
-\title{calculate a metric}
+\title{Calculate metric}
 \usage{
-calculate(MET, ...)
+calculate(obj, ...)
 
-value(MET)
+value(obj)
 
 value(obj) <- value
 }
 \arguments{
-\item{MET}{a metric object}
+\item{obj}{a metric object}
 
-\item{...}{variable inputs depending on object}
-
-\item{obj}{metric object}
+\item{...}{additional inputs depending on object}
 
 \item{value}{value}
 }
@@ -25,7 +23,14 @@ value(obj) <- value
 value the calculated value of a metric
 }
 \description{
-calculate a metric
+Calculate metric
 
 get the value for a metric
+
+set the value for a metric
+}
+\examples{
+MET = metric()
+calculate(MET)
+
 }
