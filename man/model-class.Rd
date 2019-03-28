@@ -6,6 +6,7 @@
 \alias{model}
 \alias{model.train,model,dataset-method}
 \alias{model.predict,model,dataset-method}
+\alias{model.reverse,model,dataset-method}
 \alias{predicted,model-method}
 \alias{predicted.name,model-method}
 \alias{predicted.name<-,model,character-method}
@@ -15,7 +16,7 @@
 
 \S4method{model.predict}{model,dataset}(M, D)
 
-\S4method{model.predict}{model,dataset}(M, D)
+\S4method{model.reverse}{model,dataset}(M, D)
 
 \S4method{predicted}{model}(M)
 
@@ -55,7 +56,7 @@ functionality for method-specific classes.
 
 \item \code{model.predict}: apply the model to input data
 
-\item \code{model.predict}: reverse the model for preprocessing steps
+\item \code{model.reverse}: reverse the model for preprocessing steps
 
 \item \code{predicted}: get prediction output from model
 

@@ -61,7 +61,7 @@ setMethod(f="model.predict",
 #' M = model.predict(M,D)
 #' M = model.reverse(M,D)
 #' @return dataset dataset object with the reverse model applied
-setMethod(f="model.predict",
+setMethod(f="model.reverse",
   signature=c("model","dataset"),
   definition=function(M,D)
   {

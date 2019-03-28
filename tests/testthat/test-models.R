@@ -69,7 +69,7 @@ test_that('model objects',{
                             outputs.result_1='dataset',
                             outputs.result_2='dataset'
                         ),
-                        prototype=list(predicted='result_2')
+                        prototype=list(predicted='result_2',type='test')
     )
 
     setMethod(f='model.train',
@@ -103,7 +103,7 @@ test_that('model objects',{
 
     # train/predict
     TM = model.train(TM,D)
-    TM = model.predict(TM,D);
+    TM = model.predict(TM,D)
 
     expect_equal(TM[1]$value_1,10) # check values assigned correctly
     expect_equal(TM[1]$value_2,5) # check values assigned correctly
