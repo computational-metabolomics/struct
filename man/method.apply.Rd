@@ -7,9 +7,9 @@
 method.apply(M, D)
 }
 \arguments{
-\item{M}{a model object}
+\item{M}{a method object}
 
-\item{D}{a dataset object}
+\item{D}{another object used by the first}
 }
 \value{
 Returns a modified method object

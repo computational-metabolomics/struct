@@ -8,7 +8,7 @@ vignette: >
 ---
 
 ```{r,include=FALSE,purl=FALSE}
-library(struct)
+library("struct")
 ```
 
 <span style="color:red">Please note: this vignette describes the contents of a 

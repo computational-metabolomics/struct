@@ -52,6 +52,23 @@ setMethod(f="model.predict",
     }
 )
 
+#' @describeIn model reverse the model for preprocessing steps
+#' @export
+#' @examples
+#' D = dataset()
+#' M = model()
+#' M = model.train(M,D)
+#' M = model.predict(M,D)
+#' M = model.reverse(M,D)
+#' @return dataset dataset object with the reverse model applied
+setMethod(f="model.predict",
+  signature=c("model","dataset"),
+  definition=function(M,D)
+  {
+    return(D)
+  }
+)
+
 #' @describeIn model get prediction output from model
 #' @export
 #' @examples

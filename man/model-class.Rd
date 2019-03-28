@@ -15,6 +15,8 @@
 
 \S4method{model.predict}{model,dataset}(M, D)
 
+\S4method{model.predict}{model,dataset}(M, D)
+
 \S4method{predicted}{model}(M)
 
 \S4method{predicted.name}{model}(M)
@@ -32,6 +34,8 @@
 trained model object
 
 model object with test set results
+
+dataset dataset object with the reverse model applied
 
 the predicted output, as specified by predicted.name
 
@@ -51,6 +55,8 @@ functionality for method-specific classes.
 
 \item \code{model.predict}: apply the model to input data
 
+\item \code{model.predict}: reverse the model for preprocessing steps
+
 \item \code{predicted}: get prediction output from model
 
 \item \code{predicted.name}: get prediction output name for model
@@ -67,6 +73,11 @@ D = dataset()
 M = model()
 M = model.train(M,D)
 M = model.predict(M,D)
+D = dataset()
+M = model()
+M = model.train(M,D)
+M = model.predict(M,D)
+M = model.reverse(M,D)
 \dontrun{
 D = dataset()
 M = model()

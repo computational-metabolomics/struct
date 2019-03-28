@@ -6,3 +6,5 @@
 ^\.Rhistory
 LICENSE
 ^\README.md
+.travis.yml
+README.rst
