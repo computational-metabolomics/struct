@@ -2,7 +2,7 @@
 STRUCT: STatistics in R Using Class Templates
 ==============================================
 
-|Git| |Bioconda| |Build Status (Travis)| |License|
+|Git| |Bioconda| |Build Status (Travis)| |License| |Coverage|
 
 
 ------------
