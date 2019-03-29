@@ -36,7 +36,8 @@ RoxygenNote: 6.1.1
 Suggests: 
     testthat,
     rstudioapi,
-    rmarkdown
+    rmarkdown,
+    covr
 VignetteBuilder: knitr
 Imports: methods, ontologyIndex, crayon, datasets,graphics, stats, utils, knitr
 biocViews: WorkflowStep
