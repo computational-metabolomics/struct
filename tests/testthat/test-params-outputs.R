@@ -74,8 +74,7 @@ test_that('params and outputs',{
         slots=c(
             outputs.result_1='entity',
             outputs.result_2='numeric'
-        ),
-        prototype=list(predicted='result_1')
+        )
     )
     TM=test_model2()
     # outputs
