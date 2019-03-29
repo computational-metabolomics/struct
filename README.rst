@@ -47,5 +47,5 @@ References
 .. |License| image:: https://img.shields.io/badge/licence-GNU_v3-teal.svg?style=flat&maxAge=3600
    :target: https://www.gnu.org/licenses/gpl-3.0.html
 
-.. image:: https://codecov.io/gh/computational-metabolomics/struct/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/computational-metabolomics/struct
+.. |Coverage| image:: https://codecov.io/gh/computational-metabolomics/struct/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/computational-metabolomics/struct
