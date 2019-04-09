@@ -10,8 +10,8 @@
 #' summary(D)
 iris_dataset=function() {
     iris=datasets::iris
-    v=data.frame('feature_id'=colnames(iris))
-    rownames(v)=colnames(iris)
+    v=data.frame('feature_id'=colnames(iris[,1:4]))
+    rownames(v)=colnames(iris[,1:4])
     test_data = dataset(
         name = 'Iris',
         description = "Fisher's Iris data",
