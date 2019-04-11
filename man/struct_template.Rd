@@ -23,6 +23,8 @@ A template is created at the output location specified
 Create a struct template
 }
 \examples{
+\dontrun{
 struct_template('model','example.R',FALSE)
+}
 
 }
