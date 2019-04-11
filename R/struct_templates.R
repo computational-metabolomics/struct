@@ -10,7 +10,9 @@
 #' @importFrom utils file.edit
 #' @importFrom knitr purl
 #' @examples
+#'\dontrun{
 #' struct_template('model','example.R',FALSE)
+#'}
 #'
 struct_template=function(
     template='model',
