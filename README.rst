@@ -50,5 +50,5 @@ References
 .. |Coverage| image:: https://codecov.io/gh/computational-metabolomics/struct/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/computational-metabolomics/struct
 
-.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/github/computational-metabolomics/struct?branch=master&svg=true)
-   :target: https://ci.appveyor.com/project/computational-metabolomics/struct
+.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/github/RJMW/struct?branch=master&svg=true)
+   :target: https://ci.appveyor.com/project/RJMW/struct
