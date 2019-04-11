@@ -2,7 +2,7 @@
 STRUCT: STatistics in R Using Class Templates
 ==============================================
 
-|Git| |Bioconda| |Build Status (Travis)| |License| |Coverage|
+|Git| |Bioconda| |Build Status (Travis)| |License| |Coverage| |AppVeyor|
 
 
 ------------
@@ -49,3 +49,6 @@ References
 
 .. |Coverage| image:: https://codecov.io/gh/computational-metabolomics/struct/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/computational-metabolomics/struct
+
+.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/github/computational-metabolomics/struct?branch=master&svg=true)
+   :target: https://ci.appveyor.com/project/computational-metabolomics/struct
