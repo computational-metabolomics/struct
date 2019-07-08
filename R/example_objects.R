@@ -192,7 +192,30 @@ setMethod(f='method.apply',
 )
 
 
-
+#' data from sbcms
+#'
+#' sbcms data as a struct dataset object
+#' @export sbcms_dataset
+#' @return dataset object
+#' @import datasets
+#' @examples
+#' D = sbcms_dataset()
+#' summary(D)
+sbcms_dataset=function() {
+    data=data.frame(sbcms::sbcdata$data,stringsAsFactors = FALSE)
+    test_data = dataset(
+        name = 'SBCMS',
+        description = "DIMS data set is included in 'sbcms' package, (MTBLS79) [https://www.ebi.ac.uk/metabolights/MTBLS79]",
+        type='single_block',
+        data=data,
+        sample_meta=data.frame(class=factor(sbcms::sbcdata$class),
+                               batch=factor(sbcms::sbcdata$batch),
+                               sample_order=1:nrow(data),
+                               stringsAsFactors = FALSE),
+        variable_meta=data.frame(var_id=colnames(data))
+    )
+    return(test_data)
+}
 
 
 

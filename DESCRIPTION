@@ -37,7 +37,9 @@ Suggests:
     testthat,
     rstudioapi,
     rmarkdown,
-    covr
+    covr,
+    sbcms
 VignetteBuilder: knitr
 Imports: methods, ontologyIndex, crayon, datasets,graphics, stats, utils, knitr
 biocViews: WorkflowStep
+Remotes: computational-metabolomics/sbcms
