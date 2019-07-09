@@ -38,11 +38,16 @@ setMethod(f="initialize",
     definition=function(.Object,...)
     {
         L=list(...)
+        SN=slotNames(.Object)
         if (length(L)>0)
         {
             for (i in seq_len(length(L)))
             {
-                param.value(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
+                if (names(L)[[i]] %in% SN) {
+                    slot(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
+                } else {
+                    param.value(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
+                }
             }
         }
         return(.Object)
