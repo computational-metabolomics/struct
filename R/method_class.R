@@ -16,8 +16,10 @@ method<-setClass(
     "method",
     contains = c('struct_class','parameter_class','outputs_class'),
     slots=c(type='character',
-        predicted='character'
-    )
+        predicted='character',
+        seq_in='character'
+    ),
+    prototype=list(seq_in = 'data')
 )
 
 #' @describeIn method train the model using input data

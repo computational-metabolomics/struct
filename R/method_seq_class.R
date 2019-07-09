@@ -41,12 +41,22 @@ setMethod(f="method.apply",
     {
         # for each method in the list
         S=D # for first in list the input D is the data object
+
         for (i in seq_len(length(M)))
         {
-            # train the method on the output of the previous method
-            M[i]=method.apply(M[i],S)
+            if (M[i]@seq_in != 'data') {
+                # set parameter
+                param.value(M[i],M[i]@seq_in) = S
+            }
+            # use current data
+            M[i]=method.apply(M[i],D)
+
             # set the output of this method as the input for the next method
             S=predicted(M[i])
+            if (is(S,'dataset')) {
+                # if its a dataset then update current D
+                D=predicted(M[i])
+            }
         }
         return(M)
     }
