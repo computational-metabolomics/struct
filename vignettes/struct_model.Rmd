@@ -1,6 +1,9 @@
 ---
 title: StRUCT Model Template
-output: rmarkdown::html_vignette
+output:
+    github_document:
+        df_print: paged
+        html_preview: false
 vignette: >
     %\VignetteIndexEntry{StRUCT Model Template}
     %\VignetteEngine{knitr::rmarkdown}
