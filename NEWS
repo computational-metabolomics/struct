@@ -1,2 +1,2 @@
-Changes in version 0.00.1 (2018-05-15)
-+ Submitted to Bioconductor
+Changes in version 0.2.0 (2019-07-25)
++ Introduction of seq_out slot for more flexible workflows (currently method objects only)
