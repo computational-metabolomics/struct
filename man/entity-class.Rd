@@ -6,16 +6,24 @@
 \alias{entity}
 \alias{value,entity-method}
 \alias{value<-,entity-method}
+\alias{max_length,entity-method}
+\alias{max_length<-,entity-method}
 \title{Entity objects}
 \usage{
 \S4method{value}{entity}(obj)
 
 \S4method{value}{entity}(obj) <- value
+
+\S4method{max_length}{entity}(obj)
+
+\S4method{max_length}{entity}(obj) <- value
 }
 \arguments{
 \item{obj}{An entity object}
 
 \item{value}{Value of the entity}
+
+\item{max_length}{maximum length of value vector (default 1)}
 }
 \value{
 and entity object
@@ -36,6 +44,10 @@ can be extracted using \code{param.obj} and \code{output.obj}.
 \item \code{value}: get the value for an entity
 
 \item \code{value<-}: set the value for an entity
+
+\item \code{max_length}: get the maximum length of value vector for an entity
+
+\item \code{max_length<-}: set the maximum length of value vector for an entity
 }}
 
 \examples{

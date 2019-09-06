@@ -4,6 +4,7 @@
 \alias{calculate}
 \alias{value}
 \alias{value<-}
+\alias{max_length<-}
 \title{Calculate metric}
 \usage{
 calculate(obj, ...)
@@ -11,6 +12,8 @@ calculate(obj, ...)
 value(obj)
 
 value(obj) <- value
+
+max_length(obj) <- value
 }
 \arguments{
 \item{obj}{a metric object}
@@ -26,6 +29,8 @@ value the calculated value of a metric
 Calculate metric
 
 get the value for a metric
+
+set the value for a metric
 
 set the value for a metric
 }

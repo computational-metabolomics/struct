@@ -12,6 +12,7 @@
 #' @export entity
 #' @param obj An entity object
 #' @param value Value of the entity
+#' @param max_length maximum length of value vector (default 1)
 #' @include generics.R struct_class.R
 #' @return and entity object
 #' @examples
@@ -29,10 +30,27 @@
 #'
 entity<-setClass(
     "entity",
-    slots=c('value'),
+    slots=c(value='ANY'),
     contains='struct_class',
     prototype=list(name='name not provided',
-        description='no description provided')
+        description='no description provided',
+        value='',
+        type='character',
+        max_length=1
+        ),
+    validity = function(object) {
+        check_length=length(value(object)) <= max_length(object)
+        check_type=class(value(object))[1] %in% type(object)
+
+        msg=TRUE
+        if (!check_length) {
+            msg=paste0(name(object),': number of values must be less than "max_length"')
+        }
+        if (!check_type) {
+            msg=paste0(name(object),': class of value must match "type"')
+        }
+        return(msg)
+    }
 )
 
 #' @describeIn entity get the value for an entity
@@ -52,8 +70,29 @@ setMethod(f="value<-",
     definition=function(obj,value)
     {
         obj@value=value
+        validObject(obj)
         return(obj)
     }
 )
 
+#' @describeIn entity get the maximum length of value vector for an entity
+#' @export
+setMethod(f="max_length",
+    signature=c("entity"),
+    definition=function(obj)
+    {
+        return(obj@max_length)
+    }
+)
 
+#' @describeIn entity set the maximum length of value vector for an entity
+#' @export
+setMethod(f="max_length<-",
+    signature=c("entity"),
+    definition=function(obj,value)
+    {
+        obj@max_length=value
+        validObject(obj)
+        return(obj)
+    }
+)

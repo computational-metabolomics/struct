@@ -693,6 +693,19 @@ setGeneric("value",function(obj)standardGeneric("value"))
 #' @rdname metric
 setGeneric("value<-",function(obj,value)standardGeneric("value<-"))
 
+#' get the max value vector length for an entity
+#'
+#' @return max value vector length for an entity
+#' @rdname entity
+#' @export
+setGeneric("max_length",function(obj)standardGeneric("max_length"))
+
+#' set the value for a metric
+#'
+#' @export
+#' @rdname metric
+setGeneric("max_length<-",function(obj,value)standardGeneric("max_length<-"))
+
 ####################################
 ###### stato class generics #####
 ####################################

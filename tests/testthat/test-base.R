@@ -26,14 +26,14 @@ test_that('metric object',{
 
 # test entity
 test_that('entity object',{
-    E=entity()
+    E=entity(type='numeric',value=0)
     value(E)=1
     expect_equal(value(E),1)
 })
 
 # test enum
 test_that('enum object',{
-    E=enum(list=c('hello','world'),value='hello')
+    E=enum(list=c('hello','world'),value='hello',type='character')
     # check object creation
     expect_equal(value(E),'hello')
     # check use first value if value = NULL

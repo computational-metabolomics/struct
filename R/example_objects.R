@@ -57,7 +57,7 @@ example_model=setClass('example_model',
             stato.id='STATO:0000047'),
         params.value_2=20,
         outputs.result_1=entity(name='Result 1',type='dataset',
-            description='An example entity object'),
+            description='An example entity object',value=dataset()),
         outputs.result_2=dataset(),
         predicted='result_1'
     )
@@ -167,7 +167,7 @@ example_method=setClass('example_method',
             stato.id='STATO:0000047'),
         params.value_2=20,
         outputs.result_1=entity(name='Result 1',type='dataset',
-            description='An example entity object'),
+            description='An example entity object',value=dataset()),
         outputs.result_2=dataset()
     )
 )
