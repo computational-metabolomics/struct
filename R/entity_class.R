@@ -30,7 +30,7 @@
 #'
 entity<-setClass(
     "entity",
-    slots=c(value='ANY'),
+    slots=c(value='ANY',max_length='numeric'),
     contains='struct_class',
     prototype=list(name='name not provided',
         description='no description provided',
@@ -41,13 +41,16 @@ entity<-setClass(
     validity = function(object) {
         check_length=length(value(object)) <= max_length(object)
         check_type=class(value(object))[1] %in% type(object)
-
+        check_max_length=length(max_length(object))==1
         msg=TRUE
         if (!check_length) {
             msg=paste0(name(object),': number of values must be less than "max_length"')
         }
         if (!check_type) {
             msg=paste0(name(object),': class of value must match "type"')
+        }
+        if (!check_max_length) {
+            msg=paste0(name(object),': ', ' max_length must be of length 1')
         }
         return(msg)
     }
