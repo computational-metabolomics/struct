@@ -1,3 +1,4 @@
+doc
 Meta
 inst/doc
 
@@ -15,7 +16,6 @@ inst/doc
 *.png
 *.pdf
 .Rproj
-.Rhistory
 T6
 T4
 T2

@@ -3,9 +3,6 @@ title: StRUCT Model Template
 output:
     html_vignette:
         df_print: paged
-    github_document:
-        df_print: paged
-        html_preview: false
 vignette: >
     %\VignetteIndexEntry{StRUCT Model Template}
     %\VignetteEngine{knitr::rmarkdown}
@@ -297,8 +294,8 @@ model_template=setClass('model_template', # replace model_template with ...
         params.value_2=20,
         
         # entities can be initialised with populated slots
-        outputs.result_1=entity(name='Result 1',type='data.frame',
-            description='An example entity object',value=data.frame()),
+        outputs.result_1=entity(name='Result 1',type='dataset',
+            description='An example entity object',value=dataset()),
         
         # outputs dont have to be entity objects but we dont recommend this.
         outputs.result_2=2
