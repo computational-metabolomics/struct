@@ -152,7 +152,7 @@ setGeneric("output.value",function(obj,name)standardGeneric("output.value"))
 #' @return struct object
 #' @examples
 #' M = example_model()
-#' output.value(M,'result_1') = 'example'
+#' output.value(M,'result_1') = dataset()
 #'
 setGeneric("output.value<-",
     function(obj,name,value)standardGeneric("output.value<-"))
