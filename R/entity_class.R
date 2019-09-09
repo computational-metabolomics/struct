@@ -36,7 +36,7 @@ entity<-setClass(
         description='no description provided',
         value='',
         type='character',
-        max_length=1
+        max_length=Inf
     ),
     validity = function(object) {
         check_length=length(value(object)) <= max_length(object)
@@ -82,9 +82,6 @@ setMethod(f="initialize",
             } else {
                 .Object@value=new(.Object@type)
             }
-        }
-        if ((.Object@type %in% c('data.frame','formula','matrix')) && !('max_length' %in% names(L))) {
-            .Object@max_length=Inf
         }
 
         validObject(.Object)
