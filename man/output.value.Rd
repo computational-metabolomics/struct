@@ -29,6 +29,6 @@ M = example_model()
 output.value(M,'result_1')
 
 M = example_model()
-output.value(M,'result_1') = 'example'
+output.value(M,'result_1') = dataset()
 
 }
