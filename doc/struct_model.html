@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -94,7 +95,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -289,6 +290,9 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
+
+
+
 </head>
 
 <body>
@@ -459,7 +463,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb15-33" title="33">        </a>
 <a class="sourceLine" id="cb15-34" title="34">        <span class="co"># entities can be initialised with populated slots</span></a>
 <a class="sourceLine" id="cb15-35" title="35">        <span class="dt">outputs.result_1=</span><span class="kw">entity</span>(<span class="dt">name=</span><span class="st">&#39;Result 1&#39;</span>,<span class="dt">type=</span><span class="st">&#39;dataset&#39;</span>,</a>
-<a class="sourceLine" id="cb15-36" title="36">            <span class="dt">description=</span><span class="st">&#39;An example entity object&#39;</span>),</a>
+<a class="sourceLine" id="cb15-36" title="36">            <span class="dt">description=</span><span class="st">&#39;An example entity object&#39;</span>,<span class="dt">value=</span><span class="kw">dataset</span>()),</a>
 <a class="sourceLine" id="cb15-37" title="37">        </a>
 <a class="sourceLine" id="cb15-38" title="38">        <span class="co"># outputs dont have to be entity objects but we dont recommend this.</span></a>
 <a class="sourceLine" id="cb15-39" title="39">        <span class="dt">outputs.result_2=</span><span class="dv">2</span></a>
@@ -488,6 +492,9 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <hr />
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
