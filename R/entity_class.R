@@ -83,7 +83,9 @@ setMethod(f="initialize",
                 .Object@value=new(.Object@type)
             }
         }
-        validObject(.Object)
+        if ((.Object@type %in% c('data.frame','formula','matrix')) && !('max_length' %in% names(L))) {
+            validObject(.Object)
+        }
         return(.Object)
     }
 )
