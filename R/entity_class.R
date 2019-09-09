@@ -37,7 +37,7 @@ entity<-setClass(
         value='',
         type='character',
         max_length=1
-        ),
+    ),
     validity = function(object) {
         check_length=length(value(object)) <= max_length(object)
         check_type=class(value(object))[1] %in% type(object)
@@ -53,6 +53,38 @@ entity<-setClass(
             msg=paste0(name(object),': ', ' max_length must be of length 1')
         }
         return(msg)
+    }
+)
+
+## initialise parameters on object creation
+setMethod(f="initialize",
+    signature="entity",
+    definition=function(.Object,...)
+    {
+        L=list(...)
+        SN=slotNames(.Object)
+        if (length(L)>0)
+        {
+            for (i in seq_len(length(L)))
+            {
+                if (names(L)[[i]] %in% SN) {
+                    slot(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
+                }
+            }
+        }
+
+        if (!('value' %in% names(L))) {
+            if (isVirtualClass(.Object@type)) {
+                # create a spoof object until a real one is generated
+                x=numeric(0)
+                class(x)=.Object@type
+                .Object@value=x
+            } else {
+                .Object@value=new(.Object@type)
+            }
+        }
+        validObject(.Object)
+        return(.Object)
     }
 )
 

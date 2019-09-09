@@ -10,7 +10,9 @@ test_that('params and outputs',{
             outputs.result_1='entity',
             outputs.result_2='numeric'
         ),
-        prototype=list(predicted='result_1')
+        prototype=list(
+            predicted='result_1',
+            outputs.result_1=entity(name='result_1',type='numeric',value=0))
     )
 
     ## test return objects
@@ -21,7 +23,7 @@ test_that('params and outputs',{
     expect_identical(obj,numeric(0))
     # outputs
     obj = output.obj(test_model(),'result_1')
-    expect_identical(obj,entity())
+    expect_true(is(obj,'entity'))
     obj = output.obj(test_model(),'result_2')
     expect_identical(obj,numeric(0))
 
@@ -40,31 +42,32 @@ test_that('params and outputs',{
     expect_equal(param.name(TM,'value_1'),'pickle')
     expect_equal(param.name(TM,'value_2'),'value_2')
     # outputs
-    output.obj(TM,'result_1')=entity(name='carrot')
+    output.obj(TM,'result_1')=entity(name='carrot',type='numeric',value=10)
     expect_equal(output.name(TM,'result_1'),'carrot')
     expect_equal(output.name(TM,'result_2'),'result_2')
 
     ## test set lists
-    L=list('value_1'=10,value_2=20)
+    L=list('value_1'='banana',value_2=20)
     param.list(TM)=L
-    expect_equal(param.value(TM,'value_1'),10)
+    expect_equal(param.value(TM,'value_1'),'banana')
     expect_equal(param.value(TM,'value_2'),20)
     names(L)=c('result_1','result_2')
+    L$result_1=10
     output.list(TM)=L
     expect_equal(output.value(TM,'result_1'),10)
     expect_equal(output.value(TM,'result_2'),20)
 
     ## get lists
     K=param.list(TM)
-    expect_identical(K,list(value_1=10,value_2=20))
+    expect_identical(K,list(value_1='banana',value_2=20))
     # output
     J=output.list(TM)
     expect_identical(J,list(result_1=10,result_2=20))
 
     ## $ and $<-
     #params
-    TM$value_1=777
-    expect_equal(TM$value_1,777)
+    TM$value_1='cabbage'
+    expect_equal(TM$value_1,'cabbage')
     expect_error(TM$value_3)
     expect_error({TM$value_3=999})
 
@@ -74,7 +77,8 @@ test_that('params and outputs',{
         slots=c(
             outputs.result_1='entity',
             outputs.result_2='numeric'
-        )
+        ),
+        prototype = list(outputs.result_1=entity(type='numeric',value=1))
     )
     TM=test_model2()
     # outputs

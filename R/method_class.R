@@ -26,6 +26,7 @@ method<-setClass(
 #' @export
 #' @examples
 #' D = iris_dataset() # example dataset
+#' M = method() # create a method object
 #' M = method.apply(M,D) # apply method to data
 #'
 setMethod(f="method.apply",
@@ -59,7 +60,8 @@ setMethod(f='predicted',
 #' \dontrun{
 #'
 #' M = method()
-#' predicted.name(M)
+#' predicted.name(M) = 'example' # set
+#' predicted.name(M)             # get
 #' }
 #'
 setMethod(f='predicted.name',

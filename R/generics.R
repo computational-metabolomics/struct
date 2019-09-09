@@ -21,7 +21,7 @@
 #' obj = param.obj(M, 'value_0')
 #'
 #' # set a parameter as an object
-#' param.obj(M, 'value_0') = entity(value = 15)
+#' param.obj(M, 'value_0') = entity(value = 15,type='numeric')
 #'
 setGeneric("param.obj",function(obj,name)standardGeneric("param.obj"))
 
@@ -152,7 +152,7 @@ setGeneric("output.value",function(obj,name)standardGeneric("output.value"))
 #' @return struct object
 #' @examples
 #' M = example_model()
-#' output.value(M,'result_1') = 0.95
+#' output.value(M,'result_1') = 'example'
 #'
 setGeneric("output.value<-",
     function(obj,name,value)standardGeneric("output.value<-"))
@@ -176,7 +176,7 @@ setGeneric("output.value<-",
 #' obj = output.obj(M, 'result_1')
 #'
 #' # set a output as an object
-#' output.obj(M, 'result_1') = entity(value = 15)
+#' output.obj(M, 'result_1') = entity(value = 15,type='numeric')
 #'
 setGeneric("output.obj",
     function(obj,name)standardGeneric("output.obj"))

@@ -29,6 +29,6 @@ M = example_model()
 output.value(M,'result_1')
 
 M = example_model()
-output.value(M,'result_1') = 0.95
+output.value(M,'result_1') = 'example'
 
 }

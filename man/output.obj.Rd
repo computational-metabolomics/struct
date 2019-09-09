@@ -31,6 +31,6 @@ M = example_model()
 obj = output.obj(M, 'result_1')
 
 # set a output as an object
-output.obj(M, 'result_1') = entity(value = 15)
+output.obj(M, 'result_1') = entity(value = 15,type='numeric')
 
 }

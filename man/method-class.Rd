@@ -48,6 +48,7 @@ inherited to provide functionality for method-specific classes.
 M = method() # create a method object
 
 D = iris_dataset() # example dataset
+M = method() # create a method object
 M = method.apply(M,D) # apply method to data
 
 \dontrun{
@@ -58,7 +59,8 @@ p = predicted(M) # get the predicted output from the model
 \dontrun{
 
 M = method()
-predicted.name(M)
+predicted.name(M) = 'example' # set
+predicted.name(M)             # get
 }
 
 M = method()

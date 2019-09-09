@@ -6,8 +6,8 @@ test_that('stato object',{
         slots=c(params.value_1='entity.stato',
              outputs.value_1='entity.stato'),
         prototype=list(stato.id='OBI:0200201',
-            params.value_1=entity.stato(value=1,stato.id='OBI:0000175'),
-            outputs.value_1=entity.stato(value=1,stato.id='OBI:0000175'))
+            params.value_1=entity.stato(value=1,stato.id='OBI:0000175',type='numeric'),
+            outputs.value_1=entity.stato(value=1,stato.id='OBI:0000175',type='numeric'))
         )
     S=test_class()
     expect_equal(stato.id(S),'OBI:0200201')
