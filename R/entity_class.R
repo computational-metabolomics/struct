@@ -80,7 +80,7 @@ setMethod(f="initialize",
                 class(x)=.Object@type
                 .Object@value=x
             } else {
-                .Object@value=new(.Object@type)
+                .Object@value=new(.Object@type[[1]])
             }
         }
 
