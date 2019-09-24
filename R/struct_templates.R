@@ -18,7 +18,7 @@ struct_template=function(
     template='model',
     output,
     in_editor = TRUE,
-    overwrite=FALSE
+    overwrite = FALSE
 ) {
 
     if ((!template %in% c('model'))) {

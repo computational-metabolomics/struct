@@ -80,12 +80,12 @@ M = model.train(M,D)
 M = model.predict(M,D)
 M = model.reverse(M,D)
 D = dataset()
-M = model()
+M = example_model()
 M = model.train(M,D)
 M = model.predict(M,D)
 p = predicted(M)
-M = model()
+M = example_model()
 predicted.name(M)
-M = model()
-predicted.name(M)='example'
+M = example_model()
+predicted.name(M)='result_2'
 }

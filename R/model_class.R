@@ -73,7 +73,7 @@ setMethod(f="model.reverse",
 #' @export
 #' @examples
 #' D = dataset()
-#' M = model()
+#' M = example_model()
 #' M = model.train(M,D)
 #' M = model.predict(M,D)
 #' p = predicted(M)
@@ -89,7 +89,7 @@ setMethod(f='predicted',
 #' @describeIn model get prediction output name for model
 #' @export
 #' @examples
-#' M = model()
+#' M = example_model()
 #' predicted.name(M)
 #' @return the id of the output returned by predicted()
 setMethod(f='predicted.name',
@@ -103,8 +103,8 @@ setMethod(f='predicted.name',
 #' @describeIn model set prediction output from model
 #' @export
 #' @examples
-#' M = model()
-#' predicted.name(M)='example'
+#' M = example_model()
+#' predicted.name(M)='result_2'
 #' @return the modified model object
 setMethod(f='predicted.name<-',
     signature=c('model','character'),

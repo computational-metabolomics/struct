@@ -15,8 +15,8 @@ outputs_class<-setClass(
 #' @describeIn outputs_class get an output as an object (if appropriate)
 #' @export
 #' @examples
-#' M = model()
-#' obj = output.obj(M,'example')
+#' M = example_model()
+#' obj = output.obj(M,'result_1')
 #' @return the output id as an (e.g entity) object
 setMethod(f="output.obj",
     signature=c("outputs_class","character"),
@@ -30,8 +30,8 @@ setMethod(f="output.obj",
 #' @describeIn outputs_class set the value of an output
 #' @export
 #' @examples
-#' M = model()
-#' output.obj(M,'example') = entity()
+#' M = example_model()
+#' output.obj(M,'result_1') = entity()
 #'
 #' @return the modified object
 setMethod(f="output.obj<-",
@@ -84,8 +84,8 @@ setMethod(f="output.ids",
 #' @describeIn outputs_class get the (long) name of an output id
 #' @export
 #' @examples
-#' M = model()
-#' output.name(M,'example')
+#' M = example_model()
+#' output.name(M,'result_1')
 #' @return (long) name of output
 setMethod(f="output.name",
     signature=c("outputs_class",'character'),
@@ -148,8 +148,8 @@ setMethod(f='output.list<-',
 #' @describeIn outputs_class get the value of an output by id
 #' @export
 #' @examples
-#' M = model()
-#' L = output.value(M,'example')
+#' M = example_model()
+#' L = output.value(M,'result_1')
 #' @return value of output
 setMethod(f="output.value",
     signature=c("outputs_class","character"),
@@ -175,8 +175,8 @@ setMethod(f="output.value",
 #' @describeIn outputs_class get the value of an output by id
 #' @export
 #' @examples
-#' M = model()
-#' v = M$example
+#' M = example_model()
+#' v = M$result_1
 #' @return value of output
 setMethod(f="$",
     signature(x='outputs_class'),
@@ -201,8 +201,8 @@ setMethod(f="$",
 #' @describeIn outputs_class set the value of an output by id
 #' @export
 #' @examples
-#' M = model()
-#' output.value(M,'example') = 10
+#' M = example_model()
+#' output.value(M,'result_1') = dataset()
 #' @return modified model object
 setMethod(f="output.value<-",
     signature=c("outputs_class","character"),
@@ -229,8 +229,8 @@ setMethod(f="output.value<-",
 #' @describeIn outputs_class set the value of an output by id
 #' @export
 #' @examples
-#' M = model()
-#' M$example = 10
+#' M = example_model()
+#' M$result_1 = dataset()
 #' @return modified model object
 setMethod(f="$<-",
     signature=c(x="outputs_class"),

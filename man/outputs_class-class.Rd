@@ -102,27 +102,27 @@ list
 }}
 
 \examples{
-M = model()
-obj = output.obj(M,'example')
-M = model()
-output.obj(M,'example') = entity()
+M = example_model()
+obj = output.obj(M,'result_1')
+M = example_model()
+output.obj(M,'result_1') = entity()
 
 M = model()
 is.output(M,'example') # FALSE
 M = model()
 output.ids(M)
-M = model()
-output.name(M,'example')
-M = model()
-L = output.list(M)
+M = example_model()
+output.name(M,'result_1')
 M = model()
 L = output.list(M)
 M = model()
-L = output.value(M,'example')
-M = model()
-v = M$example
-M = model()
-output.value(M,'example') = 10
-M = model()
-M$example = 10
+L = output.list(M)
+M = example_model()
+L = output.value(M,'result_1')
+M = example_model()
+v = M$result_1
+M = example_model()
+output.value(M,'result_1') = dataset()
+M = example_model()
+M$result_1 = dataset()
 }

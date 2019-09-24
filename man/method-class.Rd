@@ -51,11 +51,10 @@ D = iris_dataset() # example dataset
 M = method() # create a method object
 M = method.apply(M,D) # apply method to data
 
-M=method()
+M=example_method()
 p = predicted(M) # get the predicted output from the model
 
 M = method()
-predicted.name(M) = 'example' # set
 predicted.name(M)             # get
 
 M = method()

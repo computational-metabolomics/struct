@@ -41,7 +41,7 @@ setMethod(f="method.apply",
 #' @describeIn method get prediction output from model
 #' @export
 #' @examples
-#' M=method()
+#' M=example_method()
 #' p = predicted(M) # get the predicted output from the model
 #'
 setMethod(f='predicted',
@@ -56,7 +56,6 @@ setMethod(f='predicted',
 #' @export
 #' @examples
 #' M = method()
-#' predicted.name(M) = 'example' # set
 #' predicted.name(M)             # get
 #'
 setMethod(f='predicted.name',

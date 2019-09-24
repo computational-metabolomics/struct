@@ -37,7 +37,8 @@ Suggests:
  testthat,
  rstudioapi,
  rmarkdown,
- covr
+ covr,
+ BiocStyle
 VignetteBuilder: knitr
 Imports: methods, ontologyIndex, crayon, datasets,graphics, stats, utils, knitr
 biocViews: WorkflowStep

@@ -1,50 +1,54 @@
 ---
 title: StRUCT Model Template
+author: 
+  name: Dr Gavin Rhys Lloyd
+  affiliation: Phenome Centre Birmingham, University of Birmingham, UK
 output:
-    html_vignette:
-        df_print: paged
+  BiocStyle::html_document:
+    toc_float: true
+  BiocStyle::pdf_document: default
 vignette: >
     %\VignetteIndexEntry{StRUCT Model Template}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
----
-
+    ---
+    
 ```{r,include=FALSE,purl=FALSE}
 library("struct")
 ```
-
-<span style="color:red">Please note: this vignette describes the contents of a 
+    
+Please note: this vignette describes the contents of a 
 class object broken down in to section. As such some of the lines cannot be run 
-on their own. Please skip to the <span style="color:black">**Complete object**
-</span> section for a working example. </span>
-
+on their own. Please skip to the **Complete object**
+section for a working example. 
+    
 # Using the template
 
 If you want to output the full model template to an editable R script you can 
 use the `struct_template` function. The `type` parameter specifies the template 
 to access (in this case "model") and the file to save the template to. If no 
 path is specified the file will be created in your working directory.
-
-```r 
-struct_template(template='model',output='example.R')
+    
+```r
+struct_template(template='model',output='example.R',overwrite=TRUE, in_editor=FALSE)`
 ```
-
+    
 You can browse all the templates, available as vignettes in the StRUCT package 
 using the `browseVignettes` function. Viewing the HTML will show this page, and 
 viewing the R code will display a working template.
-
+    
 ```r
 browseVignettes('struct')
 ```
-
+    
 ***After editing the template*** you can source the script to use your new 
 model. You can add the script to your own package, or submit it to us for 
 inclusion in the `structtoolbox` package.
-
-```r
+    
+```{r}
 ## example use
 # create an instance of your object
-M = model_template()
+M = example_model()
 # get/set parameters
 M$value_1 = 5
 M$value_1 # 5
@@ -53,14 +57,14 @@ M = model.train(M,iris_dataset())
 # apply your model to some test data
 M = model.predict(M,iris_dataset())
 ```
-
+    
 You might find it useful to create some chart objects for your new model object. 
 See the `chart` template for help to do this.
-
+    
 ***
-
+    
 # Walkthrough
-
+    
 ## Class definition
 The model templates are based on inheriting the `model` or `model.stato` classes 
 from the StRUCT package. This means all the functionality already created as 
@@ -72,62 +76,65 @@ the following steps.
 
 ```r
 model_template=setClass('model_template', # replace model_template (both places) 
-                                          # with your new model name
-    contains = c('model','stato'),        # 'stato' is optional
+# with your new model name
+contains = c('model','stato'),        # 'stato' is optional
 ```
 
 The `contains` option  tells R which aspects of `struct` to include in the new
 model.
-
+    
 ***
-
+    
 ### Slots for parameters and outputs
-
+    
 After defining the name of your new class and specifying that it contains the 
 `model` and (optionally) the `stato` class, the *slots* are defined. Slots are 
 variables that are associated with the object that are intended to be accessable
 by the user. It is here that you specify the input parameters and outputs for 
 your class. Input parameters should have `params.` appended and outputs should 
 have `outputs.` appended. 
-
+    
 Default slots like `name`, `description` and `type` are inherited (i.e. provided 
 by `struct`) and do not need to be specified. 
-
+    
 A type should be indicated for each slot e.g. `numeric`. Some special types
 are available in `struct`, namely `entity` and `enum`, and we recommend you use
 these where possible because they allow you to provide additonal information
 (`name`, `description` etc) about the parameters/outputs.
-
+    
 To use `entity` objects for parameters and/or outputs, specify `entity` 
 as the type. If you want to enable STATO functionality for your parameters then 
 you can specify `entity.stato` as the type.
 
 ```r
-    slots=c(
-        'params.value_0'='entity',
-        'params.value_1'='entity.stato',
-        'params.value_2'='numeric',
-        'outputs.result_1'='entity',
-        'outputs.result_2'='numeric'
-    ),
+slots=c(
+'params.value_0'='entity',
+'params.value_1'='entity.stato',
+'params.value_2'='numeric',
+'outputs.result_1'='entity',
+'outputs.result_2'='numeric'
+),
 ```
-
+    
 ***
-
+    
 ### Prototypes
-
+    
 #### Model protoype
 You can also optionally include a list of prototypes. Protoypes are used to 
 define default values for parameters. It is recommended that the `name`, 
 `description` and `type` are defined here for your model.
 
 ```r
-    prototype = list(
-        ## These are the default slots available for every struct object
-        name='A test model',
-        description='An example model object. Training adds value_1 counts to
-        a dataset, while prediction adds value_2 counts.',
-        type='test',
+prototype = list(
+## These are the default slots available for every struct object
+name='A test model',
+description='An example model object. Training adds value_1 counts to
+a dataset, while prediction adds value_2 counts.',
+type='test',
+
+## This is slot is only required for stato objects
+stato.id='OBI:0000011',
 ```
 
 
@@ -137,11 +144,6 @@ changing it by the user (other than using @ which is discouraged).
 
 STATO names and definitions can then be extracted from the STATO database based 
 on the supplied id. To search for a relevant ID see http://stato-ontology.org/
-
-```r
-        ## This is slot is only required for stato objects
-        stato.id='OBI:0000011',
-```
 
 ***
 
@@ -155,9 +157,16 @@ will be initialised as NULL or a vector or zero length of the appropriate class
 e.g `numeric(0)`.
 
 ```r
-        ## parameters all start with params.
-        # entities can be initialised with populated slots
-        params.value_0=entity(name='Value 0',value=0,type='numeric'),
+## parameters all start with params.
+# entities can be initialised with populated slots
+params.value_1=entity.stato(value=10,name='Value 1',type='numeric',
+description='An example entity.stato object',
+stato.id='STATO:0000047'),
+
+# entity.stato objects can have a stato.id
+params.value_2=entity.stato(value=10,name='Value 1',type='numeric',
+description='An example entity.stato object',
+stato.id='STATO:0000047'),
 ```
 
 ***
@@ -166,12 +175,6 @@ A stato.id can be set for `entity.stato` objects enabling STATO integration for
 parameters and outputs as well as model objects. It is a good idea to set 
 `name`, `description` and `stato.id` slots here, when the object is defined.
 
-```r
-        # entity.stato objects can have a stato.id
-        params.value_1=entity.stato(value=10,name='Value 1',type='numeric',
-            description='An example entity.stato object',
-            stato.id='STATO:0000047'),
-```
 
 ***
 
@@ -179,23 +182,15 @@ Parameters dont have to be entities, but this is not recommended as there is no
 mechanism for providing long names and descriptions for these parameters.
 
 ```r
-        params.value_2 = 20,
+params.value_2 = 20,
 ```
 
 ***
 
 Outputs can be included in the prototype, and we recommend `entity` or 
-`entity.stato` objects for these too:
+`entity.stato` objects for these too. They are created in the same way as 
+params.
 
-```r
-        
-        outputs.result_1=entity(name='Result 1',type='dataset',
-            description='An example entity object'),
-
-        outputs.result_2=2 # dont have to be entity
-    )
-)
-```
 
 ***
 
@@ -213,8 +208,8 @@ for your new model object.
 
 ```r
 setMethod(f='model.train',                   # dont change this line
-    signature=c('model_template','dataset'), # replace model_template with... 
-                                             # ...your new model name
+signature=c('model_template','dataset'), # replace model_template with... 
+# ...your new model name
 ```
 
 ***
@@ -222,12 +217,12 @@ setMethod(f='model.train',                   # dont change this line
 The description function is where you can include your own R code to train your 
 model. Make sure you `return(M)` otherwise you model will not behave in the way 
 expected by other StRUCT objects. 
-    
+
 ```r
-    definition = function(M,D) {         # dont change this line
-        # do something here #
-        return(M)                        # make sure you return the model object
-    }
+definition = function(M,D) {         # dont change this line
+# do something here #
+return(M)                        # make sure you return the model object
+}
 )
 
 ```
@@ -242,13 +237,13 @@ Similarly, a `model.predict` method is provided so that you can apply your
 
 ```r
 setMethod(f='model.predict',                 # dont change this line
-    signature=c('model_template','dataset'), # replace model_template with... 
-                                             # ...your new model name
-    definition = function(M,D) {             # dont change this line
-        ## do something here ##
-        # M is the model object
-        return(M)                            # make sure you return the model 
-    }
+signature=c('model_template','dataset'), # replace model_template with... 
+# ...your new model name
+definition = function(M,D) {             # dont change this line
+## do something here ##
+# M is the model object
+return(M)                            # make sure you return the model 
+}
 )
 
 ```
@@ -261,7 +256,7 @@ The final model object will look something like this working example:
 
 ```{r}
 model_template=setClass('model_template', # replace model_template with ...
-                                          # ...your new model name
+    # ...your new model name
     contains = c('model','stato'),       # stato is optional
     slots=c(                      # define your parameters and outputs here
         'params.value_0'='entity',
@@ -275,7 +270,7 @@ model_template=setClass('model_template', # replace model_template with ...
         ## These are the default slots available for every struct object
         name='A test model',
         description='An example model object. Training adds value_1 counts to
-        a dataset, while prediction adds value_2 counts.',
+    a dataset, while prediction adds value_2 counts.',
         type='test',
         
         ## This slot is only required for model.stato objects
@@ -301,21 +296,27 @@ model_template=setClass('model_template', # replace model_template with ...
         outputs.result_2=2
     )
 )
+```
 
+You should include a method to train your model:
+```{r}
 # create a model.train method for your object
 setMethod(f='model.train', # dont change this line
     signature=c('model_template','dataset'),  # replace model_template with...
-                                              # ...your new model name
+    # ...your new model name
     definition = function(M,D) {              # dont change this line
         # do something here #
         return(M)                             # make sure you return the model
     }
 )
+```
 
+You should also include a method for prediction using a trained model:
+```{r}
 # create a model.predict method for your object
 setMethod(f='model.predict',                  # dont change this line
     signature=c('model_template','dataset'),  # replace model_template with...
-                                              # ...your new model name
+    # ...your new model name
     definition = function(M,D) {              # dont change this line
         ## do something here ##
         return(M)                             # make sure you return the model 
@@ -324,3 +325,10 @@ setMethod(f='model.predict',                  # dont change this line
 ```
 
 ***
+
+Similar approaches can be used to make other struct objects, such as methods and charts.
+
+
+
+
+

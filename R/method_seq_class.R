@@ -30,7 +30,7 @@ method.seq<-setClass(
 #' @export
 #' @examples
 #' D = dataset()
-#' MS = method() + method()
+#' MS = example_method() + example_method()
 #' MS = method.apply(MS,D)
 #'
 setMethod(f="method.apply",
@@ -64,9 +64,8 @@ setMethod(f="method.apply",
 #' @export
 #' @examples
 #' D = dataset()
-#' M = method()
-#' M = method.train(M,D)
-#' M = method.predict(M,D)
+#' M = example_method()
+#' M = method.apply(M,D)
 #' p = predicted(M)
 #' @return the predicted output of the last method in the sequence
 setMethod(f='predicted',

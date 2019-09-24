@@ -121,11 +121,11 @@ A class for (ordered) lists of models
 \examples{
 MS = model.seq()
 MS = model() + model()
-MS = model() + model()
-MS = model.train(MS)
+MS = example_model() + example_model()
+MS = model.train(MS,dataset())
 D= dataset()
-MS = model() + model()
-MS = model.train(MS)
+MS = example_model() + example_model()
+MS = model.train(MS,D)
 MS = model.predict(MS,D)
 MS = model() + model()
 MS[2]
@@ -157,7 +157,7 @@ MS = MS + M
 MS = model() + model()
 
 D = dataset()
-M = model()
+M = example_model()
 M = model.train(M,D)
 M = model.predict(M,D)
 p = predicted(M)

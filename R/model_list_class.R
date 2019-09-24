@@ -28,8 +28,8 @@ model.seq<-setClass(
 #' @describeIn model.seq train the model using input data
 #' @export
 #' @examples
-#' MS = model() + model()
-#' MS = model.train(MS)
+#' MS = example_model() + example_model()
+#' MS = model.train(MS,dataset())
 #' @return model sequence
 setMethod(f="model.train",
     signature=c("model.seq","dataset"),
@@ -54,8 +54,8 @@ setMethod(f="model.train",
 #' @export
 #' @examples
 #' D= dataset()
-#' MS = model() + model()
-#' MS = model.train(MS)
+#' MS = example_model() + example_model()
+#' MS = model.train(MS,D)
 #' MS = model.predict(MS,D)
 #' @return model sequence
 setMethod(f="model.predict",
@@ -256,7 +256,7 @@ setMethod("+",
 #' @export
 #' @examples
 #' D = dataset()
-#' M = model()
+#' M = example_model()
 #' M = model.train(M,D)
 #' M = model.predict(M,D)
 #' p = predicted(M)

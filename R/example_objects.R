@@ -161,6 +161,7 @@ example_method=setClass('example_method',
         a dataset.',
         type='test',
         stato.id='OBI:0000011',
+        predicted='result_1',
         params.value_0=entity(name='Value 0',value=0,type='numeric'),
         params.value_1=entity.stato(value=10,name='Value 1',type='numeric',
             description='An example entity.stato object',
@@ -188,6 +189,7 @@ setMethod(f='method.apply',
     definition = function(M,D) {
         D$data = D$data + M$value_1
         M$result_1=D
+        return(M)
     }
 )
 
