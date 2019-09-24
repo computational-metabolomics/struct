@@ -121,59 +121,44 @@ A class for (ordered) lists of models
 \examples{
 MS = model.seq()
 MS = model() + model()
-\dontrun{
 MS = model() + model()
 MS = model.train(MS)
-}
-\dontrun{
 D= dataset()
 MS = model() + model()
 MS = model.train(MS)
 MS = model.predict(MS,D)
-}
-
 MS = model() + model()
 MS[2]
-
 
 MS = model() + model()
 MS[3] = model()
 
-
 MS = model() + model()
 L = models(MS)
-
 
 MS = model.seq()
 L = list(model(),model())
 models(MS) = L
 
-
 MS = model() + model()
 length(MS) # 2
 
-
 MS = model() + model()
 show(MS)
-
 
 MS = model() + model()
 M = model()
 MS = M + MS
 
-
 MS = model() + model()
 M = model()
 MS = MS + M
 
-
 MS = model() + model()
 
-\dontrun{
 D = dataset()
 M = model()
 M = model.train(M,D)
 M = model.predict(M,D)
 p = predicted(M)
-}
 }

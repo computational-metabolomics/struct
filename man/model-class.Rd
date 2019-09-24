@@ -79,19 +79,13 @@ M = model()
 M = model.train(M,D)
 M = model.predict(M,D)
 M = model.reverse(M,D)
-\dontrun{
 D = dataset()
 M = model()
 M = model.train(M,D)
 M = model.predict(M,D)
 p = predicted(M)
-}
-\dontrun{
 M = model()
 predicted.name(M)
-}
-\dontrun{
 M = model()
 predicted.name(M)='example'
-}
 }

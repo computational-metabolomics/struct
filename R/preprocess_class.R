@@ -6,7 +6,6 @@
 #' @export preprocess
 #' @param M a model object
 #' @param D a dataset object
-#' @param value value
 #' @include generics.R model_class.R
 #' @examples
 #' M = preprocess()

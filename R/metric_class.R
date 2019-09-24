@@ -25,10 +25,8 @@ metric<-setClass(
 #' @describeIn metric calculate a metric
 #' @export
 #' @examples
-#' \dontrun{
 #' M = metric()
 #' calculate(M,Y,Yhat)
-#' }
 setMethod(f="calculate",
     signature=c('metric'),
     definition=function(obj,Y,Yhat)

@@ -29,11 +29,9 @@ method.seq<-setClass(
 #' @describeIn method.seq train the method using input data
 #' @export
 #' @examples
-#' \dontrun{
 #' D = dataset()
 #' MS = method() + method()
 #' MS = method.apply(MS,D)
-#' }
 #'
 setMethod(f="method.apply",
     signature=c("method.seq","dataset"),
@@ -65,13 +63,11 @@ setMethod(f="method.apply",
 #' @describeIn method.seq get prediction output from method.seq
 #' @export
 #' @examples
-#' \dontrun{
 #' D = dataset()
 #' M = method()
 #' M = method.train(M,D)
 #' M = method.predict(M,D)
 #' p = predicted(M)
-#' }
 #' @return the predicted output of the last method in the sequence
 setMethod(f='predicted',
     signature=c('method.seq'),

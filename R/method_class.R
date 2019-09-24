@@ -41,10 +41,9 @@ setMethod(f="method.apply",
 #' @describeIn method get prediction output from model
 #' @export
 #' @examples
-#' \dontrun{
-#'
+#' M=method()
 #' p = predicted(M) # get the predicted output from the model
-#' }
+#'
 setMethod(f='predicted',
     signature=c('method'),
     definition=function(M)
@@ -56,13 +55,9 @@ setMethod(f='predicted',
 #' @describeIn method get prediction output name for model
 #' @export
 #' @examples
-#'
-#' \dontrun{
-#'
 #' M = method()
 #' predicted.name(M) = 'example' # set
 #' predicted.name(M)             # get
-#' }
 #'
 setMethod(f='predicted.name',
     signature=c('method'),

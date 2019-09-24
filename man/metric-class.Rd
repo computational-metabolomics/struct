@@ -43,10 +43,8 @@ functionality for method-specific classes.
 
 \examples{
 MET = metric()
-\dontrun{
 M = metric()
 calculate(M,Y,Yhat)
-}
 MET = metric()
 value(MET)
 MET = metric()

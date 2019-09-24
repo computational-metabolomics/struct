@@ -19,7 +19,7 @@ struct_template=function(
     output,
     in_editor = TRUE,
     overwrite=FALSE
-    ) {
+) {
 
     if ((!template %in% c('model'))) {
         return(stop('Incorrect template'))

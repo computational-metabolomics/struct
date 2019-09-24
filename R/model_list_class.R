@@ -28,10 +28,8 @@ model.seq<-setClass(
 #' @describeIn model.seq train the model using input data
 #' @export
 #' @examples
-#' \dontrun{
 #' MS = model() + model()
 #' MS = model.train(MS)
-#' }
 #' @return model sequence
 setMethod(f="model.train",
     signature=c("model.seq","dataset"),
@@ -55,12 +53,10 @@ setMethod(f="model.train",
 #' @describeIn model.seq apply the model to input data
 #' @export
 #' @examples
-#' \dontrun{
 #' D= dataset()
 #' MS = model() + model()
 #' MS = model.train(MS)
 #' MS = model.predict(MS,D)
-#' }
 #' @return model sequence
 setMethod(f="model.predict",
     signature=c("model.seq",'dataset'),
@@ -99,7 +95,6 @@ setMethod(f="model.predict",
 #' @describeIn model.seq get model by index
 #' @export
 #' @examples
-#'
 #' MS = model() + model()
 #' MS[2]
 #'
@@ -114,7 +109,6 @@ setMethod(f= "[",
 #' @describeIn model.seq set model by index
 #' @export
 #' @examples
-#'
 #' MS = model() + model()
 #' MS[3] = model()
 #'
@@ -134,7 +128,6 @@ setMethod(f= "[<-",
 #' @describeIn model.seq get a list of models in the sequence
 #' @export
 #' @examples
-#'
 #' MS = model() + model()
 #' L = models(MS)
 #'
@@ -149,7 +142,6 @@ setMethod(f='models',
 #' @describeIn model.seq set the models in the sequence
 #' @export
 #' @examples
-#'
 #' MS = model.seq()
 #' L = list(model(),model())
 #' models(MS) = L
@@ -172,7 +164,6 @@ setMethod(f='models<-',
 #' @describeIn model.seq get the number of models in the sequence
 #' @export
 #' @examples
-#'
 #' MS = model() + model()
 #' length(MS) # 2
 #'
@@ -187,7 +178,6 @@ setMethod(f='length',
 #' @describeIn model.seq print a summary of the model.seq to the command line
 #' @export
 #' @examples
-#'
 #' MS = model() + model()
 #' show(MS)
 #'
@@ -213,7 +203,6 @@ setClassUnion("model_OR_model.seq", c("model", "model.seq"))
 #' @describeIn model.seq add a model to the (front) of a model sequence
 #' @export
 #' @examples
-#'
 #' MS = model() + model()
 #' M = model()
 #' MS = M + MS
@@ -233,7 +222,6 @@ setMethod("+",
 #' @describeIn model.seq add a model to the (end) of a model sequence
 #' @export
 #' @examples
-#'
 #' MS = model() + model()
 #' M = model()
 #' MS = MS + M
@@ -253,7 +241,6 @@ setMethod("+",
 #' @describeIn model.seq combine two models into a sequence
 #' @export
 #' @examples
-#'
 #' MS = model() + model()
 #'
 #' @return a model sequence
@@ -268,13 +255,11 @@ setMethod("+",
 #' @describeIn model.seq get prediction output from model.seq
 #' @export
 #' @examples
-#' \dontrun{
 #' D = dataset()
 #' M = model()
 #' M = model.train(M,D)
 #' M = model.predict(M,D)
 #' p = predicted(M)
-#' }
 #' @return the predicted output of the last model in the sequence
 setMethod(f='predicted',
     signature=c('model.seq'),

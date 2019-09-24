@@ -102,48 +102,27 @@ list
 }}
 
 \examples{
-\dontrun{
 M = model()
 obj = output.obj(M,'example')
-}
-\dontrun{
 M = model()
 output.obj(M,'example') = entity()
-}
-\dontrun{
+
 M = model()
 is.output(M,'example') # FALSE
-}
-\dontrun{
 M = model()
 output.ids(M)
-}
-\dontrun{
 M = model()
 output.name(M,'example')
-}
-\dontrun{
 M = model()
 L = output.list(M)
-}
-\dontrun{
 M = model()
 L = output.list(M)
-}
-\dontrun{
 M = model()
 L = output.value(M,'example')
-}
-\dontrun{
 M = model()
 v = M$example
-}
-\dontrun{
 M = model()
 output.value(M,'example') = 10
-}
-\dontrun{
 M = model()
 M$example = 10
-}
 }

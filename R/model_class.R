@@ -62,23 +62,21 @@ setMethod(f="model.predict",
 #' M = model.reverse(M,D)
 #' @return dataset dataset object with the reverse model applied
 setMethod(f="model.reverse",
-  signature=c("model","dataset"),
-  definition=function(M,D)
-  {
-    return(D)
-  }
+    signature=c("model","dataset"),
+    definition=function(M,D)
+    {
+        return(D)
+    }
 )
 
 #' @describeIn model get prediction output from model
 #' @export
 #' @examples
-#' \dontrun{
 #' D = dataset()
 #' M = model()
 #' M = model.train(M,D)
 #' M = model.predict(M,D)
 #' p = predicted(M)
-#' }
 #' @return the predicted output, as specified by predicted.name
 setMethod(f='predicted',
     signature=c('model'),
@@ -91,10 +89,8 @@ setMethod(f='predicted',
 #' @describeIn model get prediction output name for model
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' predicted.name(M)
-#' }
 #' @return the id of the output returned by predicted()
 setMethod(f='predicted.name',
     signature=c('model'),
@@ -107,10 +103,8 @@ setMethod(f='predicted.name',
 #' @describeIn model set prediction output from model
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' predicted.name(M)='example'
-#' }
 #' @return the modified model object
 setMethod(f='predicted.name<-',
     signature=c('model','character'),

@@ -695,6 +695,7 @@ setGeneric("value<-",function(obj,value)standardGeneric("value<-"))
 
 #' get the max value vector length for an entity
 #'
+#' @param obj an entity object
 #' @return max value vector length for an entity
 #' @rdname entity
 #' @export

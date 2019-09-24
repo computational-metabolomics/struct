@@ -13,8 +13,6 @@
 \item{M}{a model object}
 
 \item{D}{a dataset object}
-
-\item{value}{value}
 }
 \value{
 dataset object

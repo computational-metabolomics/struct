@@ -52,6 +52,10 @@
 \item{e1}{an iterator object}
 
 \item{e2}{an iterator or a model object}
+
+\item{x}{a sequence object}
+
+\item{i}{index into sequence}
 }
 \value{
 the modified model object
@@ -99,15 +103,11 @@ MET = metric()
 I = iterator() * model()
 I = run(I,D,MET)
 
-\dontrun{
 I = iterator()
 result.name(I)='example'
-}
-
 MS = model() + model()
 I = iterator() * MS
 I[2] # returns the second model() object
-
 
 MS = model() + model()
 I = iterator() * MS

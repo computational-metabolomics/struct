@@ -95,19 +95,15 @@ methods
 \examples{
 MS = method.seq()
 MS = method() + method()
-\dontrun{
 D = dataset()
 MS = method() + method()
 MS = method.apply(MS,D)
-}
 
-\dontrun{
 D = dataset()
 M = method()
 M = method.train(M,D)
 M = method.predict(M,D)
 p = predicted(M)
-}
 M = method()
 MS = method() + method()
 MS[2]

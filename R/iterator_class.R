@@ -84,10 +84,8 @@ setMethod(f="models<-",
 #' @describeIn iterator set result output from iterator
 #' @export
 #' @examples
-#' \dontrun{
 #' I = iterator()
 #' result.name(I)='example'
-#' }
 #' @return the modified model object
 setMethod(f='result.name<-',
     signature=c('iterator','character'),
@@ -137,9 +135,10 @@ setMethod(f='*',
 )
 
 #' @describeIn iterator get model by index
+#' @param x a sequence object
+#' @param i index into sequence
 #' @export
 #' @examples
-#'
 #' MS = model() + model()
 #' I = iterator() * MS
 #' I[2] # returns the second model() object
@@ -155,7 +154,6 @@ setMethod(f= "[",
 #' @describeIn iterator set model by index
 #' @export
 #' @examples
-#'
 #' MS = model() + model()
 #' I = iterator() * MS
 #' I[2] = model() # sets the second model to model()

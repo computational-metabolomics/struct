@@ -6,6 +6,9 @@
 \usage{
 max_length(obj)
 }
+\arguments{
+\item{obj}{an entity object}
+}
 \value{
 max value vector length for an entity
 }

@@ -15,10 +15,8 @@ outputs_class<-setClass(
 #' @describeIn outputs_class get an output as an object (if appropriate)
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' obj = output.obj(M,'example')
-#' }
 #' @return the output id as an (e.g entity) object
 setMethod(f="output.obj",
     signature=c("outputs_class","character"),
@@ -32,10 +30,9 @@ setMethod(f="output.obj",
 #' @describeIn outputs_class set the value of an output
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' output.obj(M,'example') = entity()
-#' }
+#'
 #' @return the modified object
 setMethod(f="output.obj<-",
     signature=c("outputs_class","character"),
@@ -50,10 +47,8 @@ setMethod(f="output.obj<-",
 #' @describeIn outputs_class check if a name is a valid output id for an object
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' is.output(M,'example') # FALSE
-#' }
 #' @return logical
 setMethod(f="is.output",
     signature=c("outputs_class"),
@@ -70,10 +65,8 @@ setMethod(f="is.output",
 #' @describeIn outputs_class list the valid output ids for an object
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' output.ids(M)
-#' }
 #' @return character list of valid output ids for object M
 setMethod(f="output.ids",
     signature=c("outputs_class"),
@@ -91,10 +84,8 @@ setMethod(f="output.ids",
 #' @describeIn outputs_class get the (long) name of an output id
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' output.name(M,'example')
-#' }
 #' @return (long) name of output
 setMethod(f="output.name",
     signature=c("outputs_class",'character'),
@@ -118,10 +109,8 @@ setMethod(f="output.name",
 #' @describeIn outputs_class get the output values of an object as a named list
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' L = output.list(M)
-#' }
 #' @return named list of output ids and current values
 setMethod(f='output.list',
     signature=c('outputs_class'),
@@ -140,10 +129,8 @@ setMethod(f='output.list',
 #' @describeIn outputs_class set the output values of an object using a named
 #' list
 #' @examples
-#' \dontrun{
 #' M = model()
 #' L = output.list(M)
-#' }
 #' @return named list of output ids and current values
 setMethod(f='output.list<-',
     signature=c('outputs_class','list'),
@@ -161,10 +148,8 @@ setMethod(f='output.list<-',
 #' @describeIn outputs_class get the value of an output by id
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' L = output.value(M,'example')
-#' }
 #' @return value of output
 setMethod(f="output.value",
     signature=c("outputs_class","character"),
@@ -190,10 +175,8 @@ setMethod(f="output.value",
 #' @describeIn outputs_class get the value of an output by id
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' v = M$example
-#' }
 #' @return value of output
 setMethod(f="$",
     signature(x='outputs_class'),
@@ -218,10 +201,8 @@ setMethod(f="$",
 #' @describeIn outputs_class set the value of an output by id
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' output.value(M,'example') = 10
-#' }
 #' @return modified model object
 setMethod(f="output.value<-",
     signature=c("outputs_class","character"),
@@ -248,10 +229,8 @@ setMethod(f="output.value<-",
 #' @describeIn outputs_class set the value of an output by id
 #' @export
 #' @examples
-#' \dontrun{
 #' M = model()
 #' M$example = 10
-#' }
 #' @return modified model object
 setMethod(f="$<-",
     signature=c(x="outputs_class"),
