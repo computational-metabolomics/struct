@@ -32,28 +32,6 @@ parameter_class<-setClass(
     "parameter_class"
 )
 
-## initialise parameters on object creation
-setMethod(f="initialize",
-    signature="parameter_class",
-    definition=function(.Object,...)
-    {
-        L=list(...)
-        SN=slotNames(.Object)
-        if (length(L)>0)
-        {
-            for (i in seq_len(length(L)))
-            {
-                if (names(L)[[i]] %in% SN) {
-                    slot(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
-                } else {
-                    param.value(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
-                }
-            }
-        }
-        return(.Object)
-    }
-)
-
 #' @describeIn parameter_class a parameter as an object (if appropriate)
 #' @export
 setMethod(f="param.obj",

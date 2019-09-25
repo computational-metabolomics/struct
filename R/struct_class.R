@@ -12,9 +12,48 @@ struct_class<-setClass(
     "struct_class",
     slots=c(name='character',
         description="character",
-        type="character"
+        type="character",
+        libraries='character'
     )
 )
+
+setMethod('initialize','struct_class',function(.Object,...) {
+
+    L=list(...)
+    SN=slotNames(.Object)
+    if (length(L)>0)
+    {
+        for (i in seq_len(length(L)))
+        {
+            if (names(L)[[i]] %in% SN) {
+                slot(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
+            } else if (is(.Object,'parameter_class')) {
+                param.value(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
+            } else {
+                stop(paste0(names(L)[[i]], 'is not a valid for ', class(.Object), ' objects.'))
+            }
+
+        }
+    }
+
+    # check if packages are available
+    not_found=character(0)
+    for (k in .Object@libraries) {
+        if (!requireNamespace(k, quietly = TRUE)) {
+            not_found=c(not_found,k)
+        }
+    }
+
+    if (length(not_found)>0) {
+        stop(paste0('The following packages are required but not installed: ', paste0(not_found,collapse=', ',
+             'Please install them.')),
+            call. = FALSE)
+    }
+
+    return(.Object)
+
+})
+
 
 #' name
 #'
