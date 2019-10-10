@@ -39,12 +39,22 @@ setMethod(f="model.train",
         S=D # for first in list the input D is the data object
         for (i in seq_len(length(M)))
         {
+            if (M[i]@seq_in != 'data') {
+                # set parameter
+                param.value(M[i],M[i]@seq_in) = S
+            }
+
             # train the model on the output of the previous model
             M[i]=model.train(M[i],S)
             # apply the model to the output of the previous model
             M[i]=model.predict(M[i],S)
             # set the output of this model as the input for the next model
             S=predicted(M[i])
+
+            if (is(S,'dataset')) {
+                # if its a dataset then update current D
+                D=predicted(M[i])
+            }
         }
         return(M)
     }
