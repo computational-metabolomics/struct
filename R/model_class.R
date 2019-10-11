@@ -54,6 +54,23 @@ setMethod(f="model.predict",
     }
 )
 
+#' @describeIn model trains and tests the data using the input model
+#' @export
+#' @examples
+#' D = dataset()
+#' M = model()
+#' M = model.apply(M,D)
+#' @return trained model object
+setMethod(f="model.apply",
+    signature=c("model","dataset"),
+    definition=function(M,D)
+    {
+        M=model.train(M,D)
+        M=model.predict(M,D)
+        return(M)
+    }
+)
+
 #' @describeIn model reverse the model for preprocessing steps
 #' @export
 #' @examples

@@ -133,66 +133,6 @@ setMethod(f="chart.plot",
     }
 )
 
-#' Example method
-#'
-#' An example model for testing
-#' @export example_method
-#' @return test method object
-#' @param M example_method object
-#' @param D dataset object
-#' @rdname example_method
-#' @include method_class.R
-#' @examples
-#' M = example_method()
-#' M = example_method(value_1 = 10, value_2 = 20)
-#'
-example_method=setClass('example_method',
-    contains = c('method','stato'),
-    slots=c(
-        'params.value_0'='entity',
-        'params.value_1'='entity.stato',
-        'params.value_2'='numeric',
-        'outputs.result_1'='entity',
-        'outputs.result_2'='dataset'
-    ),
-    prototype = list(
-        name='A test model',
-        description='An example method object. Adds value_1 counts to
-        a dataset.',
-        type='test',
-        stato.id='OBI:0000011',
-        predicted='result_1',
-        params.value_0=entity(name='Value 0',value=0,type='numeric'),
-        params.value_1=entity.stato(value=10,name='Value 1',type='numeric',
-            description='An example entity.stato object',
-            stato.id='STATO:0000047'),
-        params.value_2=20,
-        outputs.result_1=entity(name='Result 1',type='dataset',
-            description='An example entity object',value=dataset()),
-        outputs.result_2=dataset()
-    )
-)
-
-#' method.apply example
-#'
-#' applies the example method, which adds value_1 to the raw data of a dataset
-#' @export
-#' @return dataset object
-#' @rdname example_method
-#' @examples
-#' D = iris_dataset()
-#' M = example_method(value_1 = 10, value_2 = 20)
-#' M = method.apply(M,D)
-#'
-setMethod(f='method.apply',
-    signature=c('example_method','dataset'),
-    definition = function(M,D) {
-        D$data = D$data + M$value_1
-        M$result_1=D
-        return(M)
-    }
-)
-
 
 
 

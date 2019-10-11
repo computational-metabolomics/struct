@@ -16,6 +16,7 @@
 \alias{+,model.seq,model-method}
 \alias{+,model,model-method}
 \alias{predicted,model.seq-method}
+\alias{model.apply,model.seq,dataset-method}
 \title{model.seq class}
 \usage{
 \S4method{model.train}{model.seq,dataset}(M, D)
@@ -41,6 +42,8 @@
 \S4method{+}{model,model}(e1, e2)
 
 \S4method{predicted}{model.seq}(M)
+
+\S4method{model.apply}{model.seq,dataset}(M, D)
 }
 \arguments{
 \item{M}{a model object}
@@ -116,6 +119,9 @@ A class for (ordered) lists of models
 \item \code{+}: combine two models into a sequence
 
 \item \code{predicted}: get prediction output from model.seq
+
+\item \code{model.apply}: uses the input for data for training and prediction
+(if applicable)
 }}
 
 \examples{
@@ -161,4 +167,8 @@ M = example_model()
 M = model.train(M,D)
 M = model.predict(M,D)
 p = predicted(M)
+D = dataset()
+MS = example_model() + example_model()
+MS = model.apply(MS,D)
+
 }

@@ -6,6 +6,7 @@
 \alias{model}
 \alias{model.train,model,dataset-method}
 \alias{model.predict,model,dataset-method}
+\alias{model.apply,model,dataset-method}
 \alias{model.reverse,model,dataset-method}
 \alias{predicted,model-method}
 \alias{predicted.name,model-method}
@@ -15,6 +16,8 @@
 \S4method{model.train}{model,dataset}(M, D)
 
 \S4method{model.predict}{model,dataset}(M, D)
+
+\S4method{model.apply}{model,dataset}(M, D)
 
 \S4method{model.reverse}{model,dataset}(M, D)
 
@@ -36,6 +39,8 @@ trained model object
 
 model object with test set results
 
+trained model object
+
 dataset dataset object with the reverse model applied
 
 the predicted output, as specified by predicted.name
@@ -56,6 +61,8 @@ functionality for method-specific classes.
 
 \item \code{model.predict}: apply the model to input data
 
+\item \code{model.apply}: trains and tests the data using the input model
+
 \item \code{model.reverse}: reverse the model for preprocessing steps
 
 \item \code{predicted}: get prediction output from model
@@ -74,6 +81,9 @@ D = dataset()
 M = model()
 M = model.train(M,D)
 M = model.predict(M,D)
+D = dataset()
+M = model()
+M = model.apply(M,D)
 D = dataset()
 M = model()
 M = model.train(M,D)

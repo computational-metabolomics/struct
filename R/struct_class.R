@@ -46,7 +46,7 @@ setMethod('initialize','struct_class',function(.Object,...) {
 
     if (length(not_found)>0) {
         stop(paste0('The following packages are required but not installed: ', paste0(not_found,collapse=', ',
-             'Please install them.')),
+            'Please install them.')),
             call. = FALSE)
     }
 
@@ -189,13 +189,15 @@ setMethod(f="chart.names",
                 if (length(a)>0) {
                     a=a[seq(2, length(a), by=2)]
                     a=a[-which(a==class(obj)[1])]
-
-                    if (extends(a,'chart')) {
-                        if (ret=='char') {
-                            OUT=c(OUT,a)
-                        } else
-                            OUT[[length(OUT)+1]]=eval(parse(text=paste0(a,
-                                '()')))
+                    if (length(a)>0) {
+                        if (a=='chart') {
+                        } else if (extends(a,'chart')) {
+                            if (ret=='char') {
+                                OUT=c(OUT,a)
+                            } else
+                                OUT[[length(OUT)+1]]=eval(parse(text=paste0(a,
+                                    '()')))
+                        }
                     }
                 }
             }

@@ -280,3 +280,40 @@ setMethod(f='predicted',
         return(output.value(M[L],predicted.name(M[L])))
     }
 )
+
+
+#' @describeIn model.seq uses the input for data for training and prediction
+#' (if applicable)
+#' @export
+#' @examples
+#' D = dataset()
+#' MS = example_model() + example_model()
+#' MS = model.apply(MS,D)
+#'
+setMethod(f="model.apply",
+    signature=c("model.seq","dataset"),
+    definition=function(M,D)
+    {
+        # for each method in the list
+        S=D # for first in list the input D is the data object
+
+        for (i in seq_len(length(M)))
+        {
+            if (M[i]@seq_in != 'data') {
+                # set parameter
+                param.value(M[i],M[i]@seq_in) = S
+            }
+            # use current data
+            M[i]=model.apply(M[i],D)
+
+            # set the output of this method as the input for the next method
+            S=predicted(M[i])
+            if (is(S,'dataset')) {
+                # if its a dataset then update current D
+                D=predicted(M[i])
+            }
+        }
+        return(M)
+    }
+)
+
