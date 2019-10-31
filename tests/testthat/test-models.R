@@ -115,11 +115,9 @@ test_that('model objects',{
     expect_identical(TM[2]$result_2$data,iris[,1:4]+7) # value_2 added then value_2 added
 
     # check can only add models to sequence
-    expect_error(TM+method())
     expect_error(TM+dataset())
 
     # check can only insert models by index
-    expect_error({TM[1]=method()})
     expect_error({TM[1]=dataset()})
 
     # check only models if assigning by list

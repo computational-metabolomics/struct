@@ -16,8 +16,10 @@ model<-setClass(
     "model",
     contains = c('struct_class','parameter_class','outputs_class'),
     slots=c(type='character',
-        predicted='character'
-    )
+        predicted='character',
+        seq_in='character'
+    ),
+    prototype=list(seq_in = 'data')
 )
 
 #' @describeIn model train the model using input data
@@ -48,6 +50,23 @@ setMethod(f="model.predict",
     signature=c("model","dataset"),
     definition=function(M,D)
     {
+        return(M)
+    }
+)
+
+#' @describeIn model trains and tests the data using the input model
+#' @export
+#' @examples
+#' D = dataset()
+#' M = model()
+#' M = model.apply(M,D)
+#' @return trained model object
+setMethod(f="model.apply",
+    signature=c("model","dataset"),
+    definition=function(M,D)
+    {
+        M=model.train(M,D)
+        M=model.predict(M,D)
         return(M)
     }
 )

@@ -356,26 +356,23 @@ setGeneric("description",function(obj)standardGeneric("description"))
 setGeneric("description<-",function(obj,value)standardGeneric("description<-"))
 
 #################################
-###### method class generics ####
+###### model class generics #####
 #################################
 
-#' Apply a method
+#' Apply a model
 #'
 #' Applies a method to the input dataset
 #' @param M a method object
 #' @param D another object used by the first
 #' @return Returns a modified method object
-#' @rdname method.apply
+#' @rdname model.apply
 #' @export
 #' @examples
-#' M = example_method()
-#' M = method.apply(M,iris_dataset())
+#' M = example_model()
+#' M = model.apply(M,iris_dataset())
 #'
-setGeneric("method.apply",function(M,D)standardGeneric("method.apply"))
+setGeneric("model.apply",function(M,D)standardGeneric("model.apply"))
 
-#################################
-###### model class generics #####
-#################################
 
 #' Train a model
 #'
@@ -746,29 +743,3 @@ setGeneric("stato.definition",function(obj)standardGeneric("stato.definition"))
 #' @export
 setGeneric("stato.summary",function(obj)standardGeneric("stato.summary"))
 
-######################################
-###### method.seq class generics #####
-######################################
-
-#' Get/set methods of a method.seq
-#'
-#' Returns the list of method in a method.seq object
-#' @param ML a method.seq object
-#' @param value a list containing only method objects
-#' @rdname methods
-#' @return
-#' \describe{
-#' \item{\code{method.steps(ML)}}{returns a list of methods}
-#' \item{\code{method.steps(ML)<-}}{sets the list of methods for a sequence}
-#' }
-#' @export
-#' @examples
-#' ML = example_method() + example_method()
-#' method.steps(ML)
-#' method.steps(ML) = list(example_method(),example_method())
-#'
-setGeneric("method.steps",function(ML)standardGeneric("method.steps"))
-
-#' @export
-#' @rdname methods
-setGeneric("method.steps<-",function(ML,value)standardGeneric("method.steps<-"))
