@@ -171,3 +171,25 @@ setMethod(f="summary",
             '"',sep='')
     }
 )
+
+#' @describeIn dataset write the dataset object to an excel file
+#' @export
+setMethod(f="export.xlsx",
+    signature=c("dataset"),
+    definition=function(object,xlsxfile,transpose=TRUE) {
+        if (transpose) {
+            X=as.data.frame(t(object$data))
+        } else {
+            X=object$data
+        }
+
+        OUT=list(
+            'data'=X,
+            'sample_meta'=object$sample_meta,
+            'variable_meta'=object$variable_meta
+            )
+        openxlsx::write.xlsx(OUT,file = xlsxfile,rowNames=TRUE,colNames=TRUE)
+    }
+)
+
+

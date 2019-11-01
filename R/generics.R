@@ -571,6 +571,11 @@ setGeneric("dataset.variable_meta",
 setGeneric("dataset.variable_meta<-",
     function(obj,value)standardGeneric("dataset.variable_meta<-"))
 
+#' write a dataset object to file
+#'
+#' @export
+setGeneric("export.xlsx",function(object,...)standardGeneric("export.xlsx"))
+
 ####################################
 ###### iterator class generics #####
 ####################################
@@ -742,4 +747,5 @@ setGeneric("stato.definition",function(obj)standardGeneric("stato.definition"))
 #' @rdname stato
 #' @export
 setGeneric("stato.summary",function(obj)standardGeneric("stato.summary"))
+
 
