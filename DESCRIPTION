@@ -1,7 +1,7 @@
 Package: struct
 Type: Package
 Title: Statistics in R Using Class Templates
-Version: 0.4.0
+Version: 0.4.1
 Author: Dr Gavin Rhys Lloyd
 Maintainer: Dr Gavin Rhys Lloyd <g.r.lloyd@bham.ac.uk>
 Description: Defines a set of class templates for developing statistical workflows.
