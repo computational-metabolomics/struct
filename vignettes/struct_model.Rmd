@@ -1,5 +1,5 @@
 ---
-title: StRUCT Model Template
+title: STRUCT Model Template
 author: 
   name: Dr Gavin Rhys Lloyd
   affiliation: Phenome Centre Birmingham, University of Birmingham, UK
@@ -8,20 +8,113 @@ output:
     toc_float: true
   BiocStyle::pdf_document: default
 vignette: >
-    %\VignetteIndexEntry{StRUCT Model Template}
+    %\VignetteIndexEntry{STRUCT Model Template}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
-    ---
+---
     
 ```{r,include=FALSE,purl=FALSE}
 library("struct")
 ```
     
-Please note: this vignette describes the contents of a 
-class object broken down in to section. As such some of the lines cannot be run 
+Please note: the **Using the template** section of this vignette describes the contents of a 
+class object broken down into sections. As such, some of the lines cannot be run 
 on their own. Please skip to the **Complete object**
 section for a working example. 
-    
+
+Alternatively, you may find the the functions described in the **Using helper functions** sections 
+an easier approach (recommended).
+
+# Using helper functions
+
+`struct` provides a number of helper functions that can be used to create a new struct object from the command line, or in a script:
+
+- `set_struct_obj()`: used to create a new struct object
+- `set_obj_method()`: used to modify a method for a struct object
+- `set_obj_show()`: used to modify the displayed output for a struct object
+
+## Creating a new struct object
+
+To create a new struct object use the `set_struct_obj()` function. There are several inputs which are described below.
+
+- `class_name`    The name of the new struct object (character).
+- `struct_obj`    The type of struct object to create e.g. model, iterator, metric, etc.
+- `stato`         TRUE (default) or FALSE to add stato functionality to the object
+- `params`        A named vector of types for input slots. The names will become slotnames and the types will be used to determine                     what type of assignments are allowed to the named slot (e.g. integer, character etc).
+- `outputs`       As `params`, but for output slots.
+- `private`       As `params` and `outputs` but for slots that are used internally by the object and not intended for use by the                      user. These slots are only accessible using \@.
+- `prototype`      A named list of default values for each input/output/private slot.
+- `where`         Specifies the environment in which the class definition is created. Default is `.GlobalEnv`
+
+To demonstrate, a new model object that simply adds two inputs together will be defined.
+
+```{r}
+set_struct_obj(
+  class_name = 'add_two_inputs',
+  struct_obj = 'model',
+  stato = FALSE,
+  params=c(input_1 = 'numeric', input_2 = 'numeric'),
+  outputs=c(result = 'numeric'),
+  prototype=list(
+    input_1 = 0, 
+    input_2 = 0,
+    name='Add two inputs',
+    description='example class that adds two values together')
+  )
+
+# show the class definition
+add_two_inputs
+
+```
+
+The class definition was by default placed in the `.GlobalEnv` so that it is readily accessible. However, the object only has the default methods (such as `model.apply`) assigned and so doesnt do anything yet. The default methods can be updated using other helper funtions which are described in the following sections.
+
+## Changing the default methods
+
+All struct objects have some default methods that are intended to be "overloaded" i.e. replaced to provide functionality specific to the new object being implemented. The helper function `set_obj_method()` provides this functionality with the following inputs:
+
+
+For the example object that adds two values together, we will overload the `model.apply` method.
+
+```{r}
+set_obj_method(
+  class_name = 'add_two_inputs',
+  method_name = 'model.apply',
+  definition = function(M,D) { # you need to supply D here even if you dont use it
+    M$result = M$input_1 + M$input_2
+    return(M)                  # remember to always return the input object after modifying it
+  }
+)
+
+# create an instance of the model
+M = add_two_inputs(input_1 = 3, input_2 = 5)
+# use the model
+M = model.apply(M,dataset())
+# check the result = 8
+M$result
+
+```
+
+## Changing the default `show` output
+
+If you want to provide additional information when printing the new object then you can overload the show method using the `set_obj_show()` function, which has the following inputs:
+
+For the example object we will print the inputs in addition to the standard output.
+
+```{r}
+# update the show method
+set_obj_show(
+  class_name = 'add_two_inputs',
+  extra_string = function(x) {
+    str= paste('\nThis model is currently set to calculate: ',x$input_1,' + ', x$input_2,sep='')
+    return(str)
+  }
+)
+
+# call the show method
+M
+```
+
 # Using the template
 
 If you want to output the full model template to an editable R script you can 
@@ -33,7 +126,7 @@ path is specified the file will be created in your working directory.
 struct_template(template='model',output='example.R',overwrite=TRUE, in_editor=FALSE)`
 ```
     
-You can browse all the templates, available as vignettes in the StRUCT package 
+You can browse all the templates, available as vignettes in the STRUCT package
 using the `browseVignettes` function. Viewing the HTML will show this page, and 
 viewing the R code will display a working template.
     
@@ -42,8 +135,8 @@ browseVignettes('struct')
 ```
     
 ***After editing the template*** you can source the script to use your new 
-model. You can add the script to your own package, or submit it to us for 
-inclusion in the `structtoolbox` package.
+model. You can add the script to your own package, or potentially even submit 
+it to us for inclusion in the `structToolbox` package.
     
 ```{r}
 ## example use
@@ -63,7 +156,7 @@ See the `chart` template for help to do this.
     
 ***
     
-# Walkthrough
+# Template walkthrough
     
 ## Class definition
 The model templates are based on inheriting the `model` or `model.stato` classes 
