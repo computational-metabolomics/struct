@@ -20,6 +20,8 @@
 #' @param name The name of the slot to set (data, sample_meta or variable_meta
 #' for dataset objects)
 #' @param value A data.frame
+#' @param transpose TRUE (default) or FALSE to transpose the rows/columns when writing an excel sheet
+#' @param xlsxfile file name (can include full path) of excel file to write
 #' @include generics.R struct_class.R stato_class.R chart_class.R
 #' @return The returned value depends on the method used
 #' @examples
