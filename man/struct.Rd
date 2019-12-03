@@ -3,7 +3,6 @@
 \docType{package}
 \name{struct}
 \alias{struct}
-\alias{struct-package}
 \title{StRUCT: Statistics in R Using Class Templates}
 \description{
 This package defines classes for developing statistical workflows.

@@ -1,6 +1,67 @@
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
+set_struct_obj(
+  class_name = 'add_two_inputs',
+  struct_obj = 'model',
+  stato = FALSE,
+  params=c(input_1 = 'numeric', input_2 = 'numeric'),
+  outputs=c(result = 'numeric'),
+  prototype=list(
+    input_1 = 0, 
+    input_2 = 0,
+    name='Add two inputs',
+    description='example class that adds two values together')
+  )
+
+# show the class definition
+add_two_inputs
+
+
+## -----------------------------------------------------------------------------
+set_obj_method(
+  class_name = 'add_two_inputs',
+  method_name = 'model.apply',
+  definition = function(M,D) { # you need to supply D here even if you dont use it
+    M$result = M$input_1 + M$input_2
+    return(M)                  # remember to always return the input object after modifying it
+  }
+)
+
+# create an instance of the model
+M = add_two_inputs(input_1 = 3, input_2 = 5)
+# use the model
+M = model.apply(M,dataset())
+# check the result = 8
+M$result
+
+
+## -----------------------------------------------------------------------------
+# update the show method
+set_obj_show(
+  class_name = 'add_two_inputs',
+  extra_string = function(x) {
+    str= paste('\nThis model is currently set to calculate: ',x$input_1,' + ', x$input_2,sep='')
+    return(str)
+  }
+)
+
+# call the show method
+M
+
+## -----------------------------------------------------------------------------
+## example use
+# create an instance of your object
+M = example_model()
+# get/set parameters
+M$value_1 = 5
+M$value_1 # 5
+# train your model with some data
+M = model.train(M,iris_dataset())
+# apply your model to some test data
+M = model.predict(M,iris_dataset())
+
+## -----------------------------------------------------------------------------
 model_template=setClass('model_template', # replace model_template with ...
-                                          # ...your new model name
+    # ...your new model name
     contains = c('model','stato'),       # stato is optional
     slots=c(                      # define your parameters and outputs here
         'params.value_0'='entity',
@@ -14,7 +75,7 @@ model_template=setClass('model_template', # replace model_template with ...
         ## These are the default slots available for every struct object
         name='A test model',
         description='An example model object. Training adds value_1 counts to
-        a dataset, while prediction adds value_2 counts.',
+    a dataset, while prediction adds value_2 counts.',
         type='test',
         
         ## This slot is only required for model.stato objects
@@ -41,20 +102,22 @@ model_template=setClass('model_template', # replace model_template with ...
     )
 )
 
+## -----------------------------------------------------------------------------
 # create a model.train method for your object
 setMethod(f='model.train', # dont change this line
     signature=c('model_template','dataset'),  # replace model_template with...
-                                              # ...your new model name
+    # ...your new model name
     definition = function(M,D) {              # dont change this line
         # do something here #
         return(M)                             # make sure you return the model
     }
 )
 
+## -----------------------------------------------------------------------------
 # create a model.predict method for your object
 setMethod(f='model.predict',                  # dont change this line
     signature=c('model_template','dataset'),  # replace model_template with...
-                                              # ...your new model name
+    # ...your new model name
     definition = function(M,D) {              # dont change this line
         ## do something here ##
         return(M)                             # make sure you return the model 

@@ -4,8 +4,12 @@
 \alias{struct_template}
 \title{StRUCT templates}
 \usage{
-struct_template(template = "model", output, in_editor = TRUE,
-  overwrite = FALSE)
+struct_template(
+  template = "model",
+  output,
+  in_editor = TRUE,
+  overwrite = FALSE
+)
 }
 \arguments{
 \item{template}{the type of object you want a template for e.g. 'model'}
