@@ -219,7 +219,139 @@ setMethod(f="show",
     signature=c("struct_class"),
     definition=function(object)
     {
-        cat('A ',class(object),' object\nName: ',name(object),'\nDescription: ',
-            description(object),sep='')
+        cat(
+            'A "',class(object),'" object','\n',
+            'Name: ',name(object),'\n',
+            'Description: ',description(object),'\n',
+            sep=''
+        )
     }
 )
+
+
+#' define a new struct object
+#'
+#' a helper function to create new struct objects
+#' @export
+#' @param class_name the name of the new class to create
+#' @param struct_obj the struct obj to inherit e.g. 'model', 'metric' etc
+#' @param stato TRUE (default) or FALSE to inherit the stato class
+#' @param params a named character vector of input parameters where each
+#' element specifies the type of value that will be in the slot e.g. c(example = 'character')
+#' @param outputs a named character vector of outputs where each
+#' element specifies the type of value that will be in the slot e.g. c(example = 'character')
+#' @param private a named character vector of private slots where each
+#' element specifies the type of value that will be in the slot e.g. c(example = 'character').
+#' These are intended for internal use by the object and generally not available to the user.
+#' @param prototype a named list with initial values for slots.
+#' @return a new class definition. to create  a new object from this class use X = new_class_name()
+set_struct_obj = function(class_name, struct_obj, stato=TRUE, params=character(0), outputs=character(0), private=character(0), prototype=list()) {
+
+    # inherit stato if stato = TRUE
+    if (stato) {
+        struct_obj=c(struct_obj,'stato')
+    }
+
+    ## list of slots to create
+    # adjust names for params and outputs
+    np=names(params)
+    npi=as.character(interaction('params',np,sep='.'))
+    names(params)=npi
+    no=names(outputs)
+    noi=as.character(interaction('outputs',no,sep='.'))
+    names(outputs)=noi
+    # combine into a slot vector
+    slots=c(params,outputs,private)
+
+    ## change the names of any prototypes if they are listed in params or outputs
+    w=which(names(prototype) %in% np)
+    names(prototype)[w]=npi[w]
+    w=which(names(prototype) %in% no)
+    names(prototype)[w]=noi[w]
+
+    ## create class definition as assign to the chosen environment
+
+    assign(class_name,setClass(
+        Class = class_name,
+        contains = struct_obj,
+        slots=slots,
+        prototype = prototype,
+        where=topenv(parent.frame())
+    ),topenv(parent.frame()))
+
+
+
+}
+
+
+#' update method for a struct object
+#'
+#' a helper function to update methods for a struct object
+#' @export
+#' @param class_name the name of the to update the method for
+#' @param method_name the name of the method to update. Must be an existing method for the object.
+#' @param definition the function to replace the method with. This function will be used when the method is called on the object.
+#' @param where the environment to create the object in. default where = environment()
+#' @examples
+#' set_struct_obj(
+#' class_name = 'add_two_inputs',
+#' struct_obj = 'model',
+#' stato = FALSE,
+#' params=c(input_1 = 'numeric', input_2 = 'numeric'),
+#' outputs=c(result = 'numeric'),
+#' prototype=list(
+#'    input_1 = 0,
+#'    input_2 = 0,
+#'    name='Add two inputs',
+#'    description='example class that adds two values together')
+#')
+set_obj_method = function(class_name, method_name, definition, where=topenv(parent.frame())) {
+
+    setMethod(f=method_name,
+        signature=c(class_name,'dataset'),
+        definition=definition,
+        where=where
+    )
+}
+
+# ' update show method for a struct object
+#'
+#' a helper function to update the show method for a struct object
+#' @export
+#' @param class_name the name of the to update the method for
+#' @param extra_string a function that returns an extra string using the input object as an input e.g. function(object){return = 'extra_string'}
+#' @param where the environment to create the object in. default where = environment()
+#' @examples
+#' # create an example object first
+#' set_struct_obj(
+#' class_name = 'add_two_inputs',
+#' struct_obj = 'model',
+#' stato = FALSE,
+#' params=c(input_1 = 'numeric', input_2 = 'numeric'),
+#' outputs=c(result = 'numeric'),
+#' prototype=list(
+#'    input_1 = 0,
+#'    input_2 = 0,
+#'    name='Add two inputs',
+#'    description='example class that adds two values together')
+#')
+#'
+#' # now update the method
+#' set_obj_show(
+#' class_name = 'add_two_inputs',
+#' method_name = 'model.apply',
+#' extra_string = function(object) {return 'The extra text'}
+#' )
+#'
+set_obj_show = function(class_name, extra_string,where=topenv(parent.frame())) {
+
+    setMethod(f='show',
+        signature=c(class_name),
+        definition=function(object) {
+            callNextMethod() # force the default output
+            # add extra info
+            cat(extra_string(object))
+        },
+        where=where
+    )
+}
