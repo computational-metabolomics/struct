@@ -135,3 +135,12 @@ setMethod(f = "stato.summary",
 }
 
 
+setMethod(f = 'show',
+    signature = c('stato'),
+    definition = function(object) {
+        # add extra info
+        cat('Stato ID:      ',stato.id(object),sep='')
+        cat('\n')
+
+    }
+)

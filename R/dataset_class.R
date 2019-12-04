@@ -211,3 +211,13 @@ setMethod(f = "export.xlsx",
 )
 
 
+#' @export
+setMethod(f = 'show',
+    signature = c('dataset'),
+    definition = function(object) {
+        callNextMethod()
+        cat('data:          ',nrow(object$data),' rows x ', ncol(object$data),' columns\n',sep='')
+        cat('sample_meta:   ',nrow(object$sample_meta),' rows x ', ncol(object$sample_meta),' columns\n',sep='')
+        cat('variable_meta: ',nrow(object$sample_meta),' rows x ', ncol(object$sample_meta),' columns\n',sep='')
+    }
+)

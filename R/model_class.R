@@ -131,3 +131,13 @@ setMethod(f = 'predicted.name<-',
     }
 )
 
+#' @export
+setMethod(f = "show",
+    signature = c("model"),
+    definition = function(object) {
+        callNextMethod()
+        cat('predicted:     ',predicted.name(object),'    (', class(predicted(object)),')\n',sep='')
+        cat('seq_in:        ',object@seq_in,'\n',sep = '')
+        cat('\n')
+    }
+)

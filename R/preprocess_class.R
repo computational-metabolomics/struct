@@ -31,4 +31,11 @@ setMethod(f = "model.reverse",
     }
 )
 
+#' @export
+setMethod(f = "show",
+    signature = c("resampler"),
+    definition = function(object) {
+        callNextMethod()
+    }
+)
 

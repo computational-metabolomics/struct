@@ -217,11 +217,12 @@ setMethod(f = "show",
     signature = c("struct_class"),
     definition = function(object) {
         cat(
-            'A "',class(object),'" object','\n',
-            'Name: ',name(object),'\n',
-            'Description: ',description(object),'\n',
+            'A "', class(object),'" object','\n',
+            'name:          ', name(object),'\n',
+            'description:   ', paste0(strwrap(description(object),width=65,exdent = 15),collapse='\n'),
             sep = ''
         )
+        cat('\n')
     }
 )
 

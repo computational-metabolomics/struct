@@ -66,4 +66,13 @@ setMethod(f = "value<-",
     }
 )
 
-
+#' @export
+setMethod(f = 'show',
+    signature = c('enum'),
+    definition = function(object) {
+        callNextMethod()
+        
+        cat('list:         ',paste0(object@list,collapse=', '))
+        cat('\n')
+    }
+)

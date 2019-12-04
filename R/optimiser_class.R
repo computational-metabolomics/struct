@@ -18,3 +18,11 @@ optimiser<-setClass(
 )
 
 setClassUnion("model_OR_optimiser", c("model", "optimiser"))
+
+#' @export
+setMethod(f = "show",
+    signature = c("optimiser"),
+    definition = function(object) {
+        callNextMethod()
+    }
+)

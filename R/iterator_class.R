@@ -210,3 +210,19 @@ setMethod(f = 'run',
         calculate(MET)
         return(I)
     })
+
+#' @export
+setMethod(f = 'show',
+    signature = c('iterator'),
+    definition = function(object) {
+        callNextMethod()
+        
+        if (is(models(object),'model.seq')) {
+            cat('models:        ','a model.seq with ', length(models(object)),' steps\n',sep='')
+        } else {
+            cat('models:        ','a ',class(models(object)), 'object\n',sep='')
+        }
+        cat('result:        ',result.name(object),'    (', class(result(object)),')\n',sep='')
+        cat('\n')
+    }
+)

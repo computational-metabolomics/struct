@@ -95,3 +95,12 @@ setMethod(f = "calculate",
     }
 )
 
+#' @export
+setMethod(f = "show",
+    signature = c("metric"),
+    definition = function(object) {
+        callNextMethod()
+        cat('value:         ', value(object),'\n',sep = '')
+        cat('\n')
+    }
+)

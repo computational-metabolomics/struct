@@ -128,3 +128,16 @@ setMethod(f = "max_length<-",
         return(obj)
     }
 )
+
+#' @export
+setMethod(f = 'show',
+    signature = c('entity'),
+    definition = function(object) {
+        callNextMethod() # force the default output
+        # add extra info
+        cat('value:         ', value(E), '\n',sep='')
+        cat('type:          ', paste0(type(E),collapse=', '), '\n',sep='')
+        cat('max length:    ', max_length(E),sep='')
+        cat('\n')
+    }
+)

@@ -189,16 +189,19 @@ setMethod(f = 'length',
 setMethod(f = 'show',
     signature = 'model.seq',
     definition = function(object) {
-        cat('A model.seq object containing:\n')
+        cat('A model.seq object containing:\n\n')
         if (length(object) == 0) {
             cat('no models')
             return()
         }
         for (i in seq_len(length(object))) {
-            cat('[',i,'] ',name(object[i]),'\n',sep = '')
+            cat('[',i,']\n',sep='')
+            show(object[i])
         }
     }
 )
+
+
 
 setClassUnion("model_OR_model.seq", c("model", "model.seq"))
 

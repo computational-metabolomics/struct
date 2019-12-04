@@ -14,3 +14,16 @@ enum.stato<-setClass(
     "enum.stato",
     contains = c('enum','stato')
 )
+
+#' @export
+setMethod(f = 'show',
+    signature = c('enum.stato'),
+    definition = function(object) {
+        callNextMethod()
+        
+        # add the stato part
+        show(stato())
+        
+        cat('\n')
+    }
+)

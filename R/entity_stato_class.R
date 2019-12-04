@@ -15,4 +15,15 @@ entity.stato<-setClass(
     contains = c('entity','stato')
 )
 
+#' @export
+setMethod(f = 'show',
+    signature = c('entity.stato'),
+    definition = function(object) {
+        callNextMethod()
 
+        # add the stato part
+        show(stato())
+        
+        cat('\n')
+    }
+)
