@@ -6,6 +6,11 @@
 \usage{
 export.xlsx(object, ...)
 }
+\arguments{
+\item{object}{a dataset object}
+
+\item{...}{additional input arguments (see description)}
+}
 \description{
 write a dataset object to file
 }
