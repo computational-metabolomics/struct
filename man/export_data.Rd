@@ -24,7 +24,7 @@ Exports a dataset object to an excel file with sheets for data, sample_meta and 
 }
 \examples{
 \dontrun{
-D=iris_dataset() # example dataset
+D = iris_dataset() # example dataset
 export.xlsx(D,'iris_dataset.xlsx')
 }
 }

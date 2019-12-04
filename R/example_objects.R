@@ -8,17 +8,17 @@
 #' @examples
 #' D = iris_dataset()
 #' summary(D)
-iris_dataset=function() {
-    iris=datasets::iris
-    v=data.frame('feature_id'=colnames(iris[,1:4]))
-    rownames(v)=colnames(iris[,1:4])
+iris_dataset = function() {
+    iris = datasets::iris
+    v = data.frame('feature_id' = colnames(iris[,1:4]))
+    rownames(v) = colnames(iris[,1:4])
     test_data = dataset(
         name = 'Iris',
         description = "Fisher's Iris data",
-        type='single_block',
-        data=iris[,seq_len(4)],
-        sample_meta=iris[,5,drop=FALSE],
-        variable_meta=v
+        type = 'single_block',
+        data = iris[,seq_len(4)],
+        sample_meta = iris[,5,drop = FALSE],
+        variable_meta = v
     )
     return(test_data)
 }
@@ -36,30 +36,30 @@ iris_dataset=function() {
 #' M = example_model()
 #' M = example_model(value_1 = 10, value_2 = 20)
 #'
-example_model=setClass('example_model',
+example_model = setClass('example_model',
     contains = c('model','stato'),
-    slots=c(
-        'params.value_0'='entity',
-        'params.value_1'='entity.stato',
-        'params.value_2'='numeric',
-        'outputs.result_1'='entity',
-        'outputs.result_2'='dataset'
+    slots = c(
+        'params.value_0' = 'entity',
+        'params.value_1' = 'entity.stato',
+        'params.value_2' = 'numeric',
+        'outputs.result_1' = 'entity',
+        'outputs.result_2' = 'dataset'
     ),
     prototype = list(
-        name='A test model',
-        description='An example model object. Training adds value_1 counts to
+        name = 'A test model',
+        description = 'An example model object. Training adds value_1 counts to
         a dataset, while prediction adds value_2 counts.',
-        type='test',
-        stato.id='OBI:0000011',
-        params.value_0=entity(name='Value 0',value=0,type='numeric'),
-        params.value_1=entity.stato(value=10,name='Value 1',type='numeric',
-            description='An example entity.stato object',
-            stato.id='STATO:0000047'),
-        params.value_2=20,
-        outputs.result_1=entity(name='Result 1',type='dataset',
-            description='An example entity object',value=dataset()),
-        outputs.result_2=dataset(),
-        predicted='result_1'
+        type = 'test',
+        stato.id = 'OBI:0000011',
+        params.value_0 = entity(name = 'Value 0',value = 0,type = 'numeric'),
+        params.value_1 = entity.stato(value = 10,name = 'Value 1',type = 'numeric',
+            description = 'An example entity.stato object',
+            stato.id = 'STATO:0000047'),
+        params.value_2 = 20,
+        outputs.result_1 = entity(name = 'Result 1',type = 'dataset',
+            description = 'An example entity object',value = dataset()),
+        outputs.result_2 = dataset(),
+        predicted = 'result_1'
     )
 )
 
@@ -74,11 +74,11 @@ example_model=setClass('example_model',
 #' D = iris_dataset()
 #' M = example_model(value_1 = 10, value_2 = 20)
 #' M = model.train(M,D)
-setMethod(f='model.train',
-    signature=c('example_model','dataset'),
+setMethod(f = 'model.train',
+    signature = c('example_model','dataset'),
     definition = function(M,D) {
         D$data = D$data + M$value_1
-        M$result_1=D
+        M$result_1 = D
         return(M)
     }
 )
@@ -94,11 +94,11 @@ setMethod(f='model.train',
 #' D = iris_dataset()
 #' M = example_model(value_1 = 10, value_2 = 20)
 #' M = model.predict(M,D)
-setMethod(f='model.predict',
-    signature=c('example_model','dataset'),
+setMethod(f = 'model.predict',
+    signature = c('example_model','dataset'),
     definition = function(M,D) {
         D$data = D$data + M$value_2
-        M$result_2=D
+        M$result_2 = D
         return(M)
     }
 )
@@ -117,16 +117,16 @@ setMethod(f='model.predict',
 #' @importFrom stats runif
 example_chart<-setClass(
     "example_chart",
-    contains=c('chart')
+    contains = c('chart')
 )
 
 #' @param obj a chart object
 #' @param dobj a example_model object
 #' @rdname chart.example
 #' @export
-setMethod(f="chart.plot",
-    signature=c("example_chart","example_model"),
-    definition=function(obj,dobj)
+setMethod(f = "chart.plot",
+    signature = c("example_chart","example_model"),
+    definition = function(obj,dobj)
     {
         p = plot(runif(n = 10),runif(n = 10))
         return(p)

@@ -12,5 +12,5 @@
 #' E = enum.stato()
 enum.stato<-setClass(
     "enum.stato",
-    contains=c('enum','stato')
+    contains = c('enum','stato')
 )

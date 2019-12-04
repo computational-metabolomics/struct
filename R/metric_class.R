@@ -17,8 +17,8 @@
 metric<-setClass(
     "metric",
     contains = c('struct_class'),
-    slots=c(type='character',
-        value='numeric'
+    slots = c(type = 'character',
+        value = 'numeric'
     )
 )
 
@@ -27,9 +27,9 @@ metric<-setClass(
 #' @examples
 #' M = metric()
 #' calculate(M,Y,Yhat)
-setMethod(f="calculate",
-    signature=c('metric'),
-    definition=function(obj,Y,Yhat)
+setMethod(f = "calculate",
+    signature = c('metric'),
+    definition = function(obj,Y,Yhat)
     {
         warning('no calculation provided for this metric')
         return(obj)
@@ -41,9 +41,9 @@ setMethod(f="calculate",
 #' @examples
 #' MET = metric()
 #' value(MET)
-setMethod(f="value",
-    signature=c("metric"),
-    definition=function(obj)
+setMethod(f = "value",
+    signature = c("metric"),
+    definition = function(obj)
     {
         return(obj@value)
     }
@@ -53,10 +53,10 @@ setMethod(f="value",
 #' @export
 #' @examples
 #' MET = metric()
-#' value(MET)=10
-setMethod(f="value<-",
-    signature=c("metric"),
-    definition=function(obj)
+#' value(MET) = 10
+setMethod(f = "value<-",
+    signature = c("metric"),
+    definition = function(obj)
     {
         return(obj)
     }
@@ -76,8 +76,8 @@ setMethod(f="value<-",
 #'
 test_metric<-setClass(
     "test_metric",
-    contains='metric',
-    prototype = list(name='example metric')
+    contains = 'metric',
+    prototype = list(name = 'example metric')
 )
 
 #' calculate metric example
@@ -90,11 +90,11 @@ test_metric<-setClass(
 #' MET = test_metric()
 #' MET = calculate(MET)
 #'
-setMethod(f="calculate",
-    signature=c('test_metric'),
-    definition=function(obj)
+setMethod(f = "calculate",
+    signature = c('test_metric'),
+    definition = function(obj)
     {
-        value(obj)=3.142
+        value(obj) = 3.142
         return(obj)
     }
 )

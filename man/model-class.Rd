@@ -97,5 +97,5 @@ p = predicted(M)
 M = example_model()
 predicted.name(M)
 M = example_model()
-predicted.name(M)='result_2'
+predicted.name(M) = 'result_2'
 }

@@ -48,5 +48,5 @@ calculate(M,Y,Yhat)
 MET = metric()
 value(MET)
 MET = metric()
-value(MET)=10
+value(MET) = 10
 }

@@ -21,7 +21,7 @@
 #' obj = param.obj(M, 'value_0')
 #'
 #' # set a parameter as an object
-#' param.obj(M, 'value_0') = entity(value = 15,type='numeric')
+#' param.obj(M, 'value_0') = entity(value = 15,type = 'numeric')
 #'
 setGeneric("param.obj",function(obj,name)standardGeneric("param.obj"))
 
@@ -87,7 +87,7 @@ setGeneric("param.list",function(obj)standardGeneric("param.list"))
 #' @return struct object
 #' @examples
 #' M = example_model()
-#' param.list(M)=list('value_1' = 15,'value_2' = 20)
+#' param.list(M) = list('value_1' = 15,'value_2' = 20)
 #'
 setGeneric("param.list<-",function(obj,value)standardGeneric("param.list<-"))
 
@@ -176,7 +176,7 @@ setGeneric("output.value<-",
 #' obj = output.obj(M, 'result_1')
 #'
 #' # set a output as an object
-#' output.obj(M, 'result_1') = entity(value = 15,type='numeric')
+#' output.obj(M, 'result_1') = entity(value = 15,type = 'numeric')
 #'
 setGeneric("output.obj",
     function(obj,name)standardGeneric("output.obj"))
@@ -232,7 +232,7 @@ setGeneric("output.list",function(obj)standardGeneric("output.list"))
 #' @return struct object
 #' @examples
 #' M = example_model()
-#' output.list(M)=list('result_1' = dataset(),'result_2' = dataset())
+#' output.list(M) = list('result_1' = dataset(),'result_2' = dataset())
 #'
 setGeneric("output.list<-",function(obj,value)standardGeneric("output.list<-"))
 

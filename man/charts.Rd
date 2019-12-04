@@ -37,14 +37,14 @@ and descriptions pulled from the STATO ontology database.
 # define a new chart object class
 example_chart = setClass('example_chart',
     contains = 'chart',                  # inherit the chart template
-    slots = c('params.column'='numeric') # add a parameter
+    slots = c('params.column' = 'numeric') # add a parameter
 )
 
 # define the chart.plot method for the example_chart
 setMethod('chart.plot',                     # name of the method
     signature('example_chart','dataset'),   # the class for each input
     definition = function(obj, dobj) {  # function definition (from template)
-        p=hist(dobj$data[,obj$column])      # the plot
+        p = hist(dobj$data[,obj$column])      # the plot
         return(p)
     }
 )

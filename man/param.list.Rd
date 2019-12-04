@@ -27,6 +27,6 @@ M = example_model()
 L = param.list(M)
 
 M = example_model()
-param.list(M)=list('value_1' = 15,'value_2' = 20)
+param.list(M) = list('value_1' = 15,'value_2' = 20)
 
 }

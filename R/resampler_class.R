@@ -10,7 +10,7 @@
 resampler<-setClass(
     "resampler",
     contains = c('iterator'),
-    slots=c(models='model_OR_iterator')
+    slots = c(models = 'model_OR_iterator')
 )
 
 

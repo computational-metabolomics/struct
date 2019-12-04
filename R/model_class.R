@@ -15,11 +15,11 @@
 model<-setClass(
     "model",
     contains = c('struct_class','parameter_class','outputs_class'),
-    slots=c(type='character',
-        predicted='character',
-        seq_in='character'
+    slots = c(type = 'character',
+        predicted = 'character',
+        seq_in = 'character'
     ),
-    prototype=list(seq_in = 'data')
+    prototype = list(seq_in = 'data')
 )
 
 #' @describeIn model train the model using input data
@@ -29,9 +29,9 @@ model<-setClass(
 #' M = model()
 #' M = model.train(M,D)
 #' @return trained model object
-setMethod(f="model.train",
-    signature=c("model","dataset"),
-    definition=function(M,D)
+setMethod(f = "model.train",
+    signature = c("model","dataset"),
+    definition = function(M,D)
     {
         warning('no training implemented for this model')
         return(M)
@@ -46,9 +46,9 @@ setMethod(f="model.train",
 #' M = model.train(M,D)
 #' M = model.predict(M,D)
 #' @return model object with test set results
-setMethod(f="model.predict",
-    signature=c("model","dataset"),
-    definition=function(M,D)
+setMethod(f = "model.predict",
+    signature = c("model","dataset"),
+    definition = function(M,D)
     {
         return(M)
     }
@@ -61,12 +61,12 @@ setMethod(f="model.predict",
 #' M = model()
 #' M = model.apply(M,D)
 #' @return trained model object
-setMethod(f="model.apply",
-    signature=c("model","dataset"),
-    definition=function(M,D)
+setMethod(f = "model.apply",
+    signature = c("model","dataset"),
+    definition = function(M,D)
     {
-        M=model.train(M,D)
-        M=model.predict(M,D)
+        M = model.train(M,D)
+        M = model.predict(M,D)
         return(M)
     }
 )
@@ -80,9 +80,9 @@ setMethod(f="model.apply",
 #' M = model.predict(M,D)
 #' M = model.reverse(M,D)
 #' @return dataset dataset object with the reverse model applied
-setMethod(f="model.reverse",
-    signature=c("model","dataset"),
-    definition=function(M,D)
+setMethod(f = "model.reverse",
+    signature = c("model","dataset"),
+    definition = function(M,D)
     {
         return(D)
     }
@@ -97,9 +97,9 @@ setMethod(f="model.reverse",
 #' M = model.predict(M,D)
 #' p = predicted(M)
 #' @return the predicted output, as specified by predicted.name
-setMethod(f='predicted',
-    signature=c('model'),
-    definition=function(M)
+setMethod(f = 'predicted',
+    signature = c('model'),
+    definition = function(M)
     {
         return(output.value(M,predicted.name(M)))
     }
@@ -111,9 +111,9 @@ setMethod(f='predicted',
 #' M = example_model()
 #' predicted.name(M)
 #' @return the id of the output returned by predicted()
-setMethod(f='predicted.name',
-    signature=c('model'),
-    definition=function(M)
+setMethod(f = 'predicted.name',
+    signature = c('model'),
+    definition = function(M)
     {
         return(M@predicted)
     }
@@ -123,13 +123,13 @@ setMethod(f='predicted.name',
 #' @export
 #' @examples
 #' M = example_model()
-#' predicted.name(M)='result_2'
+#' predicted.name(M) = 'result_2'
 #' @return the modified model object
-setMethod(f='predicted.name<-',
-    signature=c('model','character'),
-    definition=function(M,value)
+setMethod(f = 'predicted.name<-',
+    signature = c('model','character'),
+    definition = function(M,value)
     {
-        M@predicted=value
+        M@predicted = value
         return(M)
     }
 )

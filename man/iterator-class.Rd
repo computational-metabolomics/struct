@@ -104,7 +104,7 @@ I = iterator() * model()
 I = run(I,D,MET)
 
 I = iterator()
-result.name(I)='example'
+result.name(I) = 'example'
 MS = model() + model()
 I = iterator() * MS
 I[2] # returns the second model() object

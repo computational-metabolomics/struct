@@ -35,11 +35,11 @@ can be extracted using \code{param.obj} and \code{output.obj}.
 \examples{
 # Create a new enum object
 E = enum(
-    name='example',
-    description='this is an example',
-    type='character',
-    value='hello',
-    list=c('hello','world')
+    name = 'example',
+    description = 'this is an example',
+    type = 'character',
+    value = 'hello',
+    list = c('hello','world')
 )
 
 # Get/set the value of the entity object

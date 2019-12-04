@@ -21,7 +21,7 @@
 model.seq<-setClass(
     "model.seq",
     contains = c('struct_class'),
-    slots=c(models='list')
+    slots = c(models = 'list')
 )
 
 
@@ -31,12 +31,12 @@ model.seq<-setClass(
 #' MS = example_model() + example_model()
 #' MS = model.train(MS,dataset())
 #' @return model sequence
-setMethod(f="model.train",
-    signature=c("model.seq","dataset"),
-    definition=function(M,D)
+setMethod(f = "model.train",
+    signature = c("model.seq","dataset"),
+    definition = function(M,D)
     {
         # for each model in the list
-        S=D # for first in list the input D is the data object
+        S = D # for first in list the input D is the data object
         for (i in seq_len(length(M)))
         {
             if (M[i]@seq_in != 'data') {
@@ -45,15 +45,15 @@ setMethod(f="model.train",
             }
 
             # train the model on the output of the previous model
-            M[i]=model.train(M[i],S)
+            M[i] = model.train(M[i],S)
             # apply the model to the output of the previous model
-            M[i]=model.predict(M[i],S)
+            M[i] = model.predict(M[i],S)
             # set the output of this model as the input for the next model
-            S=predicted(M[i])
+            S = predicted(M[i])
 
             if (is(S,'dataset')) {
                 # if its a dataset then update current D
-                D=predicted(M[i])
+                D = predicted(M[i])
             }
         }
         return(M)
@@ -63,39 +63,39 @@ setMethod(f="model.train",
 #' @describeIn model.seq apply the model to input data
 #' @export
 #' @examples
-#' D= dataset()
+#' D = dataset()
 #' MS = example_model() + example_model()
 #' MS = model.train(MS,D)
 #' MS = model.predict(MS,D)
 #' @return model sequence
-setMethod(f="model.predict",
-    signature=c("model.seq",'dataset'),
-    definition=function(M,D)
+setMethod(f = "model.predict",
+    signature = c("model.seq",'dataset'),
+    definition = function(M,D)
     {
-        S=D # for the first model the input use the input data
-        L=length(M) # number of models
+        S = D # for the first model the input use the input data
+        L = length(M) # number of models
         for (i in seq_len(L))
         {
             # apply the model the output of the previous model
-            M[i]=model.predict(M[i],S)
+            M[i] = model.predict(M[i],S)
             # keep the previous output
-            penultimate=S
+            penultimate = S
             # set the output of this model as the input to the next
-            S=predicted(M[i])
+            S = predicted(M[i])
         }
 
         # if regression, reverse the processing to get predictions
         # on the same scale as the input data
-        if (type(M[L])=='regression') {
+        if (type(M[L]) == 'regression') {
             # put the predictions into the penultimate dataset object
-            penultimate$sample_meta[,M[L]$factor_name]=S
+            penultimate$sample_meta[,M[L]$factor_name] = S
             # apply the reverse models (only works if all are preprocess models)
             for (k in seq(L-1,1,-1)) {
-                penultimate=model.reverse(M[k],penultimate)
+                penultimate = model.reverse(M[k],penultimate)
             }
             # put the update predictions into the last model
-            pred=predicted.name(M[L]) # name of predicted output
-            output.value(M[L],pred)=as.data.frame(penultimate$sample_meta[,M[L]$factor_name])
+            pred = predicted.name(M[L]) # name of predicted output
+            output.value(M[L],pred) = as.data.frame(penultimate$sample_meta[,M[L]$factor_name])
         }
 
         return(M)
@@ -109,9 +109,9 @@ setMethod(f="model.predict",
 #' MS[2]
 #'
 #' @return model at the given index in the sequence
-setMethod(f= "[",
-    signature="model.seq",
-    definition=function(x,i){
+setMethod(f = "[",
+    signature = "model.seq",
+    definition = function(x,i){
         return(x@models[[i]])
     }
 )
@@ -123,14 +123,14 @@ setMethod(f= "[",
 #' MS[3] = model()
 #'
 #' @return model sequence with the model at index i replaced
-setMethod(f= "[<-",
-    signature="model.seq",
-    definition=function(x,i,value){
+setMethod(f = "[<-",
+    signature = "model.seq",
+    definition = function(x,i,value){
         if (!is(value,'model'))
         {
             stop('value must be a model')
         }
-        x@models[[i]]=value
+        x@models[[i]] = value
         return(x)
     }
 )
@@ -142,9 +142,9 @@ setMethod(f= "[<-",
 #' L = models(MS)
 #'
 #' @return a list of models in the sequence
-setMethod(f='models',
-    signature='model.seq',
-    definition=function(ML){
+setMethod(f = 'models',
+    signature = 'model.seq',
+    definition = function(ML){
         return(ML@models)
     }
 )
@@ -157,16 +157,16 @@ setMethod(f='models',
 #' models(MS) = L
 #'
 #' @return a model sequence containing the input models
-setMethod(f='models<-',
-    signature=c('model.seq','list'),
-    definition=function(ML,value) {
+setMethod(f = 'models<-',
+    signature = c('model.seq','list'),
+    definition = function(ML,value) {
         # check that all items in list are models
-        ism=lapply(X=value,FUN=is,class2='model')
+        ism = lapply(X = value,FUN = is,class2 = 'model')
         if (!all(unlist(ism))) {
             stop('all items in list must be a model')
         }
         # if they are all models then add them to the object
-        ML@models=value
+        ML@models = value
         return(ML)
     }
 )
@@ -178,9 +178,9 @@ setMethod(f='models<-',
 #' length(MS) # 2
 #'
 #' @return the number of models in the sequence
-setMethod(f='length',
-    signature='model.seq',
-    definition=function(x) {
+setMethod(f = 'length',
+    signature = 'model.seq',
+    definition = function(x) {
         return(length(x@models))
     }
 )
@@ -192,18 +192,18 @@ setMethod(f='length',
 #' show(MS)
 #'
 #' @return pritns a summary of the contents of a model sequence
-setMethod(f='show',
-    signature='model.seq',
-    definition=function(object) {
+setMethod(f = 'show',
+    signature = 'model.seq',
+    definition = function(object) {
         cat('A model.seq object containing:\n')
-        if (length(object)==0)
+        if (length(object) == 0)
         {
             cat('no models')
             return()
         }
         for (i in seq_len(length(object)))
         {
-            cat('[',i,'] ',name(object[i]),'\n',sep='')
+            cat('[',i,'] ',name(object[i]),'\n',sep = '')
         }
     }
 )
@@ -220,11 +220,11 @@ setClassUnion("model_OR_model.seq", c("model", "model.seq"))
 #' @return a model sequence with the additional model appended to the front of
 #' the sequence
 setMethod("+",
-    signature(e1='model',e2='model.seq'),
-    definition=function(e1,e2) {
-        m=models(e2)
-        m=c(e1,m)
-        models(e2)=m
+    signature(e1 = 'model',e2 = 'model.seq'),
+    definition = function(e1,e2) {
+        m = models(e2)
+        m = c(e1,m)
+        models(e2) = m
         return(e2)
     }
 )
@@ -239,11 +239,11 @@ setMethod("+",
 #' @return a model sequence with the additional model appended to the end of the
 #' sequence
 setMethod("+",
-    signature(e1='model.seq',e2='model'),
-    definition=function(e1,e2) {
-        m=models(e1)
-        m=c(m,e2)
-        models(e1)=m
+    signature(e1 = 'model.seq',e2 = 'model'),
+    definition = function(e1,e2) {
+        m = models(e1)
+        m = c(m,e2)
+        models(e1) = m
         return(e1)
     }
 )
@@ -255,9 +255,9 @@ setMethod("+",
 #'
 #' @return a model sequence
 setMethod("+",
-    signature(e1='model',e2='model'),
-    definition=function(e1,e2) {
-        ML=model.seq(models=c(e1,e2))
+    signature(e1 = 'model',e2 = 'model'),
+    definition = function(e1,e2) {
+        ML = model.seq(models = c(e1,e2))
         return(ML)
     }
 )
@@ -271,12 +271,12 @@ setMethod("+",
 #' M = model.predict(M,D)
 #' p = predicted(M)
 #' @return the predicted output of the last model in the sequence
-setMethod(f='predicted',
-    signature=c('model.seq'),
-    definition=function(M)
+setMethod(f = 'predicted',
+    signature = c('model.seq'),
+    definition = function(M)
     {
         # return the predicted ooutput from the last model
-        L=length(M)
+        L = length(M)
         return(output.value(M[L],predicted.name(M[L])))
     }
 )
@@ -290,12 +290,12 @@ setMethod(f='predicted',
 #' MS = example_model() + example_model()
 #' MS = model.apply(MS,D)
 #'
-setMethod(f="model.apply",
-    signature=c("model.seq","dataset"),
-    definition=function(M,D)
+setMethod(f = "model.apply",
+    signature = c("model.seq","dataset"),
+    definition = function(M,D)
     {
         # for each method in the list
-        S=D # for first in list the input D is the data object
+        S = D # for first in list the input D is the data object
 
         for (i in seq_len(length(M)))
         {
@@ -304,13 +304,13 @@ setMethod(f="model.apply",
                 param.value(M[i],M[i]@seq_in) = S
             }
             # use current data
-            M[i]=model.apply(M[i],D)
+            M[i] = model.apply(M[i],D)
 
             # set the output of this method as the input for the next method
-            S=predicted(M[i])
+            S = predicted(M[i])
             if (is(S,'dataset')) {
                 # if its a dataset then update current D
-                D=predicted(M[i])
+                D = predicted(M[i])
             }
         }
         return(M)

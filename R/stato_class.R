@@ -40,16 +40,16 @@
 #'
 stato<-setClass(
     "stato",
-    slots=c('stato.id'="character"
+    slots = c('stato.id' = "character"
 
     )
 )
 
 #' @describeIn stato get the stato.id for an object
 #' @export
-setMethod(f="stato.id",
-    signature=c('stato'),
-    definition=function(obj)
+setMethod(f = "stato.id",
+    signature = c('stato'),
+    definition = function(obj)
     {
         if (!exists('ont',envir = statoOntology))
         {
@@ -62,60 +62,60 @@ setMethod(f="stato.id",
 
 #' @describeIn stato get the STATO name for an object
 #' @export
-setMethod(f="stato.name",
-    signature=c('stato'),
-    definition=function(obj)
+setMethod(f = "stato.name",
+    signature = c('stato'),
+    definition = function(obj)
     {
         # get the stato id
-        id=stato.id(obj)
+        id = stato.id(obj)
         # get the name from the stato database
-        nme=statoOntology$ont$name[[id]]
+        nme = statoOntology$ont$name[[id]]
         return(nme)
     }
 )
 
 #' @describeIn stato get the STATO definition for an object
 #' @export
-setMethod(f="stato.definition",
-    signature=c('stato'),
-    definition=function(obj)
+setMethod(f = "stato.definition",
+    signature = c('stato'),
+    definition = function(obj)
     {
         # get the id for the object
-        id=stato.id(obj)
+        id = stato.id(obj)
         # get the definition and clean any special chars
-        id=.strip_special(statoOntology$ont$def[[id]])
+        id = .strip_special(statoOntology$ont$def[[id]])
         
         return(id)
     }
 )
 
 # create a new environment for the stato database
-statoOntology=new.env()
+statoOntology = new.env()
 
 # internal function to extract the database into the environment
-.stato.env=function()
+.stato.env = function()
 {
-    path.to.ontology=file.path(path.package('struct'),
+    path.to.ontology = file.path(path.package('struct'),
         '/extdata/stato-reasoned.obo')
     assign('ont',
         ontologyIndex::get_ontology(path.to.ontology,
         extract_tags = 'everything'),
-        envir=statoOntology
+        envir = statoOntology
         )
 }
 
 #' @describeIn stato get the STATO definition for an object
 #' @export
-setMethod(f="stato.summary",
-    signature=c('stato'),
-    definition=function(obj)
+setMethod(f = "stato.summary",
+    signature = c('stato'),
+    definition = function(obj)
     {
         cat(stato.id(obj),'\n')
         cat(stato.name(obj),'\n')
         cat(stato.definition(obj),'\n')
         cat('\nInputs:\n')
         
-        p=param.ids(obj)
+        p = param.ids(obj)
         for (i in p)
         {
             if (is(param.obj(obj,i),'stato'))
@@ -126,7 +126,7 @@ setMethod(f="stato.summary",
             }
         }
         cat('\nOutputs:\n')
-        p=output.ids(obj)
+        p = output.ids(obj)
         for (i in p)
         {
             if (is(output.obj(obj,i),'stato'))
@@ -141,9 +141,9 @@ setMethod(f="stato.summary",
 )
 
 # internal function to strip special chars from the description
-.strip_special=function(str,chars="\"|\\[|\\]")
+.strip_special = function(str,chars = "\"|\\[|\\]")
 {
-    str=gsub(pattern=chars, replacement="", x=str)
+    str = gsub(pattern = chars, replacement = "", x = str)
     return(str)
 }
 

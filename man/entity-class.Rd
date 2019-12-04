@@ -53,10 +53,10 @@ can be extracted using \code{param.obj} and \code{output.obj}.
 \examples{
 # Create a new entity object
 E = entity(
-    name='example',
-    description='this is an example',
-    type='numeric',
-    value=1
+    name = 'example',
+    description = 'this is an example',
+    type = 'numeric',
+    value = 1
 )
 
 # Get/set the value of the entity object

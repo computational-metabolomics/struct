@@ -12,8 +12,8 @@
 optimiser<-setClass(
     "optimiser",
     contains = c('iterator'),
-    slots=c(type='character',
-        outputs.optimal_model='model_OR_iterator'
+    slots = c(type = 'character',
+        outputs.optimal_model = 'model_OR_iterator'
     )
 )
 

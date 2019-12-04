@@ -10,25 +10,25 @@
 
 struct_class<-setClass(
     "struct_class",
-    slots=c(name='character',
-        description="character",
-        type="character",
-        libraries='character'
+    slots = c(name = 'character',
+        description = "character",
+        type = "character",
+        libraries = 'character'
     )
 )
 
 setMethod('initialize','struct_class',function(.Object,...) {
 
-    L=list(...)
-    SN=slotNames(.Object)
+    L = list(...)
+    SN = slotNames(.Object)
     if (length(L)>0)
     {
         for (i in seq_len(length(L)))
         {
             if (names(L)[[i]] %in% SN) {
-                slot(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
+                slot(.Object,names(L)[[i]]) = L[[names(L)[[i]]]]
             } else if (is(.Object,'parameter_class')) {
-                param.value(.Object,names(L)[[i]])=L[[names(L)[[i]]]]
+                param.value(.Object,names(L)[[i]]) = L[[names(L)[[i]]]]
             } else {
                 stop(paste0(names(L)[[i]], 'is not a valid for ', class(.Object), ' objects.'))
             }
@@ -37,15 +37,15 @@ setMethod('initialize','struct_class',function(.Object,...) {
     }
 
     # check if packages are available
-    not_found=character(0)
+    not_found = character(0)
     for (k in .Object@libraries) {
         if (!requireNamespace(k, quietly = TRUE)) {
-            not_found=c(not_found,k)
+            not_found = c(not_found,k)
         }
     }
 
     if (length(not_found)>0) {
-        stop(paste0('The following packages are required but not installed: ', paste0(not_found,collapse=', ',
+        stop(paste0('The following packages are required but not installed: ', paste0(not_found,collapse = ', ',
             '. Please install them.')),
             call. = FALSE)
     }
@@ -66,9 +66,9 @@ setMethod('initialize','struct_class',function(.Object,...) {
 #' S = struct_class()
 #' name(S)
 #' @return (long) name of struct object
-setMethod(f="name",
-    signature="struct_class",
-    definition=function(obj)
+setMethod(f = "name",
+    signature = "struct_class",
+    definition = function(obj)
     {
         return(obj@name)
     }
@@ -80,9 +80,9 @@ setMethod(f="name",
 #' S = struct_class()
 #' name(S) = 'example'
 #' @return modified struct object
-setMethod(f="name<-",
-    signature=c("struct_class"),
-    definition=function(obj,value)
+setMethod(f = "name<-",
+    signature = c("struct_class"),
+    definition = function(obj,value)
     {
         obj@name<-value
         return(obj)
@@ -100,9 +100,9 @@ setMethod(f="name<-",
 #' S = struct_class()
 #' description(S)
 #' @return description assigned to the struct object
-setMethod(f="description",
-    signature="struct_class",
-    definition=function(obj)
+setMethod(f = "description",
+    signature = "struct_class",
+    definition = function(obj)
     {
         return(obj@description)
     }
@@ -114,9 +114,9 @@ setMethod(f="description",
 #' @return modified struct object
 #' @rdname object_desc
 #' @export
-setMethod(f="description<-",
-    signature=c("struct_class"),
-    definition=function(obj,value)
+setMethod(f = "description<-",
+    signature = c("struct_class"),
+    definition = function(obj,value)
     {
         obj@description<-value
         return(obj)
@@ -132,9 +132,9 @@ setMethod(f="description<-",
 #' S = struct_class()
 #' type(S)
 #' @return the type assigned to the struct objects
-setMethod(f="type",
-    signature="struct_class",
-    definition=function(obj)
+setMethod(f = "type",
+    signature = "struct_class",
+    definition = function(obj)
     {
         return(obj@type)
     }
@@ -146,9 +146,9 @@ setMethod(f="type",
 #' S = struct_class()
 #' type(S) = 'example'
 #' @return modified struct object
-setMethod(f="type<-",
-    signature=c("struct_class"),
-    definition=function(obj,value)
+setMethod(f = "type<-",
+    signature = c("struct_class"),
+    definition = function(obj,value)
     {
         obj@type<-value
         return(obj)
@@ -160,7 +160,7 @@ setMethod(f="type<-",
 #' print a list of chart objects associated with the input object
 #' @param obj a chart object
 #' @param ret a string indicating whether to return a list of chart
-#' names (ret="char") or a list of chart objects (ret="obj").
+#' names (ret = "char") or a list of chart objects (ret = "obj").
 #' The default is "char".
 #' @export
 #' @examples
@@ -169,33 +169,33 @@ setMethod(f="type<-",
 #' chart.names(S,'char')
 #' chart.names(S,'obj')
 #' @return list of chart names (default), or chart objects
-setMethod(f="chart.names",
-    signature=c("struct_class"),
-    definition=function(obj,ret='char')
+setMethod(f = "chart.names",
+    signature = c("struct_class"),
+    definition = function(obj,ret = 'char')
     {
-        if (ret=='char') {
-            OUT=character(0)
-        } else if (ret=='obj') {
-            OUT=list()
+        if (ret == 'char') {
+            OUT = character(0)
+        } else if (ret == 'obj') {
+            OUT = list()
         } else {
             stop('not a valid ret option. Try "char" or "obj"')
         }
-        x=showMethods(f=chart.plot,classes=class(obj)[1],printTo=FALSE)
-        if (x[2]=='<No methods>') {
+        x = showMethods(f = chart.plot,classes = class(obj)[1],printTo = FALSE)
+        if (x[2] == '<No methods>') {
         } else {
 
             for (i in 2:length(x)) {
-                a=strsplit(x[i],'\"')[[1]]
+                a = strsplit(x[i],'\"')[[1]]
                 if (length(a)>0) {
-                    a=a[seq(2, length(a), by=2)]
-                    a=a[-which(a==class(obj)[1])]
+                    a = a[seq(2, length(a), by = 2)]
+                    a = a[-which(a == class(obj)[1])]
                     if (length(a)>0) {
-                        if (a=='chart') {
+                        if (a == 'chart') {
                         } else if (extends(a,'chart')) {
-                            if (ret=='char') {
-                                OUT=c(OUT,a)
+                            if (ret == 'char') {
+                                OUT = c(OUT,a)
                             } else
-                                OUT[[length(OUT)+1]]=eval(parse(text=paste0(a,
+                                OUT[[length(OUT)+1]] = eval(parse(text = paste0(a,
                                     '()')))
                         }
                     }
@@ -215,15 +215,15 @@ setMethod(f="chart.names",
 #' S = struct_class()
 #' show(S)
 #' @return brief description of the struct object
-setMethod(f="show",
-    signature=c("struct_class"),
-    definition=function(object)
+setMethod(f = "show",
+    signature = c("struct_class"),
+    definition = function(object)
     {
         cat(
             'A "',class(object),'" object','\n',
             'Name: ',name(object),'\n',
             'Description: ',description(object),'\n',
-            sep=''
+            sep = ''
         )
     }
 )
@@ -245,39 +245,40 @@ setMethod(f="show",
 #' These are intended for internal use by the object and generally not available to the user.
 #' @param prototype a named list with initial values for slots.
 #' @return a new class definition. to create  a new object from this class use X = new_class_name()
-set_struct_obj = function(class_name, struct_obj, stato=TRUE, params=character(0), outputs=character(0), private=character(0), prototype=list()) {
+set_struct_obj = function(class_name, struct_obj, stato = TRUE, params = character(0), outputs = character(0), private = character(0), prototype = list()) {
 
     # inherit stato if stato = TRUE
     if (stato) {
-        struct_obj=c(struct_obj,'stato')
+        struct_obj = c(struct_obj,'stato')
     }
 
     ## list of slots to create
     # adjust names for params and outputs
-    np=names(params)
-    npi=as.character(interaction('params',np,sep='.'))
-    names(params)=npi
-    no=names(outputs)
-    noi=as.character(interaction('outputs',no,sep='.'))
-    names(outputs)=noi
+    np = names(params)
+    npi = as.character(interaction('params',np,sep = '.'))
+    names(params) = npi
+    no = names(outputs)
+    noi = as.character(interaction('outputs',no,sep = '.'))
+    names(outputs) = noi
     # combine into a slot vector
-    slots=c(params,outputs,private)
+    slots = c(params,outputs,private)
 
     ## change the names of any prototypes if they are listed in params or outputs
-    w=which(names(prototype) %in% np)
-    names(prototype)[w]=npi[w]
-    w=which(names(prototype) %in% no)
-    names(prototype)[w]=noi[w]
+    w = which(names(prototype) %in% np)
+    names(prototype)[w] = npi[w]
+    w = which(names(prototype) %in% no)
+    names(prototype)[w] = noi[w]
 
     ## create class definition as assign to the chosen environment
 
     assign(class_name,setClass(
         Class = class_name,
         contains = struct_obj,
-        slots=slots,
+        slots = slots,
         prototype = prototype,
-        where=topenv(parent.frame())
-    ),topenv(parent.frame()))
+        where = topenv(parent.frame())
+    ),
+    topenv(parent.frame()))
 
 
 
@@ -298,20 +299,20 @@ set_struct_obj = function(class_name, struct_obj, stato=TRUE, params=character(0
 #' class_name = 'add_two_inputs',
 #' struct_obj = 'model',
 #' stato = FALSE,
-#' params=c(input_1 = 'numeric', input_2 = 'numeric'),
-#' outputs=c(result = 'numeric'),
-#' prototype=list(
+#' params = c(input_1 = 'numeric', input_2 = 'numeric'),
+#' outputs = c(result = 'numeric'),
+#' prototype = list(
 #'    input_1 = 0,
 #'    input_2 = 0,
-#'    name='Add two inputs',
-#'    description='example class that adds two values together')
+#'    name = 'Add two inputs',
+#'    description = 'example class that adds two values together')
 #')
-set_obj_method = function(class_name, method_name, definition, where=topenv(parent.frame())) {
+set_obj_method = function(class_name, method_name, definition, where = topenv(parent.frame())) {
 
-    setMethod(f=method_name,
-        signature=c(class_name,'dataset'),
-        definition=definition,
-        where=where
+    setMethod(f = method_name,
+        signature = c(class_name,'dataset'),
+        definition = definition,
+        where = where
     )
 }
 
@@ -329,13 +330,13 @@ set_obj_method = function(class_name, method_name, definition, where=topenv(pare
 #' class_name = 'add_two_inputs',
 #' struct_obj = 'model',
 #' stato = FALSE,
-#' params=c(input_1 = 'numeric', input_2 = 'numeric'),
-#' outputs=c(result = 'numeric'),
-#' prototype=list(
+#' params = c(input_1 = 'numeric', input_2 = 'numeric'),
+#' outputs = c(result = 'numeric'),
+#' prototype = list(
 #'    input_1 = 0,
 #'    input_2 = 0,
-#'    name='Add two inputs',
-#'    description='example class that adds two values together')
+#'    name = 'Add two inputs',
+#'    description = 'example class that adds two values together')
 #')
 #'
 #' # now update the method
@@ -344,15 +345,15 @@ set_obj_method = function(class_name, method_name, definition, where=topenv(pare
 #' extra_string = function(object) {return('The extra text')}
 #' )
 #'
-set_obj_show = function(class_name, extra_string,where=topenv(parent.frame())) {
+set_obj_show = function(class_name, extra_string,where = topenv(parent.frame())) {
 
-    setMethod(f='show',
-        signature=c(class_name),
-        definition=function(object) {
+    setMethod(f = 'show',
+        signature = c(class_name),
+        definition = function(object) {
             callNextMethod() # force the default output
             # add extra info
             cat(extra_string(object))
         },
-        where=where
+        where = where
     )
 }

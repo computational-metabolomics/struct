@@ -27,6 +27,6 @@ M = example_model()
 L = output.list(M)
 
 M = example_model()
-output.list(M)=list('result_1' = dataset(),'result_2' = dataset())
+output.list(M) = list('result_1' = dataset(),'result_2' = dataset())
 
 }
