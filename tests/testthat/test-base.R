@@ -13,7 +13,7 @@ test_that('struct objects can be created and modified',{
     expect_equal({description(test_object)},"test_desc") #get
     expect_equal({description(test_object)='cabbage';description(test_object)},'cabbage') #set
     # show
-    expect_output(show(test_object),'A "struct_class" object\\nName: test_name\\nDescription: test_desc')
+    expect_output(show(test_object),'A "struct_class" object\\nName: cabbage\\nDescription: cabbage')
 })
 
 # test metric object
