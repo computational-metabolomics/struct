@@ -14,7 +14,7 @@ the returned output varies with the algorithm implemented
 }
 \description{
 Returns the results of an iterator. This is used to control model flow in a
-similar way to \code{predict} for model and model.seq objects.
+similar way to \code{predict} for model and model_seq objects.
 }
 \examples{
 D = iris_dataset() # get some data

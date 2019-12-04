@@ -8,9 +8,9 @@
 \alias{evaluate,iterator,metric-method}
 \alias{models,iterator-method}
 \alias{models<-,iterator,model_OR_iterator-method}
-\alias{result.name<-,iterator,character-method}
+\alias{result_name<-,iterator,character-method}
 \alias{result,iterator-method}
-\alias{result.name,iterator-method}
+\alias{result_name,iterator-method}
 \alias{*,iterator,model_OR_iterator-method}
 \alias{[,iterator-method}
 \alias{[<-,iterator-method}
@@ -24,11 +24,11 @@
 
 \S4method{models}{iterator,model_OR_iterator}(ML) <- value
 
-\S4method{result.name}{iterator,character}(I) <- value
+\S4method{result_name}{iterator,character}(I) <- value
 
 \S4method{result}{iterator}(M)
 
-\S4method{result.name}{iterator}(M)
+\S4method{result_name}{iterator}(M)
 
 \S4method{*}{iterator,model_OR_iterator}(e1, e2)
 
@@ -71,21 +71,21 @@ be inherited to provide functionality for method-specific classes.
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{run}: run a model/model.seq mutliple times for the input data
+\item \code{run}: run a model/model_seq mutliple times for the input data
 
-\item \code{evaluate}: evaluate the performance of a model/model.seq using
+\item \code{evaluate}: evaluate the performance of a model/model_seq using
 the input metric
 
-\item \code{models}: get the model/model.seq for an iterator object
+\item \code{models}: get the model/model_seq for an iterator object
 
-\item \code{models<-}: set the model/model.seq to be run for multiple
+\item \code{models<-}: set the model/model_seq to be run for multiple
 iterations
 
-\item \code{result.name<-}: set result output from iterator
+\item \code{result_name<-}: set result output from iterator
 
 \item \code{result}: get prediction output from iterator
 
-\item \code{result.name}: get prediction output name for iterator
+\item \code{result_name}: get prediction output name for iterator
 
 \item \code{*}: combine an interator with other model or interator
 objects
@@ -104,7 +104,7 @@ I = iterator() * model()
 I = run(I,D,MET)
 
 I = iterator()
-result.name(I) = 'example'
+result_name(I) = 'example'
 MS = model() + model()
 I = iterator() * MS
 I[2] # returns the second model() object

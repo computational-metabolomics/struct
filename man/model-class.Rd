@@ -4,28 +4,28 @@
 \name{model-class}
 \alias{model-class}
 \alias{model}
-\alias{model.train,model,dataset-method}
-\alias{model.predict,model,dataset-method}
-\alias{model.apply,model,dataset-method}
-\alias{model.reverse,model,dataset-method}
+\alias{model_train,model,dataset-method}
+\alias{model_predict,model,dataset-method}
+\alias{model_apply,model,dataset-method}
+\alias{model_reverse,model,dataset-method}
 \alias{predicted,model-method}
-\alias{predicted.name,model-method}
-\alias{predicted.name<-,model,character-method}
+\alias{predicted_name,model-method}
+\alias{predicted_name<-,model,character-method}
 \title{model class}
 \usage{
-\S4method{model.train}{model,dataset}(M, D)
+\S4method{model_train}{model,dataset}(M, D)
 
-\S4method{model.predict}{model,dataset}(M, D)
+\S4method{model_predict}{model,dataset}(M, D)
 
-\S4method{model.apply}{model,dataset}(M, D)
+\S4method{model_apply}{model,dataset}(M, D)
 
-\S4method{model.reverse}{model,dataset}(M, D)
+\S4method{model_reverse}{model,dataset}(M, D)
 
 \S4method{predicted}{model}(M)
 
-\S4method{predicted.name}{model}(M)
+\S4method{predicted_name}{model}(M)
 
-\S4method{predicted.name}{model,character}(M) <- value
+\S4method{predicted_name}{model,character}(M) <- value
 }
 \arguments{
 \item{M}{a model object}
@@ -43,7 +43,7 @@ trained model object
 
 dataset dataset object with the reverse model applied
 
-the predicted output, as specified by predicted.name
+the predicted output, as specified by predicted_name
 
 the id of the output returned by predicted()
 
@@ -57,45 +57,45 @@ functionality for method-specific classes.
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{model.train}: train the model using input data
+\item \code{model_train}: train the model using input data
 
-\item \code{model.predict}: apply the model to input data
+\item \code{model_predict}: apply the model to input data
 
-\item \code{model.apply}: trains and tests the data using the input model
+\item \code{model_apply}: trains and tests the data using the input model
 
-\item \code{model.reverse}: reverse the model for preprocessing steps
+\item \code{model_reverse}: reverse the model for preprocessing steps
 
 \item \code{predicted}: get prediction output from model
 
-\item \code{predicted.name}: get prediction output name for model
+\item \code{predicted_name}: get prediction output name for model
 
-\item \code{predicted.name<-}: set prediction output from model
+\item \code{predicted_name<-}: set prediction output from model
 }}
 
 \examples{
 M = model()
 D = dataset()
 M = model()
-M = model.train(M,D)
+M = model_train(M,D)
 D = dataset()
 M = model()
-M = model.train(M,D)
-M = model.predict(M,D)
+M = model_train(M,D)
+M = model_predict(M,D)
 D = dataset()
 M = model()
-M = model.apply(M,D)
+M = model_apply(M,D)
 D = dataset()
 M = model()
-M = model.train(M,D)
-M = model.predict(M,D)
-M = model.reverse(M,D)
+M = model_train(M,D)
+M = model_predict(M,D)
+M = model_reverse(M,D)
 D = dataset()
 M = example_model()
-M = model.train(M,D)
-M = model.predict(M,D)
+M = model_train(M,D)
+M = model_predict(M,D)
 p = predicted(M)
 M = example_model()
-predicted.name(M)
+predicted_name(M)
 M = example_model()
-predicted.name(M) = 'result_2'
+predicted_name(M) = 'result_2'
 }

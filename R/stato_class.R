@@ -26,43 +26,43 @@
 #' M = example_model()
 #'
 #' # the stato id assigned to object M
-#' stato.id(M) # OBI:0000011
+#' stato_id(M) # OBI:0000011
 #'
 #' # the name associated with that id
-#' stato.name(M)
+#' stato_name(M)
 #'
 #' # the STATO definition for that id
-#' stato.definition(M)
+#' stato_definition(M)
 #'
 #' # a summary of the STATO database entry for the id, and any parameters or
 #' # outputs that also have stato ids.
-#' stato.summary(M)
+#' stato_summary(M)
 #'
 stato<-setClass(
     "stato",
-    slots = c('stato.id' = "character")
+    slots = c('stato_id' = "character")
 )
 
-#' @describeIn stato get the stato.id for an object
+#' @describeIn stato get the stato_id for an object
 #' @export
-setMethod(f = "stato.id",
+setMethod(f = "stato_id",
     signature = c('stato'),
     definition = function(obj) {
         if (!exists('ont',envir = statoOntology)) {
             # load the ontology if it hasnt been done already
             .stato.env()
         }
-        return(obj@stato.id)
+        return(obj@stato_id)
     }
 )
 
 #' @describeIn stato get the STATO name for an object
 #' @export
-setMethod(f = "stato.name",
+setMethod(f = "stato_name",
     signature = c('stato'),
     definition = function(obj) {
         # get the stato id
-        id = stato.id(obj)
+        id = stato_id(obj)
         # get the name from the stato database
         nme = statoOntology$ont$name[[id]]
         return(nme)
@@ -71,11 +71,11 @@ setMethod(f = "stato.name",
 
 #' @describeIn stato get the STATO definition for an object
 #' @export
-setMethod(f = "stato.definition",
+setMethod(f = "stato_definition",
     signature = c('stato'),
     definition = function(obj) {
         # get the id for the object
-        id = stato.id(obj)
+        id = stato_id(obj)
         # get the definition and clean any special chars
         id = .strip_special(statoOntology$ont$def[[id]])
         return(id)
@@ -99,29 +99,29 @@ statoOntology = new.env()
 
 #' @describeIn stato get the STATO definition for an object
 #' @export
-setMethod(f = "stato.summary",
+setMethod(f = "stato_summary",
     signature = c('stato'),
     definition = function(obj) {
-        cat(stato.id(obj),'\n')
-        cat(stato.name(obj),'\n')
-        cat(stato.definition(obj),'\n')
+        cat(stato_id(obj),'\n')
+        cat(stato_name(obj),'\n')
+        cat(stato_definition(obj),'\n')
         cat('\nInputs:\n')
         
-        p = param.ids(obj)
+        p = param_ids(obj)
         for (i in p) {
-            if (is(param.obj(obj,i),'stato')) {
-                cat(stato.id(param.obj(obj,i)),'\n')
-                cat(stato.name(param.obj(obj,i)),'\n')
-                cat(stato.definition(param.obj(obj,i)),'\n\n')
+            if (is(param_obj(obj,i),'stato')) {
+                cat(stato_id(param_obj(obj,i)),'\n')
+                cat(stato_name(param_obj(obj,i)),'\n')
+                cat(stato_definition(param_obj(obj,i)),'\n\n')
             }
         }
         cat('\nOutputs:\n')
-        p = output.ids(obj)
+        p = output_ids(obj)
         for (i in p) {
-            if (is(output.obj(obj,i),'stato')) {
-                cat(stato.id(output.obj(obj,i)),'\n')
-                cat(stato.name(output.obj(obj,i)),'\n')
-                cat(stato.definition(output.obj(obj,i)),'\n\n')
+            if (is(output_obj(obj,i),'stato')) {
+                cat(stato_id(output_obj(obj,i)),'\n')
+                cat(stato_name(output_obj(obj,i)),'\n')
+                cat(stato_definition(output_obj(obj,i)),'\n\n')
             }
         }
 
@@ -139,7 +139,7 @@ setMethod(f = 'show',
     signature = c('stato'),
     definition = function(object) {
         # add extra info
-        cat('Stato ID:      ',stato.id(object),sep='')
+        cat('Stato ID:      ',stato_id(object),sep='')
         cat('\n')
 
     }

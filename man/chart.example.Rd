@@ -4,10 +4,10 @@
 \name{example_chart-class}
 \alias{example_chart-class}
 \alias{example_chart}
-\alias{chart.plot,example_chart,example_model-method}
+\alias{chart_plot,example_chart,example_model-method}
 \title{example chart object}
 \usage{
-\S4method{chart.plot}{example_chart,example_model}(obj, dobj)
+\S4method{chart_plot}{example_chart,example_model}(obj, dobj)
 }
 \arguments{
 \item{obj}{a chart object}
@@ -22,5 +22,5 @@ an example of a chart object for documentation purposes
 }
 \examples{
 C = example_chart()
-chart.plot(C,example_model())
+chart_plot(C,example_model())
 }

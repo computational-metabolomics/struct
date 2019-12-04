@@ -21,9 +21,9 @@ preprocess<-setClass(
 #' @examples
 #' D = dataset()
 #' M = model()
-#' D2 = model.reverse(M,D)
+#' D2 = model_reverse(M,D)
 #' @return dataset object
-setMethod(f = "model.reverse",
+setMethod(f = "model_reverse",
     signature = c("preprocess","dataset"),
     definition = function(M,D) {
         warning('no reverse method implemented for this model')

@@ -4,32 +4,32 @@
 \name{dataset-class}
 \alias{dataset-class}
 \alias{dataset}
-\alias{dataset.data,dataset-method}
+\alias{dataset_data,dataset-method}
 \alias{$,dataset-method}
-\alias{dataset.data<-,dataset-method}
+\alias{dataset_data<-,dataset-method}
 \alias{$<-,dataset-method}
-\alias{dataset.sample_meta,dataset-method}
-\alias{dataset.sample_meta<-,dataset-method}
-\alias{dataset.variable_meta,dataset-method}
-\alias{dataset.variable_meta<-,dataset-method}
+\alias{dataset_sample_meta,dataset-method}
+\alias{dataset_sample_meta<-,dataset-method}
+\alias{dataset_variable_meta,dataset-method}
+\alias{dataset_variable_meta<-,dataset-method}
 \alias{summary,dataset-method}
 \title{Dataset class}
 \usage{
-\S4method{dataset.data}{dataset}(obj)
+\S4method{dataset_data}{dataset}(obj)
 
 \S4method{$}{dataset}(x, name)
 
-\S4method{dataset.data}{dataset}(obj) <- value
+\S4method{dataset_data}{dataset}(obj) <- value
 
 \S4method{$}{dataset}(x, name) <- value
 
-\S4method{dataset.sample_meta}{dataset}(obj)
+\S4method{dataset_sample_meta}{dataset}(obj)
 
-\S4method{dataset.sample_meta}{dataset}(obj) <- value
+\S4method{dataset_sample_meta}{dataset}(obj) <- value
 
-\S4method{dataset.variable_meta}{dataset}(obj)
+\S4method{dataset_variable_meta}{dataset}(obj)
 
-\S4method{dataset.variable_meta}{dataset}(obj) <- value
+\S4method{dataset_variable_meta}{dataset}(obj) <- value
 
 \S4method{summary}{dataset}(object)
 }
@@ -55,21 +55,21 @@ but not as part of the same matrix as the raw data.
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{dataset.data}: get the data matrix from a dataset object
+\item \code{dataset_data}: get the data matrix from a dataset object
 
 \item \code{$}: get data/sample_meta/variable_meta from a dataset object
 
-\item \code{dataset.data<-}: set the data for a dataset object
+\item \code{dataset_data<-}: set the data for a dataset object
 
 \item \code{$<-}: set the data/sample_meta/variable_meta for a dataset
 
-\item \code{dataset.sample_meta}: get the sample meta data from a dataset object
+\item \code{dataset_sample_meta}: get the sample meta data from a dataset object
 
-\item \code{dataset.sample_meta<-}: set the sample meta data for a dataset
+\item \code{dataset_sample_meta<-}: set the sample meta data for a dataset
 
-\item \code{dataset.variable_meta}: get the variable meta data from a dataset object
+\item \code{dataset_variable_meta}: get the variable meta data from a dataset object
 
-\item \code{dataset.variable_meta<-}: set the variable meta data for a dataset
+\item \code{dataset_variable_meta<-}: set the variable meta data for a dataset
 
 \item \code{summary}: print a summary of the data set to the terminal
 }}
@@ -86,25 +86,25 @@ but not as part of the same matrix as the raw data.
 \item{\code{data}}{A data.frame of data, samples in rows, variables/features
 in columns.}
 
-\item{\code{sample.meta}}{A data.frame of sample meta data e.g. group
+\item{\code{sample_meta}}{A data.frame of sample meta data e.g. group
 membership}
 
-\item{\code{variable.meta}}{A data frame of variable meta data}
+\item{\code{variable_meta}}{A data frame of variable meta data}
 }}
 
 \examples{
 D = dataset()
 
 # get the data from a dataset object
-dataset.data(D) # OR
+dataset_data(D) # OR
 D$data
 
 # get the sample meta data from a dataset object
-dataset.sample_meta(D) # OR
+dataset_sample_meta(D) # OR
 D$sample_meta
 
 # get the variable meta data from a dataset object
-dataset.variable_meta(D) # OR
+dataset_variable_meta(D) # OR
 D$variable_meta
 
 }

@@ -1,4 +1,4 @@
-#' entity.stato class
+#' entity_stato class
 #'
 #' A base class in the \pkg{struct} package. Should not be called directly.
 #'
@@ -6,18 +6,18 @@
 #' @seealso Refer to \code{\link{entity}} and \code{\link{stato}} for further
 #' info.
 #'
-#' @export entity.stato
+#' @export entity_stato
 #' @include generics.R struct_class.R entity_class.R stato_class.R
 #' @examples
-#' E = entity.stato()
-entity.stato<-setClass(
-    "entity.stato",
+#' E = entity_stato()
+entity_stato<-setClass(
+    "entity_stato",
     contains = c('entity','stato')
 )
 
 #' @export
 setMethod(f = 'show',
-    signature = c('entity.stato'),
+    signature = c('entity_stato'),
     definition = function(object) {
         callNextMethod()
 

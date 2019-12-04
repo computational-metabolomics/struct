@@ -27,9 +27,9 @@ model<-setClass(
 #' @examples
 #' D = dataset()
 #' M = model()
-#' M = model.train(M,D)
+#' M = model_train(M,D)
 #' @return trained model object
-setMethod(f = "model.train",
+setMethod(f = "model_train",
     signature = c("model","dataset"),
     definition = function(M,D)
     {
@@ -43,10 +43,10 @@ setMethod(f = "model.train",
 #' @examples
 #' D = dataset()
 #' M = model()
-#' M = model.train(M,D)
-#' M = model.predict(M,D)
+#' M = model_train(M,D)
+#' M = model_predict(M,D)
 #' @return model object with test set results
-setMethod(f = "model.predict",
+setMethod(f = "model_predict",
     signature = c("model","dataset"),
     definition = function(M,D)
     {
@@ -59,14 +59,14 @@ setMethod(f = "model.predict",
 #' @examples
 #' D = dataset()
 #' M = model()
-#' M = model.apply(M,D)
+#' M = model_apply(M,D)
 #' @return trained model object
-setMethod(f = "model.apply",
+setMethod(f = "model_apply",
     signature = c("model","dataset"),
     definition = function(M,D)
     {
-        M = model.train(M,D)
-        M = model.predict(M,D)
+        M = model_train(M,D)
+        M = model_predict(M,D)
         return(M)
     }
 )
@@ -76,11 +76,11 @@ setMethod(f = "model.apply",
 #' @examples
 #' D = dataset()
 #' M = model()
-#' M = model.train(M,D)
-#' M = model.predict(M,D)
-#' M = model.reverse(M,D)
+#' M = model_train(M,D)
+#' M = model_predict(M,D)
+#' M = model_reverse(M,D)
 #' @return dataset dataset object with the reverse model applied
-setMethod(f = "model.reverse",
+setMethod(f = "model_reverse",
     signature = c("model","dataset"),
     definition = function(M,D)
     {
@@ -93,14 +93,14 @@ setMethod(f = "model.reverse",
 #' @examples
 #' D = dataset()
 #' M = example_model()
-#' M = model.train(M,D)
-#' M = model.predict(M,D)
+#' M = model_train(M,D)
+#' M = model_predict(M,D)
 #' p = predicted(M)
-#' @return the predicted output, as specified by predicted.name
+#' @return the predicted output, as specified by predicted_name
 setMethod(f = 'predicted',
     signature = c('model'),
     definition = function(M) {
-        return(output.value(M,predicted.name(M)))
+        return(output_value(M,predicted_name(M)))
     }
 )
 
@@ -108,9 +108,9 @@ setMethod(f = 'predicted',
 #' @export
 #' @examples
 #' M = example_model()
-#' predicted.name(M)
+#' predicted_name(M)
 #' @return the id of the output returned by predicted()
-setMethod(f = 'predicted.name',
+setMethod(f = 'predicted_name',
     signature = c('model'),
     definition = function(M) {
         return(M@predicted)
@@ -121,9 +121,9 @@ setMethod(f = 'predicted.name',
 #' @export
 #' @examples
 #' M = example_model()
-#' predicted.name(M) = 'result_2'
+#' predicted_name(M) = 'result_2'
 #' @return the modified model object
-setMethod(f = 'predicted.name<-',
+setMethod(f = 'predicted_name<-',
     signature = c('model','character'),
     definition = function(M,value) {
         M@predicted = value
@@ -136,7 +136,7 @@ setMethod(f = "show",
     signature = c("model"),
     definition = function(object) {
         callNextMethod()
-        cat('predicted:     ',predicted.name(object),'    (', class(predicted(object)),')\n',sep='')
+        cat('predicted:     ',predicted_name(object),'    (', class(predicted(object)),')\n',sep='')
         cat('seq_in:        ',object@seq_in,'\n',sep = '')
         cat('\n')
     }

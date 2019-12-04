@@ -14,12 +14,12 @@ The value returned varies depending on the output.
 }
 \description{
 returns the prediction output for a model. This is supplied as input to the
-next model when used in a model.seq
+next model when used in a model_seq
 }
 \examples{
 M = example_model()
-M = model.train(M, iris_dataset())
-M = model.predict(M, iris_dataset())
+M = model_train(M, iris_dataset())
+M = model_predict(M, iris_dataset())
 predicted(M)
 
 }

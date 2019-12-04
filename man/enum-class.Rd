@@ -25,7 +25,7 @@ An enum object is a special type of entity object that ensures the value must
 be one from a list of allowed values.
 
 Enum objects are usually defined in the prototype of another object, but
-can be extracted using \code{param.obj} and \code{output.obj}.
+can be extracted using \code{param_obj} and \code{output_obj}.
 }
 \section{Methods (by generic)}{
 \itemize{

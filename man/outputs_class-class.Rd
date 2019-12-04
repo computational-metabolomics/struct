@@ -4,38 +4,38 @@
 \name{outputs_class-class}
 \alias{outputs_class-class}
 \alias{outputs_class}
-\alias{output.obj,outputs_class,character-method}
-\alias{output.obj<-,outputs_class,character-method}
-\alias{is.output,outputs_class-method}
-\alias{output.ids,outputs_class-method}
-\alias{output.name,outputs_class,character-method}
-\alias{output.list,outputs_class-method}
-\alias{output.list<-,outputs_class,list-method}
-\alias{output.value,outputs_class,character-method}
+\alias{output_obj,outputs_class,character-method}
+\alias{output_obj<-,outputs_class,character-method}
+\alias{is_output,outputs_class-method}
+\alias{output_ids,outputs_class-method}
+\alias{output_name,outputs_class,character-method}
+\alias{output_list,outputs_class-method}
+\alias{output_list<-,outputs_class,list-method}
+\alias{output_value,outputs_class,character-method}
 \alias{$,outputs_class-method}
-\alias{output.value<-,outputs_class,character-method}
+\alias{output_value<-,outputs_class,character-method}
 \alias{$<-,outputs_class-method}
 \title{outputs_class}
 \usage{
-\S4method{output.obj}{outputs_class,character}(obj, name)
+\S4method{output_obj}{outputs_class,character}(obj, name)
 
-\S4method{output.obj}{outputs_class,character}(obj, name) <- value
+\S4method{output_obj}{outputs_class,character}(obj, name) <- value
 
-\S4method{is.output}{outputs_class}(obj, name)
+\S4method{is_output}{outputs_class}(obj, name)
 
-\S4method{output.ids}{outputs_class}(obj)
+\S4method{output_ids}{outputs_class}(obj)
 
-\S4method{output.name}{outputs_class,character}(obj, name)
+\S4method{output_name}{outputs_class,character}(obj, name)
 
-\S4method{output.list}{outputs_class}(obj)
+\S4method{output_list}{outputs_class}(obj)
 
-\S4method{output.list}{outputs_class,list}(obj) <- value
+\S4method{output_list}{outputs_class,list}(obj) <- value
 
-\S4method{output.value}{outputs_class,character}(obj, name)
+\S4method{output_value}{outputs_class,character}(obj, name)
 
 \S4method{$}{outputs_class}(x, name)
 
-\S4method{output.value}{outputs_class,character}(obj, name) <- value
+\S4method{output_value}{outputs_class,character}(obj, name) <- value
 
 \S4method{$}{outputs_class}(x, name) <- value
 }
@@ -77,52 +77,52 @@ methods for getting/setting outputs etc and should not be called directly.
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{output.obj}: get an output as an object (if appropriate)
+\item \code{output_obj}: get an output as an object (if appropriate)
 
-\item \code{output.obj<-}: set the value of an output
+\item \code{output_obj<-}: set the value of an output
 
-\item \code{is.output}: check if a name is a valid output id for an object
+\item \code{is_output}: check if a name is a valid output id for an object
 
-\item \code{output.ids}: list the valid output ids for an object
+\item \code{output_ids}: list the valid output ids for an object
 
-\item \code{output.name}: get the (long) name of an output id
+\item \code{output_name}: get the (long) name of an output id
 
-\item \code{output.list}: get the output values of an object as a named list
+\item \code{output_list}: get the output values of an object as a named list
 
-\item \code{output.list<-}: set the output values of an object using a named
+\item \code{output_list<-}: set the output values of an object using a named
 list
 
-\item \code{output.value}: get the value of an output by id
+\item \code{output_value}: get the value of an output by id
 
 \item \code{$}: get the value of an output by id
 
-\item \code{output.value<-}: set the value of an output by id
+\item \code{output_value<-}: set the value of an output by id
 
 \item \code{$<-}: set the value of an output by id
 }}
 
 \examples{
 M = example_model()
-obj = output.obj(M,'result_1')
+obj = output_obj(M,'result_1')
 M = example_model()
-output.obj(M,'result_1') = entity()
+output_obj(M,'result_1') = entity()
 
 M = model()
-is.output(M,'example') # FALSE
+is_output(M,'example') # FALSE
 M = model()
-output.ids(M)
+output_ids(M)
 M = example_model()
-output.name(M,'result_1')
+output_name(M,'result_1')
 M = model()
-L = output.list(M)
+L = output_list(M)
 M = model()
-L = output.list(M)
+L = output_list(M)
 M = example_model()
-L = output.value(M,'result_1')
+L = output_value(M,'result_1')
 M = example_model()
 v = M$result_1
 M = example_model()
-output.value(M,'result_1') = dataset()
+output_value(M,'result_1') = dataset()
 M = example_model()
 M$result_1 = dataset()
 }

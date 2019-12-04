@@ -13,9 +13,9 @@
 #' @slot type The type of dataset e.g. single_block
 #' @slot data A data.frame of data, samples in rows, variables/features
 #' in columns.
-#' @slot sample.meta A data.frame of sample meta data e.g. group
+#' @slot sample_meta A data.frame of sample meta data e.g. group
 #' membership
-#' @slot variable.meta A data frame of variable meta data
+#' @slot variable_meta A data frame of variable meta data
 #' @param obj,object,x A dataset object
 #' @param name The name of the slot to set (data, sample_meta or variable_meta
 #' for dataset objects)
@@ -26,15 +26,15 @@
 #' D = dataset()
 #'
 #' # get the data from a dataset object
-#' dataset.data(D) # OR
+#' dataset_data(D) # OR
 #' D$data
 #'
 #' # get the sample meta data from a dataset object
-#' dataset.sample_meta(D) # OR
+#' dataset_sample_meta(D) # OR
 #' D$sample_meta
 #'
 #' # get the variable meta data from a dataset object
-#' dataset.variable_meta(D) # OR
+#' dataset_variable_meta(D) # OR
 #' D$variable_meta
 #'
 dataset<-setClass(
@@ -54,7 +54,7 @@ dataset<-setClass(
 
 #' @describeIn dataset get the data matrix from a dataset object
 #' @export
-setMethod(f = "dataset.data",
+setMethod(f = "dataset_data",
     signature = c("dataset"),
     definition = function(obj)
     {
@@ -80,7 +80,7 @@ setMethod(f = "$",
 
 #' @describeIn dataset set the data for a dataset object
 #' @export
-setMethod(f = "dataset.data<-",
+setMethod(f = "dataset_data<-",
     signature = c("dataset"),
     definition = function(obj,value)
     {
@@ -106,7 +106,7 @@ setMethod(f = "$<-",
 
 #' @describeIn dataset get the sample meta data from a dataset object
 #' @export
-setMethod(f = "dataset.sample_meta",
+setMethod(f = "dataset_sample_meta",
     signature = c("dataset"),
     definition = function(obj) {
         return(obj@sample_meta)
@@ -115,7 +115,7 @@ setMethod(f = "dataset.sample_meta",
 
 #' @describeIn dataset set the sample meta data for a dataset
 #' @export
-setMethod(f = "dataset.sample_meta<-",
+setMethod(f = "dataset_sample_meta<-",
     signature = c("dataset"),
     definition = function(obj,value) {
         obj@sample_meta = value
@@ -125,7 +125,7 @@ setMethod(f = "dataset.sample_meta<-",
 
 #' @describeIn dataset get the variable meta data from a dataset object
 #' @export
-setMethod(f = "dataset.variable_meta",
+setMethod(f = "dataset_variable_meta",
     signature = c("dataset"),
     definition = function(obj)
     {
@@ -135,7 +135,7 @@ setMethod(f = "dataset.variable_meta",
 
 #' @describeIn dataset set the variable meta data for a dataset
 #' @export
-setMethod(f = "dataset.variable_meta<-",
+setMethod(f = "dataset_variable_meta<-",
     signature = c("dataset"),
     definition = function(obj,value) {
         obj@variable_meta = value
@@ -153,9 +153,9 @@ setMethod(f = "summary",
         S$name = name(object)
         S$description = description(object)
         S$type = type(object)
-        S$n.samples = nrow(dataset.data(object))
-        S$n.features = ncol(dataset.data(object))
-        S$n.levels = length(levels(dataset.sample_meta(object)[,1]))
+        S$n.samples = nrow(dataset_data(object))
+        S$n.features = ncol(dataset_data(object))
+        S$n.levels = length(levels(dataset_sample_meta(object)[,1]))
         cat(
             bold('A',class(object),'object from the struct package') %+% '\n\n' %+% 
                 blue('Name: '),name(object),'\n' %+%
@@ -165,8 +165,8 @@ setMethod(f = "summary",
         cat('\nConsists of ',S$n.samples,' samples and ',S$n.features,
             ' features.\n',sep = '')
         cat('\nThere are ',S$n.levels, ' levels: ',sep = '')
-        cat(green(levels(dataset.sample_meta(object)[,1])),sep = ',')
-        cat(' in factor named "',green(names(dataset.sample_meta(object))[1]),
+        cat(green(levels(dataset_sample_meta(object)[,1])),sep = ',')
+        cat(' in factor named "',green(names(dataset_sample_meta(object))[1]),
             '"',sep = '')
     }
 )
@@ -182,7 +182,7 @@ setMethod(f = "summary",
 #' @examples
 #' \dontrun{
 #' D = iris_dataset() # example dataset
-#' export.xlsx(D,'iris_dataset.xlsx')
+#' export.xlsx(D,'iris_dataset_xlsx')
 #' }
 #' @export
 setMethod(f = "export.xlsx",

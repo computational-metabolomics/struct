@@ -4,13 +4,13 @@
 \name{example_model-class}
 \alias{example_model-class}
 \alias{example_model}
-\alias{model.train,example_model,dataset-method}
-\alias{model.predict,example_model,dataset-method}
+\alias{model_train,example_model,dataset-method}
+\alias{model_predict,example_model,dataset-method}
 \title{Example model}
 \usage{
-\S4method{model.train}{example_model,dataset}(M, D)
+\S4method{model_train}{example_model,dataset}(M, D)
 
-\S4method{model.predict}{example_model,dataset}(M, D)
+\S4method{model_predict}{example_model,dataset}(M, D)
 }
 \arguments{
 \item{M}{example_model object}
@@ -38,8 +38,8 @@ M = example_model(value_1 = 10, value_2 = 20)
 
 D = iris_dataset()
 M = example_model(value_1 = 10, value_2 = 20)
-M = model.train(M,D)
+M = model_train(M,D)
 D = iris_dataset()
 M = example_model(value_1 = 10, value_2 = 20)
-M = model.predict(M,D)
+M = model_predict(M,D)
 }

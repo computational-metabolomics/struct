@@ -49,7 +49,7 @@ test_that('model objects',{
     },'result_2') # check predicted.name<-
 })
 
-# test model.seq objects
+# test model_seq objects
 test_that('model objects',{
 
     M=model()
@@ -124,8 +124,8 @@ test_that('model objects',{
     expect_error({models(TM)=list(D,D)})
 
     # check show
-    expect_output(show(TM),'A model.seq object containing:') # if contains models
-    expect_output(show(model.seq()),'no models') # if no models
+    expect_output(show(TM),'A model_seq object containing:') # if contains models
+    expect_output(show(model_seq()),'no models') # if no models
 
     # check add model at end of sequence
     TM=TM+test_model(value_1=50,value_2=50)

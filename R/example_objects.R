@@ -40,7 +40,7 @@ example_model = setClass('example_model',
     contains = c('model','stato'),
     slots = c(
         'params.value_0' = 'entity',
-        'params.value_1' = 'entity.stato',
+        'params.value_1' = 'entity_stato',
         'params.value_2' = 'numeric',
         'outputs.result_1' = 'entity',
         'outputs.result_2' = 'dataset'
@@ -50,11 +50,11 @@ example_model = setClass('example_model',
         description = 'An example model object. Training adds value_1 counts to
         a dataset, while prediction adds value_2 counts.',
         type = 'test',
-        stato.id = 'OBI:0000011',
+        stato_id = 'OBI:0000011',
         params.value_0 = entity(name = 'Value 0',value = 0,type = 'numeric'),
-        params.value_1 = entity.stato(value = 10,name = 'Value 1',type = 'numeric',
-            description = 'An example entity.stato object',
-            stato.id = 'STATO:0000047'),
+        params.value_1 = entity_stato(value = 10,name = 'Value 1',type = 'numeric',
+            description = 'An example entity_stato object',
+            stato_id = 'STATO:0000047'),
         params.value_2 = 20,
         outputs.result_1 = entity(name = 'Result 1',type = 'dataset',
             description = 'An example entity object',value = dataset()),
@@ -63,7 +63,7 @@ example_model = setClass('example_model',
     )
 )
 
-#' model.train example
+#' model_train example
 #'
 #' trains the example model, which adds value_1 to the raw data of a dataset
 #' @export
@@ -73,8 +73,8 @@ example_model = setClass('example_model',
 #' @examples
 #' D = iris_dataset()
 #' M = example_model(value_1 = 10, value_2 = 20)
-#' M = model.train(M,D)
-setMethod(f = 'model.train',
+#' M = model_train(M,D)
+setMethod(f = 'model_train',
     signature = c('example_model','dataset'),
     definition = function(M,D) {
         D$data = D$data + M$value_1
@@ -83,7 +83,7 @@ setMethod(f = 'model.train',
     }
 )
 
-#' model.predict example
+#' model_predict example
 #'
 #' predicts using the example model, which adds value_2 to the raw data of a
 #' dataset
@@ -93,8 +93,8 @@ setMethod(f = 'model.train',
 #' @examples
 #' D = iris_dataset()
 #' M = example_model(value_1 = 10, value_2 = 20)
-#' M = model.predict(M,D)
-setMethod(f = 'model.predict',
+#' M = model_predict(M,D)
+setMethod(f = 'model_predict',
     signature = c('example_model','dataset'),
     definition = function(M,D) {
         D$data = D$data + M$value_2
@@ -112,7 +112,7 @@ setMethod(f = 'model.predict',
 #' @return a chart object
 #' @examples
 #' C = example_chart()
-#' chart.plot(C,example_model())
+#' chart_plot(C,example_model())
 #' @importFrom graphics plot
 #' @importFrom stats runif
 example_chart<-setClass(
@@ -124,7 +124,7 @@ example_chart<-setClass(
 #' @param dobj a example_model object
 #' @rdname chart.example
 #' @export
-setMethod(f = "chart.plot",
+setMethod(f = "chart_plot",
     signature = c("example_chart","example_model"),
     definition = function(obj,dobj)
     {

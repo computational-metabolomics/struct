@@ -4,19 +4,19 @@
 \name{stato-class}
 \alias{stato-class}
 \alias{stato}
-\alias{stato.id,stato-method}
-\alias{stato.name,stato-method}
-\alias{stato.definition,stato-method}
-\alias{stato.summary,stato-method}
+\alias{stato_id,stato-method}
+\alias{stato_name,stato-method}
+\alias{stato_definition,stato-method}
+\alias{stato_summary,stato-method}
 \title{stato_class}
 \usage{
-\S4method{stato.id}{stato}(obj)
+\S4method{stato_id}{stato}(obj)
 
-\S4method{stato.name}{stato}(obj)
+\S4method{stato_name}{stato}(obj)
 
-\S4method{stato.definition}{stato}(obj)
+\S4method{stato_definition}{stato}(obj)
 
-\S4method{stato.summary}{stato}(obj)
+\S4method{stato_summary}{stato}(obj)
 }
 \arguments{
 \item{obj}{stato_class object}
@@ -44,13 +44,13 @@ the STATO database included in this package.
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{stato.id}: get the stato.id for an object
+\item \code{stato_id}: get the stato_id for an object
 
-\item \code{stato.name}: get the STATO name for an object
+\item \code{stato_name}: get the STATO name for an object
 
-\item \code{stato.definition}: get the STATO definition for an object
+\item \code{stato_definition}: get the STATO definition for an object
 
-\item \code{stato.summary}: get the STATO definition for an object
+\item \code{stato_summary}: get the STATO definition for an object
 }}
 
 \examples{
@@ -58,16 +58,16 @@ the STATO database included in this package.
 M = example_model()
 
 # the stato id assigned to object M
-stato.id(M) # OBI:0000011
+stato_id(M) # OBI:0000011
 
 # the name associated with that id
-stato.name(M)
+stato_name(M)
 
 # the STATO definition for that id
-stato.definition(M)
+stato_definition(M)
 
 # a summary of the STATO database entry for the id, and any parameters or
 # outputs that also have stato ids.
-stato.summary(M)
+stato_summary(M)
 
 }

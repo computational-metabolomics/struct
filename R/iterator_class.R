@@ -26,7 +26,7 @@ iterator<-setClass(
 )
 
 
-#' @describeIn iterator run a model/model.seq mutliple times for the input data
+#' @describeIn iterator run a model/model_seq mutliple times for the input data
 #' @export
 #' @examples
 #' D = dataset()
@@ -44,7 +44,7 @@ setMethod(f = "run",
 )
 
 
-#' @describeIn iterator evaluate the performance of a model/model.seq using
+#' @describeIn iterator evaluate the performance of a model/model_seq using
 #' the input metric
 #' @export
 setMethod(f = "evaluate",
@@ -56,7 +56,7 @@ setMethod(f = "evaluate",
     }
 )
 
-#' @describeIn iterator get the model/model.seq for an iterator object
+#' @describeIn iterator get the model/model_seq for an iterator object
 #' @export
 setMethod(f = "models",
     signature = c("iterator"),
@@ -65,9 +65,9 @@ setMethod(f = "models",
     }
 )
 
-setClassUnion("model_OR_iterator", c("model", "iterator","model.seq"))
+setClassUnion("model_OR_iterator", c("model", "iterator","model_seq"))
 
-#' @describeIn iterator set the model/model.seq to be run for multiple
+#' @describeIn iterator set the model/model_seq to be run for multiple
 #' iterations
 #' @export
 setMethod(f = "models<-",
@@ -82,9 +82,9 @@ setMethod(f = "models<-",
 #' @export
 #' @examples
 #' I = iterator()
-#' result.name(I) = 'example'
+#' result_name(I) = 'example'
 #' @return the modified model object
-setMethod(f = 'result.name<-',
+setMethod(f = 'result_name<-',
     signature = c('iterator','character'),
     definition = function(I,value) {
         I@result = value
@@ -97,13 +97,13 @@ setMethod(f = 'result.name<-',
 setMethod(f = 'result',
     signature = c('iterator'),
     definition = function(M) {
-        return(output.value(M,result.name(M)))
+        return(output_value(M,result_name(M)))
     }
 )
 
 #' @describeIn iterator get prediction output name for iterator
 #' @export
-setMethod(f = 'result.name',
+setMethod(f = 'result_name',
     signature = c('iterator'),
     definition = function(M) {
         return(M@result)
@@ -217,12 +217,12 @@ setMethod(f = 'show',
     definition = function(object) {
         callNextMethod()
         
-        if (is(models(object),'model.seq')) {
-            cat('models:        ','a model.seq with ', length(models(object)),' steps\n',sep='')
+        if (is(models(object),'model_seq')) {
+            cat('models:        ','a model_seq with ', length(models(object)),' steps\n',sep='')
         } else {
             cat('models:        ','a ',class(models(object)), 'object\n',sep='')
         }
-        cat('result:        ',result.name(object),'    (', class(result(object)),')\n',sep='')
+        cat('result:        ',result_name(object),'    (', class(result(object)),')\n',sep='')
         cat('\n')
     }
 )

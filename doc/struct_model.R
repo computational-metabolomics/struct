@@ -19,7 +19,7 @@ show(add_two_inputs)
 ## -----------------------------------------------------------------------------
 set_obj_method(
   class_name = 'add_two_inputs',
-  method_name = 'model.apply',
+  method_name = 'model_apply',
   definition = function(M,D) { # you need to supply D here even if you dont use it
     M$result = M$input_1 + M$input_2
     return(M)                  # remember to always return the input object after modifying it
@@ -30,7 +30,7 @@ set_obj_method(
 # create an instance of the model
 M = add_two_inputs(input_1 = 3, input_2 = 5)
 # use the model
-M = model.apply(M,dataset())
+M = model_apply(M,dataset())
 # check the result = 8
 M$result
 

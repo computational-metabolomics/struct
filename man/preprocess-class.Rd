@@ -4,10 +4,10 @@
 \name{preprocess-class}
 \alias{preprocess-class}
 \alias{preprocess}
-\alias{model.reverse,preprocess,dataset-method}
+\alias{model_reverse,preprocess,dataset-method}
 \title{preprocessing class}
 \usage{
-\S4method{model.reverse}{preprocess,dataset}(M, D)
+\S4method{model_reverse}{preprocess,dataset}(M, D)
 }
 \arguments{
 \item{M}{a model object}
@@ -24,7 +24,7 @@ functionality for method-specific classes.
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{model.reverse}: reverse the preprocessing step applied. Used in cases
+\item \code{model_reverse}: reverse the preprocessing step applied. Used in cases
 such as mean centring, where you may want to 'uncentre' the results
 }}
 
@@ -32,5 +32,5 @@ such as mean centring, where you may want to 'uncentre' the results
 M = preprocess()
 D = dataset()
 M = model()
-D2 = model.reverse(M,D)
+D2 = model_reverse(M,D)
 }

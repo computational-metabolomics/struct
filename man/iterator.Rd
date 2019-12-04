@@ -29,7 +29,7 @@ deprecated in a future release as \code{evaluate} is applied by \code{run}
 anyway.
 }
 \details{
-Running an iterator will apply the iterator a number of times to a dataset.
+Running an iterator will apply the iterator a number of times to a dataset_
 For example, in cross-validation the same model is applied multiple times to
 the same data, splitting it into training and test sets. The input metric
 object can be calculated and collected for each iteration as an output.

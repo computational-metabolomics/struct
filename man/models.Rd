@@ -3,14 +3,14 @@
 \name{models}
 \alias{models}
 \alias{models<-}
-\title{Get/set models of a model.seq}
+\title{Get/set models of a model_seq}
 \usage{
 models(ML)
 
 models(ML) <- value
 }
 \arguments{
-\item{ML}{a model.seq object}
+\item{ML}{a model_seq object}
 
 \item{value}{a list containing only model objects}
 }
@@ -21,11 +21,11 @@ models(ML) <- value
 }
 }
 \description{
-Returns the list of models in a model.seq object
+Returns the list of models in a model_seq object
 }
 \examples{
 # Create a model sequence
-ML = model.seq()
+ML = model_seq()
 models(ML) = list(example_model(), example_model())
 models(ML)
 

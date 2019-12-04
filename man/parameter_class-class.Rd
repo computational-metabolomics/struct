@@ -4,38 +4,38 @@
 \name{parameter_class-class}
 \alias{parameter_class-class}
 \alias{parameter_class}
-\alias{param.obj,parameter_class,character-method}
-\alias{param.obj<-,parameter_class,character-method}
-\alias{is.param,parameter_class-method}
-\alias{param.ids,parameter_class-method}
-\alias{param.name,parameter_class,character-method}
-\alias{param.list,parameter_class-method}
-\alias{param.list<-,parameter_class,list-method}
-\alias{param.value,parameter_class,character-method}
+\alias{param_obj,parameter_class,character-method}
+\alias{param_obj<-,parameter_class,character-method}
+\alias{is_param,parameter_class-method}
+\alias{param_ids,parameter_class-method}
+\alias{param_name,parameter_class,character-method}
+\alias{param_list,parameter_class-method}
+\alias{param_list<-,parameter_class,list-method}
+\alias{param_value,parameter_class,character-method}
 \alias{$,parameter_class-method}
-\alias{param.value<-,parameter_class,character-method}
+\alias{param_value<-,parameter_class,character-method}
 \alias{$<-,parameter_class-method}
 \title{parameter_class}
 \usage{
-\S4method{param.obj}{parameter_class,character}(obj, name)
+\S4method{param_obj}{parameter_class,character}(obj, name)
 
-\S4method{param.obj}{parameter_class,character}(obj, name) <- value
+\S4method{param_obj}{parameter_class,character}(obj, name) <- value
 
-\S4method{is.param}{parameter_class}(obj, name)
+\S4method{is_param}{parameter_class}(obj, name)
 
-\S4method{param.ids}{parameter_class}(obj)
+\S4method{param_ids}{parameter_class}(obj)
 
-\S4method{param.name}{parameter_class,character}(obj, name)
+\S4method{param_name}{parameter_class,character}(obj, name)
 
-\S4method{param.list}{parameter_class}(obj)
+\S4method{param_list}{parameter_class}(obj)
 
-\S4method{param.list}{parameter_class,list}(obj) <- value
+\S4method{param_list}{parameter_class,list}(obj) <- value
 
-\S4method{param.value}{parameter_class,character}(obj, name)
+\S4method{param_value}{parameter_class,character}(obj, name)
 
 \S4method{$}{parameter_class}(x, name)
 
-\S4method{param.value}{parameter_class,character}(obj, name) <- value
+\S4method{param_value}{parameter_class,character}(obj, name) <- value
 
 \S4method{$}{parameter_class}(x, name) <- value
 }
@@ -61,27 +61,27 @@ developer needing to provide generic functions.
 }
 \section{Methods (by generic)}{
 \itemize{
-\item \code{param.obj}: a parameter as an object (if appropriate)
+\item \code{param_obj}: a parameter as an object (if appropriate)
 
-\item \code{param.obj<-}: set a parameter as an object
+\item \code{param_obj<-}: set a parameter as an object
 
-\item \code{is.param}: check if an id is valid for an object
+\item \code{is_param}: check if an id is valid for an object
 
-\item \code{param.ids}: list the valid ids for an object
+\item \code{param_ids}: list the valid ids for an object
 
-\item \code{param.name}: get the (long) name of a parameter by id
+\item \code{param_name}: get the (long) name of a parameter by id
 
-\item \code{param.list}: get a named list of parameter values for an
+\item \code{param_list}: get a named list of parameter values for an
 object
 
-\item \code{param.list<-}: set parameter values for an object using a named
+\item \code{param_list<-}: set parameter values for an object using a named
 list
 
-\item \code{param.value}: get the value for a parameter by id
+\item \code{param_value}: get the value for a parameter by id
 
 \item \code{$}: get the value for a parameter by id
 
-\item \code{param.value<-}: set the value for a parameter by id
+\item \code{param_value<-}: set the value for a parameter by id
 
 \item \code{$<-}: set the value for a parameter by id
 }}
@@ -99,6 +99,6 @@ example_class = setClass(
 M = example_class()
 
 # Methods for the parameter class can now be used on the object
-param.value(M,'example') # 10
+param_value(M,'example') # 10
 
 }

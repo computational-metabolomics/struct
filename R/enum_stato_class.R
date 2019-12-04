@@ -1,4 +1,4 @@
-#' enum.stato class
+#' enum_stato class
 #'
 #' A base class in the \pkg{struct} package. Should not be called directly.
 #'
@@ -6,18 +6,18 @@
 #' @seealso Refer to \code{\link{enum}} and \code{\link{stato}} for further
 #' info.
 #'
-#' @export enum.stato
+#' @export enum_stato
 #' @include generics.R struct_class.R entity_class.R enum_class.R stato_class.R
 #' @examples
-#' E = enum.stato()
-enum.stato<-setClass(
-    "enum.stato",
+#' E = enum_stato()
+enum_stato<-setClass(
+    "enum_stato",
     contains = c('enum','stato')
 )
 
 #' @export
 setMethod(f = 'show',
-    signature = c('enum.stato'),
+    signature = c('enum_stato'),
     definition = function(object) {
         callNextMethod()
         

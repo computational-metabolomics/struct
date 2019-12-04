@@ -4,10 +4,10 @@
 \name{chart-class}
 \alias{chart-class}
 \alias{chart}
-\alias{chart.plot,chart,ANY-method}
+\alias{chart_plot,chart,ANY-method}
 \title{chart_class}
 \usage{
-\S4method{chart.plot}{chart,ANY}(obj)
+\S4method{chart_plot}{chart,ANY}(obj)
 }
 \arguments{
 \item{obj}{a chart object}
@@ -25,12 +25,12 @@ histogram plotted for a specified column.
 
 Charts can have parameters but not outputs (other than the figure itself), as
 chart objects are not intended to be used for calculations. The
-\code{chart.plot} method can be used to display a chart for an object, and
+\code{chart_plot} method can be used to display a chart for an object, and
 \code{chart.names} can be used to list all chart objects associated with an
 object.
 
 Classes that inherit the \code{chart.stato} class instead of \code{chart}
-have STATO integration enabled, allowing stato.id to be set and formal names
+have STATO integration enabled, allowing stato_id to be set and formal names
 and descriptions pulled from the STATO ontology database.
 }
 \examples{
@@ -40,8 +40,8 @@ example_chart = setClass('example_chart',
     slots = c('params.column' = 'numeric') # add a parameter
 )
 
-# define the chart.plot method for the example_chart
-setMethod('chart.plot',                     # name of the method
+# define the chart_plot method for the example_chart
+setMethod('chart_plot',                     # name of the method
     signature('example_chart','dataset'),   # the class for each input
     definition = function(obj, dobj) {  # function definition (from template)
         p = hist(dobj$data[,obj$column])      # the plot
@@ -53,6 +53,6 @@ setMethod('chart.plot',                     # name of the method
 C = example_chart(column = 2) # set the column parameter to 2
 
 # plot
-p = chart.plot(C,iris_dataset()) # plots a histogram of the second column
+p = chart_plot(C,iris_dataset()) # plots a histogram of the second column
 
 }

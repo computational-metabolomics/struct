@@ -70,19 +70,19 @@ The class definition will by default be created with the name `class_name` in th
 show(add_two_inputs)
 ```
 
-The definition has been created but the object only has the default STRUCT methods (such as `model.apply`) assigned and so doesnt do anything yet. The default methods can be updated using other helper funtions which are described in the following sections.
+The definition has been created but the object only has the default STRUCT methods (such as `model_apply`) assigned and so doesnt do anything yet. The default methods can be updated using other helper funtions which are described in the following sections.
 
 ## Changing the default methods
 
 All struct objects have some default methods that are intended to be "overloaded" i.e. replaced to provide functionality specific to the new object being implemented. The helper function `set_obj_method()` provides this functionality with the following inputs:
 
 
-For the example object that adds two values together, we will overload the `model.apply` method.
+For the example object that adds two values together, we will overload the `model_apply` method.
 
 ```{r}
 set_obj_method(
   class_name = 'add_two_inputs',
-  method_name = 'model.apply',
+  method_name = 'model_apply',
   definition = function(M,D) { # you need to supply D here even if you dont use it
     M$result = M$input_1 + M$input_2
     return(M)                  # remember to always return the input object after modifying it
@@ -96,14 +96,14 @@ The default `method.apply` method for the `add_two_inputs` model has now been up
 # create an instance of the model
 M = add_two_inputs(input_1 = 3, input_2 = 5)
 # use the model
-M = model.apply(M,dataset())
+M = model_apply(M,dataset())
 # check the result = 8
 M$result
 ```
 
-We can see that the result is 8, so the new definition for `model.apply` was used successfully.
+We can see that the result is 8, so the new definition for `model_apply` was used successfully.
 
-As well as overloading default STRUCT methods (such as `model.apply`, `model.train`, `model.precict` etc) it is also helpful to overload the extend the default `show` method to make the displayed output more informative for the new object. This is described in the following sections.
+As well as overloading default STRUCT methods (such as `model_apply`, `model.train`, `model.precict` etc) it is also helpful to overload the extend the default `show` method to make the displayed output more informative for the new object. This is described in the following sections.
 
 ## Changing the default `show` output
 

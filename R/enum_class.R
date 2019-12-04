@@ -6,7 +6,7 @@
 #' be one from a list of allowed values.
 #'
 #' Enum objects are usually defined in the prototype of another object, but
-#' can be extracted using \code{param.obj} and \code{output.obj}.
+#' can be extracted using \code{param_obj} and \code{output_obj}.
 #'
 #' @export enum
 #' @include entity_class.R

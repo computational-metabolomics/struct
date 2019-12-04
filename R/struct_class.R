@@ -28,7 +28,7 @@ setMethod('initialize','struct_class',function(.Object,...) {
             if (names(L)[[i]] %in% SN) {
                 slot(.Object,names(L)[[i]]) = L[[names(L)[[i]]]]
             } else if (is(.Object,'parameter_class')) {
-                param.value(.Object,names(L)[[i]]) = L[[names(L)[[i]]]]
+                param_value(.Object,names(L)[[i]]) = L[[names(L)[[i]]]]
             } else {
                 stop(paste0(names(L)[[i]], 'is not a valid for ', class(.Object), ' objects.'))
             }
@@ -178,7 +178,7 @@ setMethod(f = "chart.names",
         } else {
             stop('not a valid ret option. Try "char" or "obj"')
         }
-        x = showMethods(f = chart.plot,classes = class(obj)[1],printTo = FALSE)
+        x = showMethods(f = chart_plot,classes = class(obj)[1],printTo = FALSE)
         if (x[2] == '<No methods>') {
         } else {
 
@@ -260,10 +260,10 @@ set_struct_obj = function(
     ## list of slots to create
     # adjust names for params and outputs
     np = names(params)
-    npi = as.character(interaction('params',np,sep = '.'))
+    npi = as.character(interaction('params',np,sep = '_'))
     names(params) = npi
     no = names(outputs)
-    noi = as.character(interaction('outputs',no,sep = '.'))
+    noi = as.character(interaction('outputs',no,sep = '_'))
     names(outputs) = noi
     # combine into a slot vector
     slots = c(params,outputs,private)
