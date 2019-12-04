@@ -20,8 +20,6 @@
 #' @param name The name of the slot to set (data, sample_meta or variable_meta
 #' for dataset objects)
 #' @param value A data.frame
-#' @param transpose TRUE (default) or FALSE to transpose the rows/columns when writing an excel sheet
-#' @param xlsxfile file name (can include full path) of excel file to write
 #' @include generics.R struct_class.R stato_class.R chart_class.R
 #' @return The returned value depends on the method used
 #' @examples
@@ -174,11 +172,30 @@ setMethod(f="summary",
     }
 )
 
-#' @describeIn dataset write the dataset object to an excel file
+#' Export a dataset to an excel file
+#' 
+#' Exports a dataset object to an excel file with sheets for data, sample_meta and variable_meta
+#' @param object a dataset object
+#' @param outfile the filename (including path) to write the data to
+#' @param transpose TRUE (default) or FALSE to transpose the output data
+#' @return an excel file with sheets for data and meta data
+#' @rdname export_data
+#' @examples
+#' \dontrun{
+#' D=iris_dataset() # example dataset
+#' export.xlsx(D,'iris_dataset.xlsx')
+#' }
 #' @export
 setMethod(f="export.xlsx",
     signature=c("dataset"),
-    definition=function(object,xlsxfile,transpose=TRUE) {
+    definition=function(object,outfile,transpose=TRUE) {
+        
+        # check for openxlsx
+        if (!requireNamespace('openxlsx', quietly = TRUE)) {
+            stop('package "openxlsx" was not found. Please install it to use "export.xlsx()".')
+        }
+        
+        
         if (transpose) {
             X=as.data.frame(t(object$data))
         } else {
@@ -190,7 +207,7 @@ setMethod(f="export.xlsx",
             'sample_meta'=object$sample_meta,
             'variable_meta'=object$variable_meta
             )
-        openxlsx::write.xlsx(OUT,file = xlsxfile,rowNames=TRUE,colNames=TRUE)
+        openxlsx::write.xlsx(OUT,file = outfile,rowNames=TRUE,colNames=TRUE)
     }
 )
 

@@ -36,7 +36,8 @@ Suggests:
  rstudioapi,
  rmarkdown,
  covr,
- BiocStyle
+ BiocStyle,
+ openxlsx
 VignetteBuilder: knitr
 Imports: methods, ontologyIndex, crayon, datasets,graphics, stats, utils, knitr
 biocViews: WorkflowStep

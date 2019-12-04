@@ -13,7 +13,6 @@
 \alias{dataset.variable_meta,dataset-method}
 \alias{dataset.variable_meta<-,dataset-method}
 \alias{summary,dataset-method}
-\alias{export.xlsx,dataset-method}
 \title{Dataset class}
 \usage{
 \S4method{dataset.data}{dataset}(obj)
@@ -33,8 +32,6 @@
 \S4method{dataset.variable_meta}{dataset}(obj) <- value
 
 \S4method{summary}{dataset}(object)
-
-\S4method{export.xlsx}{dataset}(object, xlsxfile, transpose = TRUE)
 }
 \arguments{
 \item{obj, object, x}{A dataset object}
@@ -43,10 +40,6 @@
 for dataset objects)}
 
 \item{value}{A data.frame}
-
-\item{xlsxfile}{file name (can include full path) of excel file to write}
-
-\item{transpose}{TRUE (default) or FALSE to transpose the rows/columns when writing an excel sheet}
 }
 \value{
 The returned value depends on the method used
@@ -79,8 +72,6 @@ but not as part of the same matrix as the raw data.
 \item \code{dataset.variable_meta<-}: set the variable meta data for a dataset
 
 \item \code{summary}: print a summary of the data set to the terminal
-
-\item \code{export.xlsx}: write the dataset object to an excel file
 }}
 
 \section{Slots}{
