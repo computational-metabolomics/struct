@@ -34,8 +34,7 @@ prototype=list(
 # now update the method
 set_obj_show(
 class_name = 'add_two_inputs',
-method_name = 'model.apply',
-extra_string = function(object) {return 'The extra text'}
+extra_string = function(object) {return('The extra text')}
 )
 
 }

@@ -339,8 +339,7 @@ set_obj_method = function(class_name, method_name, definition, where=topenv(pare
 #' # now update the method
 #' set_obj_show(
 #' class_name = 'add_two_inputs',
-#' method_name = 'model.apply',
-#' extra_string = function(object) {return 'The extra text'}
+#' extra_string = function(object) {return('The extra text')}
 #' )
 #'
 set_obj_show = function(class_name, extra_string,where=topenv(parent.frame())) {
