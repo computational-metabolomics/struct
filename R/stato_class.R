@@ -66,8 +66,11 @@ setMethod(f="stato.name",
     signature=c('stato'),
     definition=function(obj)
     {
+        # get the stato id
         id=stato.id(obj)
-        return(statoOntology$ont$name[[id]])
+        # get the name from the stato database
+        nme=statoOntology$ont$name[[id]]
+        return(nme)
     }
 )
 
@@ -77,8 +80,12 @@ setMethod(f="stato.definition",
     signature=c('stato'),
     definition=function(obj)
     {
+        # get the id for the object
         id=stato.id(obj)
-        return(.strip_special(statoOntology$ont$def[[id]]))
+        # get the definition and clean any special chars
+        id=.strip_special(statoOntology$ont$def[[id]])
+        
+        return(id)
     }
 )
 
@@ -90,9 +97,11 @@ statoOntology=new.env()
 {
     path.to.ontology=file.path(path.package('struct'),
         '/extdata/stato-reasoned.obo')
-    assign('ont',ontologyIndex::get_ontology(path.to.ontology,
+    assign('ont',
+        ontologyIndex::get_ontology(path.to.ontology,
         extract_tags = 'everything'),
-        envir=statoOntology)
+        envir=statoOntology
+        )
 }
 
 #' @describeIn stato get the STATO definition for an object
@@ -105,6 +114,7 @@ setMethod(f="stato.summary",
         cat(stato.name(obj),'\n')
         cat(stato.definition(obj),'\n')
         cat('\nInputs:\n')
+        
         p=param.ids(obj)
         for (i in p)
         {
