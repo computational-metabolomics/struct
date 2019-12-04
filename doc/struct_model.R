@@ -12,9 +12,9 @@ set_struct_obj(
     description='example class that adds two values together')
   )
 
+## -----------------------------------------------------------------------------
 # show the class definition
-add_two_inputs
-
+show(add_two_inputs)
 
 ## -----------------------------------------------------------------------------
 set_obj_method(
@@ -26,6 +26,7 @@ set_obj_method(
   }
 )
 
+## -----------------------------------------------------------------------------
 # create an instance of the model
 M = add_two_inputs(input_1 = 3, input_2 = 5)
 # use the model
@@ -33,6 +34,8 @@ M = model.apply(M,dataset())
 # check the result = 8
 M$result
 
+## -----------------------------------------------------------------------------
+show(add_two_inputs())
 
 ## -----------------------------------------------------------------------------
 # update the show method
@@ -44,8 +47,10 @@ set_obj_show(
   }
 )
 
+
+## -----------------------------------------------------------------------------
 # call the show method
-M
+show(M)
 
 ## -----------------------------------------------------------------------------
 ## example use

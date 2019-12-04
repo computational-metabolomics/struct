@@ -46,7 +46,7 @@ setMethod('initialize','struct_class',function(.Object,...) {
 
     if (length(not_found)>0) {
         stop(paste0('The following packages are required but not installed: ', paste0(not_found,collapse=', ',
-            'Please install them.')),
+            '. Please install them.')),
             call. = FALSE)
     }
 
@@ -291,7 +291,8 @@ set_struct_obj = function(class_name, struct_obj, stato=TRUE, params=character(0
 #' @param class_name the name of the to update the method for
 #' @param method_name the name of the method to update. Must be an existing method for the object.
 #' @param definition the function to replace the method with. This function will be used when the method is called on the object.
-#' @param where the environment to create the object in. default where = environment()
+#' @param where the environment to create the object in. default where = topenv(parent.frame())
+#' @return a method is created in the specified environment
 #' @examples
 #' set_struct_obj(
 #' class_name = 'add_two_inputs',
@@ -320,7 +321,8 @@ set_obj_method = function(class_name, method_name, definition, where=topenv(pare
 #' @export
 #' @param class_name the name of the to update the method for
 #' @param extra_string a function that returns an extra string using the input object as an input e.g. function(object){return = 'extra_string'}
-#' @param where the environment to create the object in. default where = environment()
+#' @param where the environment to create the object in. default where = topenv(parent.frame())
+#' @return a method is created in the specified environment
 #' @examples
 #' # create an example object first
 #' set_struct_obj(

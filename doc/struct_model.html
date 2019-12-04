@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2019-12-03" />
+<meta name="date" content="2019-12-04" />
 
 <title>STRUCT Model Template</title>
 
@@ -1774,7 +1774,7 @@ div.tocify {
 <h1 class="title toc-ignore">STRUCT Model Template</h1>
 <p class="author-name">Dr Gavin Rhys Lloyd</p>
 <p class="author-affiliation">Phenome Centre Birmingham, University of Birmingham, UK</p>
-<h4 class="date">3 December 2019</h4>
+<h4 class="date">4 December 2019</h4>
 
 </div>
 
@@ -1787,7 +1787,7 @@ section for a working example.</p>
 an easier approach (recommended).</p>
 <div id="using-helper-functions" class="section level1">
 <h1><span class="header-section-number">1</span> Using helper functions</h1>
-<p><code>struct</code> provides a number of helper functions that can be used to create a new struct object from the command line, or in a script:</p>
+<p>STRUCT provides a number of helper functions that can be used to create a new struct object from the command line, or in a script:</p>
 <ul>
 <li><code>set_struct_obj()</code>: used to create a new struct object</li>
 <li><code>set_obj_method()</code>: used to modify a method for a struct object</li>
@@ -1818,14 +1818,14 @@ an easier approach (recommended).</p>
     input_2 = 0,
     name=&#39;Add two inputs&#39;,
     description=&#39;example class that adds two values together&#39;)
-  )
-
-# show the class definition
-add_two_inputs</code></pre>
+  )</code></pre>
+<p>The class definition will by default be created with the name <code>class_name</code> in the <code>.GlobalEnv</code>, unless you specify otherwise using the <code>where</code> parameter. We can check that creation of the class defintion by calling <code>show</code> on the definition:</p>
+<pre class="r"><code># show the class definition
+show(add_two_inputs)</code></pre>
 <pre><code>## class generator function for class &quot;add_two_inputs&quot; from package &#39;.GlobalEnv&#39;
 ## function (...) 
 ## new(&quot;add_two_inputs&quot;, ...)</code></pre>
-<p>The class definition was by default placed in the <code>.GlobalEnv</code> so that it is readily accessible. However, the object only has the default methods (such as <code>model.apply</code>) assigned and so doesnt do anything yet. The default methods can be updated using other helper funtions which are described in the following sections.</p>
+<p>The definition has been created but the object only has the default STRUCT methods (such as <code>model.apply</code>) assigned and so doesnt do anything yet. The default methods can be updated using other helper funtions which are described in the following sections.</p>
 </div>
 <div id="changing-the-default-methods" class="section level2">
 <h2><span class="header-section-number">1.2</span> Changing the default methods</h2>
@@ -1838,20 +1838,31 @@ add_two_inputs</code></pre>
     M$result = M$input_1 + M$input_2
     return(M)                  # remember to always return the input object after modifying it
   }
-)
-
-# create an instance of the model
+)</code></pre>
+<p>The default <code>method.apply</code> method for the <code>add_two_inputs</code> model has now been updatded. We can check this by creating an instance of our model, setting the two input values and then calling <code>method.apply</code> on our model object.</p>
+<pre class="r"><code># create an instance of the model
 M = add_two_inputs(input_1 = 3, input_2 = 5)
 # use the model
 M = model.apply(M,dataset())
 # check the result = 8
 M$result</code></pre>
 <pre><code>## [1] 8</code></pre>
+<p>We can see that the result is 8, so the new definition for <code>model.apply</code> was used successfully.</p>
+<p>As well as overloading default STRUCT methods (such as <code>model.apply</code>, <code>model.train</code>, <code>model.precict</code> etc) it is also helpful to overload the extend the default <code>show</code> method to make the displayed output more informative for the new object. This is described in the following sections.</p>
 </div>
 <div id="changing-the-default-show-output" class="section level2">
 <h2><span class="header-section-number">1.3</span> Changing the default <code>show</code> output</h2>
+<p>All STRUCT objects have a default show output, which prints the name and description for an object.</p>
+<pre class="r"><code>show(add_two_inputs())</code></pre>
+<pre><code>## A &quot;add_two_inputs&quot; object
+## Name: Add two inputs
+## Description: example class that adds two values together</code></pre>
 <p>If you want to provide additional information when printing the new object then you can overload the show method using the <code>set_obj_show()</code> function, which has the following inputs:</p>
-<p>For the example object we will print the inputs in addition to the standard output.</p>
+<ul>
+<li><code>class_name</code> the name of the class to update the show method for</li>
+<li><code>extra_string</code>: a function that takes the <code>class_name</code> object as input and outputs a string</li>
+</ul>
+<p>The string output from the <code>extra_string</code> function will be appended to the default <code>show</code> output. For the example object we will print the inputs in addition to the standard output.</p>
 <pre class="r"><code># update the show method
 set_obj_show(
   class_name = &#39;add_two_inputs&#39;,
@@ -1859,19 +1870,20 @@ set_obj_show(
     str= paste(&#39;\nThis model is currently set to calculate: &#39;,x$input_1,&#39; + &#39;, x$input_2,sep=&#39;&#39;)
     return(str)
   }
-)
-
-# call the show method
-M</code></pre>
+)</code></pre>
+<p>We can check the new show method by calling <code>show</code> on the object:</p>
+<pre class="r"><code># call the show method
+show(M)</code></pre>
 <pre><code>## A &quot;add_two_inputs&quot; object
 ## Name: Add two inputs
 ## Description: example class that adds two values together
 ## 
 ## This model is currently set to calculate: 3 + 5</code></pre>
+<p>The additonal text <code>This model is currently set to calculate: 3 + 5</code> is included, so extending the default show method was successful.</p>
 </div>
 </div>
-<div id="using-the-template" class="section level1">
-<h1><span class="header-section-number">2</span> Using the template</h1>
+<div id="using-the-templates" class="section level1">
+<h1><span class="header-section-number">2</span> Using the templates</h1>
 <p>If you want to output the full model template to an editable R script you can
 use the <code>struct_template</code> function. The <code>type</code> parameter specifies the template
 to access (in this case “model”) and the file to save the template to. If no
@@ -1912,7 +1924,7 @@ the following steps.</p>
 <pre class="r"><code>model_template=setClass(&#39;model_template&#39;, # replace model_template (both places) 
 # with your new model name
 contains = c(&#39;model&#39;,&#39;stato&#39;),        # &#39;stato&#39; is optional</code></pre>
-<p>The <code>contains</code> option tells R which aspects of <code>struct</code> to include in the new
+<p>The <code>contains</code> option tells R which aspects of STRUCT to include in the new
 model.</p>
 <hr />
 <div id="slots-for-parameters-and-outputs" class="section level3">
@@ -1924,9 +1936,9 @@ by the user. It is here that you specify the input parameters and outputs for
 your class. Input parameters should have <code>params.</code> appended and outputs should
 have <code>outputs.</code> appended.</p>
 <p>Default slots like <code>name</code>, <code>description</code> and <code>type</code> are inherited (i.e. provided
-by <code>struct</code>) and do not need to be specified.</p>
+by STRUCT) and do not need to be specified.</p>
 <p>A type should be indicated for each slot e.g. <code>numeric</code>. Some special types
-are available in <code>struct</code>, namely <code>entity</code> and <code>enum</code>, and we recommend you use
+are available in STRUCT, namely <code>entity</code> and <code>enum</code>, and we recommend you use
 these where possible because they allow you to provide additonal information
 (<code>name</code>, <code>description</code> etc) about the parameters/outputs.</p>
 <p>To use <code>entity</code> objects for parameters and/or outputs, specify <code>entity</code>
@@ -2001,7 +2013,7 @@ params.</p>
 <div id="defining-new-methods-for-your-model-object" class="section level2">
 <h2><span class="header-section-number">3.2</span> Defining new methods for your model object</h2>
 <p>Model objects have a <code>model.train</code> and a <code>model.predict</code> function predefined by
-<code>struct</code>, but by default it prints a warning that the method hasnt been
+STRUCT, but by default it prints a warning that the method hasnt been
 implemented yet. You can override the default using the <code>setMethod</code> function.
 There are a number of inputs for <code>setMethod</code> as described in the following
 steps.</p>

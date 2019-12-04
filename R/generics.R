@@ -575,8 +575,10 @@ setGeneric("dataset.variable_meta<-",
 #'
 #' @export
 #' @param object a dataset object
-#' @param ... additional input arguments (see description)
-setGeneric("export.xlsx",function(object,...)standardGeneric("export.xlsx"))
+#' @param outfile the filename to write the data to
+#' @param transpose TRUE or FALSE to transpose the output data
+#' @rdname export_data
+setGeneric("export.xlsx",function(object,outfile,transpose)standardGeneric("export.xlsx"))
 
 ####################################
 ###### iterator class generics #####

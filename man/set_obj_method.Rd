@@ -18,7 +18,10 @@ set_obj_method(
 
 \item{definition}{the function to replace the method with. This function will be used when the method is called on the object.}
 
-\item{where}{the environment to create the object in. default where = environment()}
+\item{where}{the environment to create the object in. default where = topenv(parent.frame())}
+}
+\value{
+a method is created in the specified environment
 }
 \description{
 a helper function to update methods for a struct object

@@ -27,7 +27,7 @@ an easier approach (recommended).
 
 # Using helper functions
 
-`struct` provides a number of helper functions that can be used to create a new struct object from the command line, or in a script:
+STRUCT provides a number of helper functions that can be used to create a new struct object from the command line, or in a script:
 
 - `set_struct_obj()`: used to create a new struct object
 - `set_obj_method()`: used to modify a method for a struct object
@@ -61,13 +61,16 @@ set_struct_obj(
     name='Add two inputs',
     description='example class that adds two values together')
   )
-
-# show the class definition
-add_two_inputs
-
 ```
 
-The class definition was by default placed in the `.GlobalEnv` so that it is readily accessible. However, the object only has the default methods (such as `model.apply`) assigned and so doesnt do anything yet. The default methods can be updated using other helper funtions which are described in the following sections.
+The class definition will by default be created with the name `class_name` in the `.GlobalEnv`, unless you specify otherwise using the `where` parameter. We can check that creation of the class defintion by calling `show` on the definition:
+
+```{r}
+# show the class definition
+show(add_two_inputs)
+```
+
+The definition has been created but the object only has the default STRUCT methods (such as `model.apply`) assigned and so doesnt do anything yet. The default methods can be updated using other helper funtions which are described in the following sections.
 
 ## Changing the default methods
 
@@ -85,21 +88,37 @@ set_obj_method(
     return(M)                  # remember to always return the input object after modifying it
   }
 )
+```
 
+The default `method.apply` method for the `add_two_inputs` model has now been updatded. We can check this by creating an instance of our model, setting the two input values and then calling `method.apply` on our model object.
+
+```{r}
 # create an instance of the model
 M = add_two_inputs(input_1 = 3, input_2 = 5)
 # use the model
 M = model.apply(M,dataset())
 # check the result = 8
 M$result
-
 ```
+
+We can see that the result is 8, so the new definition for `model.apply` was used successfully.
+
+As well as overloading default STRUCT methods (such as `model.apply`, `model.train`, `model.precict` etc) it is also helpful to overload the extend the default `show` method to make the displayed output more informative for the new object. This is described in the following sections.
 
 ## Changing the default `show` output
 
+All STRUCT objects have a default show output, which prints the name and description for an object.
+
+```{r}
+show(add_two_inputs())
+```
+
 If you want to provide additional information when printing the new object then you can overload the show method using the `set_obj_show()` function, which has the following inputs:
 
-For the example object we will print the inputs in addition to the standard output.
+- `class_name`        the name of the class to update the show method for
+- `extra_string`:     a function that takes the `class_name` object as input and outputs a string
+
+The string output from the `extra_string` function will be appended to the default `show` output. For the example object we will print the inputs in addition to the standard output.
 
 ```{r}
 # update the show method
@@ -111,11 +130,18 @@ set_obj_show(
   }
 )
 
-# call the show method
-M
 ```
 
-# Using the template
+We can check the new show method by calling `show` on the object:
+
+```{r}
+# call the show method
+show(M)
+```
+
+The additonal text `This model is currently set to calculate: 3 + 5` is included, so extending the default show method was successful.
+
+# Using the templates
 
 If you want to output the full model template to an editable R script you can 
 use the `struct_template` function. The `type` parameter specifies the template 
@@ -173,7 +199,7 @@ model_template=setClass('model_template', # replace model_template (both places)
 contains = c('model','stato'),        # 'stato' is optional
 ```
 
-The `contains` option  tells R which aspects of `struct` to include in the new
+The `contains` option  tells R which aspects of STRUCT to include in the new
 model.
     
 ***
@@ -188,10 +214,10 @@ your class. Input parameters should have `params.` appended and outputs should
 have `outputs.` appended. 
     
 Default slots like `name`, `description` and `type` are inherited (i.e. provided 
-by `struct`) and do not need to be specified. 
+by STRUCT) and do not need to be specified. 
     
 A type should be indicated for each slot e.g. `numeric`. Some special types
-are available in `struct`, namely `entity` and `enum`, and we recommend you use
+are available in STRUCT, namely `entity` and `enum`, and we recommend you use
 these where possible because they allow you to provide additonal information
 (`name`, `description` etc) about the parameters/outputs.
     
@@ -290,7 +316,7 @@ params.
 ## Defining new methods for your model object
 
 Model objects have a `model.train` and a `model.predict` function predefined by 
-`struct`, but by default it prints a warning that the method hasnt been 
+STRUCT, but by default it prints a warning that the method hasnt been 
 implemented yet. You can override the default using the `setMethod` function. 
 There are a number of inputs for `setMethod` as described in the following 
 steps.

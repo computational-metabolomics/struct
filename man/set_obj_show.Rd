@@ -11,7 +11,10 @@ set_obj_show(class_name, extra_string, where = topenv(parent.frame()))
 
 \item{extra_string}{a function that returns an extra string using the input object as an input e.g. function(object){return = 'extra_string'}}
 
-\item{where}{the environment to create the object in. default where = environment()}
+\item{where}{the environment to create the object in. default where = topenv(parent.frame())}
+}
+\value{
+a method is created in the specified environment
 }
 \description{
 a helper function to update the show method for a struct object
