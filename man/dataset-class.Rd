@@ -43,6 +43,10 @@
 for dataset objects)}
 
 \item{value}{A data.frame}
+
+\item{xlsxfile}{file name (can include full path) of excel file to write}
+
+\item{transpose}{TRUE (default) or FALSE to transpose the rows/columns when writing an excel sheet}
 }
 \value{
 The returned value depends on the method used
