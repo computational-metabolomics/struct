@@ -25,8 +25,7 @@ struct_template=function(
         return(stop('Incorrect template'))
     }
 
-    fn=file.path(path.package('struct'),
-        'doc',paste0('struct_',template,'.Rmd'))
+    fn=system.file(package='struct','doc',paste0('struct_',template,'.Rmd'),mustWork = TRUE)
 
     if (file.exists(output) & !overwrite) {
         stop('Output file already exists. Use overwrite = TRUE if you want to
