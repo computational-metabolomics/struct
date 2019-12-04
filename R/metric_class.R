@@ -29,8 +29,7 @@ metric<-setClass(
 #' calculate(M,Y,Yhat)
 setMethod(f = "calculate",
     signature = c('metric'),
-    definition = function(obj,Y,Yhat)
-    {
+    definition = function(obj,Y,Yhat) {
         warning('no calculation provided for this metric')
         return(obj)
     }
@@ -43,8 +42,7 @@ setMethod(f = "calculate",
 #' value(MET)
 setMethod(f = "value",
     signature = c("metric"),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         return(obj@value)
     }
 )
@@ -56,8 +54,7 @@ setMethod(f = "value",
 #' value(MET) = 10
 setMethod(f = "value<-",
     signature = c("metric"),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         return(obj)
     }
 )
@@ -92,8 +89,7 @@ test_metric<-setClass(
 #'
 setMethod(f = "calculate",
     signature = c('test_metric'),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         value(obj) = 3.142
         return(obj)
     }

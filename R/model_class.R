@@ -99,8 +99,7 @@ setMethod(f = "model.reverse",
 #' @return the predicted output, as specified by predicted.name
 setMethod(f = 'predicted',
     signature = c('model'),
-    definition = function(M)
-    {
+    definition = function(M) {
         return(output.value(M,predicted.name(M)))
     }
 )
@@ -113,8 +112,7 @@ setMethod(f = 'predicted',
 #' @return the id of the output returned by predicted()
 setMethod(f = 'predicted.name',
     signature = c('model'),
-    definition = function(M)
-    {
+    definition = function(M) {
         return(M@predicted)
     }
 )
@@ -127,8 +125,7 @@ setMethod(f = 'predicted.name',
 #' @return the modified model object
 setMethod(f = 'predicted.name<-',
     signature = c('model','character'),
-    definition = function(M,value)
-    {
+    definition = function(M,value) {
         M@predicted = value
         return(M)
     }

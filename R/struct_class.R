@@ -148,8 +148,7 @@ setMethod(f = "type",
 #' @return modified struct object
 setMethod(f = "type<-",
     signature = c("struct_class"),
-    definition = function(obj,value)
-    {
+    definition = function(obj,value) {
         obj@type<-value
         return(obj)
     }
@@ -171,8 +170,7 @@ setMethod(f = "type<-",
 #' @return list of chart names (default), or chart objects
 setMethod(f = "chart.names",
     signature = c("struct_class"),
-    definition = function(obj,ret = 'char')
-    {
+    definition = function(obj,ret = 'char') {
         if (ret == 'char') {
             OUT = character(0)
         } else if (ret == 'obj') {
@@ -217,8 +215,7 @@ setMethod(f = "chart.names",
 #' @return brief description of the struct object
 setMethod(f = "show",
     signature = c("struct_class"),
-    definition = function(object)
-    {
+    definition = function(object) {
         cat(
             'A "',class(object),'" object','\n',
             'Name: ',name(object),'\n',
@@ -245,7 +242,14 @@ setMethod(f = "show",
 #' These are intended for internal use by the object and generally not available to the user.
 #' @param prototype a named list with initial values for slots.
 #' @return a new class definition. to create  a new object from this class use X = new_class_name()
-set_struct_obj = function(class_name, struct_obj, stato = TRUE, params = character(0), outputs = character(0), private = character(0), prototype = list()) {
+set_struct_obj = function(
+    class_name, 
+    struct_obj, 
+    stato = TRUE, 
+    params = character(0), 
+    outputs = character(0), 
+    private = character(0), 
+    prototype = list()) {
 
     # inherit stato if stato = TRUE
     if (stato) {

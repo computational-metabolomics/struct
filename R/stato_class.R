@@ -40,19 +40,15 @@
 #'
 stato<-setClass(
     "stato",
-    slots = c('stato.id' = "character"
-
-    )
+    slots = c('stato.id' = "character")
 )
 
 #' @describeIn stato get the stato.id for an object
 #' @export
 setMethod(f = "stato.id",
     signature = c('stato'),
-    definition = function(obj)
-    {
-        if (!exists('ont',envir = statoOntology))
-        {
+    definition = function(obj) {
+        if (!exists('ont',envir = statoOntology)) {
             # load the ontology if it hasnt been done already
             .stato.env()
         }
@@ -64,8 +60,7 @@ setMethod(f = "stato.id",
 #' @export
 setMethod(f = "stato.name",
     signature = c('stato'),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         # get the stato id
         id = stato.id(obj)
         # get the name from the stato database
@@ -78,13 +73,11 @@ setMethod(f = "stato.name",
 #' @export
 setMethod(f = "stato.definition",
     signature = c('stato'),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         # get the id for the object
         id = stato.id(obj)
         # get the definition and clean any special chars
         id = .strip_special(statoOntology$ont$def[[id]])
-        
         return(id)
     }
 )
@@ -108,18 +101,15 @@ statoOntology = new.env()
 #' @export
 setMethod(f = "stato.summary",
     signature = c('stato'),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         cat(stato.id(obj),'\n')
         cat(stato.name(obj),'\n')
         cat(stato.definition(obj),'\n')
         cat('\nInputs:\n')
         
         p = param.ids(obj)
-        for (i in p)
-        {
-            if (is(param.obj(obj,i),'stato'))
-            {
+        for (i in p) {
+            if (is(param.obj(obj,i),'stato')) {
                 cat(stato.id(param.obj(obj,i)),'\n')
                 cat(stato.name(param.obj(obj,i)),'\n')
                 cat(stato.definition(param.obj(obj,i)),'\n\n')
@@ -127,10 +117,8 @@ setMethod(f = "stato.summary",
         }
         cat('\nOutputs:\n')
         p = output.ids(obj)
-        for (i in p)
-        {
-            if (is(output.obj(obj,i),'stato'))
-            {
+        for (i in p) {
+            if (is(output.obj(obj,i),'stato')) {
                 cat(stato.id(output.obj(obj,i)),'\n')
                 cat(stato.name(output.obj(obj,i)),'\n')
                 cat(stato.definition(output.obj(obj,i)),'\n\n')
@@ -141,8 +129,7 @@ setMethod(f = "stato.summary",
 )
 
 # internal function to strip special chars from the description
-.strip_special = function(str,chars = "\"|\\[|\\]")
-{
+.strip_special = function(str,chars = "\"|\\[|\\]") {
     str = gsub(pattern = chars, replacement = "", x = str)
     return(str)
 }

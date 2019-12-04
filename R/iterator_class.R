@@ -19,7 +19,8 @@
 iterator<-setClass(
     "iterator",
     contains = c('struct_class','parameter_class','outputs_class'),
-    slots = c(type = 'character',
+    slots = c(
+        type = 'character',
         models = 'ANY', # any here, but types enforced by e.g. resampler
         result = 'character')
 )
@@ -35,8 +36,7 @@ iterator<-setClass(
 #'
 setMethod(f = "run",
     signature = c("iterator","dataset",'metric'),
-    definition = function(I,D,MET = NULL)
-    {
+    definition = function(I,D,MET = NULL) {
         warning('the base iterator function was called, not the one defined for
             your specific iterator')
         return(I)
@@ -49,8 +49,7 @@ setMethod(f = "run",
 #' @export
 setMethod(f = "evaluate",
     signature = c("iterator","metric"),
-    definition = function(I,MET)
-    {
+    definition = function(I,MET) {
         warning('no evaluate fcn for this object. Evaluate is depricated and may
             be removed in a future release')
         return(I)
@@ -61,8 +60,7 @@ setMethod(f = "evaluate",
 #' @export
 setMethod(f = "models",
     signature = c("iterator"),
-    definition = function(ML)
-    {
+    definition = function(ML) {
         return(ML@models)
     }
 )
@@ -74,8 +72,7 @@ setClassUnion("model_OR_iterator", c("model", "iterator","model.seq"))
 #' @export
 setMethod(f = "models<-",
     signature = c("iterator",'model_OR_iterator'),
-    definition = function(ML,value)
-    {
+    definition = function(ML,value) {
         ML@models = value
         return(ML)
     }
@@ -89,8 +86,7 @@ setMethod(f = "models<-",
 #' @return the modified model object
 setMethod(f = 'result.name<-',
     signature = c('iterator','character'),
-    definition = function(I,value)
-    {
+    definition = function(I,value) {
         I@result = value
         return(I)
     }
@@ -100,8 +96,7 @@ setMethod(f = 'result.name<-',
 #' @export
 setMethod(f = 'result',
     signature = c('iterator'),
-    definition = function(M)
-    {
+    definition = function(M) {
         return(output.value(M,result.name(M)))
     }
 )
@@ -110,8 +105,7 @@ setMethod(f = 'result',
 #' @export
 setMethod(f = 'result.name',
     signature = c('iterator'),
-    definition = function(M)
-    {
+    definition = function(M) {
         return(M@result)
     }
 )
@@ -121,8 +115,7 @@ setMethod(f = 'result.name',
 #' @export
 setMethod(f = '*',
     signature = c(e1 = 'iterator',e2 = 'model_OR_iterator'),
-    definition = function(e1,e2)
-    {
+    definition = function(e1,e2) {
         m = models(e1)
         if (is(m,'iterator')) {
             models(e1) = m*e2
@@ -146,7 +139,7 @@ setMethod(f = '*',
 #' @return model at the given index in the sequence
 setMethod(f = "[",
     signature = "iterator",
-    definition = function(x,i){
+    definition = function(x,i) {
             return(models(x)[i])
     }
 )
@@ -161,9 +154,8 @@ setMethod(f = "[",
 #' @return model sequence with the model at index i replaced
 setMethod(f = "[<-",
     signature = "iterator",
-    definition = function(x,i,value){
-        if (!is(value,'model'))
-        {
+    definition = function(x,i,value) {
+        if (!is(value,'model')) {
             stop('value must be a model')
         }
         models(x)[i] = value
@@ -213,7 +205,7 @@ example_iterator = setClass('example_iterator',
 #'
 setMethod(f = 'run',
     signature = c('example_iterator','dataset','metric'),
-    definition = function(I,D,MET){
+    definition = function(I,D,MET) {
         I$result_1 = 3.142
         calculate(MET)
         return(I)
