@@ -58,4 +58,10 @@ setMethod(f = "chart.plot",
     }
 )
 
-
+#' @export
+setMethod(f = "show",
+    signature = c("chart"),
+    definition = function(object) {
+        callNextMethod()
+    }
+)
