@@ -66,7 +66,7 @@ setMethod(f = "value<-",
     }
 )
 
-#' @export
+
 setMethod(f = 'show',
     signature = c('enum'),
     definition = function(object) {

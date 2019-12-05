@@ -22,13 +22,11 @@ value of output
 struct object
 }
 \description{
-get/set the values for an output.
+get/set the values for an output_
 }
 \examples{
 M = example_model()
 output_value(M,'result_1')
-
 M = example_model()
 output_value(M,'result_1') = dataset()
-
 }

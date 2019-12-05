@@ -211,7 +211,7 @@ setMethod(f = "export.xlsx",
 )
 
 
-#' @export
+
 setMethod(f = 'show',
     signature = c('dataset'),
     definition = function(object) {

@@ -40,5 +40,4 @@ stato_id(M)
 stato_name(M)
 stato_definition(M)
 stato_summary(M)
-
 }

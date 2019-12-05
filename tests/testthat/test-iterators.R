@@ -18,10 +18,10 @@ test_that('iterator objects',{
     test_iterator=setClass('test_iterator',
         contains='iterator',
         slots=c(
-            params.value_1='numeric',
-            params.value_2='numeric',
-            outputs.result_1='numeric',
-            outputs.result_2='numeric'
+            params_value_1='numeric',
+            params_value_2='numeric',
+            outputs_result_1='numeric',
+            outputs_result_2='numeric'
         )
     )
 
@@ -35,8 +35,8 @@ test_that('iterator objects',{
     I=test_iterator()
 
     # test result()
-    result.name(I)='result_1'
-    expect_equal(result.name(I),'result_1')
+    result_name(I)='result_1'
+    expect_equal(result_name(I),'result_1')
 
 
     # test run iterator

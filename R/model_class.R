@@ -16,8 +16,8 @@ model<-setClass(
     "model",
     contains = c('struct_class','parameter_class','outputs_class'),
     slots = c(type = 'character',
-        predicted = 'character',
-        seq_in = 'character'
+              predicted = 'character',
+              seq_in = 'character'
     ),
     prototype = list(seq_in = 'data')
 )
@@ -30,12 +30,12 @@ model<-setClass(
 #' M = model_train(M,D)
 #' @return trained model object
 setMethod(f = "model_train",
-    signature = c("model","dataset"),
-    definition = function(M,D)
-    {
-        warning('no training implemented for this model')
-        return(M)
-    }
+          signature = c("model","dataset"),
+          definition = function(M,D)
+          {
+              warning('no training implemented for this model')
+              return(M)
+          }
 )
 
 #' @describeIn model apply the model to input data
@@ -47,11 +47,11 @@ setMethod(f = "model_train",
 #' M = model_predict(M,D)
 #' @return model object with test set results
 setMethod(f = "model_predict",
-    signature = c("model","dataset"),
-    definition = function(M,D)
-    {
-        return(M)
-    }
+          signature = c("model","dataset"),
+          definition = function(M,D)
+          {
+              return(M)
+          }
 )
 
 #' @describeIn model trains and tests the data using the input model
@@ -62,13 +62,13 @@ setMethod(f = "model_predict",
 #' M = model_apply(M,D)
 #' @return trained model object
 setMethod(f = "model_apply",
-    signature = c("model","dataset"),
-    definition = function(M,D)
-    {
-        M = model_train(M,D)
-        M = model_predict(M,D)
-        return(M)
-    }
+          signature = c("model","dataset"),
+          definition = function(M,D)
+          {
+              M = model_train(M,D)
+              M = model_predict(M,D)
+              return(M)
+          }
 )
 
 #' @describeIn model reverse the model for preprocessing steps
@@ -81,11 +81,11 @@ setMethod(f = "model_apply",
 #' M = model_reverse(M,D)
 #' @return dataset dataset object with the reverse model applied
 setMethod(f = "model_reverse",
-    signature = c("model","dataset"),
-    definition = function(M,D)
-    {
-        return(D)
-    }
+          signature = c("model","dataset"),
+          definition = function(M,D)
+          {
+              return(D)
+          }
 )
 
 #' @describeIn model get prediction output from model
@@ -98,10 +98,25 @@ setMethod(f = "model_reverse",
 #' p = predicted(M)
 #' @return the predicted output, as specified by predicted_name
 setMethod(f = 'predicted',
-    signature = c('model'),
-    definition = function(M) {
-        return(output_value(M,predicted_name(M)))
-    }
+          signature = c('model'),
+          definition = function(M) {
+              if (length(predicted_name(M))==0) {
+                  warning('"predicted" has not been set')
+                  return(NA)
+              }
+              if (is.na(predicted_name(M))) {
+                  warning('"predicted" is set to NA')
+                  return(NA)
+              }
+              if (is.null(predicted_name(M))) {
+                  warning('"predicted" is set to NULL')
+                  return(NA)
+                  
+              }
+              # we can try to return the slot
+              return(output_value(M,predicted_name(M)))
+          }
+
 )
 
 #' @describeIn model get prediction output name for model
@@ -111,10 +126,10 @@ setMethod(f = 'predicted',
 #' predicted_name(M)
 #' @return the id of the output returned by predicted()
 setMethod(f = 'predicted_name',
-    signature = c('model'),
-    definition = function(M) {
-        return(M@predicted)
-    }
+          signature = c('model'),
+          definition = function(M) {
+              return(M@predicted)
+          }
 )
 
 #' @describeIn model set prediction output from model
@@ -124,20 +139,20 @@ setMethod(f = 'predicted_name',
 #' predicted_name(M) = 'result_2'
 #' @return the modified model object
 setMethod(f = 'predicted_name<-',
-    signature = c('model','character'),
-    definition = function(M,value) {
-        M@predicted = value
-        return(M)
-    }
+          signature = c('model','character'),
+          definition = function(M,value) {
+              M@predicted = value
+              return(M)
+          }
 )
 
-#' @export
+
 setMethod(f = "show",
-    signature = c("model"),
-    definition = function(object) {
-        callNextMethod()
-        cat('predicted:     ',predicted_name(object),'    (', class(predicted(object)),')\n',sep='')
-        cat('seq_in:        ',object@seq_in,'\n',sep = '')
-        cat('\n')
-    }
+          signature = c("model"),
+          definition = function(object) {
+              callNextMethod()
+              cat('predicted:     ',predicted_name(object),'    (', class(predicted(object)),')\n',sep='')
+              cat('seq_in:        ',object@seq_in,'\n',sep = '')
+              cat('\n')
+          }
 )

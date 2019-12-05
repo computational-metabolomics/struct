@@ -13,13 +13,13 @@ optimiser<-setClass(
     "optimiser",
     contains = c('iterator'),
     slots = c(type = 'character',
-        outputs.optimal_model = 'model_OR_iterator'
+        outputs_optimal_model = 'model_OR_iterator'
     )
 )
 
 setClassUnion("model_OR_optimiser", c("model", "optimiser"))
 
-#' @export
+
 setMethod(f = "show",
     signature = c("optimiser"),
     definition = function(object) {

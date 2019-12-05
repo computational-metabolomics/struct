@@ -32,5 +32,4 @@ obj = param_obj(M, 'value_0')
 
 # set a parameter as an object
 param_obj(M, 'value_0') = entity(value = 15,type = 'numeric')
-
 }

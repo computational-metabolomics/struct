@@ -14,7 +14,7 @@ resampler<-setClass(
 )
 
 
-#' @export
+
 setMethod(f = "show",
     signature = c("optimiser"),
     definition = function(object) {

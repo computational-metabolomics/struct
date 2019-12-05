@@ -20,5 +20,4 @@ Trains a model using the input dataset
 \examples{
 M = example_model()
 M = model_train(M,iris_dataset())
-
 }

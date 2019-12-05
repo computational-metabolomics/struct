@@ -31,7 +31,7 @@ setMethod(f = "model_reverse",
     }
 )
 
-#' @export
+
 setMethod(f = "show",
     signature = c("preprocess"),
     definition = function(object) {

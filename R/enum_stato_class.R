@@ -15,7 +15,7 @@ enum_stato<-setClass(
     contains = c('enum','stato')
 )
 
-#' @export
+
 setMethod(f = 'show',
     signature = c('enum_stato'),
     definition = function(object) {

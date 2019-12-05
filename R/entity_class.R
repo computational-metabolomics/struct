@@ -2,7 +2,7 @@
 #'
 #' A base class in the \pkg{struct} package. Not normally called directly.
 #'
-#' An entity object is used to store information about a parameter or output.
+#' An entity object is used to store information about a parameter or output_
 #' The standard 'name','description' and 'type' slots are included, along with
 #' 'value' for storing the value of the parameter.
 #'
@@ -129,15 +129,15 @@ setMethod(f = "max_length<-",
     }
 )
 
-#' @export
+
 setMethod(f = 'show',
     signature = c('entity'),
     definition = function(object) {
         callNextMethod() # force the default output
         # add extra info
-        cat('value:         ', value(E), '\n',sep='')
-        cat('type:          ', paste0(type(E),collapse=', '), '\n',sep='')
-        cat('max length:    ', max_length(E),sep='')
+        cat('value:         ', value(object), '\n',sep='')
+        cat('type:          ', paste0(type(object),collapse=', '), '\n',sep='')
+        cat('max length:    ', max_length(object),sep='')
         cat('\n')
     }
 )

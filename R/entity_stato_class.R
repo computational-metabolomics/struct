@@ -15,7 +15,7 @@ entity_stato<-setClass(
     contains = c('entity','stato')
 )
 
-#' @export
+
 setMethod(f = 'show',
     signature = c('entity_stato'),
     definition = function(object) {

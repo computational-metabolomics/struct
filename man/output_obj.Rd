@@ -32,5 +32,4 @@ obj = output_obj(M, 'result_1')
 
 # set a output as an object
 output_obj(M, 'result_1') = entity(value = 15,type = 'numeric')
-
 }

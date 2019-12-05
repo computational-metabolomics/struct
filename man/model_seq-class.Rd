@@ -11,7 +11,6 @@
 \alias{models,model_seq-method}
 \alias{models<-,model_seq,list-method}
 \alias{length,model_seq-method}
-\alias{show,model_seq-method}
 \alias{+,model,model_seq-method}
 \alias{+,model_seq,model-method}
 \alias{+,model,model-method}
@@ -32,8 +31,6 @@
 \S4method{models}{model_seq,list}(ML) <- value
 
 \S4method{length}{model_seq}(x)
-
-\S4method{show}{model_seq}(object)
 
 \S4method{+}{model,model_seq}(e1, e2)
 
@@ -58,8 +55,6 @@
 
 \item{ML}{a model_seq object}
 
-\item{object}{a model_seq object}
-
 \item{e1}{a model or model_seq object}
 
 \item{e2}{a model or model_seq object}
@@ -78,8 +73,6 @@ a list of models in the sequence
 a model sequence containing the input models
 
 the number of models in the sequence
-
-pritns a summary of the contents of a model sequence
 
 a model sequence with the additional model appended to the front of
 the sequence
@@ -109,8 +102,6 @@ A class for (ordered) lists of models
 \item \code{models<-}: set the models in the sequence
 
 \item \code{length}: get the number of models in the sequence
-
-\item \code{show}: print a summary of the model_seq to the command line
 
 \item \code{+}: add a model to the (front) of a model sequence
 
@@ -148,9 +139,6 @@ models(MS) = L
 
 MS = model() + model()
 length(MS) # 2
-
-MS = model() + model()
-show(MS)
 
 MS = model() + model()
 M = model()

@@ -25,8 +25,6 @@ get/set a named list of parameters and thier current value for an object
 \examples{
 M = example_model()
 L = param_list(M)
-
 M = example_model()
 param_list(M) = list('value_1' = 15,'value_2' = 20)
-
 }

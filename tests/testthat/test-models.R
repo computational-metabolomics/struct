@@ -4,30 +4,30 @@
 test_that('model objects',{
 
     M=model()
-    expect_warning(model.train(M,dataset())) # check default model is to do nothing and throws a warning
-    expect_identical(model.predict(M,dataset()),M) # check default prediction is nothing
+    expect_warning(model_train(M,dataset())) # check default model is to do nothing and throws a warning
+    expect_identical(model_predict(M,dataset()),M) # check default prediction is nothing
 
     # a test model object
     # adds two input values
     test_model=setClass('test_model',
                         contains='model',
                         slots=c(
-                            params.value_1='numeric',
-                            params.value_2='numeric',
-                            outputs.result_1='numeric',
-                            outputs.result_2='numeric'
+                            params_value_1='numeric',
+                            params_value_2='numeric',
+                            outputs_result_1='numeric',
+                            outputs_result_2='numeric'
                         ),
                         prototype=list(predicted='result_1')
     )
 
-    setMethod(f='model.train',
+    setMethod(f='model_train',
               signature=c('test_model','dataset'),
               definition=function(M,D){
                   M$result_1 = M$value_1+M$value_2
                   return(M)
               })
 
-    setMethod(f='model.predict',
+    setMethod(f='model_predict',
               signature=c('test_model','dataset'),
               definition=function(M,D){
                   M$result_2 = M$value_1/M$value_2
@@ -36,25 +36,25 @@ test_that('model objects',{
 
     TM = test_model('value_1'=10,'value_2'=5)
 
-    TM = model.train(TM,dataset())
-    TM = model.predict(TM,dataset())
+    TM = model_train(TM,dataset())
+    TM = model_predict(TM,dataset())
 
     expect_equal(TM$value_1,10) # check values assigned correctly
-    expect_equal(TM$result_1,15)  # check model.train
-    expect_equal(TM$result_2,2)  # check model.predict
+    expect_equal(TM$result_1,15)  # check model_train
+    expect_equal(TM$result_2,2)  # check model_predict
     expect_equal(predicted(TM),15) # check predicted()
     expect_equal({
-        predicted.name(TM)='result_2'
-        predicted.name(TM)
-    },'result_2') # check predicted.name<-
+        predicted_name(TM)='result_2'
+        predicted_name(TM)
+    },'result_2') # check predicted_name<-
 })
 
 # test model_seq objects
 test_that('model objects',{
 
     M=model()
-    expect_warning(model.train(M,dataset())) # check default model is to do nothing and throws a warning
-    expect_identical(model.predict(M,dataset()),M) # check default prediction is nothing
+    expect_warning(model_train(M,dataset())) # check default model is to do nothing and throws a warning
+    expect_identical(model_predict(M,dataset()),M) # check default prediction is nothing
 
     # some test data
     D=iris_dataset()
@@ -64,15 +64,15 @@ test_that('model objects',{
     test_model=setClass('test_model',
                         contains='model',
                         slots=c(
-                            params.value_1='numeric',
-                            params.value_2='numeric',
-                            outputs.result_1='dataset',
-                            outputs.result_2='dataset'
+                            params_value_1='numeric',
+                            params_value_2='numeric',
+                            outputs_result_1='dataset',
+                            outputs_result_2='dataset'
                         ),
                         prototype=list(predicted='result_2',type='test')
     )
 
-    setMethod(f='model.train',
+    setMethod(f='model_train',
               signature=c('test_model','dataset'),
               definition=function(M,D){
                   D$data=D$data+M$value_1
@@ -80,7 +80,7 @@ test_that('model objects',{
                   return(M)
               })
 
-    setMethod(f='model.predict',
+    setMethod(f='model_predict',
               signature=c('test_model','dataset'),
               definition=function(M,D){
                   D$data=D$data+M$value_2
@@ -102,13 +102,13 @@ test_that('model objects',{
 
 
     # train/predict
-    TM = model.train(TM,D)
-    TM = model.predict(TM,D)
+    TM = model_train(TM,D)
+    TM = model_predict(TM,D)
 
     expect_equal(TM[1]$value_1,10) # check values assigned correctly
     expect_equal(TM[1]$value_2,5) # check values assigned correctly
 
-    # check model.train()
+    # check model_train()
     expect_identical(TM[1]$result_1$data,iris[,1:4]+10) # value_1 added
     expect_identical(TM[1]$result_2$data,iris[,1:4]+5)  # value_2 added
     expect_identical(TM[2]$result_1$data,iris[,1:4]+6) # value_2 added then value_1 added (output from [1] to input of [2])

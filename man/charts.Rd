@@ -26,10 +26,10 @@ histogram plotted for a specified column.
 Charts can have parameters but not outputs (other than the figure itself), as
 chart objects are not intended to be used for calculations. The
 \code{chart_plot} method can be used to display a chart for an object, and
-\code{chart.names} can be used to list all chart objects associated with an
+\code{chart_names} can be used to list all chart objects associated with an
 object.
 
-Classes that inherit the \code{chart.stato} class instead of \code{chart}
+Classes that inherit the \code{chart_stato} class instead of \code{chart}
 have STATO integration enabled, allowing stato_id to be set and formal names
 and descriptions pulled from the STATO ontology database.
 }
@@ -37,7 +37,7 @@ and descriptions pulled from the STATO ontology database.
 # define a new chart object class
 example_chart = setClass('example_chart',
     contains = 'chart',                  # inherit the chart template
-    slots = c('params.column' = 'numeric') # add a parameter
+    slots = c('params_column' = 'numeric') # add a parameter
 )
 
 # define the chart_plot method for the example_chart

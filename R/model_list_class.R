@@ -8,7 +8,6 @@
 #' @param x a model_seq object
 #' @param i index
 #' @param ML a model_seq object
-#' @param object a model_seq object
 #' @param e1 a model or model_seq object
 #' @param e2 a model or model_seq object
 #' @param value value
@@ -179,13 +178,8 @@ setMethod(f = 'length',
     }
 )
 
-#' @describeIn model_seq print a summary of the model_seq to the command line
-#' @export
-#' @examples
-#' MS = model() + model()
-#' show(MS)
-#'
-#' @return pritns a summary of the contents of a model sequence
+#' 
+
 setMethod(f = 'show',
     signature = 'model_seq',
     definition = function(object) {

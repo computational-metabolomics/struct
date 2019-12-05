@@ -40,7 +40,6 @@ block for example.
 M = example_model()
 type(M)
 type(M) = 'example'
-
 S = struct_class()
 type(S) = 'example'
 }

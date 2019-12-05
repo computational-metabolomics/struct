@@ -9,7 +9,9 @@ set_struct_obj(
     input_1 = 0, 
     input_2 = 0,
     name='Add two inputs',
-    description='example class that adds two values together')
+    description='example class that adds two values together',
+    predicted='result'
+    )
   )
 
 ## -----------------------------------------------------------------------------
@@ -42,7 +44,7 @@ show(add_two_inputs())
 set_obj_show(
   class_name = 'add_two_inputs',
   extra_string = function(x) {
-    str= paste('\nThis model is currently set to calculate: ',x$input_1,' + ', x$input_2,sep='')
+    str= paste('This model is currently set to calculate: ',x$input_1,' + ', x$input_2,sep='')
     return(str)
   }
 )
@@ -60,20 +62,20 @@ M = example_model()
 M$value_1 = 5
 M$value_1 # 5
 # train your model with some data
-M = model.train(M,iris_dataset())
+M = model_train(M,iris_dataset())
 # apply your model to some test data
-M = model.predict(M,iris_dataset())
+M = model_predict(M,iris_dataset())
 
 ## -----------------------------------------------------------------------------
 model_template=setClass('model_template', # replace model_template with ...
     # ...your new model name
     contains = c('model','stato'),       # stato is optional
     slots=c(                      # define your parameters and outputs here
-        'params.value_0'='entity',
-        'params.value_1'='entity.stato',
-        'params.value_2'='numeric',
-        'outputs.result_1'='entity',
-        'outputs.result_2'='numeric'
+        'params_value_0'='entity',
+        'params_value_1'='entity_stato',
+        'params_value_2'='numeric',
+        'outputs_result_1'='entity',
+        'outputs_result_2'='numeric'
     ),
     prototype = list( # specify default values for your parameters etc
         
@@ -83,33 +85,33 @@ model_template=setClass('model_template', # replace model_template with ...
     a dataset, while prediction adds value_2 counts.',
         type='test',
         
-        ## This slot is only required for model.stato objects
-        stato.id='OBI:0000011',
+        ## This slot is only required for model_stato objects
+        stato_id='OBI:0000011',
         
-        ## parameters all start with params.
+        ## parameters all start with params_
         # entities can be initialised with populated slots
-        params.value_0=entity(name='Value 0',value=0,type='numeric'),
+        params_value_0=entity(name='Value 0',value=0,type='numeric'),
         
-        # entity.stato objects can have a stato.id
-        params.value_1=entity.stato(value=10,name='Value 1',type='numeric',
-            description='An example entity.stato object',
-            stato.id='STATO:0000047'),
+        # entity_stato objects can have a stato_id
+        params_value_1=entity_stato(value=10,name='Value 1',type='numeric',
+            description='An example entity_stato object',
+            stato_id='STATO:0000047'),
         
         # params dont have to be entity objects but we dont recommend this.
-        params.value_2=20,
+        params_value_2=20,
         
         # entities can be initialised with populated slots
-        outputs.result_1=entity(name='Result 1',type='dataset',
+        outputs_result_1=entity(name='Result 1',type='dataset',
             description='An example entity object',value=dataset()),
         
         # outputs dont have to be entity objects but we dont recommend this.
-        outputs.result_2=2
+        outputs_result_2=2
     )
 )
 
 ## -----------------------------------------------------------------------------
-# create a model.train method for your object
-setMethod(f='model.train', # dont change this line
+# create a model_train method for your object
+setMethod(f='model_train', # dont change this line
     signature=c('model_template','dataset'),  # replace model_template with...
     # ...your new model name
     definition = function(M,D) {              # dont change this line
@@ -119,8 +121,8 @@ setMethod(f='model.train', # dont change this line
 )
 
 ## -----------------------------------------------------------------------------
-# create a model.predict method for your object
-setMethod(f='model.predict',                  # dont change this line
+# create a model_predict method for your object
+setMethod(f='model_predict',                  # dont change this line
     signature=c('model_template','dataset'),  # replace model_template with...
     # ...your new model name
     definition = function(M,D) {              # dont change this line

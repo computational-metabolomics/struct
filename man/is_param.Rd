@@ -21,5 +21,4 @@ Verify that the name of a paramater is valid for an object
 M = example_model()
 is_param(M,'value_1') # TRUE
 is_param(M,'alpha')   # FALSE
-
 }

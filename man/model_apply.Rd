@@ -20,5 +20,4 @@ Applies a method to the input dataset
 \examples{
 M = example_model()
 M = model_apply(M,iris_dataset())
-
 }

@@ -181,10 +181,10 @@ setMethod(f = "[<-",
 example_iterator = setClass('example_iterator',
     contains = 'iterator',
     slots = c(
-        params.value_1 = 'numeric',
-        params.value_2 = 'numeric',
-        outputs.result_1 = 'numeric',
-        outputs.result_2 = 'numeric'
+        params_value_1 = 'numeric',
+        params_value_2 = 'numeric',
+        outputs_result_1 = 'numeric',
+        outputs_result_2 = 'numeric'
     ),
     prototype = list(result = 'result_1')
 )
@@ -211,7 +211,7 @@ setMethod(f = 'run',
         return(I)
     })
 
-#' @export
+
 setMethod(f = 'show',
     signature = c('iterator'),
     definition = function(object) {

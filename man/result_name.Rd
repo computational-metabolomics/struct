@@ -24,7 +24,7 @@ result_name(I) <- value
 }
 }
 \description{
-get/set the prediction output for a model. This determines which outputs
+get/set the prediction output for a model_ This determines which outputs
 from this model are supplied as inputs to the next model when used in
 a model_seq
 }
@@ -32,5 +32,4 @@ a model_seq
 I = example_iterator() # initialise iterator
 result_name(I)
 result_name(I) = 'result_1'
-
 }

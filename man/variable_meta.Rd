@@ -29,5 +29,4 @@ get/set variable meta data for a dataset object
 D = iris_dataset()
 X = dataset_variable_meta(D)
 dataset_variable_meta(D) = X
-
 }

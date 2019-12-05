@@ -50,7 +50,7 @@ setMethod(f = "stato_id",
     definition = function(obj) {
         if (!exists('ont',envir = statoOntology)) {
             # load the ontology if it hasnt been done already
-            .stato.env()
+            .stato_env()
         }
         return(obj@stato_id)
     }
@@ -86,7 +86,7 @@ setMethod(f = "stato_definition",
 statoOntology = new.env()
 
 # internal function to extract the database into the environment
-.stato.env = function()
+.stato_env = function()
 {
     path.to.ontology = file.path(path.package('struct'),
         '/extdata/stato-reasoned.obo')

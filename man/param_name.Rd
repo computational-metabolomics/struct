@@ -20,5 +20,4 @@ return a the name for a paramater, if available
 \examples{
 M = example_model()
 param_name(M,'value_1')
-
 }

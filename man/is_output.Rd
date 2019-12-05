@@ -21,5 +21,4 @@ Verify that the name of a output is valid for an object
 M = example_model()
 is_output(M,'result_1') # TRUE
 is_output(M,'result_0')   # FALSE
-
 }

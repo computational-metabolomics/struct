@@ -21,5 +21,4 @@ first.
 \examples{
 M = example_model()
 M = model_predict(M,iris_dataset())
-
 }

@@ -28,5 +28,4 @@ Returns the list of models in a model_seq object
 ML = model_seq()
 models(ML) = list(example_model(), example_model())
 models(ML)
-
 }

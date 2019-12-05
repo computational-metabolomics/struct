@@ -18,5 +18,4 @@ return a list of valid parameter ids for an object
 \examples{
 M = example_model()
 param_ids(M)
-
 }

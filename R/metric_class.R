@@ -95,7 +95,7 @@ setMethod(f = "calculate",
     }
 )
 
-#' @export
+
 setMethod(f = "show",
     signature = c("metric"),
     definition = function(object) {

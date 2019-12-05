@@ -18,8 +18,8 @@
 #' example_class = setClass(
 #'     'example_class',                     # name of the class
 #'     contains = 'parameter_class',          # inherit the parameter class
-#'     slots = c(params.example = 'numeric'), # specify a parameter
-#'     prototype = list(params.example = 10)   # initial value for parameter
+#'     slots = c(params_example = 'numeric'), # specify a parameter
+#'     prototype = list(params_example = 10)   # initial value for parameter
 #' )
 #'
 #' # create an instance of the object
@@ -62,7 +62,7 @@ setMethod(f = "is_param",
     {
         valid = (param_ids(obj))
         
-        # ifvalid param.id then return true
+        # ifvalid param_id then return true
         if (name %in% valid) {
             return(TRUE)
         }

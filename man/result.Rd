@@ -23,5 +23,4 @@ I = example_iterator() # initialise iterator
 models(I) = example_model() # set the model
 I = run(I,D,MET) # run
 result(I)
-
 }

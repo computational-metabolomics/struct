@@ -27,8 +27,6 @@ get/set the values for a parameter.
 \examples{
 M = example_model()
 param_value(M,'value_1')
-
 M = example_model()
 param_value(M,'value_1') = 0.95
-
 }

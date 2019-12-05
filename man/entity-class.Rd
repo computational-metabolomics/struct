@@ -32,7 +32,7 @@ and entity object
 A base class in the \pkg{struct} package. Not normally called directly.
 }
 \details{
-An entity object is used to store information about a parameter or output.
+An entity object is used to store information about a parameter or output_
 The standard 'name','description' and 'type' slots are included, along with
 'value' for storing the value of the parameter.
 

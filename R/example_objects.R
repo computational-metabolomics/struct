@@ -39,11 +39,11 @@ iris_dataset = function() {
 example_model = setClass('example_model',
     contains = c('model','stato'),
     slots = c(
-        'params.value_0' = 'entity',
-        'params.value_1' = 'entity_stato',
-        'params.value_2' = 'numeric',
-        'outputs.result_1' = 'entity',
-        'outputs.result_2' = 'dataset'
+        'params_value_0' = 'entity',
+        'params_value_1' = 'entity_stato',
+        'params_value_2' = 'numeric',
+        'outputs_result_1' = 'entity',
+        'outputs_result_2' = 'dataset'
     ),
     prototype = list(
         name = 'A test model',
@@ -51,14 +51,14 @@ example_model = setClass('example_model',
         a dataset, while prediction adds value_2 counts.',
         type = 'test',
         stato_id = 'OBI:0000011',
-        params.value_0 = entity(name = 'Value 0',value = 0,type = 'numeric'),
-        params.value_1 = entity_stato(value = 10,name = 'Value 1',type = 'numeric',
+        params_value_0 = entity(name = 'Value 0',value = 0,type = 'numeric'),
+        params_value_1 = entity_stato(value = 10,name = 'Value 1',type = 'numeric',
             description = 'An example entity_stato object',
             stato_id = 'STATO:0000047'),
-        params.value_2 = 20,
-        outputs.result_1 = entity(name = 'Result 1',type = 'dataset',
+        params_value_2 = 20,
+        outputs_result_1 = entity(name = 'Result 1',type = 'dataset',
             description = 'An example entity object',value = dataset()),
-        outputs.result_2 = dataset(),
+        outputs_result_2 = dataset(),
         predicted = 'result_1'
     )
 )
@@ -108,7 +108,7 @@ setMethod(f = 'model_predict',
 #'
 #' an example of a chart object for documentation purposes
 #' @export example_chart
-#' @rdname chart.example
+#' @rdname chart_example
 #' @return a chart object
 #' @examples
 #' C = example_chart()
@@ -122,7 +122,7 @@ example_chart<-setClass(
 
 #' @param obj a chart object
 #' @param dobj a example_model object
-#' @rdname chart.example
+#' @rdname chart_example
 #' @export
 setMethod(f = "chart_plot",
     signature = c("example_chart","example_model"),

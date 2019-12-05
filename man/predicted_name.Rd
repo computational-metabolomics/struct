@@ -22,12 +22,11 @@ returns the modified object}
 }
 }
 \description{
-get/set the prediction output for a model. This determines which outputs from
+get/set the prediction output for a model_ This determines which outputs from
 this model are supplied as inputs to the next model when used in a model_seq
 }
 \examples{
 M = example_model()
 predicted_name(M)
 predicted_name(M) = 'result_2'
-
 }

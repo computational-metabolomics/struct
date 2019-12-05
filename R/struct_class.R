@@ -164,11 +164,11 @@ setMethod(f = "type<-",
 #' @export
 #' @examples
 #' S = struct_class()
-#' chart.names(S)
-#' chart.names(S,'char')
-#' chart.names(S,'obj')
+#' chart_names(S)
+#' chart_names(S,'char')
+#' chart_names(S,'obj')
 #' @return list of chart names (default), or chart objects
-setMethod(f = "chart.names",
+setMethod(f = "chart_names",
     signature = c("struct_class"),
     definition = function(obj,ret = 'char') {
         if (ret == 'char') {
@@ -204,15 +204,6 @@ setMethod(f = "chart.names",
     }
 )
 
-#' object summary
-#'
-#' print a brief summary of a struct object
-#' @export
-#' @param object a struct_class object
-#' @examples
-#' S = struct_class()
-#' show(S)
-#' @return brief description of the struct object
 setMethod(f = "show",
     signature = c("struct_class"),
     definition = function(object) {

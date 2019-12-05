@@ -18,5 +18,4 @@ return a list of valid output ids for an object
 \examples{
 M = example_model()
 output_ids(M)
-
 }
