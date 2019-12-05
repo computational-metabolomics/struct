@@ -16,15 +16,23 @@
 #' @examples
 #' MS = model_seq()
 #' MS = model() + model()
+#' @param ... named slots and their values.
+#' @rdname model_seq
+model_seq = function(...) {
+    # new object
+    out = .model_seq(...)
+    return(out)
+}
 
-model_seq<-setClass(
+
+.model_seq<-setClass(
     "model_seq",
     contains = c('struct_class'),
     slots = c(models = 'list')
 )
 
 
-#' @describeIn model_seq train the model using input data
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = example_model() + example_model()
@@ -40,14 +48,14 @@ setMethod(f = "model_train",
                 # set parameter
                 param_value(M[i],M[i]@seq_in) = S
             }
-
+            
             # train the model on the output of the previous model
             M[i] = model_train(M[i],S)
             # apply the model to the output of the previous model
             M[i] = model_predict(M[i],S)
             # set the output of this model as the input for the next model
             S = predicted(M[i])
-
+            
             if (is(S,'dataset')) {
                 # if its a dataset then update current D
                 D = predicted(M[i])
@@ -57,7 +65,7 @@ setMethod(f = "model_train",
     }
 )
 
-#' @describeIn model_seq apply the model to input data
+#' @rdname model_seq
 #' @export
 #' @examples
 #' D = dataset()
@@ -78,7 +86,7 @@ setMethod(f = "model_predict",
             # set the output of this model as the input to the next
             S = predicted(M[i])
         }
-
+        
         # if regression, reverse the processing to get predictions
         # on the same scale as the input data
         if (type(M[L]) == 'regression') {
@@ -96,7 +104,7 @@ setMethod(f = "model_predict",
     }
 )
 
-#' @describeIn model_seq get model by index
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
@@ -110,7 +118,7 @@ setMethod(f = "[",
     }
 )
 
-#' @describeIn model_seq set model by index
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
@@ -128,7 +136,7 @@ setMethod(f = "[<-",
     }
 )
 
-#' @describeIn model_seq get a list of models in the sequence
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
@@ -142,7 +150,7 @@ setMethod(f = 'models',
     }
 )
 
-#' @describeIn model_seq set the models in the sequence
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model_seq()
@@ -164,7 +172,7 @@ setMethod(f = 'models<-',
     }
 )
 
-#' @describeIn model_seq get the number of models in the sequence
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
@@ -199,7 +207,7 @@ setMethod(f = 'show',
 
 setClassUnion("model_OR_model_seq", c("model", "model_seq"))
 
-#' @describeIn model_seq add a model to the (front) of a model sequence
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
@@ -218,7 +226,7 @@ setMethod("+",
     }
 )
 
-#' @describeIn model_seq add a model to the (end) of a model sequence
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
@@ -237,7 +245,7 @@ setMethod("+",
     }
 )
 
-#' @describeIn model_seq combine two models into a sequence
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
@@ -251,7 +259,7 @@ setMethod("+",
     }
 )
 
-#' @describeIn model_seq get prediction output from model_seq
+#' @rdname model_seq
 #' @export
 #' @examples
 #' D = dataset()
@@ -270,8 +278,7 @@ setMethod(f = 'predicted',
 )
 
 
-#' @describeIn model_seq uses the input for data for training and prediction
-#' (if applicable)
+#' @rdname model_seq
 #' @export
 #' @examples
 #' D = dataset()
@@ -283,7 +290,7 @@ setMethod(f = "model_apply",
     definition = function(M,D) {
         # for each method in the list
         S = D # for first in list the input D is the data object
-
+        
         for (i in seq_len(length(M))) {
             if (M[i]@seq_in != 'data') {
                 # set parameter
@@ -291,7 +298,7 @@ setMethod(f = "model_apply",
             }
             # use current data
             M[i] = model_apply(M[i],D)
-
+            
             # set the output of this method as the input for the next method
             S = predicted(M[i])
             if (is(S,'dataset')) {

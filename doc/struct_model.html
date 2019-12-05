@@ -1824,9 +1824,14 @@ an easier approach (recommended).</p>
 <p>The class definition will by default be created with the name <code>class_name</code> in the <code>.GlobalEnv</code>, unless you specify otherwise using the <code>where</code> parameter. We can check that creation of the class defintion by calling <code>show</code> on the definition:</p>
 <pre class="r"><code># show the class definition
 show(add_two_inputs)</code></pre>
-<pre><code>## class generator function for class &quot;add_two_inputs&quot; from package &#39;.GlobalEnv&#39;
-## function (...) 
-## new(&quot;add_two_inputs&quot;, ...)</code></pre>
+<pre><code>## function (...) 
+## {
+##     out = eval(parse(text = paste0(&quot;.&quot;, class_name, &quot;()&quot;)))
+##     out = .initialize_struct_class(out, ...)
+##     return(out)
+## }
+## &lt;bytecode: 0x000000002b5a1b38&gt;
+## &lt;environment: 0x000000002b5a0de0&gt;</code></pre>
 <p>The definition has been created but the object only has the default STRUCT methods (such as <code>model_apply</code>) assigned and so doesnt do anything yet. The default methods can be updated using other helper funtions which are described in the following sections.</p>
 </div>
 <div id="changing-the-default-methods" class="section level2">
@@ -1841,7 +1846,7 @@ show(add_two_inputs)</code></pre>
     return(M)                  # remember to always return the input object after modifying it
   }
 )</code></pre>
-<p>The default <code>method.apply</code> method for the <code>add_two_inputs</code> model has now been updatded. We can check this by creating an instance of our model, setting the two input values and then calling <code>method.apply</code> on our model object.</p>
+<p>The default <code>method.apply</code> method for the <code>add_two_inputs</code> model has now been updated. We can check this by creating an instance of our model, setting the two input values and then calling <code>method.apply</code> on our model object.</p>
 <pre class="r"><code># create an instance of the model
 M = add_two_inputs(input_1 = 3, input_2 = 5)
 # use the model

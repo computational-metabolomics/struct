@@ -36,8 +36,7 @@ parameter_class<-setClass(
 #' @export
 setMethod(f = "param_obj",
     signature = c("parameter_class","character"),
-    definition = function(obj,name)
-    {
+    definition = function(obj,name) {
         value = slot(obj, paste("params",name,sep = '_'))
         return(value)
     }
@@ -47,8 +46,7 @@ setMethod(f = "param_obj",
 #' @export
 setMethod(f = "param_obj<-",
     signature = c("parameter_class","character"),
-    definition = function(obj,name,value)
-    {
+    definition = function(obj,name,value) {
         slot(obj, paste("params",name,sep = '_')) = value
         return(obj)
     }
@@ -58,8 +56,7 @@ setMethod(f = "param_obj<-",
 #' @export
 setMethod(f = "is_param",
     signature = c("parameter_class"),
-    definition = function(obj,name)
-    {
+    definition = function(obj,name) {
         valid = (param_ids(obj))
         
         # ifvalid param_id then return true
@@ -77,8 +74,7 @@ setMethod(f = "is_param",
 #' @export
 setMethod(f = "param_ids",
     signature = c("parameter_class"),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         # get slotnames
         s = slotNames(obj)
         
@@ -106,8 +102,7 @@ setMethod(f = "param_ids",
 #' @export
 setMethod(f = "param_name",
     signature = c("parameter_class",'character'),
-    definition = function(obj,name)
-    {
+    definition = function(obj,name) {
         p = slot(obj, paste("params",name,sep = '_'))
         # if the parameter is an entity then get its name
         if (is(p,'entity')) {
@@ -125,8 +120,7 @@ setMethod(f = "param_name",
 #' @export
 setMethod(f = 'param_list',
     signature = c('parameter_class'),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         L = list()
         names = param_ids(obj)
         for (i in seq_len(length(names))) {
@@ -141,8 +135,7 @@ setMethod(f = 'param_list',
 #' @export
 setMethod(f = 'param_list<-',
     signature = c('parameter_class','list'),
-    definition = function(obj,value)
-    {
+    definition = function(obj,value) {
         namez = names(value)
         for (i in seq_len(length(namez))) {
             param_value(obj,namez[[i]]) = value[[i]]
@@ -155,8 +148,7 @@ setMethod(f = 'param_list<-',
 #' @export
 setMethod(f = "param_value",
     signature = c("parameter_class","character"),
-    definition = function(obj,name)
-    {
+    definition = function(obj,name) {
         p = slot(obj, paste("params",name,sep = '_'))
         
         # if the parameter is an entity then set its entity value
@@ -175,8 +167,7 @@ setMethod(f = "param_value",
 #' @export
 setMethod(f = "$",
     signature(x = 'parameter_class'),
-    definition = function(x,name)
-    {
+    definition = function(x,name) {
         if (is(x,'outputs_class')) {
             if (is_output(x,name)) {
                 value = output_value(x,name)
@@ -196,8 +187,7 @@ setMethod(f = "$",
 #' @export
 setMethod(f = "param_value<-",
     signature = c("parameter_class","character","ANY"),
-    definition = function(obj,name,value)
-    {
+    definition = function(obj,name,value) {
         p = slot(obj, paste("params",name,sep = '_'))
         # if the parameter is an entity then set its value
         if (is(p,'entity')) {

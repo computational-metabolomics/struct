@@ -4,7 +4,6 @@
 #' model multiple times. Not intended to be called directly, this class should
 #' be inherited to provide functionality for method-specific classes.
 #' @export iterator
-#' @inheritParams run
 #' @param ML a model sequence object
 #' @param M a model object
 #' @param value value
@@ -15,8 +14,20 @@
 #' @examples
 #' I = iterator()
 #' I = iterator() * model()
+#' @param ... named slots and their values.
+#' @rdname iterator
+iterator = function(...) {
+    # new object
+    out = .iterator()
+    # initialise
+    out = .initialize_struct_class(out,...)
+    return(out)
+}
 
-iterator<-setClass(
+
+
+
+.iterator<-setClass(
     "iterator",
     contains = c('struct_class','parameter_class','outputs_class'),
     slots = c(
@@ -26,7 +37,7 @@ iterator<-setClass(
 )
 
 
-#' @describeIn iterator run a model/model_seq mutliple times for the input data
+#' @rdname iterator
 #' @export
 #' @examples
 #' D = dataset()
@@ -44,8 +55,7 @@ setMethod(f = "run",
 )
 
 
-#' @describeIn iterator evaluate the performance of a model/model_seq using
-#' the input metric
+#' @rdname iterator
 #' @export
 setMethod(f = "evaluate",
     signature = c("iterator","metric"),
@@ -56,7 +66,7 @@ setMethod(f = "evaluate",
     }
 )
 
-#' @describeIn iterator get the model/model_seq for an iterator object
+#' @rdname iterator
 #' @export
 setMethod(f = "models",
     signature = c("iterator"),
@@ -67,8 +77,7 @@ setMethod(f = "models",
 
 setClassUnion("model_OR_iterator", c("model", "iterator","model_seq"))
 
-#' @describeIn iterator set the model/model_seq to be run for multiple
-#' iterations
+#' @rdname iterator
 #' @export
 setMethod(f = "models<-",
     signature = c("iterator",'model_OR_iterator'),
@@ -78,7 +87,7 @@ setMethod(f = "models<-",
     }
 )
 
-#' @describeIn iterator set result output from iterator
+#' @rdname iterator
 #' @export
 #' @examples
 #' I = iterator()
@@ -92,7 +101,7 @@ setMethod(f = 'result_name<-',
     }
 )
 
-#' @describeIn iterator get prediction output from iterator
+#' @rdname iterator
 #' @export
 setMethod(f = 'result',
     signature = c('iterator'),
@@ -101,7 +110,7 @@ setMethod(f = 'result',
     }
 )
 
-#' @describeIn iterator get prediction output name for iterator
+#' @rdname iterator
 #' @export
 setMethod(f = 'result_name',
     signature = c('iterator'),
@@ -110,8 +119,7 @@ setMethod(f = 'result_name',
     }
 )
 
-#' @describeIn iterator combine an interator with other model or interator
-#' objects
+#' @rdname iterator
 #' @export
 setMethod(f = '*',
     signature = c(e1 = 'iterator',e2 = 'model_OR_iterator'),
@@ -127,7 +135,7 @@ setMethod(f = '*',
     }
 )
 
-#' @describeIn iterator get model by index
+#' @rdname iterator
 #' @param x a sequence object
 #' @param i index into sequence
 #' @export
@@ -140,11 +148,11 @@ setMethod(f = '*',
 setMethod(f = "[",
     signature = "iterator",
     definition = function(x,i) {
-            return(models(x)[i])
+        return(models(x)[i])
     }
 )
 
-#' @describeIn iterator set model by index
+#' @rdname iterator
 #' @export
 #' @examples
 #' MS = model() + model()

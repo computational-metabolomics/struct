@@ -20,8 +20,7 @@ outputs_class<-setClass(
 #' @return the output id as an (e.g entity) object
 setMethod(f = "output_obj",
     signature = c("outputs_class","character"),
-    definition = function(obj,name)
-    {
+    definition = function(obj,name) {
         value = slot(obj, paste("outputs",name,sep = '_'))
         return(value)
     }
@@ -36,8 +35,7 @@ setMethod(f = "output_obj",
 #' @return the modified object
 setMethod(f = "output_obj<-",
     signature = c("outputs_class","character"),
-    definition = function(obj,name,value)
-    {
+    definition = function(obj,name,value) {
         p = slot(obj, paste("outputs",name,sep = '_'))
         slot(obj, paste("outputs",name,sep = '_')) = value
         return(obj)
@@ -52,8 +50,7 @@ setMethod(f = "output_obj<-",
 #' @return logical
 setMethod(f = "is_output",
     signature = c("outputs_class"),
-    definition = function(obj,name)
-    {
+    definition = function(obj,name) {
         valid = (output_ids(obj))
         if (name %in% valid) {
             return(TRUE)
@@ -71,8 +68,7 @@ setMethod(f = "is_output",
 #' @return character list of valid output ids for object M
 setMethod(f = "output_ids",
     signature = c("outputs_class"),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         s = slotNames(obj)
         
         # substitute the first _ with a *
@@ -98,8 +94,7 @@ setMethod(f = "output_ids",
 #' @return (long) name of output
 setMethod(f = "output_name",
     signature = c("outputs_class",'character'),
-    definition = function(obj,name)
-    {
+    definition = function(obj,name) {
         p = slot(obj, paste("outputs",name,sep = '_'))
         # if the output is an entity then get its name
         if (is(p,'entity')) {
@@ -120,8 +115,7 @@ setMethod(f = "output_name",
 #' @return named list of output ids and current values
 setMethod(f = 'output_list',
     signature = c('outputs_class'),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         L = list()
         names = output_ids(obj)
         for (i in seq_len(length(names))) {
@@ -139,8 +133,7 @@ setMethod(f = 'output_list',
 #' @return named list of output ids and current values
 setMethod(f = 'output_list<-',
     signature = c('outputs_class','list'),
-    definition = function(obj,value)
-    {
+    definition = function(obj,value) {
         namez = names(value)
         for (i in seq_len(length(namez))) {
             output_value(obj,namez[[i]]) = value[[i]]
@@ -157,8 +150,7 @@ setMethod(f = 'output_list<-',
 #' @return value of output
 setMethod(f = "output_value",
     signature = c("outputs_class","character"),
-    definition = function(obj,name)
-    {
+    definition = function(obj,name) {
         
         p = slot(obj, paste("outputs",name,sep = '_'))
         # if the output is an entity then set its value
@@ -180,9 +172,7 @@ setMethod(f = "output_value",
 #' @return value of output
 setMethod(f = "$",
     signature(x = 'outputs_class'),
-    
-    definition = function(x,name)
-    {
+    definition = function(x,name) {
         if (is(x,'parameter_class')) {
             if (is_param(x,name)) {
                 value = param_value(x,name)
@@ -206,8 +196,7 @@ setMethod(f = "$",
 #' @return modified model object
 setMethod(f = "output_value<-",
     signature = c("outputs_class","character"),
-    definition = function(obj,name,value)
-    {
+    definition = function(obj,name,value) {
         p = slot(obj, paste("outputs",name,sep = '_'))
         # if the parameter is an entity then set its value
         if (is(p,'entity')) {
@@ -231,8 +220,7 @@ setMethod(f = "output_value<-",
 #' @return modified model object
 setMethod(f = "$<-",
     signature = c(x = "outputs_class"),
-    definition = function(x,name,value)
-    {
+    definition = function(x,name,value) {
         if (is(x,'parameter_class')) {
             if (is_param(x,name)) {
                 param_value(x,name) = value

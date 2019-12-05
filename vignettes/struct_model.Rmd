@@ -92,7 +92,7 @@ set_obj_method(
 )
 ```
 
-The default `method.apply` method for the `add_two_inputs` model has now been updatded. We can check this by creating an instance of our model, setting the two input values and then calling `method.apply` on our model object.
+The default `method.apply` method for the `add_two_inputs` model has now been updated. We can check this by creating an instance of our model, setting the two input values and then calling `method.apply` on our model object.
 
 ```{r}
 # create an instance of the model

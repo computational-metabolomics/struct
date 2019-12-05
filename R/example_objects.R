@@ -35,8 +35,19 @@ iris_dataset = function() {
 #' @examples
 #' M = example_model()
 #' M = example_model(value_1 = 10, value_2 = 20)
-#'
-example_model = setClass('example_model',
+#' @param ... named slots and their values.
+example_model = function(...) {
+    # new object
+    out = .example_model()
+    # initialise
+    out = .initialize_struct_class(out,...)
+    return(out)
+}
+
+
+
+
+.example_model = setClass('example_model',
     contains = c('model','stato'),
     slots = c(
         'params_value_0' = 'entity',
@@ -115,7 +126,17 @@ setMethod(f = 'model_predict',
 #' chart_plot(C,example_model())
 #' @importFrom graphics plot
 #' @importFrom stats runif
-example_chart<-setClass(
+#' @param ... named slots and their values.
+example_chart = function(...) {
+    # new object
+    out = .example_chart()
+    # initialise
+    out = .initialize_struct_class(out,...)
+    return(out)
+}
+
+
+.example_chart<-setClass(
     "example_chart",
     contains = c('chart')
 )

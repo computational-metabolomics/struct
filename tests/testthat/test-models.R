@@ -9,7 +9,13 @@ test_that('model objects',{
 
     # a test model object
     # adds two input values
-    test_model=setClass('test_model',
+    test_model=function(...) {
+        out = .test_model()
+        out = .initialize_struct_class(out,...)
+        return(out)
+    }
+    
+    .test_model=setClass('test_model',
                         contains='model',
                         slots=c(
                             params_value_1='numeric',
@@ -61,7 +67,13 @@ test_that('model objects',{
 
     # a test model object
     # adds two input values
-    test_model=setClass('test_model',
+    test_model=function(...) {
+        out = .test_model()
+        out = .initialize_struct_class(out,...)
+        return(out)
+    }
+    
+    .test_model=setClass('test_model',
                         contains='model',
                         slots=c(
                             params_value_1='numeric',

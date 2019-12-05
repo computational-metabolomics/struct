@@ -7,7 +7,7 @@
 #' is conventient for statistical methods where the meta data is often required
 #' but not as part of the same matrix as the raw data.
 #'
-#' @export dataset
+#' @export
 #' @slot name Name of the dataset
 #' @slot description Brief description of the dataset
 #' @slot type The type of dataset e.g. single_block
@@ -36,8 +36,17 @@
 #' # get the variable meta data from a dataset object
 #' dataset_variable_meta(D) # OR
 #' D$variable_meta
-#'
-dataset<-setClass(
+#' @param ... named slots and their values.
+#' @rdname struct_datasets
+dataset = function(...) {
+    # new object
+    out = .dataset()
+    # initialise
+    out = .initialize_struct_class(out,...)
+    return(out)
+}
+
+.dataset<-setClass(
     "dataset",
     contains = c("struct_class"),
     slots = c(name = "character",
@@ -52,22 +61,20 @@ dataset<-setClass(
     
 )
 
-#' @describeIn dataset get the data matrix from a dataset object
+#' @rdname struct_datasets
 #' @export
 setMethod(f = "dataset_data",
     signature = c("dataset"),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         return(obj@data)
     }
 )
 
-#' @describeIn dataset get data/sample_meta/variable_meta from a dataset object
+#' @rdname struct_datasets
 #' @export
 setMethod(f = "$",
     signature = c("dataset"),
-    definition = function(x,name)
-    {
+    definition = function(x,name) {
         s = c('data','sample_meta','variable_meta')
         if (name %in% s) {
             value = slot(x,name)
@@ -78,18 +85,17 @@ setMethod(f = "$",
     }
 )
 
-#' @describeIn dataset set the data for a dataset object
+#' @rdname struct_datasets
 #' @export
 setMethod(f = "dataset_data<-",
     signature = c("dataset"),
-    definition = function(obj,value)
-    {
+    definition = function(obj,value) {
         obj@data = value
         return(obj)
     }
 )
 
-#' @describeIn dataset set the data/sample_meta/variable_meta for a dataset
+#' @rdname struct_datasets
 #' @export
 setMethod(f = "$<-",
     signature(x = 'dataset'),
@@ -104,7 +110,7 @@ setMethod(f = "$<-",
     }
 )
 
-#' @describeIn dataset get the sample meta data from a dataset object
+#' @rdname struct_datasets
 #' @export
 setMethod(f = "dataset_sample_meta",
     signature = c("dataset"),
@@ -113,7 +119,7 @@ setMethod(f = "dataset_sample_meta",
     }
 )
 
-#' @describeIn dataset set the sample meta data for a dataset
+#' @rdname struct_datasets
 #' @export
 setMethod(f = "dataset_sample_meta<-",
     signature = c("dataset"),
@@ -123,17 +129,16 @@ setMethod(f = "dataset_sample_meta<-",
     }
 )
 
-#' @describeIn dataset get the variable meta data from a dataset object
+#' @rdname struct_datasets
 #' @export
 setMethod(f = "dataset_variable_meta",
     signature = c("dataset"),
-    definition = function(obj)
-    {
+    definition = function(obj) {
         return(obj@variable_meta)
     }
 )
 
-#' @describeIn dataset set the variable meta data for a dataset
+#' @rdname struct_datasets
 #' @export
 setMethod(f = "dataset_variable_meta<-",
     signature = c("dataset"),
@@ -143,7 +148,7 @@ setMethod(f = "dataset_variable_meta<-",
     }
 )
 
-#' @describeIn dataset print a summary of the data set to the terminal
+#' @rdname struct_datasets
 #' @export
 #' @import crayon
 setMethod(f = "summary",
@@ -221,3 +226,4 @@ setMethod(f = 'show',
         cat('variable_meta: ',nrow(object$sample_meta),' rows x ', ncol(object$sample_meta),' columns\n',sep='')
     }
 )
+

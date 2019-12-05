@@ -9,14 +9,22 @@
 #' @include generics.R model_class.R
 #' @examples
 #' M = preprocess()
+#' @param ... named slots and their values.
+#' @rdname preprocessing
+preprocess = function(...) {
+    # new object
+    out = .preprocess()
+    # initialise
+    out = .initialize_struct_class(out,...)
+    return(out)
+}
 
-preprocess<-setClass(
+.preprocess<-setClass(
     "preprocess",
     contains = c('model')
 )
 
-#' @describeIn preprocess reverse the preprocessing step applied. Used in cases
-#' such as mean centring, where you may want to 'uncentre' the results
+#' @rdname preprocessing
 #' @export
 #' @examples
 #' D = dataset()

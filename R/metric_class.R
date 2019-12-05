@@ -9,12 +9,18 @@
 #' @param value value
 #' @include generics.R parameter_class.R output_class.R model_class.R
 #' @include iterator_class.R model_list_class.R
-#' @inheritParams calculate
 #' @return a metric object
 #' @examples
 #' MET = metric()
+#' @param ... named slots and their values.
+#' @rdname metric
+metric = function(...) {
+    # new object
+    out = .metric(...)
+    return(out)
+}
 
-metric<-setClass(
+.metric<-setClass(
     "metric",
     contains = c('struct_class'),
     slots = c(type = 'character',
@@ -22,7 +28,7 @@ metric<-setClass(
     )
 )
 
-#' @describeIn metric calculate a metric
+#' @rdname metric
 #' @export
 #' @examples
 #' M = metric()
@@ -35,7 +41,7 @@ setMethod(f = "calculate",
     }
 )
 
-#' @describeIn metric get the caluclated value for a metric
+#' @rdname metric
 #' @export
 #' @examples
 #' MET = metric()
@@ -47,7 +53,7 @@ setMethod(f = "value",
     }
 )
 
-#' @describeIn metric set the caluclated value for a metric
+#' @rdname metric
 #' @export
 #' @examples
 #' MET = metric()

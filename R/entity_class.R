@@ -1,10 +1,10 @@
 #' Entity objects
 #'
 #' A base class in the \pkg{struct} package. Not normally called directly.
-#'
 #' An entity object is used to store information about a parameter or output_
 #' The standard 'name','description' and 'type' slots are included, along with
-#' 'value' for storing the value of the parameter.
+#' 'value' for storing the value of the parameter and 'max_length' for restricting
+#' the length of 'value' if needed.
 #'
 #' Entity objects are usually defined in the prototype of another object, but
 #' can be extracted using \code{param_obj} and \code{output_obj}.
@@ -27,15 +27,24 @@
 #' # Get/set the value of the entity object
 #' value(E)
 #' value(E) = 10
-#'
-entity<-setClass(
+#' @param ... named slots and their values.
+#' @rdname entity
+entity = function(...) {
+    # new object
+    out = .entity()
+    # initialise
+    out = .initialize_entity(out,...)
+    return(out)
+}
+
+.entity<-setClass(
     "entity",
     slots = c(value = 'ANY',max_length = 'numeric'),
     contains = 'struct_class',
     prototype = list(
         name = 'name not provided',
         description = 'no description provided',
-        value = '',
+        value = character(0),
         type = 'character',
         max_length = Inf
     ),
@@ -58,37 +67,35 @@ entity<-setClass(
 )
 
 ## initialise parameters on object creation
-setMethod(f = "initialize",
-    signature = "entity",
-    definition = function(.Object,...)
-    {
-        L = list(...)
-        SN = slotNames(.Object)
-        if (length(L)>0) {
-            for (i in seq_len(length(L))) {
-                if (names(L)[[i]] %in% SN) {
-                    slot(.Object,names(L)[[i]]) = L[[names(L)[[i]]]]
-                }
+.initialize_entity = function(.Object,...)
+{
+    L = list(...)
+    SN = slotNames(.Object)
+    if (length(L)>0) {
+        for (i in seq_len(length(L))) {
+            if (names(L)[[i]] %in% SN) {
+                slot(.Object,names(L)[[i]]) = L[[names(L)[[i]]]]
             }
         }
-
-        if (!('value' %in% names(L))) {
-            if (isVirtualClass(.Object@type)) {
-                # create a spoof object until a real one is generated
-                x = numeric(0)
-                class(x) = .Object@type
-                .Object@value = x
-            } else {
-                .Object@value = new(.Object@type[[1]])
-            }
-        }
-
-        validObject(.Object)
-        return(.Object)
     }
-)
+    
+    if (!('value' %in% names(L))) {
+        if (isVirtualClass(.Object@type)) {
+            # create a spoof object until a real one is generated
+            x = numeric(0)
+            class(x) = .Object@type
+            .Object@value = x
+        } else {
+            .Object@value = new(.Object@type[[1]])
+        }
+    }
+    
+    validObject(.Object)
+    return(.Object)
+}
 
-#' @describeIn entity get the value for an entity
+
+#' @rdname entity
 #' @export
 setMethod(f = "value",
     signature = c("entity"),
@@ -97,7 +104,7 @@ setMethod(f = "value",
     }
 )
 
-#' @describeIn entity set the value for an entity
+#' @rdname entity
 #' @export
 setMethod(f = "value<-",
     signature = c("entity"),
@@ -108,7 +115,7 @@ setMethod(f = "value<-",
     }
 )
 
-#' @describeIn entity get the maximum length of value vector for an entity
+#' @rdname entity
 #' @export
 setMethod(f = "max_length",
     signature = c("entity"),
@@ -117,12 +124,11 @@ setMethod(f = "max_length",
     }
 )
 
-#' @describeIn entity set the maximum length of value vector for an entity
+#' @rdname entity
 #' @export
 setMethod(f = "max_length<-",
     signature = c("entity"),
-    definition = function(obj,value)
-    {
+    definition = function(obj,value) {
         obj@max_length = value
         validObject(obj)
         return(obj)

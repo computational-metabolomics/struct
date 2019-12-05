@@ -2,7 +2,13 @@
 
 test_that('params and outputs',{
 
-    test_model=setClass('test_model',
+    test_model=function(...) {
+        out = .test_model()
+        out = .initialize_struct_class(out,...)
+        return(out)
+    }
+    
+    .test_model=setClass('test_model',
         contains='model',
         slots=c(
             params_value_1='entity',

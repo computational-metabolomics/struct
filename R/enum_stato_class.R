@@ -10,7 +10,18 @@
 #' @include generics.R struct_class.R entity_class.R enum_class.R stato_class.R
 #' @examples
 #' E = enum_stato()
-enum_stato<-setClass(
+#' @param ... named slots and their values.
+#' @rdname enum_stato
+#' @return an enum_stato object
+enum_stato = function(...) {
+    # new object
+    out = .enum_stato()
+    # initialise
+    out = .initialize_enum(out,...)
+    return(out)
+}
+
+.enum_stato<-setClass(
     "enum_stato",
     contains = c('enum','stato')
 )

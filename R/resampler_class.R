@@ -6,8 +6,18 @@
 #' @export resampler
 #' @examples
 #' R = resampler()
+#' @param ... named slots and their values.
+#' @rdname resampler
+#' @return a resampler object
+resampler = function(...) {
+    # new object
+    out = .resampler()
+    # initialise
+    out = .initialize_struct_class(out,...)
+    return(out)
+}
 
-resampler<-setClass(
+.resampler<-setClass(
     "resampler",
     contains = c('iterator'),
     slots = c(models = 'model_OR_iterator')

@@ -22,11 +22,18 @@
 #' @return a chart object
 #' @examples
 #' # define a new chart object class
-#' example_chart = setClass('example_chart',
+#' .example_chart = setClass('example_chart',
 #'     contains = 'chart',                  # inherit the chart template
 #'     slots = c('params_column' = 'numeric') # add a parameter
 #' )
 #'
+#' # define a constructor function
+#' example_chart = function(...) {
+#'     out = .example_chart()
+#'     out = .initialize_struct_class(out,...)
+#'     return(out)
+#' }
+#' 
 #' # define the chart_plot method for the example_chart
 #' setMethod('chart_plot',                     # name of the method
 #'     signature('example_chart','dataset'),   # the class for each input
@@ -41,8 +48,18 @@
 #'
 #' # plot
 #' p = chart_plot(C,iris_dataset()) # plots a histogram of the second column
-#'
-chart<-setClass(
+#' @param ... named slots and their values.
+chart = function(...) {
+    # new object
+    out = .chart()
+    # initialise
+    out = .initialize_struct_class(out,...)
+    return(out)
+}
+
+
+
+.chart<-setClass(
     "chart",
     contains = c('struct_class','parameter_class')
 )

@@ -38,12 +38,20 @@
 #' # outputs that also have stato ids.
 #' stato_summary(M)
 #'
-stato<-setClass(
+#' @param ... named slots and their values.
+#' @rdname stato
+stato = function(...) {
+    # new object
+    out = .stato(...)
+    return(out)
+}
+
+.stato<-setClass(
     "stato",
     slots = c('stato_id' = "character")
 )
 
-#' @describeIn stato get the stato_id for an object
+#' @rdname stato
 #' @export
 setMethod(f = "stato_id",
     signature = c('stato'),
@@ -56,7 +64,7 @@ setMethod(f = "stato_id",
     }
 )
 
-#' @describeIn stato get the STATO name for an object
+#' @rdname stato
 #' @export
 setMethod(f = "stato_name",
     signature = c('stato'),
@@ -69,7 +77,7 @@ setMethod(f = "stato_name",
     }
 )
 
-#' @describeIn stato get the STATO definition for an object
+#' @rdname stato
 #' @export
 setMethod(f = "stato_definition",
     signature = c('stato'),
@@ -86,18 +94,17 @@ setMethod(f = "stato_definition",
 statoOntology = new.env()
 
 # internal function to extract the database into the environment
-.stato_env = function()
-{
+.stato_env = function() {
     path.to.ontology = file.path(path.package('struct'),
         '/extdata/stato-reasoned.obo')
     assign('ont',
         ontologyIndex::get_ontology(path.to.ontology,
-        extract_tags = 'everything'),
+            extract_tags = 'everything'),
         envir = statoOntology
-        )
+    )
 }
 
-#' @describeIn stato get the STATO definition for an object
+#' @rdname stato
 #' @export
 setMethod(f = "stato_summary",
     signature = c('stato'),
@@ -124,7 +131,7 @@ setMethod(f = "stato_summary",
                 cat(stato_definition(output_obj(obj,i)),'\n\n')
             }
         }
-
+        
     }
 )
 
@@ -141,6 +148,6 @@ setMethod(f = 'show',
         # add extra info
         cat('Stato ID:      ',stato_id(object),sep='')
         cat('\n')
-
+        
     }
 )
