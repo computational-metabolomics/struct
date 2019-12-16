@@ -69,6 +69,7 @@ setMethod(f = "is_output",
 setMethod(f = "output_ids",
     signature = c("outputs_class"),
     definition = function(obj) {
+        # get slotnames
         s = slotNames(obj)
         
         # substitute the first _ with a *
@@ -77,11 +78,17 @@ setMethod(f = "output_ids",
         # split by the *
         t = strsplit(s,'\\*')
         
+        # see if slot has "outputs" in name
         found = unlist(lapply(t,function(x) {
             'outputs' %in% x
         }))
+        
+        # unlist those that have
         t = unlist(t[found])
+        
+        # exclude the outputs part of the slot names
         t = t[t!= 'outputs']
+        
         return(t)
     }
 )
@@ -98,7 +105,7 @@ setMethod(f = "output_name",
         p = slot(obj, paste("outputs",name,sep = '_'))
         # if the output is an entity then get its name
         if (is(p,'entity')) {
-            value = name(p)
+            value = p$name
         } else {
             # otherwise just return the slot name
             return(name)
@@ -192,7 +199,7 @@ setMethod(f = "$",
 #' @export
 #' @examples
 #' M = example_model()
-#' output_value(M,'result_1') = dataset()
+#' output_value(M,'result_1') = DatasetExperiment()
 #' @return modified model object
 setMethod(f = "output_value<-",
     signature = c("outputs_class","character"),
@@ -216,7 +223,7 @@ setMethod(f = "output_value<-",
 #' @export
 #' @examples
 #' M = example_model()
-#' M$result_1 = dataset()
+#' M$result_1 = DatasetExperiment()
 #' @return modified model object
 setMethod(f = "$<-",
     signature = c(x = "outputs_class"),

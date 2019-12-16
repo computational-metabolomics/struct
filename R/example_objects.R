@@ -1,27 +1,27 @@
 
-#' fishers iris data
+#' Fisher's Iris data
 #'
-#' fishers iris data as a struct dataset object
-#' @export iris_dataset
-#' @return dataset object
+#' Fisher's Iris data as a DatasetExperiment object
+#' @export iris_DatasetExperiment
+#' @return DatasetExperiment object
 #' @import datasets
 #' @examples
-#' D = iris_dataset()
-#' summary(D)
-iris_dataset = function() {
-    iris = datasets::iris
-    v = data.frame('feature_id' = colnames(iris[,1:4]))
-    rownames(v) = colnames(iris[,1:4])
-    test_data = dataset(
-        name = 'Iris',
-        description = "Fisher's Iris data",
-        type = 'single_block',
-        data = iris[,seq_len(4)],
-        sample_meta = iris[,5,drop = FALSE],
-        variable_meta = v
-    )
-    return(test_data)
-}
+#' D = iris_DatasetExperiment()
+iris_DatasetExperiment = function () {
+        iris = datasets::iris
+        DatasetExperiment(
+            name="Fisher's Iris dataset",
+            description=paste0(
+            "This famous (Fisher's or Anderson's) iris data set gives ",
+            "the measurements in centimeters of the variables sepal length and ",
+            "width and petal length and width, respectively, for 50 flowers from ",
+            "each of 3 species of iris. The species are Iris setosa, versicolor, ",
+            "and virginica."),
+            assay = iris[, 1:4],
+            rowData = iris[, -(1:4), drop = FALSE],
+            colData=data.frame('feature_id'=colnames(iris[,1:4]))
+        )
+    }
 
 #' Example model
 #'
@@ -54,7 +54,7 @@ example_model = function(...) {
         'params_value_1' = 'entity_stato',
         'params_value_2' = 'numeric',
         'outputs_result_1' = 'entity',
-        'outputs_result_2' = 'dataset'
+        'outputs_result_2' = 'DatasetExperiment'
     ),
     prototype = list(
         name = 'A test model',
@@ -67,9 +67,9 @@ example_model = function(...) {
             description = 'An example entity_stato object',
             stato_id = 'STATO:0000047'),
         params_value_2 = 20,
-        outputs_result_1 = entity(name = 'Result 1',type = 'dataset',
-            description = 'An example entity object',value = dataset()),
-        outputs_result_2 = dataset(),
+        outputs_result_1 = entity(name = 'Result 1',type = 'DatasetExperiment',
+            description = 'An example entity object',value = DatasetExperiment()),
+        outputs_result_2 = DatasetExperiment(),
         predicted = 'result_1'
     )
 )
@@ -82,11 +82,11 @@ example_model = function(...) {
 #' @import datasets
 #' @rdname example_model
 #' @examples
-#' D = iris_dataset()
+#' D = iris_DatasetExperiment()
 #' M = example_model(value_1 = 10, value_2 = 20)
 #' M = model_train(M,D)
 setMethod(f = 'model_train',
-    signature = c('example_model','dataset'),
+    signature = c('example_model','DatasetExperiment'),
     definition = function(M,D) {
         D$data = D$data + M$value_1
         M$result_1 = D
@@ -102,11 +102,11 @@ setMethod(f = 'model_train',
 #' @return dataset object
 #' @rdname example_model
 #' @examples
-#' D = iris_dataset()
+#' D = iris_DatasetExperiment()
 #' M = example_model(value_1 = 10, value_2 = 20)
 #' M = model_predict(M,D)
 setMethod(f = 'model_predict',
-    signature = c('example_model','dataset'),
+    signature = c('example_model','DatasetExperiment'),
     definition = function(M,D) {
         D$data = D$data + M$value_2
         M$result_2 = D

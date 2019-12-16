@@ -2,12 +2,12 @@
 % Please edit documentation in R/preprocess_class.R
 \name{preprocess}
 \alias{preprocess}
-\alias{model_reverse,preprocess,dataset-method}
+\alias{model_reverse,preprocess,DatasetExperiment-method}
 \title{preprocessing class}
 \usage{
 preprocess(...)
 
-\S4method{model_reverse}{preprocess,dataset}(M, D)
+\S4method{model_reverse}{preprocess,DatasetExperiment}(M, D)
 }
 \arguments{
 \item{...}{named slots and their values.}
@@ -26,7 +26,7 @@ functionality for method-specific classes.
 }
 \examples{
 M = preprocess()
-D = dataset()
+D = DatasetExperiment()
 M = model()
 D2 = model_reverse(M,D)
 }

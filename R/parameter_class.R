@@ -106,7 +106,7 @@ setMethod(f = "param_name",
         p = slot(obj, paste("params",name,sep = '_'))
         # if the parameter is an entity then get its name
         if (is(p,'entity')) {
-            value = name(p)
+            value = p$name
             return(value)
         }
         

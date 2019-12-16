@@ -2,46 +2,28 @@
 % Please edit documentation in R/dataset_class.R
 \name{dataset}
 \alias{dataset}
-\alias{dataset_data,dataset-method}
 \alias{$,dataset-method}
-\alias{dataset_data<-,dataset-method}
 \alias{$<-,dataset-method}
-\alias{dataset_sample_meta,dataset-method}
-\alias{dataset_sample_meta<-,dataset-method}
-\alias{dataset_variable_meta,dataset-method}
-\alias{dataset_variable_meta<-,dataset-method}
 \alias{summary,dataset-method}
 \title{Dataset class}
 \usage{
 dataset(...)
 
-\S4method{dataset_data}{dataset}(obj)
-
 \S4method{$}{dataset}(x, name)
 
-\S4method{dataset_data}{dataset}(obj) <- value
-
 \S4method{$}{dataset}(x, name) <- value
-
-\S4method{dataset_sample_meta}{dataset}(obj)
-
-\S4method{dataset_sample_meta}{dataset}(obj) <- value
-
-\S4method{dataset_variable_meta}{dataset}(obj)
-
-\S4method{dataset_variable_meta}{dataset}(obj) <- value
 
 \S4method{summary}{dataset}(object)
 }
 \arguments{
 \item{...}{named slots and their values.}
 
-\item{obj, object, x}{A dataset object}
-
 \item{name}{The name of the slot to set (data, sample_meta or variable_meta
 for dataset objects)}
 
 \item{value}{A data.frame}
+
+\item{object, x}{A dataset object}
 }
 \value{
 The returned value depends on the method used
@@ -77,14 +59,12 @@ membership}
 D = dataset()
 
 # get the data from a dataset object
-dataset_data(D) # OR
 D$data
 
 # get the sample meta data from a dataset object
-dataset_sample_meta(D) # OR
 D$sample_meta
 
 # get the variable meta data from a dataset object
-dataset_variable_meta(D) # OR
 D$variable_meta
+
 }

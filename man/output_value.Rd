@@ -28,5 +28,5 @@ get/set the values for an output_
 M = example_model()
 output_value(M,'result_1')
 M = example_model()
-output_value(M,'result_1') = dataset()
+output_value(M,'result_1') = DatasetExperiment()
 }

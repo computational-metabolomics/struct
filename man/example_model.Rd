@@ -2,15 +2,15 @@
 % Please edit documentation in R/example_objects.R
 \name{example_model}
 \alias{example_model}
-\alias{model_train,example_model,dataset-method}
-\alias{model_predict,example_model,dataset-method}
+\alias{model_train,example_model,DatasetExperiment-method}
+\alias{model_predict,example_model,DatasetExperiment-method}
 \title{Example model}
 \usage{
 example_model(...)
 
-\S4method{model_train}{example_model,dataset}(M, D)
+\S4method{model_train}{example_model,DatasetExperiment}(M, D)
 
-\S4method{model_predict}{example_model,dataset}(M, D)
+\S4method{model_predict}{example_model,DatasetExperiment}(M, D)
 }
 \arguments{
 \item{...}{named slots and their values.}
@@ -37,10 +37,10 @@ dataset
 \examples{
 M = example_model()
 M = example_model(value_1 = 10, value_2 = 20)
-D = iris_dataset()
+D = iris_DatasetExperiment()
 M = example_model(value_1 = 10, value_2 = 20)
 M = model_train(M,D)
-D = iris_dataset()
+D = iris_DatasetExperiment()
 M = example_model(value_1 = 10, value_2 = 20)
 M = model_predict(M,D)
 }

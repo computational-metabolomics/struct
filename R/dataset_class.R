@@ -16,7 +16,7 @@
 #' @slot sample_meta A data.frame of sample meta data e.g. group
 #' membership
 #' @slot variable_meta A data frame of variable meta data
-#' @param obj,object,x A dataset object
+#' @param object,x A dataset object
 #' @param name The name of the slot to set (data, sample_meta or variable_meta
 #' for dataset objects)
 #' @param value A data.frame
@@ -26,16 +26,14 @@
 #' D = dataset()
 #'
 #' # get the data from a dataset object
-#' dataset_data(D) # OR
 #' D$data
 #'
 #' # get the sample meta data from a dataset object
-#' dataset_sample_meta(D) # OR
 #' D$sample_meta
 #'
 #' # get the variable meta data from a dataset object
-#' dataset_variable_meta(D) # OR
 #' D$variable_meta
+#' 
 #' @param ... named slots and their values.
 #' @rdname struct_datasets
 dataset = function(...) {
@@ -47,7 +45,7 @@ dataset = function(...) {
 }
 
 .dataset<-setClass(
-    "dataset",
+    'dataset',
     contains = c("struct_class"),
     slots = c(name = "character",
         description = "character",
@@ -63,17 +61,8 @@ dataset = function(...) {
 
 #' @rdname struct_datasets
 #' @export
-setMethod(f = "dataset_data",
-    signature = c("dataset"),
-    definition = function(obj) {
-        return(obj@data)
-    }
-)
-
-#' @rdname struct_datasets
-#' @export
 setMethod(f = "$",
-    signature = c("dataset"),
+    signature = c('dataset'),
     definition = function(x,name) {
         s = c('data','sample_meta','variable_meta')
         if (name %in% s) {
@@ -82,16 +71,6 @@ setMethod(f = "$",
         } else {
             stop(paste0('"',name,'" is not a valid slot for dataset objects'))
         }
-    }
-)
-
-#' @rdname struct_datasets
-#' @export
-setMethod(f = "dataset_data<-",
-    signature = c("dataset"),
-    definition = function(obj,value) {
-        obj@data = value
-        return(obj)
     }
 )
 
@@ -112,66 +91,28 @@ setMethod(f = "$<-",
 
 #' @rdname struct_datasets
 #' @export
-setMethod(f = "dataset_sample_meta",
-    signature = c("dataset"),
-    definition = function(obj) {
-        return(obj@sample_meta)
-    }
-)
-
-#' @rdname struct_datasets
-#' @export
-setMethod(f = "dataset_sample_meta<-",
-    signature = c("dataset"),
-    definition = function(obj,value) {
-        obj@sample_meta = value
-        return(obj)
-    }
-)
-
-#' @rdname struct_datasets
-#' @export
-setMethod(f = "dataset_variable_meta",
-    signature = c("dataset"),
-    definition = function(obj) {
-        return(obj@variable_meta)
-    }
-)
-
-#' @rdname struct_datasets
-#' @export
-setMethod(f = "dataset_variable_meta<-",
-    signature = c("dataset"),
-    definition = function(obj,value) {
-        obj@variable_meta = value
-        return(obj)
-    }
-)
-
-#' @rdname struct_datasets
-#' @export
 #' @import crayon
 setMethod(f = "summary",
-    signature = c("dataset"),
+    signature = c('dataset'),
     definition = function(object) {
         S = list()
-        S$name = name(object)
-        S$description = description(object)
-        S$type = type(object)
-        S$n.samples = nrow(dataset_data(object))
-        S$n.features = ncol(dataset_data(object))
-        S$n.levels = length(levels(dataset_sample_meta(object)[,1]))
+        S$name = object$name
+        S$description = object$description
+        S$type = object$type
+        S$n.samples = nrow(object$data)
+        S$n.features = ncol(object$data)
+        S$n.levels = length(levels(object$sample_meta[,1]))
         cat(
             bold('A',class(object),'object from the struct package') %+% '\n\n' %+% 
-                blue('Name: '),name(object),'\n' %+%
-                blue('Description: '),description(object),'\n',
+                blue('Name: '),object$name,'\n' %+%
+                blue('Description: '),object$description,'\n',
             sep = ''
         )
         cat('\nConsists of ',S$n.samples,' samples and ',S$n.features,
             ' features.\n',sep = '')
         cat('\nThere are ',S$n.levels, ' levels: ',sep = '')
-        cat(green(levels(dataset_sample_meta(object)[,1])),sep = ',')
-        cat(' in factor named "',green(names(dataset_sample_meta(object))[1]),
+        cat(green(levels(object$sample_meta[,1])),sep = ',')
+        cat(' in factor named "',green(names(object$sample_meta)[1]),
             '"',sep = '')
     }
 )
@@ -186,12 +127,12 @@ setMethod(f = "summary",
 #' @rdname export_data
 #' @examples
 #' \dontrun{
-#' D = iris_dataset() # example dataset
-#' export.xlsx(D,'iris_dataset_xlsx')
+#' D = iris_DatasetExperiment() # example dataset
+#' export.xlsx(D,'iris_DatasetExperiment_xlsx')
 #' }
 #' @export
-setMethod(f = "export.xlsx",
-    signature = c("dataset"),
+setMethod(f = "export_xlsx",
+    signature = c('dataset'),
     definition = function(object,outfile,transpose = TRUE) {
         
         # check for openxlsx

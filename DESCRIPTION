@@ -14,6 +14,7 @@ Collate:
     'parameter_class.R'
     'chart_class.R'
     'stato_class.R'
+    'DatasetExperiment_class.R'
     'dataset_class.R'
     'entity_class.R'
     'entity_stato_class.R'
@@ -30,6 +31,7 @@ Collate:
     'resampler_class.R'
     'struct.R'
     'struct_templates.R'
+    'zzz.R'
 RoxygenNote: 7.0.1
 Suggests: 
  testthat,
@@ -39,5 +41,7 @@ Suggests:
  BiocStyle,
  openxlsx
 VignetteBuilder: knitr
-Imports: methods, ontologyIndex, crayon, datasets,graphics, stats, utils, knitr
+Imports: methods, ontologyIndex, crayon, 
+    datasets, graphics, stats, utils, knitr, 
+    SummarizedExperiment, S4Vectors
 biocViews: WorkflowStep

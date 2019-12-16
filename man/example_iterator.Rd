@@ -4,10 +4,10 @@
 \name{example_iterator-class}
 \alias{example_iterator-class}
 \alias{example_iterator}
-\alias{run,example_iterator,dataset,metric-method}
+\alias{run,example_iterator,DatasetExperiment,metric-method}
 \title{Example iterator}
 \usage{
-\S4method{run}{example_iterator,dataset,metric}(I, D, MET)
+\S4method{run}{example_iterator,DatasetExperiment,metric}(I, D, MET)
 }
 \arguments{
 \item{I}{example_iterator object}
@@ -30,7 +30,7 @@ runs the example iterator, which just returns a value of 3.142
 I = example_iterator()
 
 I = example_iterator()
-D = iris_dataset()
+D = iris_DatasetExperiment()
 MET = metric()
 I = run(I,D,MET)
 

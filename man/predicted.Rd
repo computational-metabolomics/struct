@@ -18,7 +18,7 @@ next model when used in a model_seq
 }
 \examples{
 M = example_model()
-M = model_train(M, iris_dataset())
-M = model_predict(M, iris_dataset())
+M = model_train(M, iris_DatasetExperiment())
+M = model_predict(M, iris_DatasetExperiment())
 predicted(M)
 }

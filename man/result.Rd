@@ -17,7 +17,7 @@ Returns the results of an iterator. This is used to control model flow in a
 similar way to \code{predict} for model and model_seq objects.
 }
 \examples{
-D = iris_dataset() # get some data
+D = iris_DatasetExperiment() # get some data
 MET = metric()  # use a metric
 I = example_iterator() # initialise iterator
 models(I) = example_model() # set the model

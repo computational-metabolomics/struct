@@ -19,5 +19,5 @@ Reverse the effect of a preprocessing step on a dataset_
 }
 \examples{
 M = example_model()
-D = model_reverse(M,iris_dataset())
+D = model_reverse(M,iris_DatasetExperiment())
 }

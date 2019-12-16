@@ -11,8 +11,12 @@
 #' @slot libraries R packages needed by this object
 #' @return an struct object
 #' @param ... named slots and their values.
+#' @param x a struct object
+#' @param value something to assign to a slot
+#' @param name slot to get/set
 #' @examples
 #' S = struct_class()
+#' @rdname struct_class
 struct_class = function(...) {
     # new object
     out = .struct_class()
@@ -51,6 +55,7 @@ struct_class = function(...) {
 #'     return(out)
 #'     }
 #' }
+#' @rdname struct_class
 .initialize_struct_class=function(.Object,...) {
     L = list(...)
     SN = slotNames(.Object)
@@ -88,104 +93,83 @@ struct_class = function(...) {
 }
 
 
-#' name
-#'
-#' get the name of an object
-#' @rdname object_name
+#' @rdname struct_class
 #' @export
-#' @param obj a struct object
-#' @param value value
-#' @examples
-#' S = struct_class()
-#' name(S)
-#' @return (long) name of struct object
-setMethod(f = "name",
-    signature = "struct_class",
-    definition = function(obj)
-    {
-        return(obj@name)
-    }
-)
-
-#' @rdname object_name
-#' @export
-#' @examples
-#' S = struct_class()
-#' name(S) = 'example'
-#' @return modified struct object
-setMethod(f = "name<-",
+setMethod(f = "$",
     signature = c("struct_class"),
-    definition = function(obj,value)
-    {
-        obj@name<-value
-        return(obj)
+    definition = function(x,name) {
+        
+        # check for param
+        if (is(x,'parameter_class')) {
+            w=FALSE
+            w = is_param(x,name)
+            if (w) {
+                out = param_value(x,name)
+                return(out)
+            }
+        }
+        
+        # check for output
+        if (is(x,'outputs_class')) {
+            w=FALSE
+            w = is_output(x,name)
+            if (w) {
+                out = output_value(x,name)
+                return(out)
+            }
+        }
+        
+        # check for other struct slots
+        valid=c('name','description','type','libraries')
+        if (name %in% valid) {
+            out = slot(x,name)
+            return(out)
+        } else {
+            # mirror the SummarizedExperiment use case
+            if (!(name %in% names(colData(x)))) {
+                stop(paste0(name,' is not a valid param, output or column name for this DatasetExperiment using $'))
+            }
+            out = colData(x)[[name]] 
+            return(out)
+        }
     }
 )
 
-#' description
-#'
-#' get the description of an object
-#' @rdname object_desc
+#' @rdname struct_class
 #' @export
-#' @param obj a struct object
-#' @param value value
-#' @examples
-#' S = struct_class()
-#' description(S)
-#' @return description assigned to the struct object
-setMethod(f = "description",
-    signature = "struct_class",
-    definition = function(obj)
-    {
-        return(obj@description)
-    }
-)
-
-#' @examples
-#' S = struct_class()
-#' description(S) = 'this is an example'
-#' @return modified struct object
-#' @rdname object_desc
-#' @export
-setMethod(f = "description<-",
+setMethod(f = "$<-",
     signature = c("struct_class"),
-    definition = function(obj,value)
-    {
-        obj@description<-value
-        return(obj)
+    definition = function(x,name,value) {
+        
+        
+        # check for param
+        if (is(x,'parameter_class')) {
+            if (is_param(x,name)) {
+                param_value(x,name) = value
+                return(x)
+            }
+        }
+        
+        # check for output
+        if (is(x,'outputs_class')) {
+            if (is_output(x,name)) {
+                output_value(x,name) = value
+                return(x)
+            }
+        }
+        
+        # check for other slots
+        valid=c('name','description','type','libraries')
+        if (name %in% valid) {
+            slot(x,name) = value
+            return(x)
+        } else {
+            stop(paste0(name,' is not a valid param, output or column name for this DatasetExperiment using $'))
+        }
     }
 )
 
-#' type
-#'
-#' get the type of an object
-#' @export
-#' @param obj a struct object
-#' @examples
-#' S = struct_class()
-#' type(S)
-#' @return the type assigned to the struct objects
-setMethod(f = "type",
-    signature = "struct_class",
-    definition = function(obj)
-    {
-        return(obj@type)
-    }
-)
 
-#' @describeIn type set the type of an object
-#' @export
-#' @examples
-#' S = struct_class()
-#' type(S) = 'example'
-#' @return modified struct object
-setMethod(f = "type<-",
-    signature = c("struct_class"),
-    definition = function(obj,value) {
-        obj@type<-value
-        return(obj)
-    }
-)
 
 #' chart names
 #'
@@ -242,8 +226,8 @@ setMethod(f = "show",
     definition = function(object) {
         cat(
             'A "', class(object),'" object','\n',
-            'name:          ', name(object),'\n',
-            'description:   ', paste0(strwrap(description(object),width=65,exdent = 15),collapse='\n'),
+            'name:          ', object$name,'\n',
+            'description:   ', paste0(strwrap(object$description,width=65,exdent = 15),collapse='\n'),
             sep = ''
         )
         cat('\n')
@@ -347,7 +331,7 @@ set_struct_obj = function(
 set_obj_method = function(class_name, method_name, definition, where = topenv(parent.frame())) {
     
     setMethod(f = method_name,
-        signature = c(class_name,'dataset'),
+        signature = c(class_name,'DatasetExperiment'),
         definition = definition,
         where = where
     )

@@ -20,10 +20,10 @@ test_that('charts',{
     )
 
     setMethod(f='chart_plot',
-        signature=c('test_chart','dataset'),
+        signature=c('test_chart','DatasetExperiment'),
         definition=function(obj,dobj){
         })
 
-    expect_equal(chart_names(dataset(),'char'),'test_chart')
-    #expect_equal(chart_names(dataset(),'obj'),list(test_chart()))
+    expect_equal(chart_names(DatasetExperiment(),'char'),'test_chart')
+    #expect_equal(chart_names(DatasetExperiment(),'obj'),list(test_chart()))
 })

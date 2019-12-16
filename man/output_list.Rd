@@ -26,5 +26,5 @@ get/set a named list of outputs and their current value for an object
 M = example_model()
 L = output_list(M)
 M = example_model()
-output_list(M) = list('result_1' = dataset(),'result_2' = dataset())
+output_list(M) = list('result_1' = DatasetExperiment(),'result_2' = DatasetExperiment())
 }

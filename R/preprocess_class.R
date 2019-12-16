@@ -27,12 +27,12 @@ preprocess = function(...) {
 #' @rdname preprocessing
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = model()
 #' D2 = model_reverse(M,D)
 #' @return dataset object
 setMethod(f = "model_reverse",
-    signature = c("preprocess","dataset"),
+    signature = c("preprocess","DatasetExperiment"),
     definition = function(M,D) {
         warning('no reverse method implemented for this model')
         return(D)

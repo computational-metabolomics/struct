@@ -34,12 +34,12 @@ model = function(...) {
 #' @rdname model
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = model()
 #' M = model_train(M,D)
 #' @return trained model object
 setMethod(f = "model_train",
-    signature = c("model","dataset"),
+    signature = c("model","DatasetExperiment"),
     definition = function(M,D) {
         warning('no training implemented for this model')
         return(M)
@@ -49,13 +49,13 @@ setMethod(f = "model_train",
 #' @rdname model
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = model()
 #' M = model_train(M,D)
 #' M = model_predict(M,D)
 #' @return model object with test set results
 setMethod(f = "model_predict",
-    signature = c("model","dataset"),
+    signature = c("model","DatasetExperiment"),
     definition = function(M,D) {
         return(M)
     }
@@ -64,12 +64,12 @@ setMethod(f = "model_predict",
 #' @rdname model
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = model()
 #' M = model_apply(M,D)
 #' @return trained model object
 setMethod(f = "model_apply",
-    signature = c("model","dataset"),
+    signature = c("model","DatasetExperiment"),
     definition = function(M,D) {
         M = model_train(M,D)
         M = model_predict(M,D)
@@ -80,14 +80,14 @@ setMethod(f = "model_apply",
 #' @rdname model
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = model()
 #' M = model_train(M,D)
 #' M = model_predict(M,D)
 #' M = model_reverse(M,D)
 #' @return dataset dataset object with the reverse model applied
 setMethod(f = "model_reverse",
-    signature = c("model","dataset"),
+    signature = c("model","DatasetExperiment"),
     definition = function(M,D) {
         return(D)
     }
@@ -96,7 +96,7 @@ setMethod(f = "model_reverse",
 #' @rdname model
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = example_model()
 #' M = model_train(M,D)
 #' M = model_predict(M,D)

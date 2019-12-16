@@ -1,28 +1,21 @@
 # test dataset object
-test_that('dataset objects',{
+test_that('DatasetExperiment objects',{
     # a test dataset object
-    test_data=iris_dataset()
+    # NB will fail if slots cant be assigned
+    test_data=iris_DatasetExperiment()
 
-    expect_identical(test_data$data,iris[,1:4])
-    expect_identical(dataset_data(test_data),iris[,1:4])
-    expect_identical(test_data$sample_meta,iris[,5,drop=FALSE])
-    expect_identical(dataset_sample_meta(test_data),iris[,5,drop=FALSE])
+    expect_identical(colnames(test_data$data),colnames(iris[,1:4]))
+    expect_identical(rownames(test_data$data),rownames(iris[,1:4]))
+    expect_identical(matrix(test_data$data),matrix(iris[,1:4]))
+    
+    expect_identical(colnames(test_data$sample_meta),colnames(iris[,5,drop=FALSE]))
+    expect_identical(rownames(test_data$sample_meta),rownames(iris[,5,drop=FALSE]))
+    expect_identical(matrix(test_data$sample_meta),matrix(iris[,5,drop=FALSE]))
 
     # check access to slots is restricted
     expect_error(test_data$cabbage)
     expect_error({test_data$cabbage='flipflop'})
 
-    # check assignment of data
-    dataset_data(test_data)=iris[,1:3]
-    expect_identical(test_data$data,iris[,1:3])
-    # check assignment of sample_meta
-    dataset_sample_meta(test_data)=cbind(iris[,5,drop=FALSE],iris[,5,drop=FALSE])
-    expect_identical(test_data$sample_meta,cbind(iris[,5,drop=FALSE],iris[,5,drop=FALSE]))
-    # check assignment of variable_meta
-    dataset_variable_meta(test_data)=data.frame(rownames(iris),rownames(iris))
-    expect_identical(test_data$variable_meta,data.frame(rownames(iris),rownames(iris)))
-    expect_identical(dataset_variable_meta(test_data),data.frame(rownames(iris),rownames(iris)))
-
-    # check summary
-    expect_output(summary(test_data),'object from the struct package')
+    # check show
+    expect_output(show(test_data),'A "DatasetExperiment" object')
 })

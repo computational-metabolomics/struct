@@ -40,13 +40,13 @@ iterator = function(...) {
 #' @rdname iterator
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' MET = metric()
 #' I = iterator() * model()
 #' I = run(I,D,MET)
 #'
 setMethod(f = "run",
-    signature = c("iterator","dataset",'metric'),
+    signature = c("iterator","DatasetExperiment",'metric'),
     definition = function(I,D,MET = NULL) {
         warning('the base iterator function was called, not the one defined for
             your specific iterator')
@@ -207,12 +207,12 @@ example_iterator = setClass('example_iterator',
 #' @include metric_class.R model_list_class.R
 #' @examples
 #' I = example_iterator()
-#' D = iris_dataset()
+#' D = iris_DatasetExperiment()
 #' MET = metric()
 #' I = run(I,D,MET)
 #'
 setMethod(f = 'run',
-    signature = c('example_iterator','dataset','metric'),
+    signature = c('example_iterator','DatasetExperiment','metric'),
     definition = function(I,D,MET) {
         I$result_1 = 3.142
         calculate(MET)

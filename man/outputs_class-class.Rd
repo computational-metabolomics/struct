@@ -122,7 +122,7 @@ L = output_value(M,'result_1')
 M = example_model()
 v = M$result_1
 M = example_model()
-output_value(M,'result_1') = dataset()
+output_value(M,'result_1') = DatasetExperiment()
 M = example_model()
-M$result_1 = dataset()
+M$result_1 = DatasetExperiment()
 }

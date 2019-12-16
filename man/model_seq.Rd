@@ -2,10 +2,10 @@
 % Please edit documentation in R/model_list_class.R
 \name{model_seq}
 \alias{model_seq}
-\alias{model_train,model_seq,dataset-method}
-\alias{model_predict,model_seq,dataset-method}
-\alias{[,model_seq-method}
-\alias{[<-,model_seq-method}
+\alias{model_train,model_seq,DatasetExperiment-method}
+\alias{model_predict,model_seq,DatasetExperiment-method}
+\alias{[,model_seq,ANY,ANY,ANY-method}
+\alias{[<-,model_seq,ANY,ANY,ANY-method}
 \alias{models,model_seq-method}
 \alias{models<-,model_seq,list-method}
 \alias{length,model_seq-method}
@@ -13,18 +13,18 @@
 \alias{+,model_seq,model-method}
 \alias{+,model,model-method}
 \alias{predicted,model_seq-method}
-\alias{model_apply,model_seq,dataset-method}
+\alias{model_apply,model_seq,DatasetExperiment-method}
 \title{model_seq class}
 \usage{
 model_seq(...)
 
-\S4method{model_train}{model_seq,dataset}(M, D)
+\S4method{model_train}{model_seq,DatasetExperiment}(M, D)
 
-\S4method{model_predict}{model_seq,dataset}(M, D)
+\S4method{model_predict}{model_seq,DatasetExperiment}(M, D)
 
-\S4method{[}{model_seq}(x, i)
+\S4method{[}{model_seq,ANY,ANY,ANY}(x, i)
 
-\S4method{[}{model_seq}(x, i) <- value
+\S4method{[}{model_seq,ANY,ANY,ANY}(x, i) <- value
 
 \S4method{models}{model_seq}(ML)
 
@@ -40,7 +40,7 @@ model_seq(...)
 
 \S4method{predicted}{model_seq}(M)
 
-\S4method{model_apply}{model_seq,dataset}(M, D)
+\S4method{model_apply}{model_seq,DatasetExperiment}(M, D)
 }
 \arguments{
 \item{...}{named slots and their values.}
@@ -93,8 +93,8 @@ A class for (ordered) lists of models
 MS = model_seq()
 MS = model() + model()
 MS = example_model() + example_model()
-MS = model_train(MS,dataset())
-D = dataset()
+MS = model_train(MS,DatasetExperiment())
+D = DatasetExperiment()
 MS = example_model() + example_model()
 MS = model_train(MS,D)
 MS = model_predict(MS,D)
@@ -124,12 +124,12 @@ MS = MS + M
 
 MS = model() + model()
 
-D = dataset()
+D = DatasetExperiment()
 M = example_model()
 M = model_train(M,D)
 M = model_predict(M,D)
 p = predicted(M)
-D = dataset()
+D = DatasetExperiment()
 MS = example_model() + example_model()
 MS = model_apply(MS,D)
 

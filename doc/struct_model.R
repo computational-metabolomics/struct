@@ -32,7 +32,7 @@ set_obj_method(
 # create an instance of the model
 M = add_two_inputs(input_1 = 3, input_2 = 5)
 # use the model
-M = model_apply(M,dataset())
+M = model_apply(M,DatasetExperiment())
 # check the result = 8
 M$result
 
@@ -62,9 +62,9 @@ M = example_model()
 M$value_1 = 5
 M$value_1 # 5
 # train your model with some data
-M = model_train(M,iris_dataset())
+M = model_train(M,iris_DatasetExperiment())
 # apply your model to some test data
-M = model_predict(M,iris_dataset())
+M = model_predict(M,iris_DatasetExperiment())
 
 ## -----------------------------------------------------------------------------
 model_template=setClass('model_template', # replace model_template with ...
@@ -101,8 +101,8 @@ model_template=setClass('model_template', # replace model_template with ...
         params_value_2=20,
         
         # entities can be initialised with populated slots
-        outputs_result_1=entity(name='Result 1',type='dataset',
-            description='An example entity object',value=dataset()),
+        outputs_result_1=entity(name='Result 1',type='DatasetExperiment',
+            description='An example entity object',value=DatasetExperiment()),
         
         # outputs dont have to be entity objects but we dont recommend this.
         outputs_result_2=2
@@ -112,7 +112,7 @@ model_template=setClass('model_template', # replace model_template with ...
 ## -----------------------------------------------------------------------------
 # create a model_train method for your object
 setMethod(f='model_train', # dont change this line
-    signature=c('model_template','dataset'),  # replace model_template with...
+    signature=c('model_template','DatasetExperiment'),  # replace model_template with...
     # ...your new model name
     definition = function(M,D) {              # dont change this line
         # do something here #
@@ -123,7 +123,7 @@ setMethod(f='model_train', # dont change this line
 ## -----------------------------------------------------------------------------
 # create a model_predict method for your object
 setMethod(f='model_predict',                  # dont change this line
-    signature=c('model_template','dataset'),  # replace model_template with...
+    signature=c('model_template','DatasetExperiment'),  # replace model_template with...
     # ...your new model name
     definition = function(M,D) {              # dont change this line
         ## do something here ##

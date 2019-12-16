@@ -4,7 +4,7 @@
 \alias{run}
 \alias{evaluate}
 \alias{iterator}
-\alias{run,iterator,dataset,metric-method}
+\alias{run,iterator,DatasetExperiment,metric-method}
 \alias{evaluate,iterator,metric-method}
 \alias{models,iterator-method}
 \alias{models<-,iterator,model_OR_iterator-method}
@@ -12,8 +12,8 @@
 \alias{result,iterator-method}
 \alias{result_name,iterator-method}
 \alias{*,iterator,model_OR_iterator-method}
-\alias{[,iterator-method}
-\alias{[<-,iterator-method}
+\alias{[,iterator,ANY,ANY,ANY-method}
+\alias{[<-,iterator,ANY,ANY,ANY-method}
 \title{Run iterator}
 \usage{
 run(I, D, MET)
@@ -22,7 +22,7 @@ evaluate(I, MET)
 
 iterator(...)
 
-\S4method{run}{iterator,dataset,metric}(I, D, MET = NULL)
+\S4method{run}{iterator,DatasetExperiment,metric}(I, D, MET = NULL)
 
 \S4method{evaluate}{iterator,metric}(I, MET)
 
@@ -38,9 +38,9 @@ iterator(...)
 
 \S4method{*}{iterator,model_OR_iterator}(e1, e2)
 
-\S4method{[}{iterator}(x, i)
+\S4method{[}{iterator,ANY,ANY,ANY}(x, i)
 
-\S4method{[}{iterator}(x, i) <- value
+\S4method{[}{iterator,ANY,ANY,ANY}(x, i) <- value
 }
 \arguments{
 \item{I}{an iterator object}
@@ -94,12 +94,12 @@ the same data, splitting it into training and test sets. The input metric
 object can be calculated and collected for each iteration as an output_
 }
 \examples{
-D = iris_dataset() # get some data
+D = iris_DatasetExperiment() # get some data
 MET = metric()  # use a metric
 I = example_iterator() # initialise iterator
 models(I) = example_model() # set the model
 I = run(I,D,MET) # run
-D = iris_dataset() # get some data
+D = iris_DatasetExperiment() # get some data
 MET = metric()  # use a metric
 I = example_iterator() # initialise iterator
 models(I) = example_model() # set the model
@@ -107,7 +107,7 @@ I = run(I,D,MET) # run
 I = evaluate(I,MET) # evaluate
 I = iterator()
 I = iterator() * model()
-D = dataset()
+D = DatasetExperiment()
 MET = metric()
 I = iterator() * model()
 I = run(I,D,MET)

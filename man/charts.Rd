@@ -51,7 +51,7 @@ example_chart = function(...) {
 
 # define the chart_plot method for the example_chart
 setMethod('chart_plot',                     # name of the method
-    signature('example_chart','dataset'),   # the class for each input
+    signature('example_chart','DatasetExperiment'),   # the class for each input
     definition = function(obj, dobj) {  # function definition (from template)
         p = hist(dobj$data[,obj$column])      # the plot
         return(p)
@@ -62,5 +62,5 @@ setMethod('chart_plot',                     # name of the method
 C = example_chart(column = 2) # set the column parameter to 2
 
 # plot
-p = chart_plot(C,iris_dataset()) # plots a histogram of the second column
+p = chart_plot(C,iris_DatasetExperiment()) # plots a histogram of the second column
 }

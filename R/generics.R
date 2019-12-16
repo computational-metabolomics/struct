@@ -141,7 +141,7 @@ setGeneric("output_value",function(obj,name)standardGeneric("output_value"))
 #' @return struct object
 #' @examples
 #' M = example_model()
-#' output_value(M,'result_1') = dataset()
+#' output_value(M,'result_1') = DatasetExperiment()
 #' @export
 setGeneric("output_value<-",
     function(obj,name,value)standardGeneric("output_value<-"))
@@ -215,7 +215,7 @@ setGeneric("output_list",function(obj)standardGeneric("output_list"))
 #' @return struct object
 #' @examples
 #' M = example_model()
-#' output_list(M) = list('result_1' = dataset(),'result_2' = dataset())
+#' output_list(M) = list('result_1' = DatasetExperiment(),'result_2' = DatasetExperiment())
 #' @export
 setGeneric("output_list<-",function(obj,value)standardGeneric("output_list<-"))
 
@@ -259,77 +259,6 @@ setGeneric("chart_names",function(obj,...)standardGeneric("chart_names"))
 #' @export
 setGeneric("chart_plot",function(obj, dobj, ...)standardGeneric("chart_plot"))
 
-#####################################
-###### struct class generics #####
-#####################################
-
-#' Object Type
-#'
-#' Get/set the type of a object. Can be used to specify e.g. where a model
-#' is for classification or for regression, or a dataset is single or multi
-#' block for example.
-#' @param obj an object from the \pkg{struct} class
-#' @param value a valid type string
-#' @rdname type
-#' @return
-#' \describe{
-#' \item{\code{type(obj)}}{returns the type of an object as a string}
-#' \item{\code{type(obj)<-}}{sets the type of an object and returns the modified
-#' object}
-#' }
-#' @examples
-#' M = example_model()
-#' type(M)
-#' type(M) = 'example'
-#' @export
-setGeneric("type",function(obj)standardGeneric("type"))
-
-#' @rdname type
-setGeneric("type<-",function(obj,value)standardGeneric("type<-"))
-
-#' Object Name
-#'
-#' Get/set the name of an object. This is the long name for an object, not the
-#' name of the class object.
-#' @param obj an object from the \pkg{struct} class
-#' @param value a valid string
-#' @rdname name
-#' @return
-#' \describe{
-#' \item{\code{name(obj)}}{returns the name of an object as a string}
-#' \item{\code{name(obj)<-}}{sets the name of an object and returns the modified
-#' object}
-#' }
-#' @examples
-#' M = example_model()
-#' name(M)
-#' name(M) = 'example object'
-setGeneric("name",function(obj)standardGeneric("name"))
-
-#' @rdname name
-setGeneric("name<-",function(obj,value)standardGeneric("name<-"))
-
-#' Object Description
-#'
-#' Get/set the description of an object.
-#' @param obj an object from the \pkg{struct} class
-#' @param value a valid string
-#' @rdname desc
-#' @return
-#' \describe{
-#' \item{\code{description(obj)}}{returns the description of an object as a
-#' string}
-#' \item{\code{description(obj)<-}}{sets the description of an object and
-#' returns the modified object}
-#' }
-#' @examples
-#' M = example_model()
-#' description(M)
-#' description(M) = 'this is an example'
-setGeneric("description",function(obj)standardGeneric("description"))
-
-#' @rdname desc
-setGeneric("description<-",function(obj,value)standardGeneric("description<-"))
 
 #################################
 ###### model class generics #####
@@ -344,7 +273,7 @@ setGeneric("description<-",function(obj,value)standardGeneric("description<-"))
 #' @rdname model_apply
 #' @examples
 #' M = example_model()
-#' M = model_apply(M,iris_dataset())
+#' M = model_apply(M,iris_DatasetExperiment())
 #' @export
 setGeneric("model_apply",function(M,D)standardGeneric("model_apply"))
 
@@ -358,7 +287,7 @@ setGeneric("model_apply",function(M,D)standardGeneric("model_apply"))
 #' @rdname train
 #' @examples
 #' M = example_model()
-#' M = model_train(M,iris_dataset())
+#' M = model_train(M,iris_DatasetExperiment())
 #' @export
 setGeneric("model_train",function(M,D)standardGeneric("model_train"))
 
@@ -372,7 +301,7 @@ setGeneric("model_train",function(M,D)standardGeneric("model_train"))
 #' @rdname predict
 #' @examples
 #' M = example_model()
-#' M = model_predict(M,iris_dataset())
+#' M = model_predict(M,iris_DatasetExperiment())
 #' @export
 setGeneric("model_predict",function(M,D)standardGeneric("model_predict"))
 
@@ -385,7 +314,7 @@ setGeneric("model_predict",function(M,D)standardGeneric("model_predict"))
 #' @rdname model_reverse
 #' @examples
 #' M = example_model()
-#' D = model_reverse(M,iris_dataset())
+#' D = model_reverse(M,iris_DatasetExperiment())
 #' @export
 setGeneric("model_reverse",function(M,D)standardGeneric("model_reverse"))
 
@@ -422,8 +351,8 @@ setGeneric("predicted_name<-",
 #' @rdname predicted
 #' @examples
 #' M = example_model()
-#' M = model_train(M, iris_dataset())
-#' M = model_predict(M, iris_dataset())
+#' M = model_train(M, iris_DatasetExperiment())
+#' M = model_predict(M, iris_DatasetExperiment())
 #' predicted(M)
 #' @export
 setGeneric("predicted",function(M)standardGeneric("predicted"))
@@ -454,92 +383,13 @@ setGeneric("models",function(ML)standardGeneric("models"))
 #' @rdname models
 setGeneric("models<-",function(ML,value)standardGeneric("models<-"))
 
-###################################
-###### dataset class generics #####
-###################################
-
-#' Dataset object data
-#'
-#' @param obj a type object from the *struct* class
-#' @param value a data.frame of raw data
-#' @rdname data
-#' @return
-#' \describe{
-#' \item{\code{dataset_data(obj)}}{returns a data.frame of raw data}
-#' \item{\code{dataset_data(obj)<-}}{sets the raw data of a dataset object}
-#' }
-#' @examples
-#' # iris dataset
-#' D = iris_dataset()
-#' # original raw data
-#' X = dataset_data(D)
-#' # modify the raw dataset
-#' dataset_data(D) = X + 1
-#' @export
-setGeneric("dataset_data",
-    function(obj)standardGeneric("dataset_data"))
-
-#' @rdname data
-setGeneric("dataset_data<-",
-    function(obj,value)standardGeneric("dataset_data<-"))
-
-#' Sample meta data
-#'
-#' get/set sample meta data for a dataset object
-#' @param obj a type object from the *struct* class
-#' @param value a data.frame of meta data
-#' @rdname sample_meta
-#' @return
-#' \describe{
-#' \item{\code{dataset_sample_meta(obj)}}{returns a data.frame of meta data}
-#' \item{\code{dataset_sample_meta(obj)<-}}{sets the meta data of a dataset
-#' object}
-#' }
-#' @examples
-#' # iris dataset
-#' D = iris_dataset()
-#' X = dataset_sample_meta(D)
-#' dataset_sample_meta(D) = X
-#' @export
-setGeneric("dataset_sample_meta",
-    function(obj)standardGeneric("dataset_sample_meta"))
-
-#' @rdname sample_meta
-setGeneric("dataset_sample_meta<-",
-    function(obj,value)standardGeneric("dataset_sample_meta<-"))
-
-#' Variable meta data
-#'
-#' get/set variable meta data for a dataset object
-#' @param obj a type object from the *struct* class
-#' @param value a data.frame of meta data
-#' @rdname variable_meta
-#' @return
-#' \describe{
-#' \item{\code{dataset_variable_meta(obj)}}{returns a data.frame of meta data}
-#' \item{\code{dataset_variable_meta(obj)<-}}{sets the meta data of a dataset
-#' object}
-#' }
-#' @examples
-#' # iris dataset
-#' D = iris_dataset()
-#' X = dataset_variable_meta(D)
-#' dataset_variable_meta(D) = X
-#' @export
-setGeneric("dataset_variable_meta",
-    function(obj)standardGeneric("dataset_variable_meta"))
-
-#' @rdname variable_meta
-setGeneric("dataset_variable_meta<-",
-    function(obj,value)standardGeneric("dataset_variable_meta<-"))
-
 #' write a dataset object to file
 #'
 #' @param object a dataset object
 #' @param outfile the filename to write the data to
 #' @param transpose TRUE or FALSE to transpose the output data
 #' @rdname export_data
-setGeneric("export.xlsx",function(object,outfile,transpose)standardGeneric("export.xlsx"))
+setGeneric("export_xlsx",function(object,outfile,transpose)standardGeneric("export_xlsx"))
 
 ####################################
 ###### iterator class generics #####
@@ -559,7 +409,7 @@ setGeneric("export.xlsx",function(object,outfile,transpose)standardGeneric("expo
 #' @rdname iterator
 #' @return Modified iterator object
 #' @examples
-#' D = iris_dataset() # get some data
+#' D = iris_DatasetExperiment() # get some data
 #' MET = metric()  # use a metric
 #' I = example_iterator() # initialise iterator
 #' models(I) = example_model() # set the model
@@ -575,7 +425,7 @@ setGeneric("run",function(I,D,MET)standardGeneric("run"))
 #' @rdname iterator
 #' @return Modified iterator object
 #' @examples
-#' D = iris_dataset() # get some data
+#' D = iris_DatasetExperiment() # get some data
 #' MET = metric()  # use a metric
 #' I = example_iterator() # initialise iterator
 #' models(I) = example_model() # set the model
@@ -616,7 +466,7 @@ setGeneric("result_name<-",function(I,value)standardGeneric("result_name<-"))
 #' @rdname result
 #' @return the returned output varies with the algorithm implemented
 #' @examples
-#' D = iris_dataset() # get some data
+#' D = iris_DatasetExperiment() # get some data
 #' MET = metric()  # use a metric
 #' I = example_iterator() # initialise iterator
 #' models(I) = example_model() # set the model
@@ -704,4 +554,12 @@ setGeneric("stato_definition",function(obj)standardGeneric("stato_definition"))
 #' @export
 setGeneric("stato_summary",function(obj)standardGeneric("stato_summary"))
 
-
+#' Convert a DatasetExperiment to SummarizedExperiment
+#' 
+#' Converts a DatasetExperiment to SummarizedExperiment. The assay data is 
+#' transposed, and colData and rowData switched to match. struct specific
+#' slots such as "name" and "description" are stored in the metaData.
+#' @param obj a DatasetExperiment object
+#' @return a SummarizedExperiment object
+#' @export
+setGeneric("as.SummarizedExperiment",function(obj)standardGeneric("as.SummarizedExperiment"))

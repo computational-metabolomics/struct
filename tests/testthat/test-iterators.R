@@ -3,7 +3,7 @@ test_that('iterator objects',{
 
     I=iterator()
     MET=metric()
-    D=dataset()
+    D=DatasetExperiment()
 
     # check warning if not implemented
     expect_warning(run(I,D,MET))
@@ -26,7 +26,7 @@ test_that('iterator objects',{
     )
 
     setMethod(f='run',
-        signature=c('test_iterator','dataset','metric'),
+        signature=c('test_iterator','DatasetExperiment','metric'),
         definition=function(I,D,MET){
             I$result_1 = 3.142
             return(I)

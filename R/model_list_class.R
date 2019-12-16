@@ -36,10 +36,10 @@ model_seq = function(...) {
 #' @export
 #' @examples
 #' MS = example_model() + example_model()
-#' MS = model_train(MS,dataset())
+#' MS = model_train(MS,DatasetExperiment())
 #' @return model sequence
 setMethod(f = "model_train",
-    signature = c("model_seq","dataset"),
+    signature = c("model_seq","DatasetExperiment"),
     definition = function(M,D) {
         # for each model in the list
         S = D # for first in list the input D is the data object
@@ -56,7 +56,7 @@ setMethod(f = "model_train",
             # set the output of this model as the input for the next model
             S = predicted(M[i])
             
-            if (is(S,'dataset')) {
+            if (is(S,'DatasetExperiment')) {
                 # if its a dataset then update current D
                 D = predicted(M[i])
             }
@@ -68,13 +68,13 @@ setMethod(f = "model_train",
 #' @rdname model_seq
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' MS = example_model() + example_model()
 #' MS = model_train(MS,D)
 #' MS = model_predict(MS,D)
 #' @return model sequence
 setMethod(f = "model_predict",
-    signature = c("model_seq",'dataset'),
+    signature = c("model_seq",'DatasetExperiment'),
     definition = function(M,D) {
         S = D # for the first model the input use the input data
         L = length(M) # number of models
@@ -89,7 +89,7 @@ setMethod(f = "model_predict",
         
         # if regression, reverse the processing to get predictions
         # on the same scale as the input data
-        if (type(M[L]) == 'regression') {
+        if (M[L]$type == 'regression') {
             # put the predictions into the penultimate dataset object
             penultimate$sample_meta[,M[L]$factor_name] = S
             # apply the reverse models (only works if all are preprocess models)
@@ -262,7 +262,7 @@ setMethod("+",
 #' @rdname model_seq
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = example_model()
 #' M = model_train(M,D)
 #' M = model_predict(M,D)
@@ -281,12 +281,12 @@ setMethod(f = 'predicted',
 #' @rdname model_seq
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' MS = example_model() + example_model()
 #' MS = model_apply(MS,D)
 #'
 setMethod(f = "model_apply",
-    signature = c("model_seq","dataset"),
+    signature = c("model_seq","DatasetExperiment"),
     definition = function(M,D) {
         # for each method in the list
         S = D # for first in list the input D is the data object
@@ -301,7 +301,7 @@ setMethod(f = "model_apply",
             
             # set the output of this method as the input for the next method
             S = predicted(M[i])
-            if (is(S,'dataset')) {
+            if (is(S,'DatasetExperiment')) {
                 # if its a dataset then update current D
                 D = predicted(M[i])
             }

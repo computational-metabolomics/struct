@@ -2,10 +2,10 @@
 % Please edit documentation in R/model_class.R
 \name{model}
 \alias{model}
-\alias{model_train,model,dataset-method}
-\alias{model_predict,model,dataset-method}
-\alias{model_apply,model,dataset-method}
-\alias{model_reverse,model,dataset-method}
+\alias{model_train,model,DatasetExperiment-method}
+\alias{model_predict,model,DatasetExperiment-method}
+\alias{model_apply,model,DatasetExperiment-method}
+\alias{model_reverse,model,DatasetExperiment-method}
 \alias{predicted,model-method}
 \alias{predicted_name,model-method}
 \alias{predicted_name<-,model,character-method}
@@ -13,13 +13,13 @@
 \usage{
 model(...)
 
-\S4method{model_train}{model,dataset}(M, D)
+\S4method{model_train}{model,DatasetExperiment}(M, D)
 
-\S4method{model_predict}{model,dataset}(M, D)
+\S4method{model_predict}{model,DatasetExperiment}(M, D)
 
-\S4method{model_apply}{model,dataset}(M, D)
+\S4method{model_apply}{model,DatasetExperiment}(M, D)
 
-\S4method{model_reverse}{model,dataset}(M, D)
+\S4method{model_reverse}{model,DatasetExperiment}(M, D)
 
 \S4method{predicted}{model}(M)
 
@@ -59,22 +59,22 @@ functionality for method-specific classes.
 }
 \examples{
 M = model()
-D = dataset()
+D = DatasetExperiment()
 M = model()
 M = model_train(M,D)
-D = dataset()
+D = DatasetExperiment()
 M = model()
 M = model_train(M,D)
 M = model_predict(M,D)
-D = dataset()
+D = DatasetExperiment()
 M = model()
 M = model_apply(M,D)
-D = dataset()
+D = DatasetExperiment()
 M = model()
 M = model_train(M,D)
 M = model_predict(M,D)
 M = model_reverse(M,D)
-D = dataset()
+D = DatasetExperiment()
 M = example_model()
 M = model_train(M,D)
 M = model_predict(M,D)
