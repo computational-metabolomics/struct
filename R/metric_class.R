@@ -9,55 +9,58 @@
 #' @param value value
 #' @include generics.R parameter_class.R output_class.R model_class.R
 #' @include iterator_class.R model_list_class.R
-#' @inheritParams calculate
 #' @return a metric object
 #' @examples
 #' MET = metric()
+#' @param ... named slots and their values.
+#' @rdname metric
+metric = function(...) {
+    # new object
+    out = .metric(...)
+    return(out)
+}
 
-metric<-setClass(
+.metric<-setClass(
     "metric",
     contains = c('struct_class'),
-    slots=c(type='character',
-        value='numeric'
+    slots = c(type = 'character',
+        value = 'numeric'
     )
 )
 
-#' @describeIn metric calculate a metric
+#' @rdname metric
 #' @export
 #' @examples
 #' M = metric()
 #' calculate(M,Y,Yhat)
-setMethod(f="calculate",
-    signature=c('metric'),
-    definition=function(obj,Y,Yhat)
-    {
+setMethod(f = "calculate",
+    signature = c('metric'),
+    definition = function(obj,Y,Yhat) {
         warning('no calculation provided for this metric')
         return(obj)
     }
 )
 
-#' @describeIn metric get the caluclated value for a metric
+#' @rdname metric
 #' @export
 #' @examples
 #' MET = metric()
 #' value(MET)
-setMethod(f="value",
-    signature=c("metric"),
-    definition=function(obj)
-    {
+setMethod(f = "value",
+    signature = c("metric"),
+    definition = function(obj) {
         return(obj@value)
     }
 )
 
-#' @describeIn metric set the caluclated value for a metric
+#' @rdname metric
 #' @export
 #' @examples
 #' MET = metric()
-#' value(MET)=10
-setMethod(f="value<-",
-    signature=c("metric"),
-    definition=function(obj)
-    {
+#' value(MET) = 10
+setMethod(f = "value<-",
+    signature = c("metric"),
+    definition = function(obj) {
         return(obj)
     }
 )
@@ -76,8 +79,8 @@ setMethod(f="value<-",
 #'
 test_metric<-setClass(
     "test_metric",
-    contains='metric',
-    prototype = list(name='example metric')
+    contains = 'metric',
+    prototype = list(name = 'example metric')
 )
 
 #' calculate metric example
@@ -90,12 +93,20 @@ test_metric<-setClass(
 #' MET = test_metric()
 #' MET = calculate(MET)
 #'
-setMethod(f="calculate",
-    signature=c('test_metric'),
-    definition=function(obj)
-    {
-        value(obj)=3.142
+setMethod(f = "calculate",
+    signature = c('test_metric'),
+    definition = function(obj) {
+        value(obj) = 3.142
         return(obj)
     }
 )
 
+
+setMethod(f = "show",
+    signature = c("metric"),
+    definition = function(object) {
+        callNextMethod()
+        cat('value:         ', value(object),'\n',sep = '')
+        cat('\n')
+    }
+)

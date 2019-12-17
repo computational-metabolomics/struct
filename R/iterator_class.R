@@ -4,7 +4,6 @@
 #' model multiple times. Not intended to be called directly, this class should
 #' be inherited to provide functionality for method-specific classes.
 #' @export iterator
-#' @inheritParams run
 #' @param ML a model sequence object
 #' @param M a model object
 #' @param value value
@@ -15,28 +14,40 @@
 #' @examples
 #' I = iterator()
 #' I = iterator() * model()
+#' @param ... named slots and their values.
+#' @rdname iterator
+iterator = function(...) {
+    # new object
+    out = .iterator()
+    # initialise
+    out = .initialize_struct_class(out,...)
+    return(out)
+}
 
-iterator<-setClass(
+
+
+
+.iterator<-setClass(
     "iterator",
     contains = c('struct_class','parameter_class','outputs_class'),
-    slots=c(type='character',
-        models='ANY', # any here, but types enforced by e.g. resampler
-        result='character')
+    slots = c(
+        type = 'character',
+        models = 'ANY', # any here, but types enforced by e.g. resampler
+        result = 'character')
 )
 
 
-#' @describeIn iterator run a model/model.seq mutliple times for the input data
+#' @rdname iterator
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' MET = metric()
 #' I = iterator() * model()
 #' I = run(I,D,MET)
 #'
-setMethod(f="run",
-    signature=c("iterator","dataset",'metric'),
-    definition=function(I,D,MET=NULL)
-    {
+setMethod(f = "run",
+    signature = c("iterator","DatasetExperiment",'metric'),
+    definition = function(I,D,MET = NULL) {
         warning('the base iterator function was called, not the one defined for
             your specific iterator')
         return(I)
@@ -44,97 +55,87 @@ setMethod(f="run",
 )
 
 
-#' @describeIn iterator evaluate the performance of a model/model.seq using
-#' the input metric
+#' @rdname iterator
 #' @export
-setMethod(f="evaluate",
-    signature=c("iterator","metric"),
-    definition=function(I,MET)
-    {
+setMethod(f = "evaluate",
+    signature = c("iterator","metric"),
+    definition = function(I,MET) {
         warning('no evaluate fcn for this object. Evaluate is depricated and may
             be removed in a future release')
         return(I)
     }
 )
 
-#' @describeIn iterator get the model/model.seq for an iterator object
+#' @rdname iterator
 #' @export
-setMethod(f="models",
-    signature=c("iterator"),
-    definition=function(ML)
-    {
+setMethod(f = "models",
+    signature = c("iterator"),
+    definition = function(ML) {
         return(ML@models)
     }
 )
 
-setClassUnion("model_OR_iterator", c("model", "iterator","model.seq"))
+setClassUnion("model_OR_iterator", c("model", "iterator","model_seq"))
 
-#' @describeIn iterator set the model/model.seq to be run for multiple
-#' iterations
+#' @rdname iterator
 #' @export
-setMethod(f="models<-",
-    signature=c("iterator",'model_OR_iterator'),
-    definition=function(ML,value)
-    {
-        ML@models=value
+setMethod(f = "models<-",
+    signature = c("iterator",'model_OR_iterator'),
+    definition = function(ML,value) {
+        ML@models = value
         return(ML)
     }
 )
 
-#' @describeIn iterator set result output from iterator
+#' @rdname iterator
 #' @export
 #' @examples
 #' I = iterator()
-#' result.name(I)='example'
+#' result_name(I) = 'example'
 #' @return the modified model object
-setMethod(f='result.name<-',
-    signature=c('iterator','character'),
-    definition=function(I,value)
-    {
-        I@result=value
+setMethod(f = 'result_name<-',
+    signature = c('iterator','character'),
+    definition = function(I,value) {
+        I@result = value
         return(I)
     }
 )
 
-#' @describeIn iterator get prediction output from iterator
+#' @rdname iterator
 #' @export
-setMethod(f='result',
-    signature=c('iterator'),
-    definition=function(M)
-    {
-        return(output.value(M,result.name(M)))
+setMethod(f = 'result',
+    signature = c('iterator'),
+    definition = function(M) {
+        return(output_value(M,result_name(M)))
     }
 )
 
-#' @describeIn iterator get prediction output name for iterator
+#' @rdname iterator
 #' @export
-setMethod(f='result.name',
-    signature=c('iterator'),
-    definition=function(M)
-    {
+setMethod(f = 'result_name',
+    signature = c('iterator'),
+    definition = function(M) {
         return(M@result)
     }
 )
 
-#' @describeIn iterator combine an interator with other model or interator
-#' objects
+#' @rdname iterator
 #' @export
-setMethod(f='*',
-    signature=c(e1='iterator',e2='model_OR_iterator'),
-    definition=function(e1,e2)
-    {
-        m=models(e1)
+setMethod(f = '*',
+    signature = c(e1 = 'iterator',e2 = 'model_OR_iterator'),
+    definition = function(e1,e2) {
+        m = models(e1)
         if (is(m,'iterator')) {
-            models(e1)=m*e2
+            models(e1) = m*e2
         } else {
-            #print(paste('putting',class(e2),'into',class(e1),sep=' '))
-            models(e1)=e2
+            #print(paste('putting',class(e2),'into',class(e1),sep = ' '))
+            models(e1) = e2
         }
         return(e1)
     }
 )
 
-#' @describeIn iterator get model by index
+#' @rdname iterator
 #' @param x a sequence object
 #' @param i index into sequence
 #' @export
@@ -144,14 +145,14 @@ setMethod(f='*',
 #' I[2] # returns the second model() object
 #'
 #' @return model at the given index in the sequence
-setMethod(f= "[",
-    signature="iterator",
-    definition=function(x,i){
-            return(models(x)[i])
+setMethod(f = "[",
+    signature = "iterator",
+    definition = function(x,i) {
+        return(models(x)[i])
     }
 )
 
-#' @describeIn iterator set model by index
+#' @rdname iterator
 #' @export
 #' @examples
 #' MS = model() + model()
@@ -159,14 +160,13 @@ setMethod(f= "[",
 #' I[2] = model() # sets the second model to model()
 #'
 #' @return model sequence with the model at index i replaced
-setMethod(f= "[<-",
-    signature="iterator",
-    definition=function(x,i,value){
-        if (!is(value,'model'))
-        {
+setMethod(f = "[<-",
+    signature = "iterator",
+    definition = function(x,i,value) {
+        if (!is(value,'model')) {
             stop('value must be a model')
         }
-        models(x)[i]=value
+        models(x)[i] = value
         return(x)
     }
 )
@@ -186,15 +186,15 @@ setMethod(f= "[<-",
 #' @examples
 #' I = example_iterator()
 #'
-example_iterator=setClass('example_iterator',
-    contains='iterator',
-    slots=c(
-        params.value_1='numeric',
-        params.value_2='numeric',
-        outputs.result_1='numeric',
-        outputs.result_2='numeric'
+example_iterator = setClass('example_iterator',
+    contains = 'iterator',
+    slots = c(
+        params_value_1 = 'numeric',
+        params_value_2 = 'numeric',
+        outputs_result_1 = 'numeric',
+        outputs_result_2 = 'numeric'
     ),
-    prototype = list(result='result_1')
+    prototype = list(result = 'result_1')
 )
 
 #' run example
@@ -207,14 +207,30 @@ example_iterator=setClass('example_iterator',
 #' @include metric_class.R model_list_class.R
 #' @examples
 #' I = example_iterator()
-#' D = iris_dataset()
+#' D = iris_DatasetExperiment()
 #' MET = metric()
 #' I = run(I,D,MET)
 #'
-setMethod(f='run',
-    signature=c('example_iterator','dataset','metric'),
-    definition=function(I,D,MET){
+setMethod(f = 'run',
+    signature = c('example_iterator','DatasetExperiment','metric'),
+    definition = function(I,D,MET) {
         I$result_1 = 3.142
         calculate(MET)
         return(I)
     })
+
+
+setMethod(f = 'show',
+    signature = c('iterator'),
+    definition = function(object) {
+        callNextMethod()
+        
+        if (is(models(object),'model_seq')) {
+            cat('models:        ','a model_seq with ', length(models(object)),' steps\n',sep='')
+        } else {
+            cat('models:        ','a ',class(models(object)), 'object\n',sep='')
+        }
+        cat('result:        ',result_name(object),'    (', class(result(object)),')\n',sep='')
+        cat('\n')
+    }
+)

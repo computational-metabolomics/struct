@@ -59,7 +59,9 @@ set_struct_obj(
     input_1 = 0, 
     input_2 = 0,
     name='Add two inputs',
-    description='example class that adds two values together')
+    description='example class that adds two values together',
+    predicted='result'
+    )
   )
 ```
 
@@ -70,19 +72,19 @@ The class definition will by default be created with the name `class_name` in th
 show(add_two_inputs)
 ```
 
-The definition has been created but the object only has the default STRUCT methods (such as `model.apply`) assigned and so doesnt do anything yet. The default methods can be updated using other helper funtions which are described in the following sections.
+The definition has been created but the object only has the default STRUCT methods (such as `model_apply`) assigned and so doesnt do anything yet. The default methods can be updated using other helper funtions which are described in the following sections.
 
 ## Changing the default methods
 
 All struct objects have some default methods that are intended to be "overloaded" i.e. replaced to provide functionality specific to the new object being implemented. The helper function `set_obj_method()` provides this functionality with the following inputs:
 
 
-For the example object that adds two values together, we will overload the `model.apply` method.
+For the example object that adds two values together, we will overload the `model_apply` method.
 
 ```{r}
 set_obj_method(
   class_name = 'add_two_inputs',
-  method_name = 'model.apply',
+  method_name = 'model_apply',
   definition = function(M,D) { # you need to supply D here even if you dont use it
     M$result = M$input_1 + M$input_2
     return(M)                  # remember to always return the input object after modifying it
@@ -90,20 +92,20 @@ set_obj_method(
 )
 ```
 
-The default `method.apply` method for the `add_two_inputs` model has now been updatded. We can check this by creating an instance of our model, setting the two input values and then calling `method.apply` on our model object.
+The default `method.apply` method for the `add_two_inputs` model has now been updated. We can check this by creating an instance of our model, setting the two input values and then calling `method.apply` on our model object.
 
 ```{r}
 # create an instance of the model
 M = add_two_inputs(input_1 = 3, input_2 = 5)
 # use the model
-M = model.apply(M,dataset())
+M = model_apply(M,iris_DatasetExperiment())
 # check the result = 8
 M$result
 ```
 
-We can see that the result is 8, so the new definition for `model.apply` was used successfully.
+We can see that the result is `8`, so the new definition for `model_apply` was used successfully.
 
-As well as overloading default STRUCT methods (such as `model.apply`, `model.train`, `model.precict` etc) it is also helpful to overload the extend the default `show` method to make the displayed output more informative for the new object. This is described in the following sections.
+As well as overloading default STRUCT methods (such as `model_apply`, `model_train`, `model_precict` etc) it is also helpful to overload the extend the default `show` method to make the displayed output more informative for the new object. This is described in the following sections.
 
 ## Changing the default `show` output
 
@@ -118,14 +120,14 @@ If you want to provide additional information when printing the new object then 
 - `class_name`        the name of the class to update the show method for
 - `extra_string`:     a function that takes the `class_name` object as input and outputs a string
 
-The string output from the `extra_string` function will be appended to the default `show` output. For the example object we will print the inputs in addition to the standard output.
+The string output from the `extra_string` function will be appended to the default `show` output_ For the example object we will print the inputs in addition to the standard output_
 
 ```{r}
 # update the show method
 set_obj_show(
   class_name = 'add_two_inputs',
   extra_string = function(x) {
-    str= paste('\nThis model is currently set to calculate: ',x$input_1,' + ', x$input_2,sep='')
+    str= paste('This model is currently set to calculate: ',x$input_1,' + ', x$input_2,sep='')
     return(str)
   }
 )
@@ -161,7 +163,7 @@ browseVignettes('struct')
 ```
     
 ***After editing the template*** you can source the script to use your new 
-model. You can add the script to your own package, or potentially even submit 
+model_ You can add the script to your own package, or potentially even submit 
 it to us for inclusion in the `structToolbox` package.
     
 ```{r}
@@ -172,9 +174,9 @@ M = example_model()
 M$value_1 = 5
 M$value_1 # 5
 # train your model with some data
-M = model.train(M,iris_dataset())
+M = model_train(M,iris_DatasetExperiment())
 # apply your model to some test data
-M = model.predict(M,iris_dataset())
+M = model_predict(M,iris_DatasetExperiment())
 ```
     
 You might find it useful to create some chart objects for your new model object. 
@@ -185,7 +187,7 @@ See the `chart` template for help to do this.
 # Template walkthrough
     
 ## Class definition
-The model templates are based on inheriting the `model` or `model.stato` classes 
+The model templates are based on inheriting the `model` or `model_stato` classes 
 from the StRUCT package. This means all the functionality already created as 
 part of struct will be available to the new class.
 
@@ -200,7 +202,7 @@ contains = c('model','stato'),        # 'stato' is optional
 ```
 
 The `contains` option  tells R which aspects of STRUCT to include in the new
-model.
+model_
     
 ***
     
@@ -210,8 +212,8 @@ After defining the name of your new class and specifying that it contains the
 `model` and (optionally) the `stato` class, the *slots* are defined. Slots are 
 variables that are associated with the object that are intended to be accessable
 by the user. It is here that you specify the input parameters and outputs for 
-your class. Input parameters should have `params.` appended and outputs should 
-have `outputs.` appended. 
+your class. Input parameters should have `params_` appended and outputs should 
+have `outputs_` appended. 
     
 Default slots like `name`, `description` and `type` are inherited (i.e. provided 
 by STRUCT) and do not need to be specified. 
@@ -219,19 +221,19 @@ by STRUCT) and do not need to be specified.
 A type should be indicated for each slot e.g. `numeric`. Some special types
 are available in STRUCT, namely `entity` and `enum`, and we recommend you use
 these where possible because they allow you to provide additonal information
-(`name`, `description` etc) about the parameters/outputs.
+(`name`, `description` etc) about the parameters/outputs_
     
 To use `entity` objects for parameters and/or outputs, specify `entity` 
 as the type. If you want to enable STATO functionality for your parameters then 
-you can specify `entity.stato` as the type.
+you can specify `entity_stato` as the type.
 
 ```r
 slots=c(
-'params.value_0'='entity',
-'params.value_1'='entity.stato',
-'params.value_2'='numeric',
-'outputs.result_1'='entity',
-'outputs.result_2'='numeric'
+'params_value_0'='entity',
+'params_value_1'='entity_stato',
+'params_value_2'='numeric',
+'outputs_result_1'='entity',
+'outputs_result_2'='numeric'
 ),
 ```
     
@@ -242,7 +244,7 @@ slots=c(
 #### Model protoype
 You can also optionally include a list of prototypes. Protoypes are used to 
 define default values for parameters. It is recommended that the `name`, 
-`description` and `type` are defined here for your model.
+`description` and `type` are defined here for your model_
 
 ```r
 prototype = list(
@@ -253,11 +255,11 @@ a dataset, while prediction adds value_2 counts.',
 type='test',
 
 ## This is slot is only required for stato objects
-stato.id='OBI:0000011',
+stato_id='OBI:0000011',
 ```
 
 
-STATO objects can also have a `stato.id` assigned in the protoype list. It 
+STATO objects can also have a `stato_id` assigned in the protoype list. It 
 must be assigned when the class is defined, as no mechanism is provided for 
 changing it by the user (other than using @ which is discouraged). 
 
@@ -276,23 +278,23 @@ will be initialised as NULL or a vector or zero length of the appropriate class
 e.g `numeric(0)`.
 
 ```r
-## parameters all start with params.
+## parameters all start with params_
 # entities can be initialised with populated slots
-params.value_1=entity.stato(value=10,name='Value 1',type='numeric',
-description='An example entity.stato object',
-stato.id='STATO:0000047'),
+params_value_1=entity_stato(value=10,name='Value 1',type='numeric',
+description='An example entity_stato object',
+stato_id='STATO:0000047'),
 
-# entity.stato objects can have a stato.id
-params.value_2=entity.stato(value=10,name='Value 1',type='numeric',
-description='An example entity.stato object',
-stato.id='STATO:0000047'),
+# entity_stato objects can have a stato_id
+params_value_2=entity_stato(value=10,name='Value 1',type='numeric',
+description='An example entity_stato object',
+stato_id='STATO:0000047'),
 ```
 
 ***
 
-A stato.id can be set for `entity.stato` objects enabling STATO integration for 
+A stato_id can be set for `entity_stato` objects enabling STATO integration for 
 parameters and outputs as well as model objects. It is a good idea to set 
-`name`, `description` and `stato.id` slots here, when the object is defined.
+`name`, `description` and `stato_id` slots here, when the object is defined.
 
 
 ***
@@ -301,40 +303,40 @@ Parameters dont have to be entities, but this is not recommended as there is no
 mechanism for providing long names and descriptions for these parameters.
 
 ```r
-params.value_2 = 20,
+params_value_2 = 20,
 ```
 
 ***
 
 Outputs can be included in the prototype, and we recommend `entity` or 
-`entity.stato` objects for these too. They are created in the same way as 
-params.
+`entity_stato` objects for these too. They are created in the same way as 
+params_
 
 
 ***
 
 ## Defining new methods for your model object
 
-Model objects have a `model.train` and a `model.predict` function predefined by 
+Model objects have a `model_train` and a `model_predict` function predefined by 
 STRUCT, but by default it prints a warning that the method hasnt been 
 implemented yet. You can override the default using the `setMethod` function. 
 There are a number of inputs for `setMethod` as described in the following 
 steps.
 
 The `signature` option should include your new class as the first element, as 
-this will direct R to use the correct `model.train` or `model.predict` function 
+this will direct R to use the correct `model_train` or `model_predict` function 
 for your new model object.
 
 ```r
-setMethod(f='model.train',                   # dont change this line
-signature=c('model_template','dataset'), # replace model_template with... 
+setMethod(f='model_train',                   # dont change this line
+signature=c('model_template','DatasetExperiment'), # replace model_template with... 
 # ...your new model name
 ```
 
 ***
 
 The description function is where you can include your own R code to train your 
-model. Make sure you `return(M)` otherwise you model will not behave in the way 
+model_ Make sure you `return(M)` otherwise you model will not behave in the way 
 expected by other StRUCT objects. 
 
 ```r
@@ -351,12 +353,12 @@ and D is the input dataset object, containing the data to train the model with.
 
 ***
 
-Similarly, a `model.predict` method is provided so that you can apply your 
+Similarly, a `model_predict` method is provided so that you can apply your 
 (trained) model to test data.
 
 ```r
-setMethod(f='model.predict',                 # dont change this line
-signature=c('model_template','dataset'), # replace model_template with... 
+setMethod(f='model_predict',                 # dont change this line
+signature=c('model_template','DatasetExperiment'), # replace model_template with... 
 # ...your new model name
 definition = function(M,D) {             # dont change this line
 ## do something here ##
@@ -378,11 +380,11 @@ model_template=setClass('model_template', # replace model_template with ...
     # ...your new model name
     contains = c('model','stato'),       # stato is optional
     slots=c(                      # define your parameters and outputs here
-        'params.value_0'='entity',
-        'params.value_1'='entity.stato',
-        'params.value_2'='numeric',
-        'outputs.result_1'='entity',
-        'outputs.result_2'='numeric'
+        'params_value_0'='entity',
+        'params_value_1'='entity_stato',
+        'params_value_2'='numeric',
+        'outputs_result_1'='entity',
+        'outputs_result_2'='numeric'
     ),
     prototype = list( # specify default values for your parameters etc
         
@@ -392,36 +394,36 @@ model_template=setClass('model_template', # replace model_template with ...
     a dataset, while prediction adds value_2 counts.',
         type='test',
         
-        ## This slot is only required for model.stato objects
-        stato.id='OBI:0000011',
+        ## This slot is only required for model_stato objects
+        stato_id='OBI:0000011',
         
-        ## parameters all start with params.
+        ## parameters all start with params_
         # entities can be initialised with populated slots
-        params.value_0=entity(name='Value 0',value=0,type='numeric'),
+        params_value_0=entity(name='Value 0',value=0,type='numeric'),
         
-        # entity.stato objects can have a stato.id
-        params.value_1=entity.stato(value=10,name='Value 1',type='numeric',
-            description='An example entity.stato object',
-            stato.id='STATO:0000047'),
+        # entity_stato objects can have a stato_id
+        params_value_1=entity_stato(value=10,name='Value 1',type='numeric',
+            description='An example entity_stato object',
+            stato_id='STATO:0000047'),
         
         # params dont have to be entity objects but we dont recommend this.
-        params.value_2=20,
+        params_value_2=20,
         
         # entities can be initialised with populated slots
-        outputs.result_1=entity(name='Result 1',type='dataset',
-            description='An example entity object',value=dataset()),
+        outputs_result_1=entity(name='Result 1',type='DatasetExperiment',
+            description='An example entity object',value=DatasetExperiment()),
         
         # outputs dont have to be entity objects but we dont recommend this.
-        outputs.result_2=2
+        outputs_result_2=2
     )
 )
 ```
 
 You should include a method to train your model:
 ```{r}
-# create a model.train method for your object
-setMethod(f='model.train', # dont change this line
-    signature=c('model_template','dataset'),  # replace model_template with...
+# create a model_train method for your object
+setMethod(f='model_train', # dont change this line
+    signature=c('model_template','DatasetExperiment'),  # replace model_template with...
     # ...your new model name
     definition = function(M,D) {              # dont change this line
         # do something here #
@@ -432,9 +434,9 @@ setMethod(f='model.train', # dont change this line
 
 You should also include a method for prediction using a trained model:
 ```{r}
-# create a model.predict method for your object
-setMethod(f='model.predict',                  # dont change this line
-    signature=c('model_template','dataset'),  # replace model_template with...
+# create a model_predict method for your object
+setMethod(f='model_predict',                  # dont change this line
+    signature=c('model_template','DatasetExperiment'),  # replace model_template with...
     # ...your new model name
     definition = function(M,D) {              # dont change this line
         ## do something here ##

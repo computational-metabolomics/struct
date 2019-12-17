@@ -11,126 +11,153 @@
 #' @include generics.R    parameter_class.R output_class.R dataset_class.R
 #' @examples
 #' M = model()
+#' @param ... named slots and their values.
+#' @rdname model
+model = function(...) {
+    # new object
+    out = .model()
+    # initialise
+    out = .initialize_struct_class(out,...)
+    return(out)
+}
 
-model<-setClass(
+.model<-setClass(
     "model",
     contains = c('struct_class','parameter_class','outputs_class'),
-    slots=c(type='character',
-        predicted='character',
-        seq_in='character'
+    slots = c(type = 'character',
+        predicted = 'character',
+        seq_in = 'character'
     ),
-    prototype=list(seq_in = 'data')
+    prototype = list(seq_in = 'data')
 )
 
-#' @describeIn model train the model using input data
+#' @rdname model
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = model()
-#' M = model.train(M,D)
+#' M = model_train(M,D)
 #' @return trained model object
-setMethod(f="model.train",
-    signature=c("model","dataset"),
-    definition=function(M,D)
-    {
+setMethod(f = "model_train",
+    signature = c("model","DatasetExperiment"),
+    definition = function(M,D) {
         warning('no training implemented for this model')
         return(M)
     }
 )
 
-#' @describeIn model apply the model to input data
+#' @rdname model
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = model()
-#' M = model.train(M,D)
-#' M = model.predict(M,D)
+#' M = model_train(M,D)
+#' M = model_predict(M,D)
 #' @return model object with test set results
-setMethod(f="model.predict",
-    signature=c("model","dataset"),
-    definition=function(M,D)
-    {
+setMethod(f = "model_predict",
+    signature = c("model","DatasetExperiment"),
+    definition = function(M,D) {
         return(M)
     }
 )
 
-#' @describeIn model trains and tests the data using the input model
+#' @rdname model
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = model()
-#' M = model.apply(M,D)
+#' M = model_apply(M,D)
 #' @return trained model object
-setMethod(f="model.apply",
-    signature=c("model","dataset"),
-    definition=function(M,D)
-    {
-        M=model.train(M,D)
-        M=model.predict(M,D)
+setMethod(f = "model_apply",
+    signature = c("model","DatasetExperiment"),
+    definition = function(M,D) {
+        M = model_train(M,D)
+        M = model_predict(M,D)
         return(M)
     }
 )
 
-#' @describeIn model reverse the model for preprocessing steps
+#' @rdname model
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = model()
-#' M = model.train(M,D)
-#' M = model.predict(M,D)
-#' M = model.reverse(M,D)
+#' M = model_train(M,D)
+#' M = model_predict(M,D)
+#' M = model_reverse(M,D)
 #' @return dataset dataset object with the reverse model applied
-setMethod(f="model.reverse",
-    signature=c("model","dataset"),
-    definition=function(M,D)
-    {
+setMethod(f = "model_reverse",
+    signature = c("model","DatasetExperiment"),
+    definition = function(M,D) {
         return(D)
     }
 )
 
-#' @describeIn model get prediction output from model
+#' @rdname model
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = example_model()
-#' M = model.train(M,D)
-#' M = model.predict(M,D)
+#' M = model_train(M,D)
+#' M = model_predict(M,D)
 #' p = predicted(M)
-#' @return the predicted output, as specified by predicted.name
-setMethod(f='predicted',
-    signature=c('model'),
-    definition=function(M)
-    {
-        return(output.value(M,predicted.name(M)))
+#' @return the predicted output, as specified by predicted_name
+setMethod(f = 'predicted',
+    signature = c('model'),
+    definition = function(M) {
+        if (length(predicted_name(M))==0) {
+            warning('"predicted" has not been set')
+            return(NA)
+        }
+        if (is.na(predicted_name(M))) {
+            warning('"predicted" is set to NA')
+            return(NA)
+        }
+        if (is.null(predicted_name(M))) {
+            warning('"predicted" is set to NULL')
+            return(NA)
+            
+        }
+        # we can try to return the slot
+        return(output_value(M,predicted_name(M)))
     }
+    
 )
 
-#' @describeIn model get prediction output name for model
+#' @rdname model
 #' @export
 #' @examples
 #' M = example_model()
-#' predicted.name(M)
+#' predicted_name(M)
 #' @return the id of the output returned by predicted()
-setMethod(f='predicted.name',
-    signature=c('model'),
-    definition=function(M)
-    {
+setMethod(f = 'predicted_name',
+    signature = c('model'),
+    definition = function(M) {
         return(M@predicted)
     }
 )
 
-#' @describeIn model set prediction output from model
+#' @rdname model
 #' @export
 #' @examples
 #' M = example_model()
-#' predicted.name(M)='result_2'
+#' predicted_name(M) = 'result_2'
 #' @return the modified model object
-setMethod(f='predicted.name<-',
-    signature=c('model','character'),
-    definition=function(M,value)
-    {
-        M@predicted=value
+setMethod(f = 'predicted_name<-',
+    signature = c('model','character'),
+    definition = function(M,value) {
+        M@predicted = value
         return(M)
     }
 )
 
+
+setMethod(f = "show",
+    signature = c("model"),
+    definition = function(object) {
+        callNextMethod()
+        cat('predicted:     ',predicted_name(object),'    (', class(predicted(object)),')\n',sep='')
+        cat('seq_in:        ',object@seq_in,'\n',sep = '')
+        cat('\n')
+    }
+)

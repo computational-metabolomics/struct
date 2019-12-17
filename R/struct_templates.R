@@ -14,36 +14,35 @@
 #' struct_template('model','example.R',FALSE)
 #'}
 #'
-struct_template=function(
-    template='model',
+struct_template = function(
+    template = 'model',
     output,
     in_editor = TRUE,
     overwrite = FALSE
 ) {
-
+    
     if ((!template %in% c('model'))) {
         return(stop('Incorrect template'))
     }
-
-    fn=file.path(path.package('struct'),
-        'doc',paste0('struct_',template,'.Rmd'))
-
+    
+    fn = system.file(package = 'struct','doc',paste0('struct_',template,'.Rmd'),mustWork = TRUE)
+    
     if (file.exists(output) & !overwrite) {
         stop('Output file already exists. Use overwrite = TRUE if you want to
             replace the existing file.')
     }
-
+    
     knitr::purl(input = fn,
         documentation = 0,quiet = TRUE,
-        output=output                   # name/path of the R script to create
+        output = output                   # name/path of the R script to create
     )
-
+    
     if (in_editor) {
         # use rstudio if available
         if (rstudioapi::isAvailable()) {
             rstudioapi::navigateToFile(output)
         } else { # otherwise default to the internal editor
-            utils::file.edit(output,editor='internal')
+            utils::file.edit(output,editor = 'internal')
         }
     }
 }

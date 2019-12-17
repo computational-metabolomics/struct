@@ -4,16 +4,16 @@ test_that('struct objects can be created and modified',{
     test_object=struct_class(name = 'test_name', description='test_desc','type' = 'test_type')
 
     # name
-    expect_equal({name(test_object)},'test_name') # get
-    expect_equal({name(test_object)='cabbage';name(test_object)},'cabbage') # set
+    expect_equal({test_object$name},'test_name') # get
+    expect_equal({test_object$name='cabbage';test_object$name},'cabbage') # set
     #type
-    expect_equal({type(test_object)},'test_type') # get
-    expect_equal({type(test_object)='cabbage';type(test_object)},'cabbage') #set
+    expect_equal({test_object$type},'test_type') # get
+    expect_equal({test_object$type='cabbage';test_object$type},'cabbage') #set
     # description
-    expect_equal({description(test_object)},"test_desc") #get
-    expect_equal({description(test_object)='cabbage';description(test_object)},'cabbage') #set
+    expect_equal({test_object$description},"test_desc") #get
+    expect_equal({test_object$description='cabbage';test_object$description},'cabbage') #set
     # show
-    expect_output(show(test_object),'A "struct_class" object\\nName: cabbage\\nDescription: cabbage')
+    expect_output(show(test_object),'A "struct_class" object\\nname:          cabbage\\ndescription:   cabbage')
 })
 
 # test metric object

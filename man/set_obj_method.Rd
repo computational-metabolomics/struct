@@ -31,12 +31,12 @@ set_struct_obj(
 class_name = 'add_two_inputs',
 struct_obj = 'model',
 stato = FALSE,
-params=c(input_1 = 'numeric', input_2 = 'numeric'),
-outputs=c(result = 'numeric'),
-prototype=list(
+params = c(input_1 = 'numeric', input_2 = 'numeric'),
+outputs = c(result = 'numeric'),
+prototype = list(
    input_1 = 0,
    input_2 = 0,
-   name='Add two inputs',
-   description='example class that adds two values together')
+   name = 'Add two inputs',
+   description = 'example class that adds two values together')
 )
 }

@@ -16,13 +16,12 @@ outputs_class<-setClass(
 #' @export
 #' @examples
 #' M = example_model()
-#' obj = output.obj(M,'result_1')
+#' obj = output_obj(M,'result_1')
 #' @return the output id as an (e.g entity) object
-setMethod(f="output.obj",
-    signature=c("outputs_class","character"),
-    definition=function(obj,name)
-    {
-        value=slot(obj, paste("outputs",name,sep='.'))
+setMethod(f = "output_obj",
+    signature = c("outputs_class","character"),
+    definition = function(obj,name) {
+        value = slot(obj, paste("outputs",name,sep = '_'))
         return(value)
     }
 )
@@ -31,15 +30,14 @@ setMethod(f="output.obj",
 #' @export
 #' @examples
 #' M = example_model()
-#' output.obj(M,'result_1') = entity()
+#' output_obj(M,'result_1') = entity()
 #'
 #' @return the modified object
-setMethod(f="output.obj<-",
-    signature=c("outputs_class","character"),
-    definition=function(obj,name,value)
-    {
-        p=slot(obj, paste("outputs",name,sep='.'))
-        slot(obj, paste("outputs",name,sep='.'))=value
+setMethod(f = "output_obj<-",
+    signature = c("outputs_class","character"),
+    definition = function(obj,name,value) {
+        p = slot(obj, paste("outputs",name,sep = '_'))
+        slot(obj, paste("outputs",name,sep = '_')) = value
         return(obj)
     }
 )
@@ -48,17 +46,17 @@ setMethod(f="output.obj<-",
 #' @export
 #' @examples
 #' M = model()
-#' is.output(M,'example') # FALSE
+#' is_output(M,'example') # FALSE
 #' @return logical
-setMethod(f="is.output",
-    signature=c("outputs_class"),
-    definition=function(obj,name)
-    {
-        valid=(output.ids(obj))
-        if (name %in% valid)
-        {return(TRUE)}
-        else
-        {return(FALSE)}
+setMethod(f = "is_output",
+    signature = c("outputs_class"),
+    definition = function(obj,name) {
+        valid = (output_ids(obj))
+        if (name %in% valid) {
+            return(TRUE)
+        } else {
+            return(FALSE)
+        }
     }
 )
 
@@ -66,17 +64,31 @@ setMethod(f="is.output",
 #' @export
 #' @examples
 #' M = model()
-#' output.ids(M)
+#' output_ids(M)
 #' @return character list of valid output ids for object M
-setMethod(f="output.ids",
-    signature=c("outputs_class"),
-    definition=function(obj)
-    {
-        s=slotNames(obj)
-        t=strsplit(s,'\\.')
-        found=unlist(lapply(t,function(x) {'outputs' %in% x}))
-        t=unlist(t[found])
-        t=t[t!='outputs']
+setMethod(f = "output_ids",
+    signature = c("outputs_class"),
+    definition = function(obj) {
+        # get slotnames
+        s = slotNames(obj)
+        
+        # substitute the first _ with a *
+        s=sub('_','*',s)
+        
+        # split by the *
+        t = strsplit(s,'\\*')
+        
+        # see if slot has "outputs" in name
+        found = unlist(lapply(t,function(x) {
+            'outputs' %in% x
+        }))
+        
+        # unlist those that have
+        t = unlist(t[found])
+        
+        # exclude the outputs part of the slot names
+        t = t[t!= 'outputs']
+        
         return(t)
     }
 )
@@ -85,20 +97,16 @@ setMethod(f="output.ids",
 #' @export
 #' @examples
 #' M = example_model()
-#' output.name(M,'result_1')
+#' output_name(M,'result_1')
 #' @return (long) name of output
-setMethod(f="output.name",
-    signature=c("outputs_class",'character'),
-    definition=function(obj,name)
-    {
-        p=slot(obj, paste("outputs",name,sep='.'))
+setMethod(f = "output_name",
+    signature = c("outputs_class",'character'),
+    definition = function(obj,name) {
+        p = slot(obj, paste("outputs",name,sep = '_'))
         # if the output is an entity then get its name
-        if (is(p,'entity'))
-        {
-            value=name(p)
-        }
-        else
-        {
+        if (is(p,'entity')) {
+            value = p$name
+        } else {
             # otherwise just return the slot name
             return(name)
         }
@@ -110,17 +118,15 @@ setMethod(f="output.name",
 #' @export
 #' @examples
 #' M = model()
-#' L = output.list(M)
+#' L = output_list(M)
 #' @return named list of output ids and current values
-setMethod(f='output.list',
-    signature=c('outputs_class'),
-    definition=function(obj)
-    {
-        L=list()
-        names=output.ids(obj)
-        for (i in seq_len(length(names)))
-        {
-            L[[names[[i]]]]=output.value(obj,names[[i]])
+setMethod(f = 'output_list',
+    signature = c('outputs_class'),
+    definition = function(obj) {
+        L = list()
+        names = output_ids(obj)
+        for (i in seq_len(length(names))) {
+            L[[names[[i]]]] = output_value(obj,names[[i]])
         }
         return(L)
     }
@@ -130,16 +136,14 @@ setMethod(f='output.list',
 #' list
 #' @examples
 #' M = model()
-#' L = output.list(M)
+#' L = output_list(M)
 #' @return named list of output ids and current values
-setMethod(f='output.list<-',
-    signature=c('outputs_class','list'),
-    definition=function(obj,value)
-    {
-        namez=names(value)
-        for (i in seq_len(length(namez)))
-        {
-            output.value(obj,namez[[i]])=value[[i]]
+setMethod(f = 'output_list<-',
+    signature = c('outputs_class','list'),
+    definition = function(obj,value) {
+        namez = names(value)
+        for (i in seq_len(length(namez))) {
+            output_value(obj,namez[[i]]) = value[[i]]
         }
         return(obj)
     }
@@ -149,24 +153,19 @@ setMethod(f='output.list<-',
 #' @export
 #' @examples
 #' M = example_model()
-#' L = output.value(M,'result_1')
+#' L = output_value(M,'result_1')
 #' @return value of output
-setMethod(f="output.value",
-    signature=c("outputs_class","character"),
-    definition=function(obj,name)
-    {
-
-        p=slot(obj, paste("outputs",name,sep='.'))
+setMethod(f = "output_value",
+    signature = c("outputs_class","character"),
+    definition = function(obj,name) {
+        
+        p = slot(obj, paste("outputs",name,sep = '_'))
         # if the output is an entity then set its value
-        if (is(p,'entity'))
-        {
-            value=value(p)
-
-        }
-        else
-        {
+        if (is(p,'entity')) {
+            value = value(p)
+        } else {
             # otherwise just set it to the value
-            value=slot(obj, paste("outputs",name,sep='.'))
+            value = slot(obj, paste("outputs",name,sep = '_'))
         }
         return(value)
     }
@@ -178,19 +177,17 @@ setMethod(f="output.value",
 #' M = example_model()
 #' v = M$result_1
 #' @return value of output
-setMethod(f="$",
-    signature(x='outputs_class'),
-
-    definition=function(x,name)
-    {
+setMethod(f = "$",
+    signature(x = 'outputs_class'),
+    definition = function(x,name) {
         if (is(x,'parameter_class')) {
-            if (is.param(x,name)) {
-                value=param.value(x,name)
+            if (is_param(x,name)) {
+                value = param_value(x,name)
                 return(value)
             }
         }
-        if (is.output(x,name)) {
-            value=output.value(x,name)
+        if (is_output(x,name)) {
+            value = output_value(x,name)
             return(value)
         }
         stop(paste0('"',name,'" is not a valid param or output for ', class(x),
@@ -202,23 +199,19 @@ setMethod(f="$",
 #' @export
 #' @examples
 #' M = example_model()
-#' output.value(M,'result_1') = dataset()
+#' output_value(M,'result_1') = DatasetExperiment()
 #' @return modified model object
-setMethod(f="output.value<-",
-    signature=c("outputs_class","character"),
-    definition=function(obj,name,value)
-    {
-        p=slot(obj, paste("outputs",name,sep='.'))
+setMethod(f = "output_value<-",
+    signature = c("outputs_class","character"),
+    definition = function(obj,name,value) {
+        p = slot(obj, paste("outputs",name,sep = '_'))
         # if the parameter is an entity then set its value
-        if (is(p,'entity'))
-        {
-            value(p)=value
-            slot(obj, paste("outputs",name,sep='.'))=p
-        }
-        else
-        {
+        if (is(p,'entity')) {
+            value(p) = value
+            slot(obj, paste("outputs",name,sep = '_')) = p
+        } else {
             # otherwise just set it to the value
-            slot(obj, paste("outputs",name,sep='.'))=value
+            slot(obj, paste("outputs",name,sep = '_')) = value
         }
         return(obj)
     }
@@ -230,29 +223,27 @@ setMethod(f="output.value<-",
 #' @export
 #' @examples
 #' M = example_model()
-#' M$result_1 = dataset()
+#' M$result_1 = DatasetExperiment()
 #' @return modified model object
-setMethod(f="$<-",
-    signature=c(x="outputs_class"),
-    definition=function(x,name,value)
-    {
+setMethod(f = "$<-",
+    signature = c(x = "outputs_class"),
+    definition = function(x,name,value) {
         if (is(x,'parameter_class')) {
-            if (is.param(x,name)) {
-                param.value(x,name)=value
+            if (is_param(x,name)) {
+                param_value(x,name) = value
                 return(x)
             }
         }
-
-
-        if (is.output(x,name)) {
-            output.value(x,name)=value
+        
+        if (is_output(x,name)) {
+            output_value(x,name) = value
             return(x)
         }
-
+        
         # if we get here then error
         stop(paste0('"',name,'" is not a valid param or output for ', class(x),
             ' objects.'))
-
+        
     }
 )
 

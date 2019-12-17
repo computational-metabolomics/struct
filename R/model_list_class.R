@@ -1,216 +1,213 @@
-#' model.seq class
+#' model_seq class
 #'
 #' A class for (ordered) lists of models
 #'
-#' @export model.seq
+#' @export model_seq
 #' @param M a model object
 #' @param D a dataset object
-#' @param x a model.seq object
+#' @param x a model_seq object
 #' @param i index
-#' @param ML a model.seq object
-#' @param object a model.seq object
-#' @param e1 a model or model.seq object
-#' @param e2 a model or model.seq object
+#' @param ML a model_seq object
+#' @param e1 a model or model_seq object
+#' @param e2 a model or model_seq object
 #' @param value value
 #' @include generics.R parameter_class.R output_class.R struct_class.R
 #' @include model_class.R
 #' @examples
-#' MS = model.seq()
+#' MS = model_seq()
 #' MS = model() + model()
+#' @param ... named slots and their values.
+#' @rdname model_seq
+model_seq = function(...) {
+    # new object
+    out = .model_seq(...)
+    return(out)
+}
 
-model.seq<-setClass(
-    "model.seq",
+
+.model_seq<-setClass(
+    "model_seq",
     contains = c('struct_class'),
-    slots=c(models='list')
+    slots = c(models = 'list')
 )
 
 
-#' @describeIn model.seq train the model using input data
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = example_model() + example_model()
-#' MS = model.train(MS,dataset())
+#' MS = model_train(MS,DatasetExperiment())
 #' @return model sequence
-setMethod(f="model.train",
-    signature=c("model.seq","dataset"),
-    definition=function(M,D)
-    {
+setMethod(f = "model_train",
+    signature = c("model_seq","DatasetExperiment"),
+    definition = function(M,D) {
         # for each model in the list
-        S=D # for first in list the input D is the data object
-        for (i in seq_len(length(M)))
-        {
+        S = D # for first in list the input D is the data object
+        for (i in seq_len(length(M))) {
             if (M[i]@seq_in != 'data') {
                 # set parameter
-                param.value(M[i],M[i]@seq_in) = S
+                param_value(M[i],M[i]@seq_in) = S
             }
-
+            
             # train the model on the output of the previous model
-            M[i]=model.train(M[i],S)
+            M[i] = model_train(M[i],S)
             # apply the model to the output of the previous model
-            M[i]=model.predict(M[i],S)
+            M[i] = model_predict(M[i],S)
             # set the output of this model as the input for the next model
-            S=predicted(M[i])
-
-            if (is(S,'dataset')) {
+            S = predicted(M[i])
+            
+            if (is(S,'DatasetExperiment')) {
                 # if its a dataset then update current D
-                D=predicted(M[i])
+                D = predicted(M[i])
             }
         }
         return(M)
     }
 )
 
-#' @describeIn model.seq apply the model to input data
+#' @rdname model_seq
 #' @export
 #' @examples
-#' D= dataset()
+#' D = DatasetExperiment()
 #' MS = example_model() + example_model()
-#' MS = model.train(MS,D)
-#' MS = model.predict(MS,D)
+#' MS = model_train(MS,D)
+#' MS = model_predict(MS,D)
 #' @return model sequence
-setMethod(f="model.predict",
-    signature=c("model.seq",'dataset'),
-    definition=function(M,D)
-    {
-        S=D # for the first model the input use the input data
-        L=length(M) # number of models
-        for (i in seq_len(L))
-        {
+setMethod(f = "model_predict",
+    signature = c("model_seq",'DatasetExperiment'),
+    definition = function(M,D) {
+        S = D # for the first model the input use the input data
+        L = length(M) # number of models
+        for (i in seq_len(L)) {
             # apply the model the output of the previous model
-            M[i]=model.predict(M[i],S)
+            M[i] = model_predict(M[i],S)
             # keep the previous output
-            penultimate=S
+            penultimate = S
             # set the output of this model as the input to the next
-            S=predicted(M[i])
+            S = predicted(M[i])
         }
-
+        
         # if regression, reverse the processing to get predictions
         # on the same scale as the input data
-        if (type(M[L])=='regression') {
+        if (M[L]$type == 'regression') {
             # put the predictions into the penultimate dataset object
-            penultimate$sample_meta[,M[L]$factor_name]=S
+            penultimate$sample_meta[,M[L]$factor_name] = S
             # apply the reverse models (only works if all are preprocess models)
             for (k in seq(L-1,1,-1)) {
-                penultimate=model.reverse(M[k],penultimate)
+                penultimate = model_reverse(M[k],penultimate)
             }
             # put the update predictions into the last model
-            pred=predicted.name(M[L]) # name of predicted output
-            output.value(M[L],pred)=as.data.frame(penultimate$sample_meta[,M[L]$factor_name])
+            pred = predicted_name(M[L]) # name of predicted output
+            output_value(M[L],pred) = as.data.frame(penultimate$sample_meta[,M[L]$factor_name])
         }
-
         return(M)
     }
 )
 
-#' @describeIn model.seq get model by index
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
 #' MS[2]
 #'
 #' @return model at the given index in the sequence
-setMethod(f= "[",
-    signature="model.seq",
-    definition=function(x,i){
+setMethod(f = "[",
+    signature = "model_seq",
+    definition = function(x,i) {
         return(x@models[[i]])
     }
 )
 
-#' @describeIn model.seq set model by index
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
 #' MS[3] = model()
 #'
 #' @return model sequence with the model at index i replaced
-setMethod(f= "[<-",
-    signature="model.seq",
-    definition=function(x,i,value){
-        if (!is(value,'model'))
-        {
+setMethod(f = "[<-",
+    signature = "model_seq",
+    definition = function(x,i,value) {
+        if (!is(value,'model')) {
             stop('value must be a model')
         }
-        x@models[[i]]=value
+        x@models[[i]] = value
         return(x)
     }
 )
 
-#' @describeIn model.seq get a list of models in the sequence
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
 #' L = models(MS)
 #'
 #' @return a list of models in the sequence
-setMethod(f='models',
-    signature='model.seq',
-    definition=function(ML){
+setMethod(f = 'models',
+    signature = 'model_seq',
+    definition = function(ML) {
         return(ML@models)
     }
 )
 
-#' @describeIn model.seq set the models in the sequence
+#' @rdname model_seq
 #' @export
 #' @examples
-#' MS = model.seq()
+#' MS = model_seq()
 #' L = list(model(),model())
 #' models(MS) = L
 #'
 #' @return a model sequence containing the input models
-setMethod(f='models<-',
-    signature=c('model.seq','list'),
-    definition=function(ML,value) {
+setMethod(f = 'models<-',
+    signature = c('model_seq','list'),
+    definition = function(ML,value) {
         # check that all items in list are models
-        ism=lapply(X=value,FUN=is,class2='model')
+        ism = lapply(X = value,FUN = is,class2 = 'model')
         if (!all(unlist(ism))) {
             stop('all items in list must be a model')
         }
         # if they are all models then add them to the object
-        ML@models=value
+        ML@models = value
         return(ML)
     }
 )
 
-#' @describeIn model.seq get the number of models in the sequence
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
 #' length(MS) # 2
 #'
 #' @return the number of models in the sequence
-setMethod(f='length',
-    signature='model.seq',
-    definition=function(x) {
+setMethod(f = 'length',
+    signature = 'model_seq',
+    definition = function(x) {
         return(length(x@models))
     }
 )
 
-#' @describeIn model.seq print a summary of the model.seq to the command line
-#' @export
-#' @examples
-#' MS = model() + model()
-#' show(MS)
-#'
-#' @return pritns a summary of the contents of a model sequence
-setMethod(f='show',
-    signature='model.seq',
-    definition=function(object) {
-        cat('A model.seq object containing:\n')
-        if (length(object)==0)
-        {
+#' 
+
+setMethod(f = 'show',
+    signature = 'model_seq',
+    definition = function(object) {
+        cat('A model_seq object containing:\n\n')
+        if (length(object) == 0) {
             cat('no models')
             return()
         }
-        for (i in seq_len(length(object)))
-        {
-            cat('[',i,'] ',name(object[i]),'\n',sep='')
+        for (i in seq_len(length(object))) {
+            cat('[',i,']\n',sep='')
+            show(object[i])
         }
     }
 )
 
-setClassUnion("model_OR_model.seq", c("model", "model.seq"))
 
-#' @describeIn model.seq add a model to the (front) of a model sequence
+
+setClassUnion("model_OR_model_seq", c("model", "model_seq"))
+
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
@@ -220,16 +217,16 @@ setClassUnion("model_OR_model.seq", c("model", "model.seq"))
 #' @return a model sequence with the additional model appended to the front of
 #' the sequence
 setMethod("+",
-    signature(e1='model',e2='model.seq'),
-    definition=function(e1,e2) {
-        m=models(e2)
-        m=c(e1,m)
-        models(e2)=m
+    signature(e1 = 'model',e2 = 'model_seq'),
+    definition = function(e1,e2) {
+        m = models(e2)
+        m = c(e1,m)
+        models(e2) = m
         return(e2)
     }
 )
 
-#' @describeIn model.seq add a model to the (end) of a model sequence
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
@@ -239,78 +236,74 @@ setMethod("+",
 #' @return a model sequence with the additional model appended to the end of the
 #' sequence
 setMethod("+",
-    signature(e1='model.seq',e2='model'),
-    definition=function(e1,e2) {
-        m=models(e1)
-        m=c(m,e2)
-        models(e1)=m
+    signature(e1 = 'model_seq',e2 = 'model'),
+    definition = function(e1,e2) {
+        m = models(e1)
+        m = c(m,e2)
+        models(e1) = m
         return(e1)
     }
 )
 
-#' @describeIn model.seq combine two models into a sequence
+#' @rdname model_seq
 #' @export
 #' @examples
 #' MS = model() + model()
 #'
 #' @return a model sequence
 setMethod("+",
-    signature(e1='model',e2='model'),
-    definition=function(e1,e2) {
-        ML=model.seq(models=c(e1,e2))
+    signature(e1 = 'model',e2 = 'model'),
+    definition = function(e1,e2) {
+        ML = model_seq(models = c(e1,e2))
         return(ML)
     }
 )
 
-#' @describeIn model.seq get prediction output from model.seq
+#' @rdname model_seq
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' M = example_model()
-#' M = model.train(M,D)
-#' M = model.predict(M,D)
+#' M = model_train(M,D)
+#' M = model_predict(M,D)
 #' p = predicted(M)
 #' @return the predicted output of the last model in the sequence
-setMethod(f='predicted',
-    signature=c('model.seq'),
-    definition=function(M)
-    {
+setMethod(f = 'predicted',
+    signature = c('model_seq'),
+    definition = function(M) {
         # return the predicted ooutput from the last model
-        L=length(M)
-        return(output.value(M[L],predicted.name(M[L])))
+        L = length(M)
+        return(output_value(M[L],predicted_name(M[L])))
     }
 )
 
 
-#' @describeIn model.seq uses the input for data for training and prediction
-#' (if applicable)
+#' @rdname model_seq
 #' @export
 #' @examples
-#' D = dataset()
+#' D = DatasetExperiment()
 #' MS = example_model() + example_model()
-#' MS = model.apply(MS,D)
+#' MS = model_apply(MS,D)
 #'
-setMethod(f="model.apply",
-    signature=c("model.seq","dataset"),
-    definition=function(M,D)
-    {
+setMethod(f = "model_apply",
+    signature = c("model_seq","DatasetExperiment"),
+    definition = function(M,D) {
         # for each method in the list
-        S=D # for first in list the input D is the data object
-
-        for (i in seq_len(length(M)))
-        {
+        S = D # for first in list the input D is the data object
+        
+        for (i in seq_len(length(M))) {
             if (M[i]@seq_in != 'data') {
                 # set parameter
-                param.value(M[i],M[i]@seq_in) = S
+                param_value(M[i],M[i]@seq_in) = S
             }
             # use current data
-            M[i]=model.apply(M[i],D)
-
+            M[i] = model_apply(M[i],D)
+            
             # set the output of this method as the input for the next method
-            S=predicted(M[i])
-            if (is(S,'dataset')) {
+            S = predicted(M[i])
+            if (is(S,'DatasetExperiment')) {
                 # if its a dataset then update current D
-                D=predicted(M[i])
+                D = predicted(M[i])
             }
         }
         return(M)
