@@ -563,3 +563,13 @@ setGeneric("stato_summary",function(obj)standardGeneric("stato_summary"))
 #' @return a SummarizedExperiment object
 #' @export
 setGeneric("as.SummarizedExperiment",function(obj)standardGeneric("as.SummarizedExperiment"))
+
+#' convert to data.frame
+#'
+#' Most often used with univariate statistics to gather all the different outputs in a consistent format.
+#' 
+#' @param M a struct object
+#' @param ... other inputs passed through this function
+#' @return a data.frame containing outputs from an object
+#' @export
+setGeneric("as_data_frame",function(M)standardGeneric("as_data_frame"))
