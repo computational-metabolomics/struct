@@ -1,32 +1,19 @@
-#' outputs_class
-#'
-#' A base class in the \pkg{struct} package. Provides several fundamental
-#' methods for getting/setting outputs etc and should not be called directly.
-#' @export outputs_class
-#' @param obj a struct object with outputs
-#' @param name output id
-#' @param x object of class output_class
-#' @param value value
-#' @include generics.R struct_class.R entity_class.R
-
-outputs_class<-setClass(
-    "outputs_class")
-
-#' @describeIn outputs_class get an output as an object (if appropriate)
+#' @include generics.R struct_class.R
+#' @describeIn output_obj get an output as an object (if appropriate)
 #' @export
 #' @examples
 #' M = example_model()
 #' obj = output_obj(M,'result_1')
 #' @return the output id as an (e.g entity) object
 setMethod(f = "output_obj",
-    signature = c("outputs_class","character"),
+    signature = c("struct_class","character"),
     definition = function(obj,name) {
-        value = slot(obj, paste("outputs",name,sep = '_'))
+        value = slot(obj,name)
         return(value)
     }
 )
 
-#' @describeIn outputs_class set the value of an output
+#' @describeIn output_obj set the value of an output
 #' @export
 #' @examples
 #' M = example_model()
@@ -34,75 +21,57 @@ setMethod(f = "output_obj",
 #'
 #' @return the modified object
 setMethod(f = "output_obj<-",
-    signature = c("outputs_class","character"),
+    signature = c("struct_class","character"),
     definition = function(obj,name,value) {
-        p = slot(obj, paste("outputs",name,sep = '_'))
-        slot(obj, paste("outputs",name,sep = '_')) = value
+        p = slot(obj, name)
+        slot(obj, name) = value
         return(obj)
     }
 )
 
-#' @describeIn outputs_class check if a name is a valid output id for an object
+#' @describeIn is_output check if a name is a valid output id for an object
 #' @export
 #' @examples
 #' M = model()
 #' is_output(M,'example') # FALSE
 #' @return logical
 setMethod(f = "is_output",
-    signature = c("outputs_class"),
+    signature = c("struct_class"),
     definition = function(obj,name) {
-        valid = (output_ids(obj))
-        if (name %in% valid) {
-            return(TRUE)
+        valid = output_ids(obj)
+        if (length(valid)>0) {
+            return(name %in% valid)            
         } else {
             return(FALSE)
         }
     }
 )
 
-#' @describeIn outputs_class list the valid output ids for an object
+#' @describeIn output_ids list the valid output ids for an object
 #' @export
 #' @examples
 #' M = model()
 #' output_ids(M)
 #' @return character list of valid output ids for object M
 setMethod(f = "output_ids",
-    signature = c("outputs_class"),
+    signature = c("struct_class"),
     definition = function(obj) {
-        # get slotnames
-        s = slotNames(obj)
-        
-        # substitute the first _ with a *
-        s=sub('_','*',s)
-        
-        # split by the *
-        t = strsplit(s,'\\*')
-        
-        # see if slot has "outputs" in name
-        found = unlist(lapply(t,function(x) {
-            'outputs' %in% x
-        }))
-        
-        # unlist those that have
-        t = unlist(t[found])
-        
-        # exclude the outputs part of the slot names
-        t = t[t!= 'outputs']
-        
+        # get list of outputs
+        t = obj@.outputs
         return(t)
     }
 )
 
-#' @describeIn outputs_class get the (long) name of an output id
+#' @describeIn output_name get the (long) name of an output id
 #' @export
 #' @examples
 #' M = example_model()
 #' output_name(M,'result_1')
 #' @return (long) name of output
 setMethod(f = "output_name",
-    signature = c("outputs_class",'character'),
+    signature = c("struct_class",'character'),
     definition = function(obj,name) {
-        p = slot(obj, paste("outputs",name,sep = '_'))
+        p = slot(obj, name)
         # if the output is an entity then get its name
         if (is(p,'entity')) {
             value = p$name
@@ -114,14 +83,14 @@ setMethod(f = "output_name",
     }
 )
 
-#' @describeIn outputs_class get the output values of an object as a named list
+#' @describeIn output_list get the output values of an object as a named list
 #' @export
 #' @examples
 #' M = model()
 #' L = output_list(M)
 #' @return named list of output ids and current values
 setMethod(f = 'output_list',
-    signature = c('outputs_class'),
+    signature = c('struct_class'),
     definition = function(obj) {
         L = list()
         names = output_ids(obj)
@@ -132,14 +101,14 @@ setMethod(f = 'output_list',
     }
 )
 
-#' @describeIn outputs_class set the output values of an object using a named
+#' @describeIn output_list set the output values of an object using a named
 #' list
 #' @examples
 #' M = model()
 #' L = output_list(M)
 #' @return named list of output ids and current values
 setMethod(f = 'output_list<-',
-    signature = c('outputs_class','list'),
+    signature = c('struct_class','list'),
     definition = function(obj,value) {
         namez = names(value)
         for (i in seq_len(length(namez))) {
@@ -149,101 +118,50 @@ setMethod(f = 'output_list<-',
     }
 )
 
-#' @describeIn outputs_class get the value of an output by id
+#' @describeIn output_value get the value of an output by id
 #' @export
 #' @examples
 #' M = example_model()
 #' L = output_value(M,'result_1')
 #' @return value of output
 setMethod(f = "output_value",
-    signature = c("outputs_class","character"),
+    signature = c("struct_class","character"),
     definition = function(obj,name) {
         
-        p = slot(obj, paste("outputs",name,sep = '_'))
+        p = slot(obj, name)
         # if the output is an entity then set its value
         if (is(p,'entity')) {
             value = value(p)
         } else {
             # otherwise just set it to the value
-            value = slot(obj, paste("outputs",name,sep = '_'))
+            value = slot(obj, name)
         }
         return(value)
     }
 )
 
-#' @describeIn outputs_class get the value of an output by id
-#' @export
-#' @examples
-#' M = example_model()
-#' v = M$result_1
-#' @return value of output
-setMethod(f = "$",
-    signature(x = 'outputs_class'),
-    definition = function(x,name) {
-        if (is(x,'parameter_class')) {
-            if (is_param(x,name)) {
-                value = param_value(x,name)
-                return(value)
-            }
-        }
-        if (is_output(x,name)) {
-            value = output_value(x,name)
-            return(value)
-        }
-        stop(paste0('"',name,'" is not a valid param or output for ', class(x),
-            ' objects.'))
-    }
-)
 
-#' @describeIn outputs_class set the value of an output by id
+#' @describeIn output_value set the value of an output by id
 #' @export
 #' @examples
 #' M = example_model()
 #' output_value(M,'result_1') = DatasetExperiment()
 #' @return modified model object
 setMethod(f = "output_value<-",
-    signature = c("outputs_class","character"),
+    signature = c("struct_class","character"),
     definition = function(obj,name,value) {
-        p = slot(obj, paste("outputs",name,sep = '_'))
+        p = slot(obj, name)
         # if the parameter is an entity then set its value
         if (is(p,'entity')) {
             value(p) = value
-            slot(obj, paste("outputs",name,sep = '_')) = p
+            slot(obj, name) = p
         } else {
             # otherwise just set it to the value
-            slot(obj, paste("outputs",name,sep = '_')) = value
+            slot(obj, name) = value
         }
         return(obj)
     }
 )
 
 
-
-#' @describeIn outputs_class set the value of an output by id
-#' @export
-#' @examples
-#' M = example_model()
-#' M$result_1 = DatasetExperiment()
-#' @return modified model object
-setMethod(f = "$<-",
-    signature = c(x = "outputs_class"),
-    definition = function(x,name,value) {
-        if (is(x,'parameter_class')) {
-            if (is_param(x,name)) {
-                param_value(x,name) = value
-                return(x)
-            }
-        }
-        
-        if (is_output(x,name)) {
-            output_value(x,name) = value
-            return(x)
-        }
-        
-        # if we get here then error
-        stop(paste0('"',name,'" is not a valid param or output for ', class(x),
-            ' objects.'))
-        
-    }
-)
 

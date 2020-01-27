@@ -1,122 +1,92 @@
-#' struct_class
+#' \code{struct_class} object definition
 #'
-#' A base class in the \pkg{struct} package. Provides several fundamental
-#' methods for getting/setting parameters etc and should not be called directly.
-#' @export struct_class
+#' Defines the struct class base template. This class is inherited by other objects
+#' and not intended for direct use. It defines slots and methods common to all
+#' \pkg{struct} objects.
+#' 
+#' @section Public slots:
+#' Public slots can be accessed using shorthand $ notation and are intended for 
+#' users building workflows.
+#'  
+#' \describe{
+#'   \item{\code{name}}{short descriptive name of the struct object}
+#'   \item{\code{description}}{a longer description of the struct object and what it does}
+#'   \item{\code{type}}{a single keyword that describes the type of struct object}
+#'   \item{\code{libraries}}{a (read only) list of R packages used by this struct object}
+#' }
+#' 
+#' @section Private slots:
+#' Private slots are not readily accessible to users and are intended for developers
+#' creating their own struct objects.
+#' 
+#' \describe{
+#'   \item{\code{.params}}{a list of additional slot names that can be get/set by the user
+#'   for a specific struct object. These are used as input parameters for different methods.}
+#'   \item{\code{.outputs}}{a list of additional slot names that can be get by the user. These are
+#'   used to store the results of a method.}
+#' }
+#' 
 #' @import methods
 #' @include generics.R
-#' @slot name name of object
-#' @slot description description of object
-#' @slot type type of object
-#' @slot libraries R packages needed by this object
-#' @return an struct object
-#' @param ... named slots and their values.
-#' @param x a struct object
-#' @param value something to assign to a slot
-#' @param name slot to get/set
+#' @return Returns a \pkg{struct} object
 #' @examples
-#' S = struct_class()
-#' @rdname struct_class
-struct_class = function(...) {
+#' S = struct_class(name = 'Example',description = 'An example object')
+#' @export
+.struct_class<-setClass(
+    "struct_class",
+    slots = c(
+        name = 'character',
+        description = "character",
+        type = "character",
+        libraries = 'character',
+        .params='character',
+        .outputs='character'
+    )
+)
+
+#' Constructor for struct_class objects
+#' 
+#' Creates a new \link{struct_class-class} object and populates the slots. Not intended
+#' for direct use.
+#' @param name the name of the object
+#' @param description a description of the object
+#' @param type the type of the struct object
+#' @return a struct_class object
+#' @export
+struct_class = function(
+    name=character(0),
+    description=character(0),
+    type=character(0)) {
+    
     # new object
-    out = .struct_class()
-    # initialise
-    out = .initialize_struct_class(out,...)
+    out = .struct_class(
+        name=name,
+        description=description,
+        type=type
+    )
+    
     return(out)
 }
 
 
-.struct_class<-setClass(
-    "struct_class",
-    slots = c(name = 'character',
-        description = "character",
-        type = "character",
-        libraries = 'character'
-    )
-)
 
-#' Initialise a struct object
-#' 
-#' This function handles the conversion of params from name to params_name when 
-#' initialising an object. It is used in the constructor for new struct objects, 
-#' and not intended to be used in isolation.
-#' @param ... named slots and their values.
-#' @param .Object a prototype struct object
-#' @return a struct object with populated slots
-#' @export
-#' @examples
-#' \dontrun{
-#' # a class contructor can be created as follows
-#' new_struct_class = function(...) {
-#'     # new object
-#'     out = .new_struct_class()
-#'     # initialise
-#'     out = .initialize_struct_class(out,...)
-#'     return(out)
-#'     }
-#' }
-#' @rdname struct_class
-.initialize_struct_class=function(.Object,...) {
-    L = list(...)
-    SN = slotNames(.Object)
-    if (length(L)>0)
-    {
-        for (i in seq_len(length(L)))
-        {
-            if (names(L)[[i]] %in% SN) {
-                slot(.Object,names(L)[[i]]) = L[[names(L)[[i]]]]
-            } else if (is(.Object,'parameter_class')) {
-                param_value(.Object,names(L)[[i]]) = L[[names(L)[[i]]]]
-            } else {
-                stop(paste0(names(L)[[i]], 'is not a valid for ', class(.Object), ' objects.'))
-            }
-            
-        }
-    }
-    
-    # check if packages are available
-    not_found = character(0)
-    for (k in .Object@libraries) {
-        if (!requireNamespace(k, quietly = TRUE)) {
-            not_found = c(not_found,k)
-        }
-    }
-    
-    if (length(not_found)>0) {
-        stop(paste0('The following packages are required but not installed: ', paste0(not_found,collapse = ', ',
-            '. Please install them.')),
-            call. = FALSE)
-    }
-    
-    return(.Object)
-    
-}
-
-
-#' @rdname struct_class
 #' @export
 setMethod(f = "$",
     signature = c("struct_class"),
     definition = function(x,name) {
         
         # check for param
-        if (is(x,'parameter_class')) {
-            w=FALSE
-            w = is_param(x,name)
-            if (w) {
-                out = param_value(x,name)
-                return(out)
-            }
+        w = is_param(x,name)
+        if (w) {
+            out = param_value(x,name)
+            return(out)
         }
         
         # check for output
-        if (is(x,'outputs_class')) {
-            w=FALSE
-            w = is_output(x,name)
-            if (w) {
-                out = output_value(x,name)
-                return(out)
-            }
+        w = is_output(x,name)
+        if (w) {
+            out = output_value(x,name)
+            return(out)
         }
         
         # check for other struct slots
@@ -124,18 +94,14 @@ setMethod(f = "$",
         if (name %in% valid) {
             out = slot(x,name)
             return(out)
-        } else {
-            # mirror the SummarizedExperiment use case
-            if (!(name %in% names(colData(x)))) {
-                stop(paste0(name,' is not a valid param, output or column name for this DatasetExperiment using $'))
-            }
-            out = colData(x)[[name]] 
-            return(out)
         }
+        
+        # if we get here then error
+        stop(paste0('"', name, '" is not valid for this object:', class(x)))
+        
     }
 )
 
-#' @rdname struct_class
 #' @export
 setMethod(f = "$<-",
     signature = c("struct_class"),
@@ -143,37 +109,34 @@ setMethod(f = "$<-",
         
         
         # check for param
-        if (is(x,'parameter_class')) {
-            if (is_param(x,name)) {
-                param_value(x,name) = value
-                return(x)
-            }
+        if (is_param(x,name)) {
+            param_value(x,name) = value
+            return(x)
         }
         
         # check for output
-        if (is(x,'outputs_class')) {
-            if (is_output(x,name)) {
-                output_value(x,name) = value
-                return(x)
-            }
+        if (is_output(x,name)) {
+            output_value(x,name) = value
+            return(x)
         }
         
         # check for other slots
-        valid=c('name','description','type','libraries')
+        valid=c('name','description','type') # do not allow setting of libraries
         if (name %in% valid) {
             slot(x,name) = value
             return(x)
-        } else {
-            stop(paste0(name,' is not a valid param, output or column name for this DatasetExperiment using $'))
-        }
+        } 
+        
+        # if we havent returned value by now, then we're not going to
+        stop(paste0(name,' is not a valid param, output or column name for this DatasetExperiment using $'))
+
     }
 )
 
 
-
-#' chart names
+#' Chart names
 #'
-#' print a list of chart objects associated with the input object
+#' Print a list of chart objects associated with the input object
 #' @param obj a chart object
 #' @param ret a string indicating whether to return a list of chart
 #' names (ret = "char") or a list of chart objects (ret = "obj").
@@ -220,6 +183,7 @@ setMethod(f = "chart_names",
         return(OUT)
     }
 )
+
 
 setMethod(f = "show",
     signature = c("struct_class"),
