@@ -2,7 +2,7 @@
 #' Fisher's Iris data
 #'
 #' Fisher's Iris data as a DatasetExperiment object
-#' @export iris_DatasetExperiment
+#' @export
 #' @return DatasetExperiment object
 #' @import datasets
 #' @examples
@@ -17,44 +17,44 @@ iris_DatasetExperiment = function () {
             "width and petal length and width, respectively, for 50 flowers from ",
             "each of 3 species of iris. The species are Iris setosa, versicolor, ",
             "and virginica."),
-            assay = iris[, 1:4],
-            rowData = iris[, -(1:4), drop = FALSE],
-            colData=data.frame('feature_id'=colnames(iris[,1:4]))
+            data = iris[, 1:4],
+            sample_meta = iris[, -(1:4), drop = FALSE],
+            variable_meta=data.frame('feature_id'=colnames(iris[,1:4]))
         )
     }
 
 #' Example model
 #'
-#' An example model for testing
-#' @export example_model
-#' @return dataset object
-#' @param M example_model object
-#' @param D dataset object
+#' An example model for testing. Training this model adds value_1 to a data set, and
+#' prediction using this model adds value_2.
+#' @export
+#' @return modified example_model object
+#' @param M A struct model object
+#' @param D A DatasetExperiment object
+#' @param value_0 a numeric value
+#' @param value_1 a numeric value
+#' @param value_2 a numeric value
+#' @param ... additional slots and values to pass to struct_class 
 #' @rdname example_model
 #' @include model_class.R
 #' @examples
 #' M = example_model()
 #' M = example_model(value_1 = 10, value_2 = 20)
 #' @param ... named slots and their values.
-example_model = function(...) {
+example_model = function(value_0=0,value_1=10,value_2=20,...) {
     # new object
-    out = .example_model()
-    # initialise
-    out = .initialize_struct_class(out,...)
+    out = new_struct('example_model',value_0=value_0,value_1=value_1,value_2=value_2,...)
     return(out)
 }
-
-
-
 
 .example_model = setClass('example_model',
     contains = c('model','stato'),
     slots = c(
-        'params_value_0' = 'entity',
-        'params_value_1' = 'entity_stato',
-        'params_value_2' = 'numeric',
-        'outputs_result_1' = 'entity',
-        'outputs_result_2' = 'DatasetExperiment'
+        'value_0' = 'entity',
+        'value_1' = 'entity_stato',
+        'value_2' = 'numeric',
+        'result_1' = 'entity',
+        'result_2' = 'DatasetExperiment'
     ),
     prototype = list(
         name = 'A test model',
@@ -62,15 +62,17 @@ example_model = function(...) {
         a dataset, while prediction adds value_2 counts.',
         type = 'test',
         stato_id = 'OBI:0000011',
-        params_value_0 = entity(name = 'Value 0',value = 0,type = 'numeric'),
-        params_value_1 = entity_stato(value = 10,name = 'Value 1',type = 'numeric',
+        value_0 = entity(name = 'Value 0',value = 0,type = 'numeric'),
+        value_1 = entity_stato(value = 10,name = 'Value 1',type = 'numeric',
             description = 'An example entity_stato object',
             stato_id = 'STATO:0000047'),
-        params_value_2 = 20,
-        outputs_result_1 = entity(name = 'Result 1',type = 'DatasetExperiment',
+        value_2 = 20,
+        result_1 = entity(name = 'Result 1',type = 'DatasetExperiment',
             description = 'An example entity object',value = DatasetExperiment()),
-        outputs_result_2 = DatasetExperiment(),
-        predicted = 'result_1'
+        result_2 = DatasetExperiment(),
+        predicted = 'result_1',
+        .params=c('value_0','value_1','value_2'),
+        .outputs=c('result_1','result_2')
     )
 )
 
@@ -129,9 +131,7 @@ setMethod(f = 'model_predict',
 #' @param ... named slots and their values.
 example_chart = function(...) {
     # new object
-    out = .example_chart()
-    # initialise
-    out = .initialize_struct_class(out,...)
+    out = .example_chart(...)
     return(out)
 }
 

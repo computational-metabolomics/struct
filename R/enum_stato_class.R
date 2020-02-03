@@ -6,18 +6,32 @@
 #' @seealso Refer to \code{\link{enum}} and \code{\link{stato}} for further
 #' info.
 #'
-#' @export enum_stato
+#' @export
 #' @include generics.R struct_class.R entity_class.R enum_class.R stato_class.R
 #' @examples
-#' E = enum_stato()
-#' @param ... named slots and their values.
+#' E = enum_stato(
+#'     name='example',
+#'     allowed=list('choice_1','choice_2'),
+#'     value='choice_1',
+#'     type='character',
+#'     stato_id='XYZ000001'
+#' )
+#' @inheritParams entity_stato
+#' @inheritParams enum
 #' @rdname enum_stato
 #' @return an enum_stato object
-enum_stato = function(...) {
+enum_stato = function(name, description=character(0), type='character', 
+    value=character(0),max_length=1,allowed,stato_id) {
     # new object
-    out = .enum_stato()
-    # initialise
-    out = .initialize_enum(out,...)
+    out = .enum_stato(
+        name=name, 
+        description=description,
+        type=type,
+        value=value,
+        max_length=max_length,
+        list=allowed,
+        stato_id=stato_id
+    )
     return(out)
 }
 
@@ -33,7 +47,7 @@ setMethod(f = 'show',
         callNextMethod()
         
         # add the stato part
-        show(stato())
+        show(stato(stato_id=object@stato_id))
         
         cat('\n')
     }

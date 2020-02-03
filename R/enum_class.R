@@ -8,7 +8,7 @@
 #' Enum objects are usually defined in the prototype of another object, but
 #' can be extracted using \code{param_obj} and \code{output_obj}.
 #'
-#' @export enum
+#' @export
 #' @include entity_class.R
 #' @return an enum object
 #' @examples
@@ -18,19 +18,27 @@
 #'     description = 'this is an example',
 #'     type = 'character',
 #'     value = 'hello',
-#'     list = c('hello','world')
+#'     allowed = c('hello','world')
 #' )
 #'
 #' # Get/set the value of the entity object
 #' value(E)
 #' value(E) = 'world'
-#' @param ... named slots and their values.
+#' @param allowed A list of allowed values
+#' @inheritParams entity
 #' @rdname enum
-enum = function(...) {
+enum = function(name, description=character(0), type='character', 
+    value=character(0),max_length=1,allowed) {
+    
     # new object
-    out = .enum()
-    # initialise
-    out = .initialize_enum(out,...)
+    out = .enum(
+        name=name, 
+        description=description,
+        type=type,
+        value=value,
+        max_length=max_length,
+        list=allowed
+    )
     return(out)
 }
 
@@ -39,22 +47,19 @@ enum = function(...) {
     slots = c('list'),
     contains = 'entity',
     prototype = list(name = 'name not provided',
-        description = 'no description provided')
-)
+        description = 'no description provided'),
+    validity = function(object) {
+        check_list = object@value %in% object@list
+        
+        # check enum validity
+        msg = TRUE
+        if (!check_list) {
+            msg = paste0(object$name,': enum value must be in enum list')
+        }
 
-.initialize_enum = function(.Object,...)
-{
-    L = list(...)
-    N = names(L)
-    
-    for (i in N) {
-        slot(.Object,i) = L[[i]]
+        return(msg)
     }
-    if (!is.null(.Object@list) & is.null(.Object@value)) {
-        value(.Object) = .Object@list[1]
-    }
-    return(.Object)
-}
+)
 
 
 #' @rdname enum

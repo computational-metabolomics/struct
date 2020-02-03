@@ -1,10 +1,7 @@
 #' @include generics.R struct_class.R
-#' @describeIn output_obj get an output as an object (if appropriate)
+#' 
+#' @describeIn output_obj 
 #' @export
-#' @examples
-#' M = example_model()
-#' obj = output_obj(M,'result_1')
-#' @return the output id as an (e.g entity) object
 setMethod(f = "output_obj",
     signature = c("struct_class","character"),
     definition = function(obj,name) {
@@ -13,28 +10,22 @@ setMethod(f = "output_obj",
     }
 )
 
-#' @describeIn output_obj set the value of an output
+#' @describeIn output_obj 
 #' @export
-#' @examples
-#' M = example_model()
-#' output_obj(M,'result_1') = entity()
-#'
 #' @return the modified object
 setMethod(f = "output_obj<-",
     signature = c("struct_class","character"),
     definition = function(obj,name,value) {
         p = slot(obj, name)
-        slot(obj, name) = value
+        if (is_output(obj,name)) {
+            slot(obj, name) = value
+        }
         return(obj)
     }
 )
 
-#' @describeIn is_output check if a name is a valid output id for an object
+#' @describeIn is_output 
 #' @export
-#' @examples
-#' M = model()
-#' is_output(M,'example') # FALSE
-#' @return logical
 setMethod(f = "is_output",
     signature = c("struct_class"),
     definition = function(obj,name) {
@@ -47,12 +38,8 @@ setMethod(f = "is_output",
     }
 )
 
-#' @describeIn output_ids list the valid output ids for an object
+#' @describeIn output_ids 
 #' @export
-#' @examples
-#' M = model()
-#' output_ids(M)
-#' @return character list of valid output ids for object M
 setMethod(f = "output_ids",
     signature = c("struct_class"),
     definition = function(obj) {
@@ -62,12 +49,8 @@ setMethod(f = "output_ids",
     }
 )
 
-#' @describeIn output_name get the (long) name of an output id
+#' @describeIn output_name 
 #' @export
-#' @examples
-#' M = example_model()
-#' output_name(M,'result_1')
-#' @return (long) name of output
 setMethod(f = "output_name",
     signature = c("struct_class",'character'),
     definition = function(obj,name) {
@@ -83,12 +66,8 @@ setMethod(f = "output_name",
     }
 )
 
-#' @describeIn output_list get the output values of an object as a named list
+#' @describeIn output_list 
 #' @export
-#' @examples
-#' M = model()
-#' L = output_list(M)
-#' @return named list of output ids and current values
 setMethod(f = 'output_list',
     signature = c('struct_class'),
     definition = function(obj) {
@@ -101,12 +80,8 @@ setMethod(f = 'output_list',
     }
 )
 
-#' @describeIn output_list set the output values of an object using a named
-#' list
-#' @examples
-#' M = model()
-#' L = output_list(M)
-#' @return named list of output ids and current values
+#' @describeIn output_list 
+#' @export
 setMethod(f = 'output_list<-',
     signature = c('struct_class','list'),
     definition = function(obj,value) {
@@ -118,12 +93,8 @@ setMethod(f = 'output_list<-',
     }
 )
 
-#' @describeIn output_value get the value of an output by id
+#' @describeIn output_value 
 #' @export
-#' @examples
-#' M = example_model()
-#' L = output_value(M,'result_1')
-#' @return value of output
 setMethod(f = "output_value",
     signature = c("struct_class","character"),
     definition = function(obj,name) {
@@ -141,12 +112,8 @@ setMethod(f = "output_value",
 )
 
 
-#' @describeIn output_value set the value of an output by id
+#' @describeIn output_value 
 #' @export
-#' @examples
-#' M = example_model()
-#' output_value(M,'result_1') = DatasetExperiment()
-#' @return modified model object
 setMethod(f = "output_value<-",
     signature = c("struct_class","character"),
     definition = function(obj,name,value) {

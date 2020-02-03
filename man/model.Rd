@@ -11,7 +11,7 @@
 \alias{predicted_name<-,model,character-method}
 \title{model class}
 \usage{
-model(...)
+model(predicted = character(0), seq_in = "data", ...)
 
 \S4method{model_train}{model,DatasetExperiment}(M, D)
 
@@ -28,13 +28,18 @@ model(...)
 \S4method{predicted_name}{model,character}(M) <- value
 }
 \arguments{
+\item{predicted}{The name of an output slot to return when using \code{predicted()} (see details)}
+
+\item{seq_in}{the name of an output slot to connect with the "predicted" output 
+of another model (see details)}
+
 \item{...}{named slots and their values.}
 
-\item{M}{a model object}
+\item{M}{A struct model object}
 
-\item{D}{a dataset object}
+\item{D}{A DatasetExperiment object}
 
-\item{value}{value}
+\item{value}{The value to assign}
 }
 \value{
 trained model object
@@ -57,6 +62,23 @@ Also used for preprocessing steps that require application to test sets.
 not intended to be called directly, this class should be inherited to provide
 functionality for method-specific classes.
 }
+\section{\code{predicted} slot}{
+
+The "predicted" slot is a slots for use by users to control the flow of model
+sequences. The \code{predicted()} function is used to return a default output and
+from a model. Typically it is a DatasetExperiment object that is passed directly
+into the next model in a sequence as the data for that model.
+}
+
+\section{\code{seq_in} slot}{
+
+In a sequence of models (see model_seq) the "predicted" slot is connected to the 
+DatasetExperiment input of the next model. \code{seq_in} can be used to control
+flow and connect the "predicted" output to the input parameter of the next model.
+Default is the keyword 'data', and can otherwise be replaced by any input slot 
+from the model.
+}
+
 \examples{
 M = model()
 D = DatasetExperiment()

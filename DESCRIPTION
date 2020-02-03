@@ -2,9 +2,15 @@ Package: struct
 Type: Package
 Title: Statistics in R Using Class Templates
 Version: 0.99.2
-Author: Dr Gavin Rhys Lloyd
-Maintainer: Dr Gavin Rhys Lloyd <g.r.lloyd@bham.ac.uk>
-Description: Defines a set of class templates for developing statistical workflows.
+Author: Gavin Rhys Lloyd and Ralf Weber
+Maintainer: Gavin Rhys Lloyd <g.r.lloyd@bham.ac.uk>
+Description: Defines a set of class templates for developing statistical 
+    workflows. The templates can be extended to 'wrap' tools from other packages 
+    into a common structure that allows them to work together more easily.
+    Models can be combined into sequences, and sequences nested in iterators 
+    using overloaded operators to simplify code. A version of the STATO ontology
+    is included to provide standardised definitions for methods wrapped using 
+    the templates.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -15,7 +21,6 @@ Collate:
     'chart_class.R'
     'stato_class.R'
     'DatasetExperiment_class.R'
-    'dataset_class.R'
     'entity_class.R'
     'entity_stato_class.R'
     'enum_class.R'
@@ -31,8 +36,8 @@ Collate:
     'resampler_class.R'
     'struct.R'
     'struct_templates.R'
-    'zzz.R'
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
+Depends: R (>= 4.0)
 Suggests: 
  testthat,
  rstudioapi,
@@ -41,7 +46,7 @@ Suggests:
  BiocStyle,
  openxlsx
 VignetteBuilder: knitr
-Imports: methods, ontologyIndex, crayon, 
+Imports: methods, ontologyIndex,
     datasets, graphics, stats, utils, knitr, 
     SummarizedExperiment, S4Vectors
 biocViews: WorkflowStep

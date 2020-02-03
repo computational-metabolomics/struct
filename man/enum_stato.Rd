@@ -4,10 +4,30 @@
 \alias{enum_stato}
 \title{enum_stato class}
 \usage{
-enum_stato(...)
+enum_stato(
+  name,
+  description = character(0),
+  type = "character",
+  value = character(0),
+  max_length = 1,
+  allowed,
+  stato_id
+)
 }
 \arguments{
-\item{...}{named slots and their values.}
+\item{name}{the name of the object}
+
+\item{description}{a description of the object}
+
+\item{type}{the type of the struct object}
+
+\item{value}{The value of the parameter/outputs}
+
+\item{max_length}{Maximum length of value vector (default 1)}
+
+\item{allowed}{A list of allowed values}
+
+\item{stato_id}{The STATO ID for the entity}
 }
 \value{
 an enum_stato object
@@ -19,7 +39,13 @@ A base class in the \pkg{struct} package. Should not be called directly.
 Extends the \code{enum} class to include stato functionality.
 }
 \examples{
-E = enum_stato()
+E = enum_stato(
+    name='example',
+    allowed=list('choice_1','choice_2'),
+    value='choice_1',
+    type='character',
+    stato_id='XYZ000001'
+)
 }
 \seealso{
 Refer to \code{\link{enum}} and \code{\link{stato}} for further

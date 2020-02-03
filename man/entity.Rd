@@ -11,7 +11,13 @@
 \usage{
 max_length(obj)
 
-entity(...)
+entity(
+  name,
+  description = character(0),
+  type = "character",
+  value = character(0),
+  max_length = Inf
+)
 
 \S4method{value}{entity}(obj)
 
@@ -24,16 +30,20 @@ entity(...)
 \arguments{
 \item{obj}{An entity object}
 
-\item{...}{named slots and their values.}
+\item{name}{the name of the object}
 
-\item{value}{Value of the entity}
+\item{description}{a description of the object}
 
-\item{max_length}{maximum length of value vector (default 1)}
+\item{type}{the type of the struct object}
+
+\item{value}{The value of the parameter/outputs}
+
+\item{max_length}{Maximum length of value vector (default 1)}
 }
 \value{
 max value vector length for an entity
 
-and entity object
+An entity object
 }
 \description{
 A base class in the \pkg{struct} package. Not normally called directly.

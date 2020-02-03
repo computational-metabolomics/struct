@@ -13,7 +13,7 @@ test_that('struct objects can be created and modified',{
     expect_equal({test_object$description},"test_desc") #get
     expect_equal({test_object$description='cabbage';test_object$description},'cabbage') #set
     # show
-    expect_output(show(test_object),'A "struct_class" object\\nname:          cabbage\\ndescription:   cabbage')
+    expect_output(show(test_object),'A "struct_class" object\\n-----------------------\\nname:          cabbage\\ndescription:   cabbage')
 })
 
 # test metric object
@@ -26,18 +26,15 @@ test_that('metric object',{
 
 # test entity
 test_that('entity object',{
-    E=entity(type='numeric',value=0)
+    E=entity(type='numeric',value=0,name='test_enti')
     value(E)=1
     expect_equal(value(E),1)
 })
 
 # test enum
 test_that('enum object',{
-    E=enum(list=c('hello','world'),value='hello',type='character')
+    E=enum(allowed=c('hello','world'),value='hello',type='character',name='test_entity')
     # check object creation
-    expect_equal(value(E),'hello')
-    # check use first value if value = NULL
-    E=enum(list=c('hello','world'),value=NULL)
     expect_equal(value(E),'hello')
     # check throws error if value not in list
     expect_error({value(E)='banana'},'not a valid choice for this enum')

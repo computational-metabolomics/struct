@@ -6,14 +6,25 @@
 \alias{$<-,DatasetExperiment-method}
 \title{DatasetExperiment class}
 \usage{
-DatasetExperiment(...)
+DatasetExperiment(
+  data = data.frame(),
+  sample_meta = data.frame(),
+  variable_meta = data.frame(),
+  ...
+)
 
 \S4method{$}{DatasetExperiment}(x, name)
 
 \S4method{$}{DatasetExperiment}(x, name) <- value
 }
 \arguments{
-\item{...}{slots and values to populate a new DatasetExperiment with}
+\item{data}{A data frame with samples in rows and features in columns}
+
+\item{sample_meta}{A data frame with samples in rows and meta data in columns}
+
+\item{variable_meta}{A data frame with features in rows and meta data in columns}
+
+\item{...}{named slot values to pass through to struct_class}
 
 \item{x}{A DatasetExperiment object}
 

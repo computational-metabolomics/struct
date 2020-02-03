@@ -1,10 +1,20 @@
-#' @include generics.R struct_class.R
-#' @describeIn param_obj get a param as an object (if appropriate)
+#' @include struct_class.R generics.R
+
+#' @describeIn param_obj 
 #' @export
-#' @examples
-#' M = example_model()
-#' obj = output_obj(M,'result_1')
-#' @return the output id as an (e.g entity) object
+setMethod(f = "param_obj<-",
+    signature = c("struct_class","character"),
+    definition = function(obj,name,value) {
+        p = slot(obj, name)
+        if (is_param(obj,name)) {
+            slot(obj, name) = value
+        }
+        return(obj)
+    }
+)
+
+#' @export
+#' @describeIn param_obj 
 setMethod(f = "param_obj",
     signature = c("struct_class","character"),
     definition = function(obj,name) {
@@ -14,8 +24,8 @@ setMethod(f = "param_obj",
 )
 
 
-#' @describeIn is_param test if named slot is a parameter for an object
 #' @export
+#' @describeIn is_param 
 setMethod(f = "is_param",
     signature = c("struct_class"),
     definition = function(obj,name) {
@@ -27,8 +37,8 @@ setMethod(f = "is_param",
     }
 )
 
-#' @describeIn param_ids list the valid ids for an object
 #' @export
+#' @describeIn param_ids 
 setMethod(f = "param_ids",
     signature = c("struct_class"),
     definition = function(obj) {
@@ -38,8 +48,8 @@ setMethod(f = "param_ids",
 )
 
 
-#' @describeIn param_name get the (long) name of a parameter by id
 #' @export
+#' @describeIn param_name 
 setMethod(f = "param_name",
     signature = c("struct_class",'character'),
     definition = function(obj,name) {
@@ -55,9 +65,8 @@ setMethod(f = "param_name",
     }
 )
 
-#' @describeIn param_list get a named list of parameter values for an
-#' object
 #' @export
+#' @describeIn param_list 
 setMethod(f = 'param_list',
     signature = c('struct_class'),
     definition = function(obj) {
@@ -70,9 +79,8 @@ setMethod(f = 'param_list',
     }
 )
 
-#' @describeIn param_list set parameter values for an object using a named
-#' list
 #' @export
+#' @describeIn param_list 
 setMethod(f = 'param_list<-',
     signature = c('struct_class','list'),
     definition = function(obj,value) {
@@ -84,8 +92,8 @@ setMethod(f = 'param_list<-',
     }
 )
 
-#' @describeIn param_value get the value for a parameter by id
 #' @export
+#' @describeIn param_value 
 setMethod(f = "param_value",
     signature = c("struct_class","character"),
     definition = function(obj,name) {
@@ -103,10 +111,8 @@ setMethod(f = "param_value",
     }
 )
 
-
-
-#' @describeIn param_value set the value for a parameter by id
 #' @export
+#' @describeIn param_value 
 setMethod(f = "param_value<-",
     signature = c("struct_class","character","ANY"),
     definition = function(obj,name,value) {

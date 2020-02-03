@@ -15,8 +15,9 @@ test_that('charts',{
     test_chart=setClass('test_chart',
         contains='chart',
         slots=c(
-            params_value_1='numeric'
-        )
+            value_1='numeric'
+        ),
+        prototype=list(.params=c('value_1'))
     )
 
     setMethod(f='chart_plot',

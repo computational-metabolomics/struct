@@ -18,10 +18,14 @@ test_that('iterator objects',{
     test_iterator=setClass('test_iterator',
         contains='iterator',
         slots=c(
-            params_value_1='numeric',
-            params_value_2='numeric',
-            outputs_result_1='numeric',
-            outputs_result_2='numeric'
+            value_1='numeric',
+            value_2='numeric',
+            result_1='numeric',
+            result_2='numeric'
+        ),
+        prototype = list(
+            .params=c('value_1','value_2'),
+            .outputs=c('result_1','result_2')
         )
     )
 

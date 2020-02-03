@@ -10,20 +10,22 @@ test_that('model objects',{
     # a test model object
     # adds two input values
     test_model=function(...) {
-        out = .test_model()
-        out = .initialize_struct_class(out,...)
+        out = .test_model(...)
         return(out)
     }
     
     .test_model=setClass('test_model',
                         contains='model',
                         slots=c(
-                            params_value_1='numeric',
-                            params_value_2='numeric',
-                            outputs_result_1='numeric',
-                            outputs_result_2='numeric'
+                            value_1='numeric',
+                            value_2='numeric',
+                            result_1='numeric',
+                            result_2='numeric'
                         ),
-                        prototype=list(predicted='result_1')
+                        prototype=list(predicted='result_1',
+                                       .params=c('value_1','value_2'),
+                                       .outputs=c('result_1','result_2')
+                        )
     )
 
     setMethod(f='model_train',
@@ -68,20 +70,23 @@ test_that('model objects',{
     # a test model object
     # adds two input values
     test_model=function(...) {
-        out = .test_model()
-        out = .initialize_struct_class(out,...)
+        out = .test_model(...)
         return(out)
     }
     
     .test_model=setClass('test_model',
                         contains='model',
                         slots=c(
-                            params_value_1='numeric',
-                            params_value_2='numeric',
-                            outputs_result_1='DatasetExperiment',
-                            outputs_result_2='DatasetExperiment'
+                            value_1='numeric',
+                            value_2='numeric',
+                            result_1='DatasetExperiment',
+                            result_2='DatasetExperiment'
                         ),
-                        prototype=list(predicted='result_2',type='test')
+                        prototype=list(predicted='result_2',
+                                       type='test',
+                                       .params=c('value_1','value_2'),
+                                       .outputs=c('result_1','result_2')
+                        )
     )
 
     setMethod(f='model_train',

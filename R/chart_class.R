@@ -1,9 +1,9 @@
-#' chart_class
-#'
+#' Constructor for struct chart objects
+#' 
 #' A base class in the \pkg{struct} package. Should not be called directly.
 #'
 #' The \code{chart} class provides a template for figures, charts and plots
-#' associated with other objects. For example, a dataset object could have a
+#' associated with other objects. For example, a DatasetExperiment object could have a
 #' histogram plotted for a specified column.
 #'
 #' Charts can have parameters but not outputs (other than the figure itself), as
@@ -12,65 +12,35 @@
 #' \code{chart_names} can be used to list all chart objects associated with an
 #' object.
 #'
-#' Classes that inherit the \code{chart_stato} class instead of \code{chart}
-#' have STATO integration enabled, allowing stato_id to be set and formal names
+#' Classes that inherit the \code{stato} class have STATO integration enabled, 
+#' allowing stato_id to be set and formal names
 #' and descriptions pulled from the STATO ontology database.
 #'
 #' @export chart
 #' @include generics.R struct_class.R parameter_class.R
-#' @rdname charts
 #' @return a chart object
 #' @examples
-#' # define a new chart object class
-#' .example_chart = setClass('example_chart',
-#'     contains = 'chart',                  # inherit the chart template
-#'     slots = c('params_column' = 'numeric') # add a parameter
-#' )
-#'
-#' # define a constructor function
-#' example_chart = function(...) {
-#'     out = .example_chart()
-#'     out = .initialize_struct_class(out,...)
-#'     return(out)
-#' }
-#' 
-#' # define the chart_plot method for the example_chart
-#' setMethod('chart_plot',                     # name of the method
-#'     signature('example_chart','DatasetExperiment'),   # the class for each input
-#'     definition = function(obj, dobj) {  # function definition (from template)
-#'         p = hist(dobj$data[,obj$column])      # the plot
-#'         return(p)
-#'     }
-#' )
-#'
-#' # create the chart object
-#' C = example_chart(column = 2) # set the column parameter to 2
-#'
-#' # plot
-#' p = chart_plot(C,iris_DatasetExperiment()) # plots a histogram of the second column
-#' @param ... named slots and their values.
+#' C = example_chart()
+#' @return a struct_class object
+#' @export
+#' @param ... named slots and their values that get passed to struct_class
 chart = function(...) {
     # new object
-    out = .chart()
-    # initialise
-    out = .initialize_struct_class(out,...)
+    out = .chart(...)
     return(out)
 }
 
-
-
 .chart<-setClass(
     "chart",
-    contains = c('struct_class','parameter_class')
+    contains = c('struct_class')
 )
 
-#' @param obj a chart object
-#' @rdname charts
+#' @describeIn chart_plot 
 #' @export
 setMethod(f = "chart_plot",
     signature = "chart",
-    definition = function(obj) {
-        warning('no chart defined')
+    definition = function(obj,dobj) {
+        warning(paste0('no chart defined for "',class(dobj),'"'))
         return(obj)
     }
 )

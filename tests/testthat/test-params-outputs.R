@@ -3,28 +3,31 @@
 test_that('params and outputs',{
 
     test_model=function(...) {
-        out = .test_model()
-        out = .initialize_struct_class(out,...)
+        out = .test_model(...)
         return(out)
     }
     
     .test_model=setClass('test_model',
         contains='model',
         slots=c(
-            params_value_1='entity',
-            params_value_2='numeric',
-            outputs_result_1='entity',
-            outputs_result_2='numeric'
+            value_1='entity',
+            value_2='numeric',
+            result_1='entity',
+            result_2='numeric'
         ),
         prototype=list(
             predicted='result_1',
-            outputs_result_1=entity(name='result_1',type='numeric',value=0))
+            value_1=entity(name='test'),
+            result_1=entity(name='result_1',type='numeric',value=0),
+            .params=c('value_1','value_2'),
+            .outputs=c('result_1','result_2')
+        )
     )
 
     ## test return objects
     # params
     obj = param_obj(test_model(),'value_1')
-    expect_identical(obj,entity())
+    expect_identical(obj,entity(name='test'))
     obj = param_obj(test_model(),'value_2')
     expect_identical(obj,numeric(0))
     # outputs
@@ -71,7 +74,7 @@ test_that('params and outputs',{
     expect_identical(J,list(result_1=10,result_2=20))
 
     ## $ and $<-
-    #params
+    # params
     TM$value_1='cabbage'
     expect_equal(TM$value_1,'cabbage')
     expect_error(TM$value_3)
@@ -79,12 +82,14 @@ test_that('params and outputs',{
 
     # to test $ and $<- for outputs we need a class with outputs and NO parameters
     test_model2=setClass('test_model2',
-        contains=c('outputs_class'),
+        contains=c('model'),
         slots=c(
-            outputs_result_1='entity',
-            outputs_result_2='numeric'
+            result_1='entity',
+            result_2='numeric'
         ),
-        prototype = list(outputs_result_1=entity(type='numeric',value=1))
+        prototype = list(result_1=entity(type='numeric',value=1,name='result_1'),
+                         .outputs=c('result_1','result_2')
+        )
     )
     TM=test_model2()
     # outputs

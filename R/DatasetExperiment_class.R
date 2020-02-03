@@ -19,59 +19,34 @@
 #' @slot description Brief description of the dataset
 #' @slot type The type of dataset e.g. single_block
 #' @param x A DatasetExperiment object
-#' @param ... slots and values to populate a new DatasetExperiment with
+#' @param data A data frame with samples in rows and features in columns
+#' @param sample_meta A data frame with samples in rows and meta data in columns
+#' @param variable_meta A data frame with features in rows and meta data in columns
 #' @param name DatasetExperiment slot to get/set
 #' @param value the value to assign to the named slot
+#' @param ... named slot values to pass through to struct_class
 #' @import SummarizedExperiment
 #' @import S4Vectors
 #' @include generics.R struct_class.R stato_class.R chart_class.R
 #' @return DatasetExperiment
 #' @rdname struct_DatasetExperiment
-DatasetExperiment = function(...) {
+DatasetExperiment = function(
+    data=data.frame(),
+    sample_meta=data.frame(),
+    variable_meta=data.frame(),
+    ...){
     
-    L = list(...)
+    # convert data set to list
+    assays=list(t(data))
     
-    # change slot names to match summarizedExperiment
-    if ('data' %in% names(L)) {
-        w = which(names(L) == 'data')
-        names(L)[w] = 'assay'
-    }
-    if ('sample_meta' %in% names(L)) {
-        w = which(names(L) == 'sample_meta')
-        names(L)[w] = 'rowData'
-    }
-    if ('variable_meta' %in% names(L)) {
-        w = which(names(L) == 'variable_meta')
-        names(L)[w] = 'colData'
-    }
-    w=which(names(L) %in% c('assay','rowData','colData'))
+    # sample_meta
     
-    # use SummarizedExperiment
-    # this way we get athe relevant error if row or col data are set without assay
-    if (any(c('data','assay') %in% names(L))) {
-        out = .DatasetExperiment(
-            SummarizedExperiment(
-                assays=L$assay,
-                rowData=L$rowData,
-                colData=L$colData)
-        )
-    } else {
-        out = .DatasetExperiment(
-            SummarizedExperiment()
-        )
-
-    }
-    
-    # remove SummarizedExperiment slots
-    L=L[-w]
-    
-    # populate remaining slots
-    if (length(L) > 0) {
-        for (k in names(L)) {
-            slot(out,k)=L[[k]]
-        }
-    }
-    
+    out=.DatasetExperiment(SummarizedExperiment(
+        assays=assays,
+        colData=sample_meta,
+        rowData=variable_meta),
+        ...)
+  
     return(out)
 }
 
@@ -89,19 +64,19 @@ setMethod(f = "$",
         s = c('data','sample_meta','variable_meta')
         
         if (name %in% s) {
-            if (name %in% c('data')) {
+            if (name == 'data') {
                 if (length(assays(x))==0) {
                     value=NULL
                 } else {
-                    value = assay(x,1)
+                    value = (t(assay(x,1)))
                 }
-            } else if (name %in% c('sample_meta')) {
-                value = rowData(x)
-            } else if (name %in% c('variable_meta')) {
+            } else if (name == 'sample_meta') {
                 value = S4Vectors::DataFrame(colData(x)) # because it returns a DFrame for some reason
+            } else if (name == 'variable_meta') {
+                value = rowData(x)
             } 
             
-            if (name %in% c('data','sample_meta','variable_meta')) {
+            if (name %in% s) {
                 # convert to data.frame if using the original struct definitions
                 value=as.data.frame(value)
             }
@@ -109,6 +84,7 @@ setMethod(f = "$",
             return(value)
             
         } else {
+            # for name,description etc
             return(callNextMethod())
         }
         
@@ -123,11 +99,11 @@ setMethod(f = "$<-",
         s = c('data','sample_meta','variable_meta')
         if (name %in% s) {
             if (name %in% c('data')) {
-                assay(x,1) = value
-            } else if (name %in% c('sample_meta')) {
-                rowData(x) = value
+                assay(x,1) = t(value)
             } else if (name %in% c('sample_meta')) {
                 colData(x) = value
+            } else if (name %in% c('sample_meta')) {
+                rowData(x) = value
             }
             return(x)
         } else {
@@ -194,7 +170,7 @@ setMethod (f = 'as.SummarizedExperiment',
 #' @examples
 #' \dontrun{
 #' D = iris_DatasetExperiment() # example dataset
-#' export.xlsx(D,'iris_DatasetExperiment_xlsx')
+#' export_xlsx(D,'iris_DatasetExperiment.xlsx')
 #' }
 #' @export
 setMethod(f = "export_xlsx",

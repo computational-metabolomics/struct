@@ -13,9 +13,7 @@
 #' @return an optimiser object
 optimiser = function(...) {
     # new object
-    out = .optimiser()
-    # initialise
-    out = .initialize_struct_class(out,...)
+    out = .optimiser(...)
     return(out)
 }
 

@@ -9,22 +9,24 @@
 #' users building workflows.
 #'  
 #' \describe{
-#'   \item{\code{name}}{short descriptive name of the struct object}
-#'   \item{\code{description}}{a longer description of the struct object and what it does}
-#'   \item{\code{type}}{a single keyword that describes the type of struct object}
-#'   \item{\code{libraries}}{a (read only) list of R packages used by this struct object}
+#'   \item{\code{name}}{\code{character()} A short descriptive name of the struct object}
+#'   \item{\code{description}}{\code{character()} A longer description of the struct object and what it does}
+#'   \item{\code{type}}{\code{character()} A keyword that describes the type of struct object}
+#'   \item{\code{libraries}}{\code{character()} A (read only) list of R packages used by this struct object}
 #' }
 #' 
 #' @section Private slots:
 #' Private slots are not readily accessible to users and are intended for developers
-#' creating their own struct objects.
+#' creating their own struct objects. Any slot not listed within `.params` or 
+#' `.outputs` is considered a private slot.
 #' 
 #' \describe{
-#'   \item{\code{.params}}{a list of additional slot names that can be get/set by the user
+#'   \item{\code{.params}}{\code{character()} A list of additional slot names that can be get/set by the user
 #'   for a specific struct object. These are used as input parameters for different methods.}
-#'   \item{\code{.outputs}}{a list of additional slot names that can be get by the user. These are
+#'   \item{\code{.outputs}}{\code{character()} a list of additional slot names that can be get by the user. These are
 #'   used to store the results of a method.}
 #' }
+#' 
 #' 
 #' @import methods
 #' @include generics.R
@@ -46,7 +48,7 @@
 
 #' Constructor for struct_class objects
 #' 
-#' Creates a new \link{struct_class-class} object and populates the slots. Not intended
+#' Creates a new \linkS4class{struct_class} object and populates the slots. Not intended
 #' for direct use.
 #' @param name the name of the object
 #' @param description a description of the object
@@ -69,7 +71,17 @@ struct_class = function(
 }
 
 
-
+#' Get/set parameter or output values
+#' 
+#' Dollar syntax can be used to as a shortcut for getting/setting input parameter 
+#' and output values for struct objects.
+#' @return Parameter/output value
+#' @param x An object derived from struct_class
+#' @param name The name of the slot to access
+#' @examples 
+#' M = example_model()
+#' M$value_1 = 10
+#' M$value_1 # 10
 #' @export
 setMethod(f = "$",
     signature = c("struct_class"),
@@ -102,6 +114,18 @@ setMethod(f = "$",
     }
 )
 
+#' Get/set parameter or output values
+#' 
+#' Dollar syntax can be used to as a shortcut for getting/setting input parameter 
+#' and output values for struct objects.
+#' @return Parameter/output value
+#' @param x An object derived from struct_class
+#' @param name The name of the slot to access
+#' @param value The value to assign
+#' @examples 
+#' M = example_model()
+#' M$value_1 = 10
+#' M$value_1 # 10
 #' @export
 setMethod(f = "$<-",
     signature = c("struct_class"),
@@ -133,21 +157,8 @@ setMethod(f = "$<-",
     }
 )
 
-
-#' Chart names
-#'
-#' Print a list of chart objects associated with the input object
-#' @param obj a chart object
-#' @param ret a string indicating whether to return a list of chart
-#' names (ret = "char") or a list of chart objects (ret = "obj").
-#' The default is "char".
+#' @describeIn chart_names 
 #' @export
-#' @examples
-#' S = struct_class()
-#' chart_names(S)
-#' chart_names(S,'char')
-#' chart_names(S,'obj')
-#' @return list of chart names (default), or chart objects
 setMethod(f = "chart_names",
     signature = c("struct_class"),
     definition = function(obj,ret = 'char') {
@@ -188,13 +199,21 @@ setMethod(f = "chart_names",
 setMethod(f = "show",
     signature = c("struct_class"),
     definition = function(object) {
+        n=nchar(paste0('A "', class(object),'" object'))
         cat(
             'A "', class(object),'" object','\n',
+            rep('-',n),'\n',
             'name:          ', object$name,'\n',
-            'description:   ', paste0(strwrap(object$description,width=65,exdent = 15),collapse='\n'),
+            'description:   ', paste0(strwrap(object$description,width=65,exdent = 15),collapse='\n'),'\n',
             sep = ''
         )
-        cat('\n')
+        if (length(object@.params>0) & !is(object,'entity')) {
+            cat('input params: ', paste(object@.params,collapse=', '),'\n')
+        } 
+        if (length(object@.outputs>0) & !is(object,'entity')) {
+            cat('outputs:      ', paste(object@.outputs,collapse=', '),'\n')
+        } 
+       
     }
 )
 
@@ -230,23 +249,13 @@ set_struct_obj = function(
     }
     
     ## list of slots to create
-    # adjust names for params and outputs
-    np = names(params)
-    npi = as.character(interaction('params',np,sep = '_'))
-    names(params) = npi
-    no = names(outputs)
-    noi = as.character(interaction('outputs',no,sep = '_'))
-    names(outputs) = noi
-    # combine into a slot vector
     slots = c(params,outputs,private)
     
-    ## change the names of any prototypes if they are listed in params or outputs
-    w = which(names(prototype) %in% np)
-    names(prototype)[w] = npi[w]
-    w = which(names(prototype) %in% no)
-    names(prototype)[w] = noi[w]
+    ## add .params and .outputs to prototype
+    prototype[['.params']]=names(params)
+    prototype[['.outputs']]=names(outputs)
     
-    ## create class definition as assign to the chosen environment
+   ## create class definition as assign to the chosen environment
     
     assign(paste0('.',class_name),setClass(
         Class = class_name,
@@ -259,9 +268,7 @@ set_struct_obj = function(
     
     assign(class_name,function(...){
         # new object
-        out = eval(parse(text=paste0('.',class_name,'()')))
-        # initialise
-        out = .initialize_struct_class(out,...)
+        out = eval(parse(text=paste0('new_struct("',class_name,'",...)')))
         return(out)
     },
         topenv(parent.frame())
@@ -341,4 +348,47 @@ set_obj_show = function(class_name, extra_string,where = topenv(parent.frame()))
         },
         where = where
     )
+}
+
+populate_slots=function(obj,...) {
+    L=list(...)
+    for (k in L) {
+        if (is_param(obj,names(k))) {
+                param_value(obj,names(k)) = k[[1]]
+        }
+        
+    }
+}
+
+
+#' Generate a \pkg{struct} object from a Class
+#' 
+#' This function creates a newly allocated object from the class identified by 
+#' the first argument. It works almost identically to \code{new} but is specific 
+#' to objects from the \pkg{struct} package and ensures that \code{entity} slots have 
+#' their values assigned correctly. This function is usually called by class 
+#' constructors and not used directly.
+#' 
+#' @param class The class of struct object to create
+#' @param ... named slots and values to assign
+#' @return An object derived from struct_class
+#' @examples
+#' S = new_struct('struct_class')
+#' @export
+new_struct = function(class, ...) {
+    # new default object
+    obj=new(class)
+    
+    # check if struct_class
+    if (!is(obj,'struct_class')){
+        stop(paste0('struct_class is only for objects derived from struct_class. Got object of type "',class(obj),'"'))
+    }
+        
+    # update values
+    L=list(...)
+    for (k in seq_len(length(L))) {
+        param_value(obj,names(L)[k])=L[[k]]
+    }
+    
+    return(obj)
 }

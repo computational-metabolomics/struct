@@ -18,9 +18,7 @@
 #' @rdname iterator
 iterator = function(...) {
     # new object
-    out = .iterator()
-    # initialise
-    out = .initialize_struct_class(out,...)
+    out = .iterator(...)
     return(out)
 }
 
@@ -29,7 +27,7 @@ iterator = function(...) {
 
 .iterator<-setClass(
     "iterator",
-    contains = c('struct_class','parameter_class','outputs_class'),
+    contains = c('struct_class'),
     slots = c(
         type = 'character',
         models = 'ANY', # any here, but types enforced by e.g. resampler
@@ -189,12 +187,15 @@ setMethod(f = "[<-",
 example_iterator = setClass('example_iterator',
     contains = 'iterator',
     slots = c(
-        params_value_1 = 'numeric',
-        params_value_2 = 'numeric',
-        outputs_result_1 = 'numeric',
-        outputs_result_2 = 'numeric'
+        value_1 = 'numeric',
+        value_2 = 'numeric',
+        result_1 = 'numeric',
+        result_2 = 'numeric'
     ),
-    prototype = list(result = 'result_1')
+    prototype = list(result = 'result_1',
+        .params=c('value_1','value_2'),
+        .outputs=c('result_1','result_2')
+    )
 )
 
 #' run example

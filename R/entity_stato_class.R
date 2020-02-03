@@ -6,17 +6,30 @@
 #' @seealso Refer to \code{\link{entity}} and \code{\link{stato}} for further
 #' info.
 #'
-#' @export entity_stato
+#' @export
 #' @include generics.R struct_class.R entity_class.R stato_class.R
 #' @examples
-#' E = entity_stato()
-#' @param ... named slots and their values.
+#' E = entity_stato(
+#'     name = 'example',
+#'     description = 'this is an example',
+#'     type = 'numeric',
+#'     value = 1,
+#'     stato_id='XYZ000001'
+#' )
+#' @param stato_id The STATO ID for the entity
+#' @inheritParams entity
 #' @return an entity_stato object
-entity_stato = function(...) {
+entity_stato = function(name, description=character(0), type='character', 
+    value=character(0),max_length=Inf,stato_id) {
     # new object
-    out = .entity_stato()
-    # initialise
-    out = .initialize_entity(out,...)
+    out = .entity_stato(
+        name=name, 
+        description=description, 
+        type=type, 
+        value=value,
+        max_length=max_length,
+        stato_id=stato_id
+    )
     return(out)
 }
 
@@ -32,7 +45,7 @@ setMethod(f = 'show',
         callNextMethod()
         
         # add the stato part
-        show(stato())
+        show(stato(stato_id=object@stato_id))
         
         cat('\n')
     }

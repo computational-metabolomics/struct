@@ -11,9 +11,7 @@
 #' @return a resampler object
 resampler = function(...) {
     # new object
-    out = .resampler()
-    # initialise
-    out = .initialize_struct_class(out,...)
+    out = .resampler(...)
     return(out)
 }
 

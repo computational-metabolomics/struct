@@ -5,14 +5,13 @@
 #' Parameter objects
 #'
 #' Gets or sets the object of a parameter e.g. to an entity() object.
-#' @param obj a model or iterator object from the *struct* class
-#' @param name name of parameter as a string
-#' @param value a valid value for the parameter being set
-#' @rdname param_obj
+#' @param obj An object derived from struct_class
+#' @param name Name of parameter
+#' @param value A valid value for the parameter being set
 #' @return
 #' \describe{
-#' \item{\code{param_obj(M,name)}}{returns the named parameter as an object}
-#' \item{\code{param_obj(M,name)<-}}{sets the named parameter of an object}
+#' \item{\code{param_obj(M,name)}}{Returns the named parameter as an object}
+#' \item{\code{param_obj(M,name)<-}}{Sets the named parameter of an object}
 #' }
 #' @examples
 #' # get the parameter as an object
@@ -20,90 +19,93 @@
 #' obj = param_obj(M, 'value_0')
 #'
 #' # set a parameter as an object
-#' param_obj(M, 'value_0') = entity(value = 15,type = 'numeric')
+#' param_obj(M, 'value_0') = entity(value = 15,type = 'numeric',name='value_0')
 #' @export
+#' @rdname param_obj
 setGeneric("param_obj",function(obj,name)standardGeneric("param_obj"))
 
-#' @rdname param_obj
+#' @rdname param_obj 
 #' @export
 setGeneric("param_obj<-",function(obj,name,value)standardGeneric("param_obj<-"))
 
 #' Verify parameter
 #'
-#' Verify that the name of a paramater is valid for an object
-#' @param obj a model or iterator object from the *struct* class
-#' @param name name of parameter as a string
+#' Verify that the input name is a valid input parameter for an object
+#' @param obj  An object derived from struct_class
+#' @param name  Name of parameter
 #' @return TRUE if parameter name is valid, FALSE if not
 #' @examples
 #' M = example_model()
 #' is_param(M,'value_1') # TRUE
 #' is_param(M,'alpha')   # FALSE
 #' @export
+#' @rdname is_param
 setGeneric("is_param",function(obj,name)standardGeneric("is_param"))
 
-#' parameter identifiers
+#' Parameter identifiers
 #'
 #' return a list of valid parameter ids for an object
-#' @param obj a model or iterator object from the *struct* class
+#' @param obj An object derived from struct_class
 #' @return list of parameter ids
 #' @examples
 #' M = example_model()
 #' param_ids(M)
 #' @export
+#' @rdname param_ids
 setGeneric("param_ids",function(obj)standardGeneric("param_ids"))
 
-#' parameter name
+#' Parameter name
 #'
-#' return a the name for a paramater, if available
-#' @param obj a model or iterator object from the *struct* class
-#' @param name id of parameter
+#' Returns the name for a parameter, if available
+#' @param obj An object derived from struct_class
+#' @param name Name of parameter
 #' @return name of parameter
 #' @examples
 #' M = example_model()
 #' param_name(M,'value_1')
 #' @export
+#' @rdname param_name
 setGeneric("param_name",function(obj,name)standardGeneric("param_name"))
 
-#' parameter list
+#' Parameter list
 #'
 #' get/set a named list of parameters and thier current value for an object
-#' @param obj a model or iterator object from the *struct* class
-#' @param value a named list
-#' @return list of parameter names
-#' @rdname param_list
+#' @param obj An object derived from struct_class
+#' @param value A named list of parameters and corresponding values
+#' @return A named list of parameters names and corresponding values
 #' @examples
 #' M = example_model()
 #' L = param_list(M)
-#' @export
-setGeneric("param_list",function(obj)standardGeneric("param_list"))
-
-#' @rdname param_list
-#' @return struct object
-#' @examples
+#' 
 #' M = example_model()
 #' param_list(M) = list('value_1' = 15,'value_2' = 20)
 #' @export
+#' @rdname param_list
+setGeneric("param_list",function(obj)standardGeneric("param_list"))
+
+#' @rdname param_list 
+#' @export
 setGeneric("param_list<-",function(obj,value)standardGeneric("param_list<-"))
 
-#' parameter values
+#' Parameter values
 #'
 #' get/set the values for a parameter.
-#' @param obj a model or iterator object from the *struct* class
-#' @param name of a parameter
-#' @param value value
-#' @return value of parameter
-#' @rdname param_value
+#' @param obj A model or iterator object derived from structclass
+#' @param name Name of parameter
+#' @param value A valid value for the parameter being set
+#' @return Value of parameter
 #' @examples
 #' M = example_model()
 #' param_value(M,'value_1')
-#' @export
-setGeneric("param_value",function(obj,name)standardGeneric("param_value"))
-
-#' @rdname param_value
-#' @return struct object
-#' @examples
+#' 
 #' M = example_model()
 #' param_value(M,'value_1') = 0.95
+#' 
+#' @export
+#' @rdname param_value
+setGeneric("param_value",function(obj,name)standardGeneric("param_value"))
+
+#' @rdname param_value 
 #' @export
 setGeneric("param_value<-",
     function(obj,name,value)standardGeneric("param_value<-"))
@@ -115,7 +117,7 @@ setGeneric("param_value<-",
 #' Output identifiers
 #'
 #' return a list of valid output ids for an object
-#' @param obj a model or iterator object from the *struct* class
+#' @param obj A model or iterator object derived from the *struct* class
 #' @return list of output ids
 #' @examples
 #' M = example_model()
@@ -126,10 +128,10 @@ setGeneric("output_ids",function(obj)standardGeneric("output_ids"))
 #' output values
 #'
 #' get/set the values for an output_
-#' @param obj a model or iterator object from the *struct* class
-#' @param name of an output
-#' @param value value
-#' @return value of output
+#' @param obj A model or iterator object derived from the *struct* class
+#' @param name Name of output
+#' @param value A valid value for the output being set
+#' @return Value of output
 #' @rdname output_value
 #' @examples
 #' M = example_model()
@@ -149,9 +151,9 @@ setGeneric("output_value<-",
 #' Output objects
 #'
 #' Gets or sets the object of an output e.g. to an entity() object.
-#' @param obj a model or iterator object from the *struct* class
-#' @param name name of output as a string
-#' @param value a valid value for the output being set
+#' @param obj A model or iterator object derived from the *struct* class
+#' @param name Name of output
+#' @param value A valid value for the output being set
 #' @rdname output_obj
 #' @return
 #' \describe{
@@ -164,7 +166,7 @@ setGeneric("output_value<-",
 #' obj = output_obj(M, 'result_1')
 #'
 #' # set a output as an object
-#' output_obj(M, 'result_1') = entity(value = 15,type = 'numeric')
+#' output_obj(M, 'result_1') = entity(value = 15,type = 'numeric',name = 'result_1')
 #' @export
 setGeneric("output_obj",
     function(obj,name)standardGeneric("output_obj"))
@@ -176,8 +178,8 @@ setGeneric("output_obj<-",
 #' Verify output
 #'
 #' Verify that the name of a output is valid for an object
-#' @param obj a model or iterator object from the *struct* class
-#' @param name name of output as a string
+#' @param obj A model or iterator object derived from the *struct* class
+#' @param name Name of output
 #' @return TRUE if output name is valid, FALSE if not
 #' @examples
 #' M = example_model()
@@ -189,8 +191,8 @@ setGeneric("is_output",function(obj,name)standardGeneric("is_output"))
 #' output name
 #'
 #' return a the name for a output, if available
-#' @param obj a model or iterator object from the *struct* class
-#' @param name id of output
+#' @param obj A model or iterator object derived from the *struct* class
+#' @param name Name of output
 #' @return name of output
 #'@examples
 #' M = example_model()
@@ -201,9 +203,9 @@ setGeneric("output_name",function(obj,name)standardGeneric("output_name"))
 #' output list
 #'
 #' get/set a named list of outputs and their current value for an object
-#' @param obj a model or iterator object from the *struct* class
-#' @param value a named list
-#' @return list of output names
+#' @param obj An object derived from struct_class
+#' @param value A named list of outputs and corresponding values
+#' @return A named list of outputs and corresponding values
 #' @rdname output_list
 #' @examples
 #' M = example_model()
@@ -230,31 +232,32 @@ setGeneric("output_list<-",function(obj,value)standardGeneric("output_list<-"))
 #' The chart_names method searches chart objects that specify the input object
 #' type as an input.
 #'
-#' Optional input \code{ret = 'char'} is the default and will return a character
-#' vector of object names. \code{ret = 'obj'} will return a list containing the
-#' named chart objects.
-#' @param obj a object from the *struct* package
-#' @param ... optional inputs (see details)
-#' @return list of chart names
+#' @param obj An object derived from the struct_class object
+#' @param ret A string indicating whether a list of objects ('obj') or a list of chart 
+#' names ('char') is returned. 'char' is default.
+#' @return list of chart names, or a list of chart objects
 #' @examples
 #' M = example_model()
 #' chart_names(M) # 'example_chart'
 #' chart_names(M,'char') # as above
 #' chart_names(M,'obj') # returns a list of chart objects
 #' @export
-setGeneric("chart_names",function(obj,...)standardGeneric("chart_names"))
+setGeneric("chart_names",function(obj,ret='char')standardGeneric("chart_names"))
 
 #' chart_plot
 #'
 #' Plots a chart object
-#' @param obj a chart object
-#' @param dobj a struct object
+#' 
+#' The optional optional inputs depend on the input object/chart, but might 
+#' include an additional dataset object or a second model object, for example.
+#' @param obj A chart object
+#' @param dobj An object derived from struct_class
 #' @param ... optional inputs
 #' @rdname chart_plot
 #' @return a plot object
 #' @examples
 #' C = example_chart()
-#' chart_plot(C)
+#' chart_plot(C,iris_DatasetExperiment())
 #'
 #' @export
 setGeneric("chart_plot",function(obj, dobj, ...)standardGeneric("chart_plot"))
@@ -267,7 +270,7 @@ setGeneric("chart_plot",function(obj, dobj, ...)standardGeneric("chart_plot"))
 #' Apply a model
 #'
 #' Applies a method to the input dataset
-#' @param M a method object
+#' @param M a `method` object
 #' @param D another object used by the first
 #' @return Returns a modified method object
 #' @rdname model_apply
@@ -389,7 +392,7 @@ setGeneric("models<-",function(ML,value)standardGeneric("models<-"))
 #' @param outfile the filename to write the data to
 #' @param transpose TRUE or FALSE to transpose the output data
 #' @rdname export_data
-setGeneric("export_xlsx",function(object,outfile,transpose)standardGeneric("export_xlsx"))
+setGeneric("export_xlsx",function(object,outfile,transpose=TRUE)standardGeneric("export_xlsx"))
 
 ####################################
 ###### iterator class generics #####

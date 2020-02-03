@@ -6,28 +6,35 @@
 \alias{model_predict,example_model,DatasetExperiment-method}
 \title{Example model}
 \usage{
-example_model(...)
+example_model(value_0 = 0, value_1 = 10, value_2 = 20, ...)
 
 \S4method{model_train}{example_model,DatasetExperiment}(M, D)
 
 \S4method{model_predict}{example_model,DatasetExperiment}(M, D)
 }
 \arguments{
+\item{value_0}{a numeric value}
+
+\item{value_1}{a numeric value}
+
+\item{value_2}{a numeric value}
+
 \item{...}{named slots and their values.}
 
-\item{M}{example_model object}
+\item{M}{A struct model object}
 
-\item{D}{dataset object}
+\item{D}{A DatasetExperiment object}
 }
 \value{
-dataset object
+modified example_model object
 
 dataset object
 
 dataset object
 }
 \description{
-An example model for testing
+An example model for testing. Training this model adds value_1 to a data set, and
+prediction using this model adds value_2.
 
 trains the example model, which adds value_1 to the raw data of a dataset
 

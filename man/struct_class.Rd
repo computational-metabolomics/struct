@@ -2,65 +2,25 @@
 % Please edit documentation in R/struct_class.R
 \name{struct_class}
 \alias{struct_class}
-\alias{.initialize_struct_class}
-\alias{$,struct_class-method}
-\alias{$<-,struct_class-method}
-\title{struct_class}
+\title{Constructor for struct_class objects}
 \usage{
-struct_class(...)
-
-.initialize_struct_class(.Object, ...)
-
-\S4method{$}{struct_class}(x, name)
-
-\S4method{$}{struct_class}(x, name) <- value
+struct_class(
+  name = character(0),
+  description = character(0),
+  type = character(0)
+)
 }
 \arguments{
-\item{...}{named slots and their values.}
+\item{name}{the name of the object}
 
-\item{.Object}{a prototype struct object}
+\item{description}{a description of the object}
 
-\item{x}{a struct object}
-
-\item{name}{slot to get/set}
-
-\item{value}{something to assign to a slot}
+\item{type}{the type of the struct object}
 }
 \value{
-an struct object
-
-a struct object with populated slots
+a struct_class object
 }
 \description{
-A base class in the \pkg{struct} package. Provides several fundamental
-methods for getting/setting parameters etc and should not be called directly.
-
-This function handles the conversion of params from name to params_name when 
-initialising an object. It is used in the constructor for new struct objects, 
-and not intended to be used in isolation.
-}
-\section{Slots}{
-
-\describe{
-\item{\code{name}}{name of object}
-
-\item{\code{description}}{description of object}
-
-\item{\code{type}}{type of object}
-
-\item{\code{libraries}}{R packages needed by this object}
-}}
-
-\examples{
-S = struct_class()
-\dontrun{
-# a class contructor can be created as follows
-new_struct_class = function(...) {
-    # new object
-    out = .new_struct_class()
-    # initialise
-    out = .initialize_struct_class(out,...)
-    return(out)
-    }
-}
+Creates a new \linkS4class{struct_class} object and populates the slots. Not intended
+for direct use.
 }

@@ -4,27 +4,44 @@
 #' Also used for preprocessing steps that require application to test sets.
 #' not intended to be called directly, this class should be inherited to provide
 #' functionality for method-specific classes.
+#' 
+#' @section \code{predicted} slot:
+#' The "predicted" slot is a slots for use by users to control the flow of model
+#' sequences. The \code{predicted()} function is used to return a default output and
+#' from a model. Typically it is a DatasetExperiment object that is passed directly
+#' into the next model in a sequence as the data for that model.
+#' 
+#' @section \code{seq_in} slot:
+#' In a sequence of models (see model_seq) the "predicted" slot is connected to the 
+#' DatasetExperiment input of the next model. \code{seq_in} can be used to control
+#' flow and connect the "predicted" output to the input parameter of the next model.
+#' Default is the keyword 'data', and can otherwise be replaced by any input slot 
+#' from the model.
+#' 
 #' @export model
-#' @param M a model object
-#' @param D a dataset object
-#' @param value value
-#' @include generics.R    parameter_class.R output_class.R dataset_class.R
+#' @param M A struct model object
+#' @param D A DatasetExperiment object
+#' @param value The value to assign 
+#' @param predicted The name of an output slot to return when using \code{predicted()} (see details)
+#' @param seq_in the name of an output slot to connect with the "predicted" output 
+#' of another model (see details)
+#' @include generics.R parameter_class.R output_class.R
 #' @examples
 #' M = model()
 #' @param ... named slots and their values.
 #' @rdname model
-model = function(...) {
+model = function(predicted=character(0),seq_in='data',...) {
     # new object
-    out = .model()
-    # initialise
-    out = .initialize_struct_class(out,...)
+    out = .model(predicted = predicted,
+        seq_in = seq_in,
+        ...)
     return(out)
 }
 
 .model<-setClass(
     "model",
-    contains = c('struct_class','parameter_class','outputs_class'),
-    slots = c(type = 'character',
+    contains = c('struct_class'),
+    slots = c(
         predicted = 'character',
         seq_in = 'character'
     ),
@@ -151,13 +168,14 @@ setMethod(f = 'predicted_name<-',
     }
 )
 
-
 setMethod(f = "show",
     signature = c("model"),
     definition = function(object) {
         callNextMethod()
-        cat('predicted:     ',predicted_name(object),'    (', class(predicted(object)),')\n',sep='')
-        cat('seq_in:        ',object@seq_in,'\n',sep = '')
+        cat('predicted:     ',predicted_name(object),'\n',sep = '')
+        cat('seq_in:        ',object@seq_in,         '\n',sep = '')
         cat('\n')
     }
 )
+
+

@@ -7,7 +7,7 @@
 model_apply(M, D)
 }
 \arguments{
-\item{M}{a method object}
+\item{M}{a `method` object}
 
 \item{D}{another object used by the first}
 }

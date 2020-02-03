@@ -4,10 +4,27 @@
 \alias{entity_stato}
 \title{entity_stato class}
 \usage{
-entity_stato(...)
+entity_stato(
+  name,
+  description = character(0),
+  type = "character",
+  value = character(0),
+  max_length = Inf,
+  stato_id
+)
 }
 \arguments{
-\item{...}{named slots and their values.}
+\item{name}{the name of the object}
+
+\item{description}{a description of the object}
+
+\item{type}{the type of the struct object}
+
+\item{value}{The value of the parameter/outputs}
+
+\item{max_length}{Maximum length of value vector (default 1)}
+
+\item{stato_id}{The STATO ID for the entity}
 }
 \value{
 an entity_stato object
@@ -19,7 +36,13 @@ A base class in the \pkg{struct} package. Should not be called directly.
 Extends the \code{entity} class to include stato functionality.
 }
 \examples{
-E = entity_stato()
+E = entity_stato(
+    name = 'example',
+    description = 'this is an example',
+    type = 'numeric',
+    value = 1,
+    stato_id='XYZ000001'
+)
 }
 \seealso{
 Refer to \code{\link{entity}} and \code{\link{stato}} for further

@@ -9,12 +9,13 @@
 #' Entity objects are usually defined in the prototype of another object, but
 #' can be extracted using \code{param_obj} and \code{output_obj}.
 #'
-#' @export entity
+#' @export
+#' @inheritParams struct_class
 #' @param obj An entity object
-#' @param value Value of the entity
-#' @param max_length maximum length of value vector (default 1)
+#' @param max_length Maximum length of value vector (default 1)
+#' @param value The value of the parameter/outputs
 #' @include generics.R struct_class.R
-#' @return and entity object
+#' @return An entity object
 #' @examples
 #' # Create a new entity object
 #' E = entity(
@@ -27,13 +28,18 @@
 #' # Get/set the value of the entity object
 #' value(E)
 #' value(E) = 10
-#' @param ... named slots and their values.
 #' @rdname entity
-entity = function(...) {
+entity = function(name, description=character(0), type='character', 
+    value=character(0),max_length=Inf) {
+    
     # new object
-    out = .entity()
-    # initialise
-    out = .initialize_entity(out,...)
+    out = .entity(
+        name=name, 
+        description=description,
+        type=type,
+        value=value,
+        max_length=max_length
+    )
     return(out)
 }
 
@@ -65,35 +71,6 @@ entity = function(...) {
         return(msg)
     }
 )
-
-## initialise parameters on object creation
-.initialize_entity = function(.Object,...)
-{
-    L = list(...)
-    SN = slotNames(.Object)
-    if (length(L)>0) {
-        for (i in seq_len(length(L))) {
-            if (names(L)[[i]] %in% SN) {
-                slot(.Object,names(L)[[i]]) = L[[names(L)[[i]]]]
-            }
-        }
-    }
-    
-    if (!('value' %in% names(L))) {
-        if (isVirtualClass(.Object@type)) {
-            # create a spoof object until a real one is generated
-            x = numeric(0)
-            class(x) = .Object@type
-            .Object@value = x
-        } else {
-            .Object@value = new(.Object@type[[1]])
-        }
-    }
-    
-    validObject(.Object)
-    return(.Object)
-}
-
 
 #' @rdname entity
 #' @export
@@ -140,8 +117,18 @@ setMethod(f = 'show',
     signature = c('entity'),
     definition = function(object) {
         callNextMethod() # force the default output
+        
+        V=value(object)
+        if (is(V,'DatasetExperiment') | is(V,'SummarizedExperiment') | is(V,'matrix')) {
+            V=paste0(nrow(V), ' rows x ', ncol(V), ' columns (',class(V),')')
+        } else if (is.atomic(V)) {
+            V=V
+        } else {
+            V=class(V)
+        }
+        
         # add extra info
-        cat('value:         ', value(object), '\n',sep='')
+        cat('value:         ', V, '\n',sep='')
         cat('type:          ', paste0(object$type,collapse=', '), '\n',sep='')
         cat('max length:    ', max_length(object),sep='')
         cat('\n')

@@ -17,7 +17,8 @@
 #' the STATO database included in this package.
 #'
 #' @export stato
-#' @param obj stato_class object
+#' @param obj An object derived from the stato object
+#' @param stato_id A STATO ID e.g. OBI:0000001
 #' @include generics.R
 #' @importFrom ontologyIndex get_ontology
 #' @return Value returned depends on the method used.
@@ -38,11 +39,10 @@
 #' # outputs that also have stato ids.
 #' stato_summary(M)
 #'
-#' @param ... named slots and their values.
 #' @rdname stato
-stato = function(...) {
+stato = function(stato_id) {
     # new object
-    out = .stato(...)
+    out = .stato(stato_id=stato_id)
     return(out)
 }
 
@@ -57,7 +57,7 @@ setMethod(f = "stato_id",
     signature = c('stato'),
     definition = function(obj) {
         if (!exists('ont',envir = statoOntology)) {
-            # load the ontology if it hasnt been done already
+            # load the ontology if it hasn't been done already
             .stato_env()
         }
         return(obj@stato_id)
@@ -95,8 +95,8 @@ statoOntology = new.env()
 
 # internal function to extract the database into the environment
 .stato_env = function() {
-    path.to.ontology = file.path(path.package('struct'),
-        '/extdata/stato-reasoned.obo')
+    path.to.ontology = system.file(package='struct','extdata/stato-reasoned.obo')
+    
     assign('ont',
         ontologyIndex::get_ontology(path.to.ontology,
             extract_tags = 'everything'),

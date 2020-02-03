@@ -13,9 +13,7 @@
 #' @rdname preprocessing
 preprocess = function(...) {
     # new object
-    out = .preprocess()
-    # initialise
-    out = .initialize_struct_class(out,...)
+    out = .preprocess(...)
     return(out)
 }
 

@@ -5,16 +5,31 @@
 \alias{value<-,enum-method}
 \title{Enum objects}
 \usage{
-enum(...)
+enum(
+  name,
+  description = character(0),
+  type = "character",
+  value = character(0),
+  max_length = 1,
+  allowed
+)
 
 \S4method{value}{enum}(obj) <- value
 }
 \arguments{
-\item{...}{named slots and their values.}
+\item{name}{the name of the object}
 
-\item{obj}{an enum object}
+\item{description}{a description of the object}
+
+\item{type}{the type of the struct object}
 
 \item{value}{value of the enum}
+
+\item{max_length}{Maximum length of value vector (default 1)}
+
+\item{allowed}{A list of allowed values}
+
+\item{obj}{an enum object}
 }
 \value{
 an enum object
@@ -36,7 +51,7 @@ E = enum(
     description = 'this is an example',
     type = 'character',
     value = 'hello',
-    list = c('hello','world')
+    allowed = c('hello','world')
 )
 
 # Get/set the value of the entity object

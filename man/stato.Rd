@@ -20,7 +20,7 @@ stato_definition(obj)
 
 stato_summary(obj)
 
-stato(...)
+stato(stato_id)
 
 \S4method{stato_id}{stato}(obj)
 
@@ -31,9 +31,9 @@ stato(...)
 \S4method{stato_summary}{stato}(obj)
 }
 \arguments{
-\item{obj}{stato_class object}
+\item{obj}{An object derived from the stato object}
 
-\item{...}{named slots and their values.}
+\item{stato_id}{A STATO ID e.g. OBI:0000001}
 }
 \value{
 id the stato id
