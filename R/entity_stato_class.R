@@ -20,7 +20,10 @@
 #' @inheritParams entity
 #' @return an entity_stato object
 entity_stato = function(name, description=character(0), type='character', 
-    value=character(0),max_length=Inf,stato_id) {
+    value=NULL,max_length=Inf,stato_id) {
+    
+    value=check_init_val(value,type)
+    
     # new object
     out = .entity_stato(
         name=name, 

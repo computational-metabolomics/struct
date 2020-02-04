@@ -30,7 +30,9 @@
 #' value(E) = 10
 #' @rdname entity
 entity = function(name, description=character(0), type='character', 
-    value=character(0),max_length=Inf) {
+    value=NULL,max_length=Inf) {
+    
+    value=check_init_val(value,type)
     
     # new object
     out = .entity(
@@ -71,6 +73,22 @@ entity = function(name, description=character(0), type='character',
         return(msg)
     }
 )
+
+
+check_init_val=function(value,type) {
+    if (is.null(value) & !("NULL" %in% type)) {
+        if (isVirtualClass(type)) {
+            # create a spoof object until a real one is generated
+            x=numeric(0)
+            class(x)=type
+            value=x
+        } else {
+            value=new(type[[1]])
+        }
+    }
+    return(value)
+}
+
 
 #' @rdname entity
 #' @export

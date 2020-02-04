@@ -8,7 +8,7 @@ entity_stato(
   name,
   description = character(0),
   type = "character",
-  value = character(0),
+  value = NULL,
   max_length = Inf,
   stato_id
 )
