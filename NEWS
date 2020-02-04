@@ -1,2 +1,21 @@
+Changes in v0.99.4 (2020-02-04)
++ Set initial value for entity on creation if not provided
++ Rename enum 'list' to 'allowed'
+
+Changes in v0.99.3 (2020-02-03)
++ Improved use of class constructors
+
+Changes in v0.99.2
++ incremental changes in response to bioconductor feedback
+
+Changes in v0.99.1
++ incremental changes in response to bioconductor feedback
+
+Changes in v0.99.0
++ Bioconductor submission
+
+Version 0.4.1
++ Final working release before bioconductor submission
+
 Changes in version 0.2.0 (2019-07-25)
 + Introduction of seq_out slot for more flexible workflows (currently method objects only)
