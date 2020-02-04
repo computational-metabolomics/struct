@@ -37,19 +37,19 @@ enum = function(name, description=character(0), type='character',
         type=type,
         value=value,
         max_length=max_length,
-        list=allowed
+        allowed=allowed
     )
     return(out)
 }
 
 .enum<-setClass(
     "enum",
-    slots = c('list'),
+    slots = c('allowed'),
     contains = 'entity',
     prototype = list(name = 'name not provided',
         description = 'no description provided'),
     validity = function(object) {
-        check_list = object@value %in% object@list
+        check_list = object@value %in% object@allowed
         
         # check enum validity
         msg = TRUE
@@ -69,7 +69,7 @@ enum = function(name, description=character(0), type='character',
 setMethod(f = "value<-",
     signature = c("enum"),
     definition = function(obj,value) {
-        if (value %in% obj@list) {
+        if (value %in% obj@allowed) {
             obj@value = value
         } else {
             stop(paste0(value,' is not a valid choice for this enum.'))
@@ -84,7 +84,7 @@ setMethod(f = 'show',
     definition = function(object) {
         callNextMethod()
         
-        cat('list:         ',paste0(object@list,collapse=', '))
+        cat('allowed:         ',paste0(object@allowed,collapse=', '))
         cat('\n')
     }
 )

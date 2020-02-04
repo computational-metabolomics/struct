@@ -22,6 +22,7 @@
 #' @return an enum_stato object
 enum_stato = function(name, description=character(0), type='character', 
     value=character(0),max_length=1,allowed,stato_id) {
+    
     # new object
     out = .enum_stato(
         name=name, 
@@ -29,7 +30,7 @@ enum_stato = function(name, description=character(0), type='character',
         type=type,
         value=value,
         max_length=max_length,
-        list=allowed,
+        allowed=allowed,
         stato_id=stato_id
     )
     return(out)
