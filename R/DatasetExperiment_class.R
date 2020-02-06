@@ -101,9 +101,9 @@ setMethod(f = "$<-",
             if (name %in% c('data')) {
                 assay(x,1) = t(value)
             } else if (name %in% c('sample_meta')) {
-                colData(x) = value
+                colData(x) = S4Vectors::DataFrame(value)
             } else if (name %in% c('sample_meta')) {
-                rowData(x) = value
+                rowData(x) = S4Vectors::DataFrame(value)
             }
             return(x)
         } else {
