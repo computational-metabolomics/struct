@@ -37,14 +37,14 @@ DatasetExperiment = function(
     ...){
     
     # convert data set to list
-    assays=list(t(data))
+    assays=list(data)
     
     # sample_meta
     
     out=.DatasetExperiment(SummarizedExperiment(
         assays=assays,
-        colData=sample_meta,
-        rowData=variable_meta),
+        colData=variable_meta,
+        rowData=sample_meta),
         ...)
   
     return(out)
@@ -68,12 +68,12 @@ setMethod(f = "$",
                 if (length(assays(x))==0) {
                     value=NULL
                 } else {
-                    value = (t(assay(x,1)))
+                    value = assay(x,1)
                 }
             } else if (name == 'sample_meta') {
-                value = S4Vectors::DataFrame(colData(x)) # because it returns a DFrame for some reason
+                value = S4Vectors::DataFrame(rowData(x)) 
             } else if (name == 'variable_meta') {
-                value = rowData(x)
+                value = S4Vectors::DataFrame(colData(x))
             } 
             
             if (name %in% s) {
@@ -99,11 +99,11 @@ setMethod(f = "$<-",
         s = c('data','sample_meta','variable_meta')
         if (name %in% s) {
             if (name %in% c('data')) {
-                assay(x,1) = t(value)
-            } else if (name %in% c('sample_meta')) {
-                colData(x) = S4Vectors::DataFrame(value)
+                assay(x,1) = value
             } else if (name %in% c('sample_meta')) {
                 rowData(x) = S4Vectors::DataFrame(value)
+            } else if (name %in% c('sample_meta')) {
+                colData(x) = S4Vectors::DataFrame(value)
             }
             return(x)
         } else {
