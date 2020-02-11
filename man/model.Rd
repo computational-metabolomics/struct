@@ -11,7 +11,12 @@
 \alias{predicted_name<-,model,character-method}
 \title{model class}
 \usage{
-model(predicted = character(0), seq_in = "data", ...)
+model(
+  predicted = character(0),
+  seq_in = "data",
+  seq_fcn = function(x) {     return(x) },
+  ...
+)
 
 \S4method{model_train}{model,DatasetExperiment}(M, D)
 
@@ -32,6 +37,9 @@ model(predicted = character(0), seq_in = "data", ...)
 
 \item{seq_in}{the name of an output slot to connect with the "predicted" output 
 of another model (see details)}
+
+\item{seq_fcn}{a function to apply to seq_in before inputting into the next model. 
+Typically used to extract a single column, or convert from factor to char etc.}
 
 \item{...}{named slots and their values.}
 
@@ -76,7 +84,9 @@ In a sequence of models (see model_seq) the "predicted" slot is connected to the
 DatasetExperiment input of the next model. \code{seq_in} can be used to control
 flow and connect the "predicted" output to the input parameter of the next model.
 Default is the keyword 'data', and can otherwise be replaced by any input slot 
-from the model.
+from the model. The slot \code{seq_fcn} can be used to apply a transformation to 
+the output before it is used as an input. This allows you to e.g. convert between types,
+extract a single column from a data.frame etc.
 }
 
 \examples{

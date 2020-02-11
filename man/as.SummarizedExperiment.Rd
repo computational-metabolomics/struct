@@ -2,7 +2,7 @@
 % Please edit documentation in R/generics.R
 \name{as.SummarizedExperiment}
 \alias{as.SummarizedExperiment}
-\title{Convert a DatasetExperiment to SummarizedExperiment}
+\title{Convert a DatasetExperiment to a SummarizedExperiment}
 \usage{
 as.SummarizedExperiment(obj)
 }

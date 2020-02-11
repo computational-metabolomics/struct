@@ -16,7 +16,10 @@
 #' DatasetExperiment input of the next model. \code{seq_in} can be used to control
 #' flow and connect the "predicted" output to the input parameter of the next model.
 #' Default is the keyword 'data', and can otherwise be replaced by any input slot 
-#' from the model.
+#' from the model. The slot \code{seq_fcn} can be used to apply a transformation to 
+#' the output before it is used as an input. This allows you to e.g. convert between types,
+#' extract a single column from a data.frame etc.
+#' 
 #' 
 #' @export model
 #' @param M A struct model object
@@ -25,15 +28,18 @@
 #' @param predicted The name of an output slot to return when using \code{predicted()} (see details)
 #' @param seq_in the name of an output slot to connect with the "predicted" output 
 #' of another model (see details)
+#' @param seq_fcn a function to apply to seq_in before inputting into the next model. 
+#' Typically used to extract a single column, or convert from factor to char etc.
 #' @include generics.R parameter_class.R output_class.R
 #' @examples
 #' M = model()
 #' @param ... named slots and their values.
 #' @rdname model
-model = function(predicted=character(0),seq_in='data',...) {
+model = function(predicted=character(0),seq_in='data',seq_fcn=function(x){return(x)},...) {
     # new object
     out = .model(predicted = predicted,
         seq_in = seq_in,
+        seq_fcn = seq_fcn,
         ...)
     return(out)
 }
@@ -43,9 +49,13 @@ model = function(predicted=character(0),seq_in='data',...) {
     contains = c('struct_class'),
     slots = c(
         predicted = 'character',
-        seq_in = 'character'
+        seq_in = 'character',
+        seq_fcn = 'function'
     ),
-    prototype = list(seq_in = 'data')
+    prototype = list(
+        seq_in = 'data',
+        seq_fcn=function(x){return(x)}
+        )
 )
 
 #' @rdname model

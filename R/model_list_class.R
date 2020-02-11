@@ -45,8 +45,10 @@ setMethod(f = "model_train",
         S = D # for first in list the input D is the data object
         for (i in seq_len(length(M))) {
             if (M[i]@seq_in != 'data') {
-                # set parameter
-                param_value(M[i],M[i]@seq_in) = S
+                # apply transformation
+                S=M[i]@seq_fcn(S)
+                # set
+                param_value(M[i],M[i]@seq_in)=S
             }
             
             # train the model on the output of the previous model
@@ -293,8 +295,10 @@ setMethod(f = "model_apply",
         
         for (i in seq_len(length(M))) {
             if (M[i]@seq_in != 'data') {
-                # set parameter
-                param_value(M[i],M[i]@seq_in) = S
+                # apply transformation
+                S=M[i]@seq_fcn(S)
+                # set
+                param_value(M[i],M[i]@seq_in)=S
             }
             # use current data
             M[i] = model_apply(M[i],D)
@@ -309,4 +313,5 @@ setMethod(f = "model_apply",
         return(M)
     }
 )
+
 
