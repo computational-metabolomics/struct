@@ -12,7 +12,7 @@ test_that('iterator objects',{
 
     # test get/set model
     models(I)=model()
-    expect_identical(models(I),model())
+    expect_equal(models(I),model())
 
     # object for testing
     test_iterator=setClass('test_iterator',
@@ -50,12 +50,12 @@ test_that('iterator objects',{
 
     # test combine with models and iterators
     IM=I*model()
-    expect_identical(models(IM),model())
+    expect_equal(models(IM),model())
     IIM=I*IM
-    expect_identical(models(IIM),IM)
+    expect_equal(models(IIM),IM)
     IIM=I*I*model()
-    expect_identical(models(IIM),IM)
+    expect_equal(models(IIM),IM)
 
-    # check we get an error if incorectly combined
+    # check we get an error if incorrectly combined
     expect_error(model()*IM)
 })
