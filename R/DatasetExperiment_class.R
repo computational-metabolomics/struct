@@ -159,6 +159,34 @@ setMethod (f = 'as.SummarizedExperiment',
     }
 )
 
+
+#' Convert a SummarizedExperiment to DatasetExperiment
+#' 
+#' The assay data is transposed, and colData and rowData switched to match. 
+#' struct specific slots such as "name" and "description" are extracted from the 
+#' metaData if available. NB Any additional metadata will be lost during this conversion.
+#' @param obj a SummarizedExperiment object
+#' @return a DatasetExperiment object
+#' @export
+setMethod (f = 'as.DatasetExperiment',
+    signature = 'SummarizedExperiment',
+    definition = function(obj) {
+        out=DatasetExperiment(
+            data=as.data.frame(t(assay(obj))),
+            variable_meta=as.data.frame(rowData(obj)),
+            sample_meta=as.data.frame(colData(obj)),
+            name=as.character(metadata(obj)$name),
+            description=as.character(metadata(obj)$description),
+            type=as.character(metadata(obj)$type),
+            libraries=as.character(metadata(obj)$libraries)
+            )
+        
+        return(out)
+    }
+)
+
+
+
 #' Export a dataset to an excel file
 #' 
 #' Exports a dataset object to an excel file with sheets for data, sample_meta and variable_meta

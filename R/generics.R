@@ -557,7 +557,7 @@ setGeneric("stato_definition",function(obj)standardGeneric("stato_definition"))
 #' @export
 setGeneric("stato_summary",function(obj)standardGeneric("stato_summary"))
 
-#' Convert a DatasetExperiment to SummarizedExperiment
+#' Convert a DatasetExperiment to a SummarizedExperiment
 #' 
 #' Converts a DatasetExperiment to SummarizedExperiment. The assay data is 
 #' transposed, and colData and rowData switched to match. struct specific
@@ -566,6 +566,16 @@ setGeneric("stato_summary",function(obj)standardGeneric("stato_summary"))
 #' @return a SummarizedExperiment object
 #' @export
 setGeneric("as.SummarizedExperiment",function(obj)standardGeneric("as.SummarizedExperiment"))
+
+#' Convert a SummarizedExperiment to DatasetExperiment
+#' 
+#' Converts a SummarizedExperiment to DatasetExperiment. The assay data is 
+#' transposed, and colData and rowData switched to match. struct specific
+#' slots such as "name" and "description" are extracted from the metaData.
+#' @param obj a SummarizedExperiment object
+#' @return a DatasetExperiment object
+#' @export
+setGeneric("as.DatasetExperiment",function(obj)standardGeneric("as.DatasetExperiment"))
 
 #' convert to data.frame
 #'
