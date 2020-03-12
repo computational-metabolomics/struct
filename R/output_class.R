@@ -29,12 +29,23 @@ setMethod(f = "output_obj<-",
 setMethod(f = "is_output",
     signature = c("struct_class"),
     definition = function(obj,name) {
-        valid = output_ids(obj)
-        if (length(valid)>0) {
-            return(name %in% valid)            
-        } else {
-            return(FALSE)
+        # include outputs set for parent objects
+        parents = is(obj)
+        w=which(parents == 'struct_class')
+        
+        valid=NULL
+        for (k in 1:w) {
+            
+            # skip stato
+            if (parents[k]=='stato') {
+                next
+            }
+            
+            valid = c(valid,output_ids(new_struct(parents[k])))
         }
+        
+        # if valid param_id then return true
+        return(name %in% valid)
     }
 )
 
