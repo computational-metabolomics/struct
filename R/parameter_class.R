@@ -31,19 +31,7 @@ setMethod(f = "is_param",
     definition = function(obj,name) {
         
         # include params set for parent objects
-        parents = is(obj)
-        w=which(parents == 'struct_class')
-        
-        valid=NULL
-        for (k in 1:w) {
-            
-            # skip stato
-            if (parents[k]=='stato') {
-                next
-            }
-            
-            valid = c(valid,param_ids(new_struct(parents[k])))
-        }
+        valid = param_ids(obj)
 
         # if valid param_id then return true
         return(name %in% valid)
@@ -55,8 +43,23 @@ setMethod(f = "is_param",
 setMethod(f = "param_ids",
     signature = c("struct_class"),
     definition = function(obj) {
-        t = obj@.params
-        return(t)
+        
+        # include params set for parent objects
+        parents = is(obj)
+        w=which(parents == 'struct_class')
+        
+        valid=NULL
+        for (k in 1:w) {
+            
+            # skip stato
+            if (parents[k]=='stato') {
+                next
+            }
+            
+            valid = c(valid,new_struct(parents[k])@.params)
+        }
+        
+        return(valid)
     }
 )
 
