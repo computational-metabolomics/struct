@@ -585,4 +585,4 @@ setGeneric("as.DatasetExperiment",function(obj)standardGeneric("as.DatasetExperi
 #' @param ... other inputs passed through this function
 #' @return a data.frame containing outputs from an object
 #' @export
-setGeneric("as_data_frame",function(M)standardGeneric("as_data_frame"))
+setGeneric("as_data_frame",function(M,...)standardGeneric("as_data_frame"))
