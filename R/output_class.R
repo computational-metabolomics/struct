@@ -31,7 +31,7 @@ setMethod(f = "is_output",
     definition = function(obj,name) {
         
         # include params set for parent objects
-        valid = param_ids(obj)
+        valid = output_ids(obj)
         
         # if valid param_id then return true
         return(name %in% valid)
