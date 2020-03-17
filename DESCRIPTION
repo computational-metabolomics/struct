@@ -37,7 +37,7 @@ Collate:
     'struct.R'
     'struct_templates.R'
 RoxygenNote: 7.0.2
-Depends: R (>= 4.0)
+Depends: R (>= 3.6.1)
 Suggests: 
  testthat,
  rstudioapi,
