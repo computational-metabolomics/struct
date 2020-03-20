@@ -1,7 +1,7 @@
 Package: struct
 Type: Package
 Title: Statistics in R Using Class Templates
-Version: 0.99.7
+Version: 0.99.8
 Author: Gavin Rhys Lloyd and Ralf Weber
 Maintainer: Gavin Rhys Lloyd <g.r.lloyd@bham.ac.uk>
 Description: Defines a set of class templates for developing statistical 
@@ -36,7 +36,7 @@ Collate:
     'resampler_class.R'
     'struct.R'
     'struct_templates.R'
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Depends: R (>= 4.0)
 Suggests: 
  testthat,

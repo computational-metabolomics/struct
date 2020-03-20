@@ -4,7 +4,7 @@
 \alias{as_data_frame}
 \title{convert to data.frame}
 \usage{
-as_data_frame(M)
+as_data_frame(M, ...)
 }
 \arguments{
 \item{M}{a struct object}
