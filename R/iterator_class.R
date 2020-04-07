@@ -80,6 +80,10 @@ setClassUnion("model_OR_iterator", c("model", "iterator","model_seq"))
 setMethod(f = "models<-",
     signature = c("iterator",'model_OR_iterator'),
     definition = function(ML,value) {
+      if (is(value,'model')) {
+        # convert to sequence length 1
+        value=model_seq()+value
+      }
         ML@models = value
         return(ML)
     }
@@ -157,7 +161,7 @@ setMethod(f = "[",
 #' I = iterator() * MS
 #' I[2] = model() # sets the second model to model()
 #'
-#' @return model sequence with the model at index i replaced
+#' @return iterator with the model at index i replaced
 setMethod(f = "[<-",
     signature = "iterator",
     definition = function(x,i,value) {
