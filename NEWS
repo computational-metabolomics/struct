@@ -1,38 +1,38 @@
-Changes in v0.99.9
+Changes in 0.99.9
 + subsetting of iterators with a single model now converts to a model sequence 
   with 1 step
 
-Changes in v0.99.8
+Changes in 0.99.8
 + documentation changes for Bioconductor checks
 
-Changes in v0.99.7
+Changes in 0.99.7
 + fixed broken is_valid for .outputs
 + minor documentation updates
 
-Changes in v0.99.6
+Changes in 0.99.6
 + .params and.outputs inherited correctly
 + fix some documentation issues
 
-Changes in v0.99.5
+Changes in 0.99.5
 + added as.DatasetExperiment for converting SummarizedExperiment objects
 
-Changes in v0.99.4 (2020-02-04)
+Changes in 0.99.4 (2020-02-04)
 + Set initial value for entity on creation if not provided
 + Rename enum 'list' to 'allowed'
 
-Changes in v0.99.3 (2020-02-03)
+Changes in 0.99.3 (2020-02-03)
 + Improved use of class constructors
 
-Changes in v0.99.2
+Changes in 0.99.2
 + incremental changes in response to bioconductor feedback
 
-Changes in v0.99.1
+Changes in 0.99.1
 + incremental changes in response to bioconductor feedback
 
-Changes in v0.99.0
+Changes in 0.99.0
 + Bioconductor submission
 
-Version 0.4.1
+Changes in 0.4.1
 + Final working release before bioconductor submission
 
 Changes in version 0.2.0 (2019-07-25)
