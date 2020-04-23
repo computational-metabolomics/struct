@@ -8,7 +8,8 @@ set_obj_method(
   class_name,
   method_name,
   definition,
-  where = topenv(parent.frame())
+  where = topenv(parent.frame()),
+  signature = c(class_name, "DatasetExperiment")
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ set_obj_method(
 \item{definition}{the function to replace the method with. This function will be used when the method is called on the object.}
 
 \item{where}{the environment to create the object in. default where = topenv(parent.frame())}
+
+\item{signature}{a list of classes that this object requires as inputs. Default is c(class_name,'DatasetExperiment')}
 }
 \value{
 a method is created in the specified environment

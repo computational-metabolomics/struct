@@ -74,7 +74,7 @@ the modified model object
 
 model at the given index in the sequence
 
-model sequence with the model at index i replaced
+iterator with the model at index i replaced
 }
 \description{
 Runs an iterator, applying the chosen model multiple times.
