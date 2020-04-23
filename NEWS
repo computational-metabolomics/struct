@@ -1,3 +1,8 @@
+Changes in 0.99.10
++ update vignettes
++ update documentation
++ add 'signature' input to struct_obj_method
+
 Changes in 0.99.9
 + subsetting of iterators with a single model now converts to a model sequence 
   with 1 step
