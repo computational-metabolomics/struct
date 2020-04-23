@@ -285,6 +285,7 @@ set_struct_obj = function(
 #' @param method_name the name of the method to update. Must be an existing method for the object.
 #' @param definition the function to replace the method with. This function will be used when the method is called on the object.
 #' @param where the environment to create the object in. default where = topenv(parent.frame())
+#' @param signature a list of classes that this object requires as inputs. Default is c(class_name,'DatasetExperiment')
 #' @return a method is created in the specified environment
 #' @examples
 #' set_struct_obj(
@@ -299,13 +300,13 @@ set_struct_obj = function(
 #'    name = 'Add two inputs',
 #'    description = 'example class that adds two values together')
 #')
-set_obj_method = function(class_name, method_name, definition, where = topenv(parent.frame())) {
+set_obj_method = function(class_name, method_name, definition, where = topenv(parent.frame()), signature=c(class_name,'DatasetExperiment')) {
     
-    setMethod(f = method_name,
-        signature = c(class_name,'DatasetExperiment'),
+        setMethod(f = method_name,
+        signature = signature,
         definition = definition,
-        where = where
-    )
+        where = where)
+    
 }
 
 # ' update show method for a struct object
