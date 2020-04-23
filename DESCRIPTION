@@ -1,16 +1,29 @@
 Package: struct
 Type: Package
-Title: Statistics in R Using Class Templates
+Title: Statistics in R Using Class-based Templates
 Version: 0.99.9
-Author: Gavin Rhys Lloyd and Ralf Weber
-Maintainer: Gavin Rhys Lloyd <g.r.lloyd@bham.ac.uk>
-Description: Defines a set of class templates for developing statistical 
-    workflows. The templates can be extended to 'wrap' tools from other packages 
-    into a common structure that allows them to work together more easily.
-    Models can be combined into sequences, and sequences nested in iterators 
-    using overloaded operators to simplify code. A version of the STATO ontology
-    is included to provide standardised definitions for methods wrapped using 
-    the templates.
+Authors@R: c(
+    person(
+        c("Gavin","Rhys"),
+          "Lloyd",
+           role=c("aut","cre"),
+           email="g.r.lloyd@bham.ac.uk"),
+    person(
+        c("Ralf","Johannes", "Maria"),
+          "Weber",
+           role=c("aut"),
+           email="r.j.weber@bham.ac.uk")
+           )
+Description: Defines and includes a set of class-based templates for developing 
+    and implementing data processing and analysis workflows, with a strong 
+    emphasis on statistics and machine learning. The templates can be used and 
+    where needed extended to 'wrap' tools and methods from other packages into a 
+    common standardised structure to allow for effective and fast integration. 
+    Model objects can be combined into sequences, and sequences nested in 
+    iterators using overloaded operators to simplify and improve readability of 
+    the code. STATistics Ontology (STATO) has been integrated and implemented 
+    to provide standardised definitions for methods, inputs and outputs wrapped 
+    using the class-based templates.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -44,7 +57,9 @@ Suggests:
  rmarkdown,
  covr,
  BiocStyle,
- openxlsx
+ openxlsx,
+ ggplot2,
+ magick
 VignetteBuilder: knitr
 Imports: methods, ontologyIndex,
     datasets, graphics, stats, utils, knitr, 
