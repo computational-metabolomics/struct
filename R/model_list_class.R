@@ -42,7 +42,7 @@ setMethod(f = "model_train",
     signature = c("model_seq","DatasetExperiment"),
     definition = function(M,D) {
         # for each model in the list
-        S = D # for first in list the input D is the data object
+        # for first in list the input D is the data object
         for (i in seq_len(length(M))) {
             if (M[i]@seq_in != 'data') {
                 # apply transformation
@@ -52,9 +52,9 @@ setMethod(f = "model_train",
             }
             
             # train the model on the output of the previous model
-            M[i] = model_train(M[i],S)
+            M[i] = model_train(M[i],D)
             # apply the model to the output of the previous model
-            M[i] = model_predict(M[i],S)
+            M[i] = model_predict(M[i],D)
             # set the output of this model as the input for the next model
             S = predicted(M[i])
             
@@ -78,15 +78,22 @@ setMethod(f = "model_train",
 setMethod(f = "model_predict",
     signature = c("model_seq",'DatasetExperiment'),
     definition = function(M,D) {
-        S = D # for the first model the input use the input data
+        # for the first model the input use the input data
+        S=D
         L = length(M) # number of models
         for (i in seq_len(L)) {
             # apply the model the output of the previous model
-            M[i] = model_predict(M[i],S)
-            # keep the previous output
-            penultimate = S
-            # set the output of this model as the input to the next
+            M[i] = model_predict(M[i],D)
+
+            # get the output of this model
             S = predicted(M[i])
+            if (is(S,'DatasetExperiment')) {
+                # keep the previous output
+                penultimate = D                
+                # update data for the next model
+                D = S
+                # otherwise the previous data output is used
+            }
         }
         
         # if regression, reverse the processing to get predictions
