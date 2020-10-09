@@ -128,7 +128,7 @@ D = DatasetExperiment()
 M = example_model()
 seq_in(M) = 'data'
 M = example_model()
-seq_in(M) = 'input_1'
+seq_in(M) = 'value_1'
 M = example_model()
 predicted_name(M)
 M = example_model()

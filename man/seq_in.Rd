@@ -2,9 +2,12 @@
 % Please edit documentation in R/generics.R
 \name{seq_in}
 \alias{seq_in}
+\alias{seq_in<-}
 \title{Sequence input}
 \usage{
 seq_in(M)
+
+seq_in(M) <- value
 }
 \arguments{
 \item{M}{a model object}
@@ -27,5 +30,5 @@ for methods such as \code{model_train} and \code{model_apply}.
 \examples{
 M = example_model()
 seq_in(M)
-seq_in(M) = 'input_1'
+seq_in(M) = 'value_1'
 }

@@ -3,14 +3,11 @@
 \name{predicted_name}
 \alias{predicted_name}
 \alias{predicted_name<-}
-\alias{seq_in<-}
 \title{Predicted output name}
 \usage{
 predicted_name(M)
 
 predicted_name(M) <- value
-
-seq_in(M) <- value
 }
 \arguments{
 \item{M}{a model object}

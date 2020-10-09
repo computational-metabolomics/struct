@@ -366,7 +366,7 @@ setGeneric("predicted_name<-",
 #' @export
 setGeneric("seq_in",function(M)standardGeneric("seq_in"))
 
-#' @rdname predicted_name
+#' @rdname seq_in
 setGeneric("seq_in<-",
     function(M,value)standardGeneric("seq_in<-"))
 
