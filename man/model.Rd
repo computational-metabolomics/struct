@@ -7,6 +7,8 @@
 \alias{model_apply,model,DatasetExperiment-method}
 \alias{model_reverse,model,DatasetExperiment-method}
 \alias{predicted,model-method}
+\alias{seq_in,model-method}
+\alias{seq_in<-,model,character-method}
 \alias{predicted_name,model-method}
 \alias{predicted_name<-,model,character-method}
 \title{model class}
@@ -27,6 +29,10 @@ model(
 \S4method{model_reverse}{model,DatasetExperiment}(M, D)
 
 \S4method{predicted}{model}(M)
+
+\S4method{seq_in}{model}(M)
+
+\S4method{seq_in}{model,character}(M) <- value
 
 \S4method{predicted_name}{model}(M)
 
@@ -59,6 +65,13 @@ trained model object
 dataset dataset object with the reverse model applied
 
 the predicted output, as specified by predicted_name
+
+the id of the input parameter to be replaced by the \code{predicted} 
+output of the previous model in a model sequence. Reserved keyword 'data' 
+means that the input data used by \code{model_train}, \code{model_apply} etc is used. 
+\code{seq_in = 'data'} is the default setting.
+
+the modified model object
 
 the id of the output returned by predicted()
 
@@ -111,6 +124,11 @@ M = example_model()
 M = model_train(M,D)
 M = model_predict(M,D)
 p = predicted(M)
+D = DatasetExperiment()
+M = example_model()
+seq_in(M) = 'data'
+M = example_model()
+seq_in(M) = 'input_1'
 M = example_model()
 predicted_name(M)
 M = example_model()

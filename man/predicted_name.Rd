@@ -3,11 +3,14 @@
 \name{predicted_name}
 \alias{predicted_name}
 \alias{predicted_name<-}
+\alias{seq_in<-}
 \title{Predicted output name}
 \usage{
 predicted_name(M)
 
 predicted_name(M) <- value
+
+seq_in(M) <- value
 }
 \arguments{
 \item{M}{a model object}
@@ -17,8 +20,7 @@ predicted_name(M) <- value
 \value{
 \describe{
 \item{\code{predicted_name}}{returns the name of the predicted output}
-\item{\code{predicted_name<-}}{sets the name of the predicted output and
-returns the modified object}
+\item{\code{predicted_name<-}}{sets the name of the predicted output}
 }
 }
 \description{
