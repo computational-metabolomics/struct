@@ -154,6 +154,43 @@ setMethod(f = 'predicted',
 #' @rdname model
 #' @export
 #' @examples
+#' D = DatasetExperiment()
+#' M = example_model()
+#' seq_in(M) = 'data'
+#' @return the id of the input parameter to be replaced by the \code{predicted} 
+#' output of the previous model in a model sequence. Reserved keyword 'data' 
+#' means that the input data used by \code{model_train}, \code{model_apply} etc is used. 
+#' \code{seq_in = 'data'} is the default setting. 
+setMethod(f = 'seq_in',
+    signature = c('model'),
+    definition = function(M) {
+        return(M@seq_in)
+    }
+    
+)
+
+#' @rdname model
+#' @export
+#' @examples
+#' M = example_model()
+#' seq_in(M) = 'input_1'
+#' @return the modified model object
+setMethod(f = 'seq_in<-',
+    signature = c('model','character'),
+    definition = function(M,value) {
+        if (value %in% param_ids(M) | value=='data') {
+            M@seq_in = value
+        } else {
+            stop(paste0('"', value, '" is not a valid input parameter id for',
+                ' a '), class(M), ' object.')
+        }
+        return(M)
+    }
+)
+
+#' @rdname model
+#' @export
+#' @examples
 #' M = example_model()
 #' predicted_name(M)
 #' @return the id of the output returned by predicted()
@@ -173,7 +210,12 @@ setMethod(f = 'predicted_name',
 setMethod(f = 'predicted_name<-',
     signature = c('model','character'),
     definition = function(M,value) {
-        M@predicted = value
+        if (value %in% output_ids(M)) {
+            M@predicted = value
+        } else {
+            stop(paste0('"', value, '" is not a valid output id for',
+                ' a '), class(M), ' object.')
+        }
         return(M)
     }
 )
