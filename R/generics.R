@@ -330,8 +330,7 @@ setGeneric("model_reverse",function(M,D)standardGeneric("model_reverse"))
 #' @return
 #' \describe{
 #' \item{\code{predicted_name}}{returns the name of the predicted output}
-#' \item{\code{predicted_name<-}}{sets the name of the predicted output and
-#' returns the modified object}
+#' \item{\code{predicted_name<-}}{sets the name of the predicted output}
 #' }
 #' @rdname predicted_name
 #' @examples
@@ -344,6 +343,32 @@ setGeneric("predicted_name",function(M)standardGeneric("predicted_name"))
 #' @rdname predicted_name
 setGeneric("predicted_name<-",
     function(M,value)standardGeneric("predicted_name<-"))
+
+#' Sequence input
+#'
+#' get/set the input parameter replaced by the output of the previous model in 
+#' a model sequence. Default is "data" which passes the output as the data input
+#' for methods such as \code{model_train} and \code{model_apply}.
+#' @param M a model object
+#' @param value name of an output for this model
+#' @return
+#' \describe{
+#' \item{\code{seq_in}}{returns the name of the input parameter replaced 
+#' when used in a model sequence}
+#' \item{\code{seq_in<-}}{sets the name of the input parameter replaced 
+#' when used in a model sequence}
+#' }
+#' @rdname seq_in
+#' @examples
+#' M = example_model()
+#' seq_in(M)
+#' seq_in(M) = 'input_1'
+#' @export
+setGeneric("seq_in",function(M)standardGeneric("seq_in"))
+
+#' @rdname predicted_name
+setGeneric("seq_in<-",
+    function(M,value)standardGeneric("seq_in<-"))
 
 #' Prediction output
 #'
