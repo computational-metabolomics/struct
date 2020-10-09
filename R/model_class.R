@@ -173,7 +173,7 @@ setMethod(f = 'seq_in',
 #' @export
 #' @examples
 #' M = example_model()
-#' seq_in(M) = 'input_1'
+#' seq_in(M) = 'value_1'
 #' @return the modified model object
 setMethod(f = 'seq_in<-',
     signature = c('model','character'),

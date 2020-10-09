@@ -362,7 +362,7 @@ setGeneric("predicted_name<-",
 #' @examples
 #' M = example_model()
 #' seq_in(M)
-#' seq_in(M) = 'input_1'
+#' seq_in(M) = 'value_1'
 #' @export
 setGeneric("seq_in",function(M)standardGeneric("seq_in"))
 
