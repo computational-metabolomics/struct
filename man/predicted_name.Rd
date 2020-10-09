@@ -17,8 +17,7 @@ predicted_name(M) <- value
 \value{
 \describe{
 \item{\code{predicted_name}}{returns the name of the predicted output}
-\item{\code{predicted_name<-}}{sets the name of the predicted output and
-returns the modified object}
+\item{\code{predicted_name<-}}{sets the name of the predicted output}
 }
 }
 \description{
