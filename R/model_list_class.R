@@ -321,4 +321,26 @@ setMethod(f = "model_apply",
     }
 )
 
-
+#' @rdname as.code
+#' @export
+#' @examples
+#' M = example_model()
+#' as.code(M)
+#' @return a string of code to reproduce the model sequence
+setMethod(f = 'as.code',
+    signature = c('model_seq'),
+    definition = function(M,start='M = ',mode='compact') {
+        str=''
+        for (i in seq_len(length(M))) {
+            if (i==1) {
+                str=paste0(str,as.code(M[i],start=start,mode=mode))
+            } else {
+                str=paste0(str,as.code(M[i],start=paste0(rep(' ',nchar(start)),collapse=''),mode))
+            }
+            if (i<length(M)) {
+                str=paste0(str,' +\n')
+            }
+        }
+        return(str)
+    }
+)

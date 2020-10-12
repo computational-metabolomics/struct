@@ -239,3 +239,42 @@ setMethod(f = 'show',
         cat('\n')
     }
 )
+
+#' @rdname as.code
+#' @export
+#' @examples
+#' M = example_model()
+#' as.code(M)
+#' @return a string of code to reproduce the iterator
+setMethod(f = 'as.code',
+  signature = c('iterator'),
+  definition = function(M,start='M = ',mode='compact') {
+    str=.as_code(M,start,mode)
+    # get models
+    m=models(M)
+    # if iterator then multiply
+    str=paste0(str,' * \n')
+    if (is(m,'model_seq') & length(m) > 1) {
+      if (mode=='expanded') {
+        str=paste0(str,paste0(paste0(rep(' ',nchar(start)),collapse=''),'(\n'))
+        str=paste0(str,as.code(m,start=paste0(paste0(rep(' ',nchar(start)+2),collapse='')),mode))
+      } else {
+        str=paste0(str,as.code(m,start=paste0(paste0(rep(' ',nchar(start)),collapse=''),'('),mode))
+      }
+      if (mode != 'compact') {
+        str=paste0(str,'\n',paste0(rep(' ',nchar(start)),collapse=''))
+      }
+
+      str=paste0(str,')')
+    } else {
+      str=paste0(str,as.code(m,start=paste0(rep(' ',nchar(start)),collapse=''),mode))
+    }
+    
+    return(str)
+  }
+)
+
+
+
+
+

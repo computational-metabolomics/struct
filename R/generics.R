@@ -602,6 +602,23 @@ setGeneric("as.SummarizedExperiment",function(obj)standardGeneric("as.Summarized
 #' @export
 setGeneric("as.DatasetExperiment",function(obj)standardGeneric("as.DatasetExperiment"))
 
+#' Convert to code
+#' 
+#' Prints a block of code that can be used to replicate the input object.
+#' 
+#' @param M a struct model, model_seq or iterator object
+#' @param start text prepended to the code. Default is "M = "
+#' @param mode "compact" will use the least amount of lines, "expanded" will
+#' put each object and input on a new line. "neat" will produce an output
+#' somewhere between "compact" and "extended".
+#' @return A string of code to reproduce the input object.
+#' @export
+#' @rdname as.code
+#' @examples 
+#' M = example_model(value_1 = 10)
+#' as.code(M)
+setGeneric('as.code',function(M,start='M = ',mode='compact')standrdGeneric("as.code"))
+
 #' convert to data.frame
 #'
 #' Most often used with univariate statistics to gather all the different outputs in a consistent format.
@@ -611,3 +628,6 @@ setGeneric("as.DatasetExperiment",function(obj)standardGeneric("as.DatasetExperi
 #' @return a data.frame containing outputs from an object
 #' @export
 setGeneric("as_data_frame",function(M,...)standardGeneric("as_data_frame"))
+
+
+
