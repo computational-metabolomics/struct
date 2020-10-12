@@ -615,7 +615,7 @@ setGeneric("as.DatasetExperiment",function(obj)standardGeneric("as.DatasetExperi
 #' @export
 #' @rdname as.code
 #' @examples 
-#' M = example_model(input_1 = 10)
+#' M = example_model(value_1 = 10)
 #' as.code(M)
 setGeneric('as.code',function(M,start='M = ',mode='compact')standrdGeneric("as.code"))
 

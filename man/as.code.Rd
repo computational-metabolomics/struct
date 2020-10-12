@@ -38,7 +38,7 @@ a string of code to reproduce the iterator
 Prints a block of code that can be used to replicate the input object.
 }
 \examples{
-M = example_model(input_1 = 10)
+M = example_model(value_1 = 10)
 as.code(M)
 M = example_model()
 as.code(M)
