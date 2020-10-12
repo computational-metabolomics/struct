@@ -19,7 +19,8 @@ iris_DatasetExperiment = function () {
             "and virginica."),
             data = iris[, 1:4],
             sample_meta = iris[, -(1:4), drop = FALSE],
-            variable_meta=data.frame('feature_id'=colnames(iris[,1:4]))
+            variable_meta=data.frame('feature_id'=colnames(iris[,1:4])),
+            citations='Fisher, R. A. (1936) The use of multiple measurements in taxonomic problems. Annals of Eugenics, 7, Part II, 179–188.'
         )
     }
 

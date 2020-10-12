@@ -13,6 +13,7 @@
 #'   \item{\code{description}}{\code{character()} A longer description of the struct object and what it does}
 #'   \item{\code{type}}{\code{character()} A keyword that describes the type of struct object}
 #'   \item{\code{libraries}}{\code{character()} A (read only) list of R packages used by this struct object}
+#'   \item{\code{citations}}{\code{character()} A (read only) list of citations relevant to this struct object}
 #' }
 #' 
 #' @section Private slots:
@@ -41,9 +42,14 @@
         description = "character",
         type = "character",
         libraries = 'character',
+        citations = 'character',
         .params='character',
         .outputs='character'
-    )
+    ),
+    prototype = list(
+        'citations'=gsub(' (NA)','',
+            capture.output(suppressWarnings(print(
+                citation('struct'),style='textVersion'))),fixed = TRUE))
 )
 
 #' Constructor for struct_class objects
@@ -102,7 +108,7 @@ setMethod(f = "$",
         }
         
         # check for other struct slots
-        valid=c('name','description','type','libraries')
+        valid=c('name','description','type','libraries','citations')
         if (name %in% valid) {
             out = slot(x,name)
             return(out)
@@ -145,7 +151,8 @@ setMethod(f = "$<-",
         }
         
         # check for other slots
-        valid=c('name','description','type') # do not allow setting of libraries
+        valid=c('name','description','type') 
+        # do not allow setting of libraries or citations
         if (name %in% valid) {
             slot(x,name) = value
             return(x)
@@ -200,13 +207,21 @@ setMethod(f = "show",
     signature = c("struct_class"),
     definition = function(object) {
         n=nchar(paste0('A "', class(object),'" object'))
+        
+        if (length(object@description) > 1) {
+            # add bullets to description if more than one item
+            object@description=paste0('\U2022',' ', object$description)
+        }
+        # strip newlines from description, we'll add our own
+        object@description=gsub("[\r\n]",'',object@description)
         cat(
             'A "', class(object),'" object','\n',
             rep('-',n),'\n',
             'name:          ', object$name,'\n',
-            'description:   ', paste0(strwrap(object$description,width=65,exdent = 15),collapse='\n'),'\n',
+            'description:   ', paste0(strwrap(object$description,width=95,exdent = 17),collapse='\n'),'\n',
             sep = ''
         )
+        
         if (length(object@.params>0) & !is(object,'entity')) {
             cat('input params: ', paste(object@.params,collapse=', '),'\n')
         } 
@@ -392,4 +407,64 @@ new_struct = function(class, ...) {
     }
     
     return(obj)
+}
+
+
+
+#' @rdname citations
+#' @export
+setMethod(f = "citations",
+    signature = c("struct_class"),
+    definition = function(obj) {
+        if (is(obj,'DatasetExperiment')) {
+            cit=D$citations
+        } else {
+            cit=character(0)
+        }
+        
+        # citations for libraries
+        lib=.extended_list_by_slot(obj,'libraries')
+        cit_lib=lapply(lib,function(x){
+            gsub(' (NA)','',
+                capture.output(suppressWarnings(print(
+                    citation(x),style='textVersion'))),fixed = TRUE)
+        })
+        cit=c(cit,unlist(cit_lib))
+        
+        cit=c(cit,
+            .extended_list_by_slot(obj,'citations'))
+        
+        cit=unique(cit)
+        return(cit)
+    }
+)
+
+#' @rdname libraries
+#' @export
+setMethod(f = "libraries",
+    signature = c("struct_class"),
+    definition = function(obj) {
+        lib=.extended_list_by_slot(obj,'libraries')
+        return(lib)
+    }
+)
+
+
+
+
+.extended_list_by_slot = function(obj,slotname) {
+    # returns a unique list of values for slots in this object
+    # and all the ones in inherits
+    cit=character(0)
+    # get the objects this object extends
+    ex = extends(class(obj)[1])
+    # for each one, if its a struct class grab the citations
+    for (k in seq_along(ex)) {
+        if (extends(ex[[k]],'struct_class')) {
+            X = new_struct(ex[k])
+            cit=c(cit,slot(X,slotname))
+        }
+    }
+    cit=unique(cit)
+    return(cit)
 }

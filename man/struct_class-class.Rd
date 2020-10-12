@@ -23,6 +23,7 @@ users building workflows.
   \item{\code{description}}{\code{character()} A longer description of the struct object and what it does}
   \item{\code{type}}{\code{character()} A keyword that describes the type of struct object}
   \item{\code{libraries}}{\code{character()} A (read only) list of R packages used by this struct object}
+  \item{\code{citations}}{\code{character()} A (read only) list of citations relevant to this struct object}
 }
 }
 
