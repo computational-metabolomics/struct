@@ -8,21 +8,31 @@
 #' @examples
 #' D = iris_DatasetExperiment()
 iris_DatasetExperiment = function () {
-        iris = datasets::iris
-        DatasetExperiment(
-            name="Fisher's Iris dataset",
-            description=paste0(
+    iris = datasets::iris
+    DatasetExperiment(
+        name="Fisher's Iris dataset",
+        description=paste0(
             "This famous (Fisher's or Anderson's) iris data set gives ",
             "the measurements in centimeters of the variables sepal length and ",
             "width and petal length and width, respectively, for 50 flowers from ",
             "each of 3 species of iris. The species are Iris setosa, versicolor, ",
             "and virginica."),
-            data = iris[, 1:4],
-            sample_meta = iris[, -(1:4), drop = FALSE],
-            variable_meta=data.frame('feature_id'=colnames(iris[,1:4])),
-            citations='Fisher, R. A. (1936) The use of multiple measurements in taxonomic problems. Annals of Eugenics, 7, Part II, 179–188.'
-        )
-    }
+        data = iris[, 1:4],
+        sample_meta = iris[, -(1:4), drop = FALSE],
+        variable_meta=data.frame('feature_id'=colnames(iris[,1:4])),
+        citations=list(bibentry(
+            bibtype = "article",
+            author = as.person("FISHER, R. A"),
+            title = "The use of multiple measurments in taxonomic problems",
+            journal = "Annals of Eugenics",
+            volume = 7,
+            number = 2,
+            pages = "179-188",
+            doi = "10.1111/j.1469-1809.1936.tb02137.x",
+            year = 1936
+        ))
+    )
+}
 
 #' Example model
 #'

@@ -13,7 +13,8 @@
 #'   \item{\code{description}}{\code{character()} A longer description of the struct object and what it does}
 #'   \item{\code{type}}{\code{character()} A keyword that describes the type of struct object}
 #'   \item{\code{libraries}}{\code{character()} A (read only) list of R packages used by this struct object}
-#'   \item{\code{citations}}{\code{character()} A (read only) list of citations relevant to this struct object}
+#'   \item{\code{citations}}{\code{list of bibentry} A (read only) list of citations relevant to this struct object,
+#'   in Bibtex format.}
 #' }
 #' 
 #' @section Private slots:
@@ -42,14 +43,13 @@
         description = "character",
         type = "character",
         libraries = 'character',
-        citations = 'character',
+        citations = 'list',
         .params='character',
         .outputs='character'
     ),
     prototype = list(
-        'citations'=gsub(' (NA)','',
-            capture.output(suppressWarnings(print(
-                citation('struct'),style='textVersion'))),fixed = TRUE))
+        'citations'=suppressWarnings(list(citation('struct')))
+    )
 )
 
 #' Constructor for struct_class objects
@@ -59,12 +59,27 @@
 #' @param name the name of the object
 #' @param description a description of the object
 #' @param type the type of the struct object
+#' @param citations a list of citations for the object in "bibentry" format
 #' @return a struct_class object
 #' @export
 struct_class = function(
     name=character(0),
     description=character(0),
-    type=character(0)) {
+    type=character(0),
+    citations=list()) {
+    
+    # if Bibtex is provided convert to a list
+    if (is(citations,'bibentry')){
+        citations=list(citations)
+    }
+    
+    # check all citations are Bibtex
+    if (length(citations>0)) {
+        ok=lapply(citations,is,class='bibentry')
+        if (!(all(citations))){
+            stop('all citations must be in "bibentry" format')
+        }
+    }
     
     # new object
     out = .struct_class(
@@ -154,13 +169,21 @@ setMethod(f = "$<-",
         valid=c('name','description','type') 
         # do not allow setting of libraries or citations
         if (name %in% valid) {
+            # check citation is Bibtex
+            if (name=='citations') {
+                ok=lapply(value,is,class='bibentry')
+                if (!all(unlist(ok))) {
+                    error(paste0('All citations must be "bibentry" objects'))
+                }
+            }
+            
             slot(x,name) = value
             return(x)
         } 
         
         # if we havent returned value by now, then we're not going to
         stop(paste0(name,' is not a valid param, output or column name for this DatasetExperiment using $'))
-
+        
     }
 )
 
@@ -228,7 +251,7 @@ setMethod(f = "show",
         if (length(object@.outputs>0) & !is(object,'entity')) {
             cat('outputs:      ', paste(object@.outputs,collapse=', '),'\n')
         } 
-       
+        
     }
 )
 
@@ -270,7 +293,7 @@ set_struct_obj = function(
     prototype[['.params']]=names(params)
     prototype[['.outputs']]=names(outputs)
     
-   ## create class definition as assign to the chosen environment
+    ## create class definition as assign to the chosen environment
     
     assign(paste0('.',class_name),setClass(
         Class = class_name,
@@ -317,7 +340,7 @@ set_struct_obj = function(
 #')
 set_obj_method = function(class_name, method_name, definition, where = topenv(parent.frame()), signature=c(class_name,'DatasetExperiment')) {
     
-        setMethod(f = method_name,
+    setMethod(f = method_name,
         signature = signature,
         definition = definition,
         where = where)
@@ -370,7 +393,7 @@ populate_slots=function(obj,...) {
     L=list(...)
     for (k in L) {
         if (is_param(obj,names(k))) {
-                param_value(obj,names(k)) = k[[1]]
+            param_value(obj,names(k)) = k[[1]]
         }
         
     }
@@ -399,7 +422,7 @@ new_struct = function(class, ...) {
     if (!is(obj,'struct_class')){
         stop(paste0('struct_class is only for objects derived from struct_class. Got object of type "',class(obj),'"'))
     }
-        
+    
     # update values
     L=list(...)
     for (k in seq_len(length(L))) {
@@ -419,22 +442,27 @@ setMethod(f = "citations",
         if (is(obj,'DatasetExperiment')) {
             cit=D$citations
         } else {
-            cit=character(0)
+            cit=list()
         }
         
         # citations for libraries
-        lib=.extended_list_by_slot(obj,'libraries')
-        cit_lib=lapply(lib,function(x){
-            gsub(' (NA)','',
-                capture.output(suppressWarnings(print(
-                    citation(x),style='textVersion'))),fixed = TRUE)
-        })
-        cit=c(cit,unlist(cit_lib))
+        lib = .extended_list_by_slot(obj,'libraries')
+            lib = lapply(lib,function(x){
+                # citations for library
+                A = suppressWarnings(citation(x))
+                # convert to strings
+                #B=.list_of_citations_as_strings(A)
+                return(A)
+            })
         
-        cit=c(cit,
-            .extended_list_by_slot(obj,'citations'))
+        cit = c(cit,lib)
         
-        cit=unique(cit)
+        # citations as strings
+        out = .extended_list_by_slot(obj,'citations')
+        cit=c(cit,out)
+        
+        # remove duplicates
+        cit=cit[!(duplicated(cit))]
         return(cit)
     }
 )
@@ -445,6 +473,7 @@ setMethod(f = "libraries",
     signature = c("struct_class"),
     definition = function(obj) {
         lib=.extended_list_by_slot(obj,'libraries')
+        lib=lib[!(duplicated(lib))]
         return(lib)
     }
 )
@@ -455,16 +484,32 @@ setMethod(f = "libraries",
 .extended_list_by_slot = function(obj,slotname) {
     # returns a unique list of values for slots in this object
     # and all the ones in inherits
-    cit=character(0)
+    cit=list()
     # get the objects this object extends
     ex = extends(class(obj)[1])
     # for each one, if its a struct class grab the citations
     for (k in seq_along(ex)) {
         if (extends(ex[[k]],'struct_class')) {
             X = new_struct(ex[k])
-            cit=c(cit,slot(X,slotname))
+            S=slot(X,slotname)
+            cit=c(cit,S)
         }
     }
-    cit=unique(cit)
     return(cit)
+}
+
+
+
+
+.list_of_citations_as_strings = function(L) {
+    
+    B=lapply(L,function(x){
+        str=capture.output(print(x,style='textVersion'))
+        str=paste0(str,collapse='')
+        return(str)
+    }
+    )
+    
+    C=unlist(B)
+    return(C)
 }
