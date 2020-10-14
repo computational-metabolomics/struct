@@ -182,7 +182,7 @@ setMethod(f = 'seq_in<-',
             M@seq_in = value
         } else {
             stop(paste0('"', value, '" is not a valid input parameter id for',
-                ' a '), class(M), ' object.')
+                ' a '), class(M)[1], ' object.')
         }
         return(M)
     }
@@ -288,7 +288,7 @@ setMethod(f = 'as.code',
             str=paste0(str,P[p], ' = "', seq_in(M), '"')
         } else if (P[p]=='predicted') {
             str=paste0(str,P[p], ' = "', predicted_name(M), '"')
-        } else if (class(param_value(M,P[p]))=='character') {
+        } else if (is(param_value(M,P[p]),'character')) {
             str=paste0(str,P[p], ' = "', as.character(param_value(M,P[p])), '"')
         } else {
             str=paste0(str,P[p], ' = ', as.character(param_value(M,P[p])))

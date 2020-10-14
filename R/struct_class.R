@@ -130,7 +130,7 @@ setMethod(f = "$",
         }
         
         # if we get here then error
-        stop(paste0('"', name, '" is not valid for this object:', class(x)))
+        stop(paste0('"', name, '" is not valid for this object:', class(x)[1]))
         
     }
 )
@@ -173,7 +173,7 @@ setMethod(f = "$<-",
             if (name=='citations') {
                 ok=lapply(value,is,class='bibentry')
                 if (!all(unlist(ok))) {
-                    error(paste0('All citations must be "bibentry" objects'))
+                    stop(paste0('All citations must be "bibentry" objects'))
                 }
             }
             
@@ -435,13 +435,13 @@ new_struct = function(class, ...) {
 
 
 #' @rdname citations
-#' @importFrom utils capture.output bibentry as.person
+#' @importFrom utils capture.output bibentry as.person citation
 #' @export
 setMethod(f = "citations",
     signature = c("struct_class"),
     definition = function(obj) {
         if (is(obj,'DatasetExperiment')) {
-            cit=D$citations
+            cit=obj$citations
         } else {
             cit=list()
         }
