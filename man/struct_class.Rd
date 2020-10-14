@@ -7,7 +7,8 @@
 struct_class(
   name = character(0),
   description = character(0),
-  type = character(0)
+  type = character(0),
+  citations = list()
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ struct_class(
 \item{description}{a description of the object}
 
 \item{type}{the type of the struct object}
+
+\item{citations}{a list of citations for the object in "bibentry" format}
 }
 \value{
 a struct_class object

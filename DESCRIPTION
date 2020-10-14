@@ -1,7 +1,7 @@
 Package: struct
 Type: Package
 Title: Statistics in R Using Class-based Templates
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
     person(
         c("Gavin","Rhys"),
@@ -49,7 +49,7 @@ Collate:
     'resampler_class.R'
     'struct.R'
     'struct_templates.R'
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Depends: R (>= 4.0)
 Suggests: 
  testthat,

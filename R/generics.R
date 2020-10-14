@@ -330,8 +330,7 @@ setGeneric("model_reverse",function(M,D)standardGeneric("model_reverse"))
 #' @return
 #' \describe{
 #' \item{\code{predicted_name}}{returns the name of the predicted output}
-#' \item{\code{predicted_name<-}}{sets the name of the predicted output and
-#' returns the modified object}
+#' \item{\code{predicted_name<-}}{sets the name of the predicted output}
 #' }
 #' @rdname predicted_name
 #' @examples
@@ -344,6 +343,32 @@ setGeneric("predicted_name",function(M)standardGeneric("predicted_name"))
 #' @rdname predicted_name
 setGeneric("predicted_name<-",
     function(M,value)standardGeneric("predicted_name<-"))
+
+#' Sequence input
+#'
+#' get/set the input parameter replaced by the output of the previous model in 
+#' a model sequence. Default is "data" which passes the output as the data input
+#' for methods such as \code{model_train} and \code{model_apply}.
+#' @param M a model object
+#' @param value name of an output for this model
+#' @return
+#' \describe{
+#' \item{\code{seq_in}}{returns the name of the input parameter replaced 
+#' when used in a model sequence}
+#' \item{\code{seq_in<-}}{sets the name of the input parameter replaced 
+#' when used in a model sequence}
+#' }
+#' @rdname seq_in
+#' @examples
+#' M = example_model()
+#' seq_in(M)
+#' seq_in(M) = 'value_1'
+#' @export
+setGeneric("seq_in",function(M)standardGeneric("seq_in"))
+
+#' @rdname seq_in
+setGeneric("seq_in<-",
+    function(M,value)standardGeneric("seq_in<-"))
 
 #' Prediction output
 #'
@@ -577,6 +602,23 @@ setGeneric("as.SummarizedExperiment",function(obj)standardGeneric("as.Summarized
 #' @export
 setGeneric("as.DatasetExperiment",function(obj)standardGeneric("as.DatasetExperiment"))
 
+#' Convert to code
+#' 
+#' Prints a block of code that can be used to replicate the input object.
+#' 
+#' @param M a struct model, model_seq or iterator object
+#' @param start text prepended to the code. Default is "M = "
+#' @param mode "compact" will use the least amount of lines, "expanded" will
+#' put each object and input on a new line. "neat" will produce an output
+#' somewhere between "compact" and "extended".
+#' @return A string of code to reproduce the input object.
+#' @export
+#' @rdname as.code
+#' @examples 
+#' M = example_model(value_1 = 10)
+#' as.code(M)
+setGeneric('as.code',function(M,start='M = ',mode='compact')standrdGeneric("as.code"))
+
 #' convert to data.frame
 #'
 #' Most often used with univariate statistics to gather all the different outputs in a consistent format.
@@ -586,3 +628,36 @@ setGeneric("as.DatasetExperiment",function(obj)standardGeneric("as.DatasetExperi
 #' @return a data.frame containing outputs from an object
 #' @export
 setGeneric("as_data_frame",function(M,...)standardGeneric("as_data_frame"))
+
+
+#' Citations for an object
+#' 
+#' All \code{struct} objects have a "citations" slot, which is a character array of
+#' references relevant to the object. The \code{citations} method gathers
+#' citations from an object and all \code{struct} objects that it inherits to generate
+#' a complete list.
+#' @param obj a struct object
+#' @return a character array of citations
+#' @examples 
+#' D = iris_DatasetExperiment()
+#' D$citations # the list specifically defined for this object
+#' citations(D) # the list for this object and all inherited ones
+#' @rdname citations
+#' @export
+setGeneric("citations",function(obj)standardGeneric("citations"))
+
+#' Libraries for an object
+#' 
+#' All \code{struct} objects have a "libraries" slot, which is a character array of
+#' libraries required to use the object. The \code{libraries} method gathers
+#' libraries from an object and all \code{struct} objects that it inherits to generate
+#' a complete list.
+#' @param obj a struct object
+#' @return a character array of R packages needed by the object
+#' @examples 
+#' M = example_model()
+#' libraries(M)
+#' @rdname libraries
+#' @export
+setGeneric("libraries",function(obj)standardGeneric("libraries"))
+
