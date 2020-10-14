@@ -1,7 +1,7 @@
 Package: struct
 Type: Package
 Title: Statistics in R Using Class-based Templates
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
     person(
         c("Gavin","Rhys"),
