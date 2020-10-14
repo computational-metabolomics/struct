@@ -630,4 +630,34 @@ setGeneric('as.code',function(M,start='M = ',mode='compact')standrdGeneric("as.c
 setGeneric("as_data_frame",function(M,...)standardGeneric("as_data_frame"))
 
 
+#' Citations for an object
+#' 
+#' All \code{struct} objects have a "citations" slot, which is a character array of
+#' references relevant to the object. The \code{citations} method gathers
+#' citations from an object and all \code{struct} objects that it inherits to generate
+#' a complete list.
+#' @param obj a struct object
+#' @return a character array of citations
+#' @examples 
+#' D = iris_DatasetExperiment()
+#' D$citations # the list specifically defined for this object
+#' citations(D) # the list for this object and all inherited ones
+#' @rdname citations
+#' @export
+setGeneric("citations",function(obj)standardGeneric("citations"))
+
+#' Libraries for an object
+#' 
+#' All \code{struct} objects have a "libraries" slot, which is a character array of
+#' libraries required to use the object. The \code{libraries} method gathers
+#' libraries from an object and all \code{struct} objects that it inherits to generate
+#' a complete list.
+#' @param obj a struct object
+#' @return a character array of R packages needed by the object
+#' @examples 
+#' M = example_model()
+#' libraries(M)
+#' @rdname libraries
+#' @export
+setGeneric("libraries",function(obj)standardGeneric("libraries"))
 
