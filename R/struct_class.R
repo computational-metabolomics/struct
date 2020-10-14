@@ -435,6 +435,7 @@ new_struct = function(class, ...) {
 
 
 #' @rdname citations
+#' @importFrom utils capture.output bibentry as.person
 #' @export
 setMethod(f = "citations",
     signature = c("struct_class"),
