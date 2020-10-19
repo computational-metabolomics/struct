@@ -84,7 +84,7 @@ setMethod(f = 'show',
     definition = function(object) {
         callNextMethod()
         
-        cat('allowed:         ',paste0(object@allowed,collapse=', '))
+        cat('allowed:      ',paste0(object@allowed,collapse=', '))
         cat('\n')
     }
 )

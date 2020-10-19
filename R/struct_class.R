@@ -232,16 +232,35 @@ setMethod(f = "show",
         n=nchar(paste0('A "', class(object),'" object'))
         
         if (length(object@description) > 1) {
-            # add bullets to description if more than one item
-            object@description=paste0('\U2022',' ', object$description)
+            nmes=names(object$description)
+            if (is.null(nmes)) {
+                # add bullets to description if more than one item
+                object@description=paste0('\U2022',' ', object$description)
+            } else {
+                nmes=paste0(nmes,':')
+                padding=max(nchar(nmes))
+                padding=strrep(' ',padding)
+                
+                for (k in seq_along(nmes)) {
+                    nme=sub(strrep(' ',nchar(nmes[k])),nmes[k],padding)
+                    object@description[k]=paste0(nme,' ',object@description[k])
+                }
+                # add name to description if more than one item
+                object@description=paste0('\U2022',' ', object$description)
+            }
         }
         # strip newlines from description, we'll add our own
         object@description=gsub("[\r\n]",'',object@description)
+        if (length(object$description)>1) {
+            pad='\n               '
+        } else {
+            pad='\n'
+        }
         cat(
             'A "', class(object),'" object','\n',
             rep('-',n),'\n',
             'name:          ', object$name,'\n',
-            'description:   ', paste0(strwrap(object$description,width=95,exdent = 17),collapse='\n'),'\n',
+            'description:   ', paste0(strwrap(object$description,width=95,exdent = 17),collapse=pad),'\n',
             sep = ''
         )
         
