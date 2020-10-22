@@ -58,7 +58,13 @@ entity = function(name, description=character(0), type='character',
     ),
     validity = function(object) {
         check_length = length(value(object)) <= max_length(object)
-        check_type = class(value(object))[1] %in% object$type
+        check_type = any(
+            unlist(
+                lapply(object$type,function(x){
+                    is(value(object),x)
+                })
+            )
+        )
         check_max_length = length(max_length(object)) == 1
         msg = TRUE
         if (!check_length) {
