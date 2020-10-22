@@ -232,6 +232,7 @@ setMethod(f = "show",
         n=nchar(paste0('A "', class(object),'" object'))
         
         if (length(object@description) > 1) {
+
             nmes=names(object$description)
             if (is.null(nmes)) {
                 # add bullets to description if more than one item
@@ -256,6 +257,7 @@ setMethod(f = "show",
         } else {
             pad='\n'
         }
+
         cat(
             'A "', class(object),'" object','\n',
             rep('-',n),'\n',

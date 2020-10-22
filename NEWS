@@ -1,6 +1,6 @@
 Changes in 1.1.2
 + improved 'show' output for objects
-
++ allow ANY for entities
 Changes in 1.1.1
 + added citations slot to struct classes
 + added corresponding citations method
