@@ -3,7 +3,7 @@
 #' This package defines classes (templates) for developing statistical workflows.
 #' These classes can be extended using other packages, making
 #' it easier to combine methods from different packages into a robust workflow.
-#' Integreation with STATO: the statistical methods ontology 
+#' Integration with STATO: the statistical methods ontology 
 #' (\url{https://www.ebi.ac.uk/ols/ontologies/stato}) provides standardised definitions
 #' for many statistical methods.
 #'
