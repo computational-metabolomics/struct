@@ -433,7 +433,9 @@ new_struct = function(class, ...) {
 }
 
 
-
+#' @importFrom utils capture.output
+#' @importFrom utils bibentry
+#' @importFrom utils as.person
 #' @rdname citations
 #' @export
 setMethod(f = "citations",
