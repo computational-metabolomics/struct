@@ -2,7 +2,7 @@
 STRUCT: STatistics in R Using Class Templates
 ==============================================
 
-|Git| |Bioconda| |Build Status (Travis)| |License| |Coverage| |AppVeyor|
+|Git| |Bioconda| |Build Status| |License| |Coverage|
 
 
 ------------
@@ -32,14 +32,11 @@ References
 ------------
 
 
-.. |Build Status (Travis)| image:: https://img.shields.io/travis/computational-metabolomics/struct/master.svg?label=Travis
-   :target: https://travis-ci.org/computational-metabolomics/struct
-
-.. |Build Status (AppVeyor)| image:: https://ci.appveyor.com/api/projects/status/github/computational-metabolomics/struct?branch=master&svg=true
-   :target: https://ci.appveyor.com/project/computational-metabolomcis/struct
+.. |Build Status| image:: https://github.com/computational-metabolomics/structToolbox/workflows/struct/badge.svg
+   :target: https://github.com/computational-metabolomics/struct/actions
 
 .. |Git| image:: https://img.shields.io/badge/repository-GitHub-blue.svg?style=flat&maxAge=3600
-   :target: https://github.com/computational-metabolomics/struct
+   :target: https://github.com/computational-metabolomics/structToolbox
 
 .. |Bioconda| image:: https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat&maxAge=3600
    :target: https://bioconda.github.io/recipes/bioconductor-struct/README.html
@@ -49,6 +46,3 @@ References
 
 .. |Coverage| image:: https://codecov.io/gh/computational-metabolomics/struct/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/computational-metabolomics/struct
-
-.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/github/computational-metabolomics/struct?branch=master&svg=true
-   :target: https://ci.appveyor.com/project/RJMW/struct
