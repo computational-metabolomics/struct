@@ -1,3 +1,16 @@
+Changes in 1.1.2
++ improved 'show' output for objects
++ allow ANY for entities
+Changes in 1.1.1
++ added citations slot to struct classes
++ added corresponding citations method
++ added method to get/set seq_in slot
++ as.SummarizedExepriment now works correctly
++ using seq_in now works for sequences with more than 2 steps
+
+Changes in 1.0.0
++ Biconductor 3.11 release
+
 Changes in 0.99.10
 + update vignettes
 + update documentation
