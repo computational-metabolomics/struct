@@ -280,7 +280,7 @@ setMethod("+",
 setMethod(f = 'predicted',
     signature = c('model_seq'),
     definition = function(M) {
-        # return the predicted ooutput from the last model
+        # return the predicted output from the last model
         L = length(M)
         return(output_value(M[L],predicted_name(M[L])))
     }

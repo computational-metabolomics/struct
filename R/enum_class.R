@@ -28,7 +28,7 @@
 #' @inheritParams entity
 #' @rdname enum
 enum = function(name, description=character(0), type='character', 
-    value=character(0),max_length=1,allowed) {
+    value=character(0),max_length=1,allowed,...) {
     
     # new object
     out = .enum(
@@ -37,7 +37,8 @@ enum = function(name, description=character(0), type='character',
         type=type,
         value=value,
         max_length=max_length,
-        allowed=allowed
+        allowed=allowed,
+        ...
     )
     return(out)
 }
@@ -72,7 +73,7 @@ setMethod(f = "value<-",
         if (value %in% obj@allowed) {
             obj@value = value
         } else {
-            stop(paste0(value,' is not a valid choice for this enum.'))
+            stop(value,' is not a valid choice for this enum.')
         }
         return(obj)
     }

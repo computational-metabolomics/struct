@@ -7,7 +7,6 @@
 set_struct_obj(
   class_name,
   struct_obj,
-  stato = TRUE,
   params = character(0),
   outputs = character(0),
   private = character(0),
@@ -18,8 +17,6 @@ set_struct_obj(
 \item{class_name}{the name of the new class to create}
 
 \item{struct_obj}{the struct obj to inherit e.g. 'model', 'metric' etc}
-
-\item{stato}{TRUE (default) or FALSE to inherit the stato class}
 
 \item{params}{a named character vector of input parameters where each
 element specifies the type of value that will be in the slot e.g. c(example = 'character')}

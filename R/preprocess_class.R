@@ -45,3 +45,14 @@ setMethod(f = "show",
     }
 )
 
+# autocompletion, return sample_meta column names
+#' @export
+#' @rdname autocompletion
+#' @method .DollarNames preprocess
+.DollarNames.preprocess<- function(x, pattern = "") {
+    .DollarNames.struct_class(x,pattern)
+}
+
+#' @export 
+#' @rdname autocompletion
+setMethod('.DollarNames','preprocess',.DollarNames.preprocess)

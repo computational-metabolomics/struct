@@ -16,7 +16,8 @@ entity(
   description = character(0),
   type = "character",
   value = NULL,
-  max_length = Inf
+  max_length = Inf,
+  ...
 )
 
 \S4method{value}{entity}(obj)
@@ -39,6 +40,8 @@ entity(
 \item{value}{The value of the parameter/outputs}
 
 \item{max_length}{Maximum length of value vector (default 1)}
+
+\item{...}{additional inputs to the struct_class object}
 }
 \value{
 max value vector length for an entity

@@ -14,6 +14,7 @@
 #' @param obj An entity object
 #' @param max_length Maximum length of value vector (default 1)
 #' @param value The value of the parameter/outputs
+#' @param ... additional inputs to the struct_class object
 #' @include generics.R struct_class.R
 #' @return An entity object
 #' @examples
@@ -29,8 +30,13 @@
 #' value(E)
 #' value(E) = 10
 #' @rdname entity
-entity = function(name, description=character(0), type='character', 
-    value=NULL,max_length=Inf) {
+entity = function(
+    name, 
+    description=character(0), 
+    type='character',
+    value=NULL,
+    max_length=Inf,
+    ...) {
     
     value=check_init_val(value,type)
     
@@ -40,7 +46,8 @@ entity = function(name, description=character(0), type='character',
         description=description,
         type=type,
         value=value,
-        max_length=max_length
+        max_length=max_length,
+        ...
     )
     return(out)
 }
@@ -54,7 +61,8 @@ entity = function(name, description=character(0), type='character',
         description = 'no description provided',
         value = character(0),
         type = 'character',
-        max_length = Inf
+        max_length = Inf,
+        ontology=character()
     ),
     validity = function(object) {
         check_length = length(value(object)) <= max_length(object)

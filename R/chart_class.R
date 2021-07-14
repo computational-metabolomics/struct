@@ -40,7 +40,7 @@ chart = function(...) {
 setMethod(f = "chart_plot",
     signature = "chart",
     definition = function(obj,dobj) {
-        warning(paste0('no chart defined for "',class(dobj),'"'))
+        warning('no chart defined for "',class(dobj),'"')
         return(obj)
     }
 )
@@ -52,3 +52,15 @@ setMethod(f = "show",
         callNextMethod()
     }
 )
+
+# autocompletion, return sample_meta column names
+#' @export
+#' @rdname autocompletion
+#' @method .DollarNames chart
+.DollarNames.chart <- function(x, pattern = "") {
+    .DollarNames.struct_class(x,pattern)
+}
+
+#' @export 
+#' @rdname autocompletion
+setMethod('.DollarNames','chart',.DollarNames.chart)

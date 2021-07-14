@@ -41,6 +41,7 @@
 #'
 #' @rdname stato
 stato = function(stato_id) {
+    warning('stato objects are deprecated as of version 1.5.1 please see "?struct::ontology" for details.')
     # new object
     out = .stato(stato_id=stato_id)
     return(out)

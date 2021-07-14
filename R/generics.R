@@ -1,3 +1,4 @@
+
 #####################################
 ###### parameter class generics #####
 #####################################
@@ -632,8 +633,8 @@ setGeneric("as_data_frame",function(M,...)standardGeneric("as_data_frame"))
 
 #' Citations for an object
 #' 
-#' All \code{struct} objects have a "citations" slot, which is a character array of
-#' references relevant to the object. The \code{citations} method gathers
+#' All \code{struct} objects have a "citations" slot, which is a list of
+#' references in bibtex format. The \code{citations} method gathers
 #' citations from an object and all \code{struct} objects that it inherits to generate
 #' a complete list.
 #' @param obj a struct object
@@ -661,3 +662,18 @@ setGeneric("citations",function(obj)standardGeneric("citations"))
 #' @export
 setGeneric("libraries",function(obj)standardGeneric("libraries"))
 
+#' Ontology for an object
+#' 
+#' All \code{struct} objects have an "ontology" slot, which is a list of
+#' ontology items for the object. The \code{ontology} method gathers
+#' ontology items from an object and all \code{struct} objects that it inherits to generate
+#' a complete list.
+#' @param obj a struct object
+#' @param cache a named list of ontology_terms for offline use. Terms from the cache are search 
+#' based on the name of the list items matching the ontology id. If cache=NULL then the OLS API is used to lookup terms.
+#' @examples 
+#' M = example_model()
+#' ontology(M,cache=NULL)
+#' @rdname ontology
+#' @export
+setGeneric("ontology",function(obj,cache=NULL)standardGeneric("ontology"))

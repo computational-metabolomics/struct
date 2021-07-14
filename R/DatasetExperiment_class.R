@@ -226,3 +226,4 @@ setMethod(f = "export_xlsx",
     openxlsx::write.xlsx(OUT,file = outfile,rowNames = TRUE,colNames = TRUE)
   }
 )
+

@@ -24,7 +24,6 @@ a helper function to update the show method for a struct object
 set_struct_obj(
 class_name = 'add_two_inputs',
 struct_obj = 'model',
-stato = FALSE,
 params = c(input_1 = 'numeric', input_2 = 'numeric'),
 outputs = c(result = 'numeric'),
 prototype = list(

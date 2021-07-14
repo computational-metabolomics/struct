@@ -29,3 +29,15 @@ setMethod(f = "show",
         callNextMethod()
     }
 )
+
+# autocompletion, return sample_meta column names
+#' @export
+#' @rdname autocompletion
+#' @method .DollarNames resampler
+.DollarNames.resampler<- function(x, pattern = "") {
+    .DollarNames.struct_class(x,pattern)
+}
+
+#' @export 
+#' @rdname autocompletion
+setMethod('.DollarNames','resampler',.DollarNames.resampler)

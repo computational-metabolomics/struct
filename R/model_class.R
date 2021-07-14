@@ -181,8 +181,8 @@ setMethod(f = 'seq_in<-',
         if (value %in% param_ids(M) | value=='data') {
             M@seq_in = value
         } else {
-            stop(paste0('"', value, '" is not a valid input parameter id for',
-                ' a '), class(M)[1], ' object.')
+            stop('"', value, '" is not a valid input parameter id for',
+                ' a ', class(M)[1], ' object.')
         }
         return(M)
     }
@@ -213,8 +213,8 @@ setMethod(f = 'predicted_name<-',
         if (value %in% output_ids(M)) {
             M@predicted = value
         } else {
-            stop(paste0('"', value, '" is not a valid output id for',
-                ' a '), class(M), ' object.')
+            stop('"', value, '" is not a valid output id for',
+                ' a ', class(M), ' object.')
         }
         return(M)
     }
@@ -311,3 +311,16 @@ setMethod(f = 'as.code',
     
     return(str)
 }
+
+# autocompletion, return sample_meta column names
+#' @export
+#' @rdname autocompletion
+#' @method .DollarNames model
+.DollarNames.model <- function(x, pattern = "") {
+    .DollarNames.struct_class(x,pattern)
+}
+
+#' @export 
+#' @rdname autocompletion
+setMethod('.DollarNames','model',.DollarNames.model)
+

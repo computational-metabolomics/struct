@@ -110,3 +110,15 @@ setMethod(f = "show",
         cat('\n')
     }
 )
+
+# autocompletion, return sample_meta column names
+#' @export
+#' @rdname autocompletion
+#' @method .DollarNames chart
+.DollarNames.metric<- function(x, pattern = "") {
+    .DollarNames.struct_class(x,pattern)
+}
+
+#' @export 
+#' @rdname autocompletion
+setMethod('.DollarNames','metric',.DollarNames.metric)

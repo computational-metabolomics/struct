@@ -11,7 +11,8 @@ enum(
   type = "character",
   value = character(0),
   max_length = 1,
-  allowed
+  allowed,
+  ...
 )
 
 \S4method{value}{enum}(obj) <- value
@@ -28,6 +29,8 @@ enum(
 \item{max_length}{Maximum length of value vector (default 1)}
 
 \item{allowed}{A list of allowed values}
+
+\item{...}{additional inputs to the struct_class object}
 
 \item{obj}{an enum object}
 }
