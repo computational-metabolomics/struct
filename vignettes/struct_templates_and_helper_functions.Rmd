@@ -77,8 +77,6 @@ To create a new struct object use the `set_struct_obj()` function. There are sev
   - The name of the new struct object (character).
 + `struct_obj`    
   - The type of struct object to create e.g. model, iterator, metric, etc.
-+ `stato`         
-   - TRUE (default) or FALSE to add stato functionality to the object
 + `params`        
   - A named vector of types for input slots. The names will become slots and the types will be used to determine what type of assignments are allowed to the named slot (e.g. integer, character etc).
 + `outputs`       
@@ -139,8 +137,6 @@ The string output from the `extra_string` function will be appended to the defau
    + Used to define input and output parameters
 * `enum` objects
    + Similar to `entity` objects but with a fixed set of allowed values
-* `stato` objects
-   + Used in combination with other objects this provided access to the STATO database in order to provide standardised definitions for methods and parameters.
 
 Each of the templates has a similar structure and a number of template-specific methods defined. They have been designed with the development of data analysis workflows in mind and make it easy to incorporate new methods into the existing framework.
 
@@ -154,6 +150,10 @@ All `struct` objects have a number of common fields or "slots", which are define
   - A list of keywords for the object, such as 'classifier'
 + `libraries` 
   - A list of R packages needed for to use the object
++ `citations`
+  - A list of citations for the object in `citation` `bibentry` format
++ `ontology`
+  - A vector of ontology term identifiers for the object
 
 All `struct` objects have a `show` method defined which summarises the object.
 
@@ -273,7 +273,6 @@ The first step is to define the new model objects using the `set_struct_object()
 mean_centre = set_struct_obj(
   class_name = 'mean_centre', 
   struct_obj = 'model',       
-  stato = FALSE,              
   params = character(0),            
   outputs = c(centred = 'DatasetExperiment',
               mean = 'numeric'),
@@ -285,13 +284,12 @@ mean_centre = set_struct_obj(
 PCA = set_struct_obj(
   class_name = 'PCA', 
   struct_obj = 'model',       
-  stato = TRUE,              
   params = c(number_components = 'numeric'),                
   outputs = c(scores = 'DatasetExperiment',
               loadings = 'data.frame'),
   private = character(0),
   prototype = list(number_components = 2,
-                  stato_id = 'OBI:0200051',
+                  ontology = 'OBI:0200051',
                   predicted = 'scores')
 )
 ```
@@ -553,7 +551,6 @@ We use the helper function `set_struct_object()` to define the new chart object.
 set_struct_obj(
   class_name = 'pca_scores_plot',
   struct_obj = 'chart',
-  stato = FALSE,
   params = c(factor_name = 'character'),
   prototype = list(
     name = 'PCA scores plot',
@@ -647,13 +644,12 @@ It can then be used with the `set_struct_obj()` function when creating the PCA o
 PCA = set_struct_obj(
   class_name = 'PCA', 
   struct_obj = 'model',       
-  stato = TRUE,              
   params = c(number_components = 'entity'),                
   outputs = c(scores = 'DatasetExperiment',
               loadings = 'data.frame'),
   private = character(0),
   prototype = list(number_components = npc,
-                  stato_id = 'OBI:0200051',
+                  ontology = 'OBI:0200051',
                   predicted = 'scores')
 )
 
@@ -668,28 +664,24 @@ param_obj(P,'number_components')$description
 
 ```
 
-Both `entity` and `enum` objects have extended `stato` versions, which is discussed in the next section.
-
-## `stato` objects.
-STATistics Ontology (STATO) is incorporated into  the `struct` package. By using `entity_stato` and `enum_stato` objects in place of `entity` and `enum` objects a STATO identifier can be included to provide standardised definitions for input and output parameters.
-
-`model` and `iterator` objects can also be extended by the `stato` class to provide similar functionality. For example, a STATO id was included in the PCA object we created.
+## Ontology.
+All `struct` objects have an `ontology` slot that can be assigned ontology term identifiers. `struct` makes use of the `rols` bioconductor package to access the Ontology lookup Service API and obtain names and definitions based on the provided identifiers. 
 
 ```{r}
 P = PCA()
 
-# verify PCA is a stato object
-is(P, 'stato')
+# return a list of ontologies for PCA, including the input parameters and outputs
+ontology(P)
 
-# get stato id
-stato_id(P)
+# return the ontology id'd for PCA only (not inputs/outputs)
+P$ontology
 
-# stato name
-stato_name(P)
-
-# stato definition
-stato_definition(P)
+# get the ontology for a specific input
+IN = param_obj(P,'number_components') # get as entity object
+IN$ontology
 ```
+
+NOTE: in versions prior to v1.5.1 `stato` classes were used. This has now been deprecated in favour of `ontology` and will be removed in a future release.
 
 # Session Info
 ```{r}

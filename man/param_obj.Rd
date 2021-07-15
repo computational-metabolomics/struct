@@ -31,13 +31,6 @@ param_obj(obj, name) <- value
 \description{
 Gets or sets the object of a parameter e.g. to an entity() object.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{obj = struct_class,name = character}: 
-
-\item \code{obj = struct_class,name = character}: 
-}}
-
 \examples{
 # get the parameter as an object
 M = example_model()

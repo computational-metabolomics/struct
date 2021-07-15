@@ -276,5 +276,15 @@ setMethod(f = 'as.code',
 
 
 
+# autocompletion, return sample_meta column names
+#' @export
+#' @method .DollarNames chart
+#' @rdname autocompletion
+.DollarNames.iterator<- function(x, pattern = "") {
+  .DollarNames.struct_class(x,pattern)
+}
 
+#' @export 
+#' @rdname autocompletion
+setMethod('.DollarNames','iterator',.DollarNames.iterator)
 

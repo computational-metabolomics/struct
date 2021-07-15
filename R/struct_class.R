@@ -31,7 +31,7 @@
 #' 
 #' 
 #' @import methods
-#' @include generics.R
+#' @include generics.R ontology_term_class.R
 #' @return Returns a \pkg{struct} object
 #' @examples
 #' S = struct_class(name = 'Example',description = 'An example object')
@@ -44,6 +44,7 @@
         type = "character",
         libraries = 'character',
         citations = 'list',
+        ontology = 'character',
         .params='character',
         .outputs='character'
     ),
@@ -60,13 +61,15 @@
 #' @param description a description of the object
 #' @param type the type of the struct object
 #' @param citations a list of citations for the object in "bibentry" format
+#' @param ontology a list of ontology items for the object in "ontology_item" format
 #' @return a struct_class object
 #' @export
 struct_class = function(
     name=character(0),
     description=character(0),
     type=character(0),
-    citations=list()) {
+    citations=list(),
+    ontology=character(0)) {
     
     # if Bibtex is provided convert to a list
     if (is(citations,'bibentry')){
@@ -76,7 +79,7 @@ struct_class = function(
     # check all citations are Bibtex
     if (length(citations>0)) {
         ok=lapply(citations,is,class='bibentry')
-        if (!(all(citations))){
+        if (!(all(ok))){
             stop('all citations must be in "bibentry" format')
         }
     }
@@ -85,7 +88,9 @@ struct_class = function(
     out = .struct_class(
         name=name,
         description=description,
-        type=type
+        type=type,
+        citations=citations,
+        ontology=ontology
     )
     
     return(out)
@@ -123,14 +128,14 @@ setMethod(f = "$",
         }
         
         # check for other struct slots
-        valid=c('name','description','type','libraries','citations')
+        valid=c('name','description','type','libraries','citations','ontology')
         if (name %in% valid) {
             out = slot(x,name)
             return(out)
         }
         
         # if we get here then error
-        stop(paste0('"', name, '" is not valid for this object:', class(x)[1]))
+        stop('"', name, '" is not valid for this object: ', class(x)[1])
         
     }
 )
@@ -167,22 +172,15 @@ setMethod(f = "$<-",
         
         # check for other slots
         valid=c('name','description','type') 
-        # do not allow setting of libraries or citations
+        # do not allow setting of libraries or citations or ontology by user
         if (name %in% valid) {
-            # check citation is Bibtex
-            if (name=='citations') {
-                ok=lapply(value,is,class='bibentry')
-                if (!all(unlist(ok))) {
-                    stop(paste0('All citations must be "bibentry" objects'))
-                }
-            }
-            
             slot(x,name) = value
             return(x)
         } 
         
         # if we havent returned value by now, then we're not going to
-        stop(paste0(name,' is not a valid param, output or column name for this DatasetExperiment using $'))
+        stop(name,' is not a valid param, output or column name for ',
+            'this DatasetExperiment using $')
         
     }
 )
@@ -261,7 +259,7 @@ setMethod(f = "show",
         cat(
             'A "', class(object),'" object','\n',
             rep('-',n),'\n',
-            'name:          ', object$name,'\n',
+            'name:          ', paste0(strwrap(object$name,width=95,exdent = 17),collapse=pad),'\n',
             'description:   ', paste0(strwrap(object$description,width=95,exdent = 17),collapse=pad),'\n',
             sep = ''
         )
@@ -283,7 +281,6 @@ setMethod(f = "show",
 #' @export
 #' @param class_name the name of the new class to create
 #' @param struct_obj the struct obj to inherit e.g. 'model', 'metric' etc
-#' @param stato TRUE (default) or FALSE to inherit the stato class
 #' @param params a named character vector of input parameters where each
 #' element specifies the type of value that will be in the slot e.g. c(example = 'character')
 #' @param outputs a named character vector of outputs where each
@@ -296,16 +293,10 @@ setMethod(f = "show",
 set_struct_obj = function(
     class_name, 
     struct_obj, 
-    stato = TRUE, 
     params = character(0), 
     outputs = character(0), 
     private = character(0), 
     prototype = list()) {
-    
-    # inherit stato if stato = TRUE
-    if (stato) {
-        struct_obj = c(struct_obj,'stato')
-    }
     
     ## list of slots to create
     slots = c(params,outputs,private)
@@ -314,7 +305,7 @@ set_struct_obj = function(
     prototype[['.params']]=names(params)
     prototype[['.outputs']]=names(outputs)
     
-    ## create class definition as assign to the chosen environment
+    ## create class definition and assign to the chosen environment
     
     assign(paste0('.',class_name),setClass(
         Class = class_name,
@@ -350,7 +341,6 @@ set_struct_obj = function(
 #' set_struct_obj(
 #' class_name = 'add_two_inputs',
 #' struct_obj = 'model',
-#' stato = FALSE,
 #' params = c(input_1 = 'numeric', input_2 = 'numeric'),
 #' outputs = c(result = 'numeric'),
 #' prototype = list(
@@ -381,7 +371,6 @@ set_obj_method = function(class_name, method_name, definition, where = topenv(pa
 #' set_struct_obj(
 #' class_name = 'add_two_inputs',
 #' struct_obj = 'model',
-#' stato = FALSE,
 #' params = c(input_1 = 'numeric', input_2 = 'numeric'),
 #' outputs = c(result = 'numeric'),
 #' prototype = list(
@@ -441,7 +430,7 @@ new_struct = function(class, ...) {
     
     # check if struct_class
     if (!is(obj,'struct_class')){
-        stop(paste0('struct_class is only for objects derived from struct_class. Got object of type "',class(obj),'"'))
+        stop('struct_class is only for objects derived from struct_class. Got object of type "',class(obj),'"')
     }
     
     # update values
@@ -506,7 +495,7 @@ setMethod(f = "libraries",
 .extended_list_by_slot = function(obj,slotname) {
     # returns a unique list of values for slots in this object
     # and all the ones in inherits
-    cit=list()
+    cit=slot(obj,slotname)
     # get the objects this object extends
     ex = extends(class(obj)[1])
     # for each one, if its a struct class grab the citations
@@ -521,17 +510,76 @@ setMethod(f = "libraries",
 }
 
 
-
-
-.list_of_citations_as_strings = function(L) {
+#' @rdname ontology
+#' @export
+setMethod(f = "ontology",
+    signature = c("struct_class"),
+    definition = function(obj,cache=NULL) {
+        
+        # ontology for object and inherited
+        ont = .extended_list_by_slot(obj,'ontology')
+        
+        # ontology for params and outputs
+        p=param_ids(obj)
+        pont=lapply(p,function(x){
+            ent=param_obj(obj,x)
+            if (is(ent,'struct_class')) {
+                return(ent$ontology)
+            } else {
+                return(character(0))
+            }
+        })
+        o=output_ids(obj)
+        oont=lapply(o,function(x){
+            ent=output_obj(obj,x)
+            if (is(ent,'struct_class')) {
+                return(ent$ontology)
+            } else {
+                return(character(0))
+            }
+        })
+        
+        ont = c(ont,unlist(pont),unlist(oont))
+        
+        # remove duplicates
+        ont=ont[!(duplicated(ont))]
+        
+        # get definitions
+        if (!is.null(cache)) {
+            # use cache
+            ont=lapply(ont,function(x){
+                ontology_list(cache[[x]])
+            })
+        } else {
+            # use api
+            ont=ontology_list(ont)
+        }
     
-    B=lapply(L,function(x){
-        str=capture.output(print(x,style='textVersion'))
-        str=paste0(str,collapse='')
-        return(str)
+        return(ont)
     }
+)
+
+
+#' autocompletion
+#' 
+#' This function returns slotnames for autocompletion when using $ syntax
+#' @param x a struct_class object
+#' @param pattern the text used to compare against the slot names
+#' @return A vector of slot names
+#' @rdname autocompletion
+#' @export
+#' @method .DollarNames struct_class
+.DollarNames.struct_class <- function(x, pattern = "") {
+    s = slotNames(x)
+    IN = s %in% c(
+        slot(x,'.params'),
+        slot(x,'.outputs'),
+        c('name','description','type','libraries','citations','ontology')
     )
-    
-    C=unlist(B)
-    return(C)
+    s=s[IN]
+    return(grep(pattern, s, value=TRUE))
 }
+
+#' @export 
+#' @rdname autocompletion
+setMethod('.DollarNames','struct_class',.DollarNames.struct_class)

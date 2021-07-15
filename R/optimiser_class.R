@@ -34,3 +34,16 @@ setMethod(f = "show",
         callNextMethod()
     }
 )
+
+# autocompletion, return sample_meta column names
+#' @export
+#' @method .DollarNames optimiser
+#' @rdname autocompletion
+.DollarNames.optimiser<- function(x, pattern = "") {
+    .DollarNames.struct_class(x,pattern)
+}
+
+#' @export 
+#' @rdname autocompletion
+setMethod('.DollarNames','optimiser',.DollarNames.optimiser)
+

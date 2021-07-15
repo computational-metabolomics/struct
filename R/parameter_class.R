@@ -1,6 +1,6 @@
 #' @include struct_class.R generics.R
 
-#' @describeIn param_obj 
+#' @rdname param_obj
 #' @export
 setMethod(f = "param_obj<-",
     signature = c("struct_class","character"),
@@ -14,7 +14,7 @@ setMethod(f = "param_obj<-",
 )
 
 #' @export
-#' @describeIn param_obj 
+#' @rdname param_obj 
 setMethod(f = "param_obj",
     signature = c("struct_class","character"),
     definition = function(obj,name) {

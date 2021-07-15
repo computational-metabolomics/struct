@@ -1,7 +1,7 @@
 Package: struct
 Type: Package
 Title: Statistics in R Using Class-based Templates
-Version: 1.5.0
+Version: 1.5.1
 Authors@R: c(
     person(
         c("Gavin","Rhys"),
@@ -26,9 +26,9 @@ Description: Defines and includes a set of class-based templates for developing
     using the class-based templates.
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
 Collate:
     'generics.R'
+    'ontology_term_class.R'
     'struct_class.R'
     'parameter_class.R'
     'chart_class.R'
@@ -61,7 +61,7 @@ Suggests:
  ggplot2,
  magick
 VignetteBuilder: knitr
-Imports: methods, ontologyIndex,
+Imports: methods,ontologyIndex,
     datasets, graphics, stats, utils, knitr, 
-    SummarizedExperiment, S4Vectors
+    SummarizedExperiment, S4Vectors, rols
 biocViews: WorkflowStep

@@ -8,7 +8,8 @@ struct_class(
   name = character(0),
   description = character(0),
   type = character(0),
-  citations = list()
+  citations = list(),
+  ontology = character(0)
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ struct_class(
 \item{type}{the type of the struct object}
 
 \item{citations}{a list of citations for the object in "bibentry" format}
+
+\item{ontology}{a list of ontology items for the object in "ontology_item" format}
 }
 \value{
 a struct_class object

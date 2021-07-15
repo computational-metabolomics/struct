@@ -16,8 +16,8 @@ citations(obj)
 a character array of citations
 }
 \description{
-All \code{struct} objects have a "citations" slot, which is a character array of
-references relevant to the object. The \code{citations} method gathers
+All \code{struct} objects have a "citations" slot, which is a list of
+references in bibtex format. The \code{citations} method gathers
 citations from an object and all \code{struct} objects that it inherits to generate
 a complete list.
 }
