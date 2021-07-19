@@ -18,4 +18,41 @@ test_that('DatasetExperiment objects',{
 
     # check show
     expect_output(show(test_data),'A "DatasetExperiment" object')
+    
+    SE=as.SummarizedExperiment(iris_DatasetExperiment())
+    expect_true(is(SE,'SummarizedExperiment'))
+    
+    DE=as.DatasetExperiment(SE)
+    expect_true(is(DE,'DatasetExperiment'))
+    
+    expect_true("name" %in% .DollarNames.struct_class(DE))
+    
+    df=as.data.frame(matrix(rnorm(20*3),nrow=20))
+    sm=as.data.frame(matrix(rnorm(20*3),nrow=20))
+    vm=as.data.frame(matrix(rnorm(3*3),nrow=3))
+    DE=DatasetExperiment(data=df,sample_meta=sm,variable_meta=vm)
+    
+    # excel files
+    dirT <- tempdir()
+    export_xlsx(DE,file.path(dirT,'test.xlsx'),transpose=FALSE)
+    export_xlsx(DE,file.path(dirT,'test2.xlsx'),transpose=TRUE)
+    
+    # check the output file has the expect sheets
+    sn=openxlsx::getSheetNames(file.path(dirT,'test.xlsx'))
+    expect_equal(sn,c('data','sample_meta','variable_meta'))
+    
+    # check dims aftr reading back in
+    DF=openxlsx::read.xlsx(file.path(dirT,'test.xlsx'),rowNames=TRUE,colNames=TRUE,sheet = 'data')
+    DF2=openxlsx::read.xlsx(file.path(dirT,'test2.xlsx'),rowNames=TRUE,colNames=TRUE,sheet = 'data')
+    SM=openxlsx::read.xlsx(file.path(dirT,'test.xlsx'),rowNames=TRUE,colNames=TRUE,sheet='sample_meta')
+    VM=openxlsx::read.xlsx(file.path(dirT,'test.xlsx'),rowNames=TRUE,colNames=TRUE,sheet='variable_meta')
+    
+    expect_equal(dim(DF),dim(df))
+    expect_equal(dim(DF2),dim(t(df)))
+    expect_equal(dim(SM),dim(sm))
+    expect_equal(dim(VM),dim(vm))
+    
+    # clean up temp files
+    files <- dir(path=dirT, pattern="test*")
+    unlink(x=files)
 })

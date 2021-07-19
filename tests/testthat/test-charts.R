@@ -1,6 +1,12 @@
 # test charts
 
 test_that('charts',{
+    
+    
+    C=example_chart()
+    chart_plot(C,example_model())
+    expect_output(show(C),regexp = 'A "example_chart" object')
+    
     C=chart()
     # warning if no chart defined
     expect_warning(chart_plot(C,example_iterator()))
@@ -27,4 +33,6 @@ test_that('charts',{
 
     expect_equal(chart_names(DatasetExperiment(),'char'),'test_chart')
     #expect_equal(chart_names(DatasetExperiment(),'obj'),list(test_chart()))
+    
+    expect_true("name" %in% .DollarNames.chart(C))
 })

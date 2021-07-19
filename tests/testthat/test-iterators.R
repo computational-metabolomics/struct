@@ -58,4 +58,29 @@ test_that('iterator objects',{
 
     # check we get an error if incorrectly combined
     expect_error(model()*IM)
+    
+    O=optimiser(result='name')
+    expect_true(is(O,'optimiser'))
+    
+    R=resampler(result='name')
+    expect_true(is(R,'resampler'))
+    
+    P=preprocess(predicted='name')
+    expect_true(is(P,'preprocess'))
+    
+    expect_output(show(R),regexp = 'A "resampler" object')
+    expect_output(cat(as.code(R*example_model(),mode='compact')),regexp='M = resampler')
+    expect_output(cat(as.code(R*(example_model()+example_model()),mode='compact')),regexp='M = resampler')
+    expect_output(cat(as.code(R*(example_model()+example_model()),mode='expanded')),regexp='M = resampler')
+
+    expect_output(show(O),regexp = 'A "optimiser" object')
+    expect_output(cat(as.code(O*example_model())),regexp='M = optimiser')
+    
+    expect_output(show(P),regexp = 'A "preprocess" object')
+    expect_output(cat(as.code(P),regexp='M = preprocess'))
+    
+    expect_true("name" %in% .DollarNames.iterator(I))
+    expect_true("name" %in% .DollarNames.optimiser(O))
+    expect_true("name" %in% .DollarNames.resampler(R))
+    expect_true("name" %in% .DollarNames.preprocess(P))
 })

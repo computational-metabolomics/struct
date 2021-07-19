@@ -57,6 +57,7 @@ stato = function(stato_id) {
 setMethod(f = "stato_id",
     signature = c('stato'),
     definition = function(obj) {
+        warning('stato objects are deprecated as of version 1.5.1 please see "?struct::ontology" for details.')
         if (!exists('ont',envir = statoOntology)) {
             # load the ontology if it hasn't been done already
             .stato_env()
@@ -70,6 +71,7 @@ setMethod(f = "stato_id",
 setMethod(f = "stato_name",
     signature = c('stato'),
     definition = function(obj) {
+        warning('stato objects are deprecated as of version 1.5.1 please see "?struct::ontology" for details.')
         # get the stato id
         id = stato_id(obj)
         # get the name from the stato database
@@ -83,6 +85,7 @@ setMethod(f = "stato_name",
 setMethod(f = "stato_definition",
     signature = c('stato'),
     definition = function(obj) {
+        warning('stato objects are deprecated as of version 1.5.1 please see "?struct::ontology" for details.')
         # get the id for the object
         id = stato_id(obj)
         # get the definition and clean any special chars
@@ -110,6 +113,7 @@ statoOntology = new.env()
 setMethod(f = "stato_summary",
     signature = c('stato'),
     definition = function(obj) {
+        warning('stato objects are deprecated as of version 1.5.1 please see "?struct::ontology" for details.')
         cat(stato_id(obj),'\n')
         cat(stato_name(obj),'\n')
         cat(stato_definition(obj),'\n')
@@ -146,6 +150,7 @@ setMethod(f = "stato_summary",
 setMethod(f = 'show',
     signature = c('stato'),
     definition = function(object) {
+        warning('stato objects are deprecated as of version 1.5.1 please see "?struct::ontology" for details.')
         # add extra info
         cat('Stato ID:      ',stato_id(object),sep='')
         cat('\n')

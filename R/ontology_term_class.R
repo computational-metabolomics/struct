@@ -119,23 +119,6 @@ setMethod(f = 'show',
 )
 
 
-.as_ontology_term = function(obj) {
-    
-    if (!is(obj,'Term')) {
-        stop('Input object must be a rols::Term object')
-    }
-    
-    OT = ontology_term(
-        ontology=rols::termOntology(obj),
-        id=rols::termId(obj),
-        label=rols::termLabel(obj),
-        description=rols::termDesc(obj),
-        iri=obj@iri
-    )
-    return(OT)
-}
-
-
 setAs("ontology_term", "data.frame",
     function(from)
         data.frame(

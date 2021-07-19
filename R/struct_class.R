@@ -78,7 +78,7 @@ struct_class = function(
     
     # check all citations are Bibtex
     if (length(citations>0)) {
-        ok=lapply(citations,is,class='bibentry')
+        ok=unlist(lapply(citations,is,class='bibentry'))
         if (!(all(ok))){
             stop('all citations must be in "bibentry" format')
         }

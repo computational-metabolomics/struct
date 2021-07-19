@@ -21,7 +21,7 @@ Description: Defines and includes a set of class-based templates for developing
     common standardised structure to allow for effective and fast integration. 
     Model objects can be combined into sequences, and sequences nested in 
     iterators using overloaded operators to simplify and improve readability of 
-    the code. STATistics Ontology (STATO) has been integrated and implemented 
+    the code. Ontology lookup has been integrated and implemented 
     to provide standardised definitions for methods, inputs and outputs wrapped 
     using the class-based templates.
 License: GPL-3

@@ -25,9 +25,6 @@ optimiser = function(...) {
     )
 )
 
-setClassUnion("model_OR_optimiser", c("model", "optimiser"))
-
-
 setMethod(f = "show",
     signature = c("optimiser"),
     definition = function(object) {

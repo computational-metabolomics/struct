@@ -267,6 +267,10 @@ setMethod(f = 'as.code',
     # add predicted if its not the default
     if (is(M,'model')) {
         N=new_struct(class(M)[1])
+        if (length(predicted_name(N))==0) {
+            N@predicted='cake'
+        }
+            
         if  (predicted_name(N) != predicted_name(M) | mode=='full') {
             P=c(P,'predicted')
         }

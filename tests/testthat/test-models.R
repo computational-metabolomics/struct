@@ -3,6 +3,11 @@
 # test model objects
 test_that('model objects',{
 
+    M=example_model()
+    M=model_train(M,iris_DatasetExperiment())
+    M=model_apply(M,iris_DatasetExperiment())
+    M=model_apply(M,iris_DatasetExperiment())
+    
     M=model()
     expect_warning(model_train(M,DatasetExperiment())) # check default model is to do nothing and throws a warning
     expect_identical(model_predict(M,DatasetExperiment()),M) # check default prediction is nothing
@@ -147,9 +152,18 @@ test_that('model objects',{
     # check add model at end of sequence
     TM=TM+test_model(value_1=50,value_2=50)
     expect_equal(TM[3]$value_1,50)
+    expect_true(is(predicted(TM),'DatasetExperiment'))
 
     # check add model at start of sequence
     TM=test_model(value_1=50,value_2=50)+TM
     expect_equal(TM[1]$value_1,50)
+    
+    # model_apply
+    M=model_apply(TM,iris_DatasetExperiment())
+    expect_equal(floor(mean(unlist(iris_DatasetExperiment()$data - predicted(M)$data))),-107)
+    
+    expect_output(cat(as.code(M)),regexp = "M = test_model")
+    
+    expect_true("name" %in% .DollarNames.struct_class(M))
 })
 
