@@ -96,6 +96,47 @@ struct_class = function(
     return(out)
 }
 
+setValidity('struct_class', method = function(object) {
+    str = character(0)
+    
+    # check for libraries
+    check = lapply(object$libraries,function(x){
+        length(find.package(x,quiet=TRUE))>0
+    })
+    
+    check=unlist(check)
+    
+    if (length(check)>0) {
+        w=which(!check)
+        if (length(w)==1) {
+            str=paste0(
+                'The required package "', object$libraries[w], '" is not installed.',
+                collapse = ','
+            )
+        } else if (length(w)>1) {
+            str=paste0(
+                'The required packages c(', paste0('"',object$libraries[w],'"'), ') are not installed.',
+                collapse = ','
+            )
+        }
+    }
+    
+    citations=object$citations
+    # check all citations are Bibtex
+    if (length(citations>0)) {
+      ok=unlist(lapply(citations,is,class='bibentry'))
+      if (!(all(ok))){
+        str=c(str,('All citations must be in "bibentry" format'))
+      }
+    }
+    
+    if (length(str)>0)
+        return(str)
+    else
+        return(TRUE)
+}
+    
+)
 
 #' Get/set parameter or output values
 #' 
@@ -425,6 +466,7 @@ populate_slots=function(obj,...) {
 #' S = new_struct('struct_class')
 #' @export
 new_struct = function(class, ...) {
+    
     # new default object
     obj=new(class)
     
@@ -433,11 +475,21 @@ new_struct = function(class, ...) {
         stop('struct_class is only for objects derived from struct_class. Got object of type "',class(obj),'"')
     }
     
-    # update values
+    # convert to entity if req
     L=list(...)
     for (k in seq_len(length(L))) {
-        param_value(obj,names(L)[k])=L[[k]]
+        isEntity = is(param_obj(obj,names(L[k])),'entity')
+        
+        # if entity, replace input value with entity and assign value
+        if (isEntity) {
+            ent = param_obj(obj,names(L[k]))
+            value(ent) = L[[k]]
+            L[[k]]=ent
+        }
     }
+    
+    L$Class = class
+    obj = do.call(new,L) # will check for validity
     
     return(obj)
 }

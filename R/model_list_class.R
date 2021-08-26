@@ -20,7 +20,7 @@
 #' @rdname model_seq
 model_seq = function(...) {
     # new object
-    out = .model_seq(...)
+    out = new_struct('model_seq',...)
     return(out)
 }
 

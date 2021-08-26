@@ -26,7 +26,7 @@
 #' @param ... named slots and their values that get passed to struct_class
 chart = function(...) {
     # new object
-    out = .chart(...)
+    out = new_struct('chart',...)
     return(out)
 }
 

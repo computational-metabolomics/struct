@@ -13,7 +13,7 @@
 #' @return an optimiser object
 optimiser = function(...) {
     # new object
-    out = .optimiser(...)
+    out = new_struct('optimiser',...)
     return(out)
 }
 

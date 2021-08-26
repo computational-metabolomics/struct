@@ -18,7 +18,7 @@
 #' @rdname iterator
 iterator = function(...) {
     # new object
-    out = .iterator(...)
+    out = new_struct('iterator',...)
     return(out)
 }
 
@@ -278,7 +278,7 @@ setMethod(f = 'as.code',
 
 # autocompletion, return sample_meta column names
 #' @export
-#' @method .DollarNames chart
+#' @method .DollarNames iterator
 #' @rdname autocompletion
 .DollarNames.iterator<- function(x, pattern = "") {
   .DollarNames.struct_class(x,pattern)

@@ -11,7 +11,7 @@
 #' @return a resampler object
 resampler = function(...) {
     # new object
-    out = .resampler(...)
+    out = new_struct('resampler',...)
     return(out)
 }
 

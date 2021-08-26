@@ -33,11 +33,11 @@
 
 \S4method{.DollarNames}{model}(x, pattern = "")
 
-\method{.DollarNames}{chart}(x, pattern = "")
+\method{.DollarNames}{metric}(x, pattern = "")
 
 \S4method{.DollarNames}{metric}(x, pattern = "")
 
-\method{.DollarNames}{chart}(x, pattern = "")
+\method{.DollarNames}{iterator}(x, pattern = "")
 
 \S4method{.DollarNames}{iterator}(x, pattern = "")
 

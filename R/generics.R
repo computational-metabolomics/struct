@@ -677,3 +677,6 @@ setGeneric("libraries",function(obj)standardGeneric("libraries"))
 #' @rdname ontology
 #' @export
 setGeneric("ontology",function(obj,cache=NULL)standardGeneric("ontology"))
+
+#' @importFrom utils .DollarNames
+setGeneric('.DollarNames', package='utils')

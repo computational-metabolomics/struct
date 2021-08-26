@@ -16,7 +16,7 @@
 #' @rdname metric
 metric = function(...) {
     # new object
-    out = .metric(...)
+    out = new_struct('metric',...)
     return(out)
 }
 
@@ -114,7 +114,7 @@ setMethod(f = "show",
 # autocompletion, return sample_meta column names
 #' @export
 #' @rdname autocompletion
-#' @method .DollarNames chart
+#' @method .DollarNames metric
 .DollarNames.metric<- function(x, pattern = "") {
     .DollarNames.struct_class(x,pattern)
 }

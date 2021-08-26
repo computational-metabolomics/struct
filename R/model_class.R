@@ -37,7 +37,8 @@
 #' @rdname model
 model = function(predicted=character(0),seq_in='data',seq_fcn=function(x){return(x)},...) {
     # new object
-    out = .model(predicted = predicted,
+    out = new_struct('model',
+        predicted = predicted,
         seq_in = seq_in,
         seq_fcn = seq_fcn,
         ...)

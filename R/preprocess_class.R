@@ -13,7 +13,7 @@
 #' @rdname preprocessing
 preprocess = function(...) {
     # new object
-    out = .preprocess(...)
+    out = new_struct('preprocess',...)
     return(out)
 }
 
