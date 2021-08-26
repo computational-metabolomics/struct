@@ -172,8 +172,14 @@ setMethod (f = 'as.SummarizedExperiment',
 setMethod (f = 'as.DatasetExperiment',
   signature = 'SummarizedExperiment',
   definition = function(obj) {
+    
+    A = assay(obj)
+    B = as.data.frame(t(A))
+    colnames(B) = rownames(A)
+    rownames(B) = colnames(A)
+    
     out=DatasetExperiment(
-      data=as.data.frame(t(assay(obj))),
+      data=B,
       variable_meta=as.data.frame(rowData(obj)),
       sample_meta=as.data.frame(colData(obj)),
       name=as.character(metadata(obj)$name),
