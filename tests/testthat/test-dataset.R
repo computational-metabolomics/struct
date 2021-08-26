@@ -24,6 +24,11 @@ test_that('DatasetExperiment objects',{
     
     DE=as.DatasetExperiment(SE)
     expect_true(is(DE,'DatasetExperiment'))
+
+    SE=SummarizedExperiment(data.frame(x=1:8, y=letters[1:8]))
+    DE=as.DatasetExperiment(SE)
+    expect_true(is(DE,'DatasetExperiment'))
+    expect_identical(dimnames(DE), rev(dimnames(SE)))
     
     expect_true("name" %in% .DollarNames.struct_class(DE))
     
