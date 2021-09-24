@@ -297,7 +297,7 @@ setGeneric("model_train",function(M,D)standardGeneric("model_train"))
 
 #' Model prediction
 #'
-#' Apply a model using the input dataset_ Assumes the model is trained
+#' Apply a model using the input dataset. Assumes the model is trained
 #' first.
 #' @param M a model object
 #' @param D a dataset object

@@ -103,7 +103,7 @@ setMethod(f = "$<-",
         assay(x,1) = value
       } else if (name %in% c('sample_meta')) {
         rowData(x) = S4Vectors::DataFrame(value)
-      } else if (name %in% c('sample_meta')) {
+      } else if (name %in% c('variable_meta')) {
         colData(x) = S4Vectors::DataFrame(value)
       }
       return(x)
