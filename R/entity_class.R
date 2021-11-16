@@ -62,24 +62,21 @@ entity = function(
         value = character(0),
         type = 'character',
         max_length = Inf,
-        ontology=character()
+        ontology=character(),
+        .params='value'
     ),
     validity = function(object) {
         check_length = length(value(object)) <= max_length(object)
-        check_type = any(
-            unlist(
-                lapply(object$type,function(x){
-                    is(value(object),x)
-                })
-            )
-        )
+
+        check_type = any(unlist(lapply(object$type,function(x) is(value(object),x))))
+        
         check_max_length = length(max_length(object)) == 1
         msg = TRUE
         if (!check_length) {
             msg = paste0(object$name,': number of values must be less than "max_length"')
         }
         if (!check_type) {
-            msg = paste0(object$type,': class of value must match "type"')
+            msg = paste0(object$type,': class of value must match "type" for this entity.')
         }
         if (!check_max_length) {
             msg = paste0(object$max_length,': ', ' max_length must be of length 1')

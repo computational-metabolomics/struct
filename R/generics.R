@@ -680,3 +680,10 @@ setGeneric("ontology",function(obj,cache=NULL)standardGeneric("ontology"))
 
 #' @importFrom utils .DollarNames
 setGeneric('.DollarNames', package='utils')
+
+#' get the value for a metric
+#'
+#' @return allowed The allowed values ot be set for an enum
+#' @rdname enum
+#' @export
+setGeneric("allowed",function(obj)standardGeneric("allowed"))
