@@ -294,9 +294,17 @@ setMethod(f = 'as.code',
         } else if (P[p]=='predicted') {
             str=paste0(str,P[p], ' = "', predicted_name(M), '"')
         } else if (is(param_value(M,P[p]),'character')) {
-            str=paste0(str,P[p], ' = "', as.character(param_value(M,P[p])), '"')
+            if (length(param_value(M,P[p]))>1) {
+                str=paste0(str,P[p], ' = c(', paste0('"',as.character(param_value(M,P[p]),'"'),collapse=','),')')
+            } else {
+                str=paste0(str,P[p], ' = "', as.character(param_value(M,P[p])), '"')
+            }
         } else {
-            str=paste0(str,P[p], ' = ', as.character(param_value(M,P[p])))
+            if (length(param_value(M,P[p]))>1) {
+                str=paste0(str,P[p], ' = c(', paste0(as.character(param_value(M,P[p])),collapse=','),')')
+            } else {
+                str=paste0(str,P[p], ' = ', as.character(param_value(M,P[p])))
+            }
         }
         
         

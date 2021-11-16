@@ -618,7 +618,7 @@ setGeneric("as.DatasetExperiment",function(obj)standardGeneric("as.DatasetExperi
 #' @examples 
 #' M = example_model(value_1 = 10)
 #' as.code(M)
-setGeneric('as.code',function(M,start='M = ',mode='compact')standrdGeneric("as.code"))
+setGeneric('as.code',function(M,start='M = ',mode='compact')standardGeneric("as.code"))
 
 #' convert to data.frame
 #'

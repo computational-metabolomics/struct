@@ -15,7 +15,7 @@ model_predict(M, D)
 Returns a modified model object
 }
 \description{
-Apply a model using the input dataset_ Assumes the model is trained
+Apply a model using the input dataset. Assumes the model is trained
 first.
 }
 \examples{

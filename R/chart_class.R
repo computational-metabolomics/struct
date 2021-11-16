@@ -64,3 +64,19 @@ setMethod(f = "show",
 #' @export 
 #' @rdname autocompletion
 setMethod('.DollarNames','chart',.DollarNames.chart)
+
+#' @rdname as.code
+#' @export
+#' @examples
+#' M = example_model()
+#' as.code(M)
+#' @return a string of code to reproduce the chart
+setMethod(f = 'as.code',
+    signature = c('chart'),
+    definition = function(M,start = 'C = ',mode = 'compact') {
+        .as_code(M,start,mode)
+    }
+)
+
+
+
