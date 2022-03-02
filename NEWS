@@ -1,3 +1,7 @@
+Changes 1.7.1
++ fix as.code generic
++ improve as.code for all objects
+
 Changes in 1.5.3
 + fix variable_meta assignment
 

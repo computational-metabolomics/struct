@@ -611,14 +611,15 @@ setGeneric("as.DatasetExperiment",function(obj)standardGeneric("as.DatasetExperi
 #' @param start text prepended to the code. Default is "M = "
 #' @param mode "compact" will use the least amount of lines, "expanded" will
 #' put each object and input on a new line. "neat" will produce an output
-#' somewhere between "compact" and "extended".
+#' somewhere between "compact" and "expanded".
+#' @param quiet TRUE or FALSE to print code to console
 #' @return A string of code to reproduce the input object.
 #' @export
 #' @rdname as.code
 #' @examples 
 #' M = example_model(value_1 = 10)
 #' as.code(M)
-setGeneric('as.code',function(M,start='M = ',mode='compact')standrdGeneric("as.code"))
+setGeneric('as.code',function(M,start='M = ',mode='compact',quiet=FALSE)standardGeneric("as.code"))
 
 #' convert to data.frame
 #'

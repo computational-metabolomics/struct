@@ -248,7 +248,7 @@ setMethod(f = 'show',
 #' @return a string of code to reproduce the iterator
 setMethod(f = 'as.code',
   signature = c('iterator'),
-  definition = function(M,start='M = ',mode='compact') {
+  definition = function(M,start='M = ',mode='compact',quiet=FALSE) {
     str=.as_code(M,start,mode)
     # get models
     m=models(M)
@@ -257,9 +257,9 @@ setMethod(f = 'as.code',
     if (is(m,'model_seq') & length(m) > 1) {
       if (mode=='expanded') {
         str=paste0(str,paste0(paste0(rep(' ',nchar(start)),collapse=''),'(\n'))
-        str=paste0(str,as.code(m,start=paste0(paste0(rep(' ',nchar(start)+2),collapse='')),mode))
+        str=paste0(str,as.code(m,start=paste0(paste0(rep(' ',nchar(start)+2),collapse='')),mode,quiet=TRUE))
       } else {
-        str=paste0(str,as.code(m,start=paste0(paste0(rep(' ',nchar(start)),collapse=''),'('),mode))
+        str=paste0(str,as.code(m,start=paste0(paste0(rep(' ',nchar(start)),collapse=''),'('),mode,quiet=TRUE))
       }
       if (mode != 'compact') {
         str=paste0(str,'\n',paste0(rep(' ',nchar(start)),collapse=''))
@@ -267,10 +267,14 @@ setMethod(f = 'as.code',
 
       str=paste0(str,')')
     } else {
-      str=paste0(str,as.code(m,start=paste0(rep(' ',nchar(start)),collapse=''),mode))
+      str=paste0(str,as.code(m,start=paste0(rep(' ',nchar(start)),collapse=''),mode,quiet=TRUE))
     }
     
-    return(str)
+    if (!quiet){
+        cat(str)
+    }
+    
+    invisible(str)
   }
 )
 

@@ -329,18 +329,23 @@ setMethod(f = "model_apply",
 #' @return a string of code to reproduce the model sequence
 setMethod(f = 'as.code',
     signature = c('model_seq'),
-    definition = function(M,start='M = ',mode='compact') {
+    definition = function(M,start='M = ',mode='compact',quiet=FALSE) {
         str=''
         for (i in seq_len(length(M))) {
             if (i==1) {
-                str=paste0(str,as.code(M[i],start=start,mode=mode))
+                str=paste0(str,as.code(M[i],start=start,mode=mode,quiet=TRUE))
             } else {
-                str=paste0(str,as.code(M[i],start=paste0(rep(' ',nchar(start)),collapse=''),mode))
+                str=paste0(str,as.code(M[i],start=paste0(rep(' ',nchar(start)),collapse=''),mode,quiet=TRUE))
             }
             if (i<length(M)) {
                 str=paste0(str,' +\n')
             }
         }
-        return(str)
+        
+        if (!quiet) {
+            cat(str)
+        }
+        
+        invisible(str)
     }
 )

@@ -233,3 +233,18 @@ setMethod(f = "export_xlsx",
   }
 )
 
+#' @export
+#' @rdname autocompletion
+#' @method .DollarNames DatasetExperiment
+.DollarNames.DatasetExperiment <- function(x, pattern = "") {
+    IN = c('data', 'sample_meta','variable_meta','name','description','type',
+        'libraries','citations','ontology')
+    return(IN)
+}
+
+#' @export 
+#' @rdname autocompletion
+setMethod('.DollarNames','DatasetExperiment',.DollarNames.DatasetExperiment)
+
+
+

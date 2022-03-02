@@ -124,10 +124,10 @@ setValidity('struct_class', method = function(object) {
     citations=object$citations
     # check all citations are Bibtex
     if (length(citations>0)) {
-      ok=unlist(lapply(citations,is,class='bibentry'))
-      if (!(all(ok))){
-        str=c(str,('All citations must be in "bibentry" format'))
-      }
+        ok=unlist(lapply(citations,is,class='bibentry'))
+        if (!(all(ok))){
+            str=c(str,('All citations must be in "bibentry" format'))
+        }
     }
     
     if (length(str)>0)
@@ -271,7 +271,7 @@ setMethod(f = "show",
         n=nchar(paste0('A "', class(object),'" object'))
         
         if (length(object@description) > 1) {
-
+            
             nmes=names(object$description)
             if (is.null(nmes)) {
                 # add bullets to description if more than one item
@@ -296,7 +296,7 @@ setMethod(f = "show",
         } else {
             pad='\n'
         }
-
+        
         cat(
             'A "', class(object),'" object','\n',
             rep('-',n),'\n',
@@ -510,13 +510,13 @@ setMethod(f = "citations",
         
         # citations for libraries
         lib = .extended_list_by_slot(obj,'libraries')
-            lib = lapply(lib,function(x){
-                # citations for library
-                A = suppressWarnings(citation(x))
-                # convert to strings
-                #B=.list_of_citations_as_strings(A)
-                return(A)
-            })
+        lib = lapply(lib,function(x){
+            # citations for library
+            A = suppressWarnings(citation(x))
+            # convert to strings
+            #B=.list_of_citations_as_strings(A)
+            return(A)
+        })
         
         cit = c(cit,lib)
         
@@ -606,7 +606,7 @@ setMethod(f = "ontology",
             # use api
             ont=ontology_list(ont)
         }
-    
+        
         return(ont)
     }
 )
@@ -635,3 +635,121 @@ setMethod(f = "ontology",
 #' @export 
 #' @rdname autocompletion
 setMethod('.DollarNames','struct_class',.DollarNames.struct_class)
+
+#' @rdname as.code
+#' @export
+#' @examples
+#' M = example_model()
+#' as.code(M)
+#' @return a string of code to reproduce the model
+setMethod(f = 'as.code',
+    signature = c('struct_class'),
+    definition = function(M,start = 'M = ',mode = 'compact',quiet=FALSE) {
+        str=.as_code(M,start,mode)
+        
+        if (!quiet) {
+            cat(str)
+        }
+        
+        invisible(str)
+    }
+)
+
+
+
+.as_code = function(M,start='M = ',mode = 'compact') {
+    
+    if (!(mode %in% c('compact','neat','expanded','full'))) {
+        stop(paste0('unknown option "', mode , '" for as.code()'))
+    }
+    str=start
+    # model object name
+    str=paste0(str,class(M)[1],'(')
+    
+    # parameters
+    P = param_ids(M)
+    
+    # add seq_in if not equal to data
+    if (is(M,'model')) {
+        if (M@seq_in != 'data' | mode=='full') {
+            P=c(P,'seq_in')
+        }
+    }
+    # add predicted if its not the default
+    if (is(M,'model')) {
+        N=new_struct(class(M)[1])
+        if (length(predicted_name(N))==0) {
+            N@predicted='cake'
+        }
+        
+        if  (predicted_name(N) != predicted_name(M) | mode=='full') {
+            P=c(P,'predicted')
+        }
+    }
+    
+    if (mode != "compact") {
+        str=paste0(str,'\n')
+        indent=nchar(start)+2
+    } else {
+        indent=(nchar(start)+1)+nchar(class(M)[1])
+    }
+    
+    for (p in seq_len(length(P))) {
+        if (p>1 | mode!="compact") {
+            str=paste0(str,paste0(rep(' ',indent),collapse=''))
+        } 
+        
+        if (P[p]=='seq_in') {
+            str=paste0(str,P[p], ' = "', seq_in(M), '"')
+        } else if (P[p]=='predicted') {
+            str=paste0(str,P[p], ' = "', predicted_name(M), '"')
+        } else {
+            val = param_value(M,P[p])
+            if ((is (val,'numeric') | is(val,'character')) & length(val)<4) {
+                # if character or numeric and up to 3 long then print
+                if (length(val)==0) {
+                    # if length zero
+                    val=paste0(capture.output(print(val)))
+                } else {
+                    val2=new(class(val))
+                    for (g in val) {
+                        if (is(g,'character')) {
+                            val2=c(val2,paste0('"',g,'"')) 
+                        } else {
+                            val2=c(val2,g)
+                        }
+                    }
+                    val=val2
+                    if (length(val)>1) {
+                        val=paste0('c(',paste0(val,collapse=', '),')')
+                    }
+                }
+                str=paste0(str,P[p], ' = ', val)
+                
+            } else if (is(val,'formula')) {
+                str=paste0(str,P[p], ' = ',capture.output(print(val)))
+            } else if (is.null(val)) {
+                str=paste0(str,P[p], ' = ','NULL')
+            } else {
+                # otherwise, print the class
+                str=paste0(str,P[p], ' = ','[a ',class(val)[1],']')
+            }
+        }
+        
+        
+        if (p==length(P)) {
+            if (mode=='expanded') {
+                str=paste0(str,'\n',paste0(rep(' ',indent-2),collapse=''))
+            }
+            
+            
+            str=paste0(str,')')
+            
+            
+        } else {
+            str=paste0(str,',\n')
+        }
+    }
+    
+   return(str)
+}

@@ -53,7 +53,7 @@ setMethod(f = "show",
     }
 )
 
-# autocompletion, return sample_meta column names
+# autocompletion
 #' @export
 #' @rdname autocompletion
 #' @method .DollarNames chart
@@ -64,3 +64,4 @@ setMethod(f = "show",
 #' @export 
 #' @rdname autocompletion
 setMethod('.DollarNames','chart',.DollarNames.chart)
+
