@@ -72,9 +72,9 @@ setMethod(f = "$",
           value = assay(x,1)
         }
       } else if (name == 'sample_meta') {
-        value = S4Vectors::DataFrame(rowData(x)) 
+        value = S4Vectors::DataFrame(rowData(x),check.names = FALSE) 
       } else if (name == 'variable_meta') {
-        value = S4Vectors::DataFrame(colData(x))
+        value = S4Vectors::DataFrame(colData(x),check.names = FALSE)
       } 
       
       if (name %in% s) {
