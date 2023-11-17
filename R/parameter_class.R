@@ -14,7 +14,7 @@ setMethod(f = "param_obj<-",
 )
 
 #' @export
-#' @rdname param_obj 
+#' @rdname param_obj
 setMethod(f = "param_obj",
     signature = c("struct_class","character"),
     definition = function(obj,name) {
@@ -25,11 +25,11 @@ setMethod(f = "param_obj",
 
 
 #' @export
-#' @describeIn is_param 
+#' @describeIn is_param
 setMethod(f = "is_param",
     signature = c("struct_class"),
     definition = function(obj,name) {
-        
+
         # include params set for parent objects
         valid = param_ids(obj)
 
@@ -39,33 +39,33 @@ setMethod(f = "is_param",
 )
 
 #' @export
-#' @describeIn param_ids 
+#' @describeIn param_ids
 setMethod(f = "param_ids",
     signature = c("struct_class"),
     definition = function(obj) {
-        
+
         # include params set for parent objects
         parents = is(obj)
         w=which(parents == 'struct_class')
-        
+
         valid=NULL
         for (k in 1:w) {
-            
+
             # skip stato
             if (parents[k]=='stato') {
                 next
             }
-            
+
             valid = c(valid,new_struct(parents[k])@.params)
         }
-        
-        return(valid)
+
+        return(unique(valid))
     }
 )
 
 
 #' @export
-#' @describeIn param_name 
+#' @describeIn param_name
 setMethod(f = "param_name",
     signature = c("struct_class",'character'),
     definition = function(obj,name) {
@@ -75,14 +75,14 @@ setMethod(f = "param_name",
             value = p$name
             return(value)
         }
-        
+
         # otherwise just return the slot name
         return(name)
     }
 )
 
 #' @export
-#' @describeIn param_list 
+#' @describeIn param_list
 setMethod(f = 'param_list',
     signature = c('struct_class'),
     definition = function(obj) {
@@ -96,7 +96,7 @@ setMethod(f = 'param_list',
 )
 
 #' @export
-#' @describeIn param_list 
+#' @describeIn param_list
 setMethod(f = 'param_list<-',
     signature = c('struct_class','list'),
     definition = function(obj,value) {
@@ -109,12 +109,12 @@ setMethod(f = 'param_list<-',
 )
 
 #' @export
-#' @describeIn param_value 
+#' @describeIn param_value
 setMethod(f = "param_value",
     signature = c("struct_class","character"),
     definition = function(obj,name) {
         p = slot(obj, name)
-        
+
         # if the parameter is an entity then set its entity value
         if (is(p,'entity')) {
             value = value(p)
@@ -128,7 +128,7 @@ setMethod(f = "param_value",
 )
 
 #' @export
-#' @describeIn param_value 
+#' @describeIn param_value
 setMethod(f = "param_value<-",
     signature = c("struct_class","character","ANY"),
     definition = function(obj,name,value) {

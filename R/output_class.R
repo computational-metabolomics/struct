@@ -1,6 +1,6 @@
 #' @include generics.R struct_class.R
-#' 
-#' @describeIn output_obj 
+#'
+#' @describeIn output_obj
 #' @export
 setMethod(f = "output_obj",
     signature = c("struct_class","character"),
@@ -10,7 +10,7 @@ setMethod(f = "output_obj",
     }
 )
 
-#' @describeIn output_obj 
+#' @describeIn output_obj
 #' @export
 #' @return the modified object
 setMethod(f = "output_obj<-",
@@ -24,21 +24,21 @@ setMethod(f = "output_obj<-",
     }
 )
 
-#' @describeIn is_output 
+#' @describeIn is_output
 #' @export
 setMethod(f = "is_output",
     signature = c("struct_class"),
     definition = function(obj,name) {
-        
+
         # include params set for parent objects
         valid = output_ids(obj)
-        
+
         # if valid param_id then return true
         return(name %in% valid)
     }
 )
 
-#' @describeIn output_ids 
+#' @describeIn output_ids
 #' @export
 setMethod(f = "output_ids",
     signature = c("struct_class"),
@@ -46,23 +46,23 @@ setMethod(f = "output_ids",
         # include params set for parent objects
         parents = is(obj)
         w=which(parents == 'struct_class')
-        
+
         valid=NULL
         for (k in 1:w) {
-            
+
             # skip stato
             if (parents[k]=='stato') {
                 next
             }
-            
+
             valid = c(valid,new_struct(parents[k])@.outputs)
         }
-        
-        return(valid)
+
+        return(unique(valid))
     }
 )
 
-#' @describeIn output_name 
+#' @describeIn output_name
 #' @export
 setMethod(f = "output_name",
     signature = c("struct_class",'character'),
@@ -79,7 +79,7 @@ setMethod(f = "output_name",
     }
 )
 
-#' @describeIn output_list 
+#' @describeIn output_list
 #' @export
 setMethod(f = 'output_list',
     signature = c('struct_class'),
@@ -93,7 +93,7 @@ setMethod(f = 'output_list',
     }
 )
 
-#' @describeIn output_list 
+#' @describeIn output_list
 #' @export
 setMethod(f = 'output_list<-',
     signature = c('struct_class','list'),
@@ -106,12 +106,12 @@ setMethod(f = 'output_list<-',
     }
 )
 
-#' @describeIn output_value 
+#' @describeIn output_value
 #' @export
 setMethod(f = "output_value",
     signature = c("struct_class","character"),
     definition = function(obj,name) {
-        
+
         p = slot(obj, name)
         # if the output is an entity then set its value
         if (is(p,'entity')) {
@@ -125,7 +125,7 @@ setMethod(f = "output_value",
 )
 
 
-#' @describeIn output_value 
+#' @describeIn output_value
 #' @export
 setMethod(f = "output_value<-",
     signature = c("struct_class","character"),
