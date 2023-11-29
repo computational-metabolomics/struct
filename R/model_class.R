@@ -4,31 +4,31 @@
 #' Also used for preprocessing steps that require application to test sets.
 #' not intended to be called directly, this class should be inherited to provide
 #' functionality for method-specific classes.
-#' 
+#'
 #' @section \code{predicted} slot:
 #' The "predicted" slot is a slots for use by users to control the flow of model
 #' sequences. The \code{predicted()} function is used to return a default output and
 #' from a model. Typically it is a DatasetExperiment object that is passed directly
 #' into the next model in a sequence as the data for that model.
-#' 
+#'
 #' @section \code{seq_in} slot:
-#' In a sequence of models (see model_seq) the "predicted" slot is connected to the 
+#' In a sequence of models (see model_seq) the "predicted" slot is connected to the
 #' DatasetExperiment input of the next model. \code{seq_in} can be used to control
 #' flow and connect the "predicted" output to the input parameter of the next model.
-#' Default is the keyword 'data', and can otherwise be replaced by any input slot 
-#' from the model. The slot \code{seq_fcn} can be used to apply a transformation to 
+#' Default is the keyword 'data', and can otherwise be replaced by any input slot
+#' from the model. The slot \code{seq_fcn} can be used to apply a transformation to
 #' the output before it is used as an input. This allows you to e.g. convert between types,
 #' extract a single column from a data.frame etc.
-#' 
-#' 
+#'
+#'
 #' @export model
 #' @param M A struct model object
 #' @param D A DatasetExperiment object
-#' @param value The value to assign 
+#' @param value The value to assign
 #' @param predicted The name of an output slot to return when using \code{predicted()} (see details)
-#' @param seq_in the name of an output slot to connect with the "predicted" output 
+#' @param seq_in the name of an output slot to connect with the "predicted" output
 #' of another model (see details)
-#' @param seq_fcn a function to apply to seq_in before inputting into the next model. 
+#' @param seq_fcn a function to apply to seq_in before inputting into the next model.
 #' Typically used to extract a single column, or convert from factor to char etc.
 #' @include generics.R parameter_class.R output_class.R
 #' @examples
@@ -144,12 +144,12 @@ setMethod(f = 'predicted',
         if (is.null(predicted_name(M))) {
             warning('"predicted" is set to NULL')
             return(NA)
-            
+
         }
         # we can try to return the slot
         return(output_value(M,predicted_name(M)))
     }
-    
+
 )
 
 #' @rdname model
@@ -158,16 +158,16 @@ setMethod(f = 'predicted',
 #' D = DatasetExperiment()
 #' M = example_model()
 #' seq_in(M) = 'data'
-#' @return the id of the input parameter to be replaced by the \code{predicted} 
-#' output of the previous model in a model sequence. Reserved keyword 'data' 
-#' means that the input data used by \code{model_train}, \code{model_apply} etc is used. 
-#' \code{seq_in = 'data'} is the default setting. 
+#' @return the id of the input parameter to be replaced by the \code{predicted}
+#' output of the previous model in a model sequence. Reserved keyword 'data'
+#' means that the input data used by \code{model_train}, \code{model_apply} etc is used.
+#' \code{seq_in = 'data'} is the default setting.
 setMethod(f = 'seq_in',
     signature = c('model'),
     definition = function(M) {
         return(M@seq_in)
     }
-    
+
 )
 
 #' @rdname model
@@ -242,7 +242,7 @@ setMethod(f = "show",
     .DollarNames.struct_class(x,pattern)
 }
 
-#' @export 
+#' @export
 #' @rdname autocompletion
 setMethod('.DollarNames','model',.DollarNames.model)
 

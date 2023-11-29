@@ -25,7 +25,7 @@
 #' @rdname param_obj
 setGeneric("param_obj",function(obj,name)standardGeneric("param_obj"))
 
-#' @rdname param_obj 
+#' @rdname param_obj
 #' @export
 setGeneric("param_obj<-",function(obj,name,value)standardGeneric("param_obj<-"))
 
@@ -77,14 +77,14 @@ setGeneric("param_name",function(obj,name)standardGeneric("param_name"))
 #' @examples
 #' M = example_model()
 #' L = param_list(M)
-#' 
+#'
 #' M = example_model()
 #' param_list(M) = list('value_1' = 15,'value_2' = 20)
 #' @export
 #' @rdname param_list
 setGeneric("param_list",function(obj)standardGeneric("param_list"))
 
-#' @rdname param_list 
+#' @rdname param_list
 #' @export
 setGeneric("param_list<-",function(obj,value)standardGeneric("param_list<-"))
 
@@ -98,15 +98,15 @@ setGeneric("param_list<-",function(obj,value)standardGeneric("param_list<-"))
 #' @examples
 #' M = example_model()
 #' param_value(M,'value_1')
-#' 
+#'
 #' M = example_model()
 #' param_value(M,'value_1') = 0.95
-#' 
+#'
 #' @export
 #' @rdname param_value
 setGeneric("param_value",function(obj,name)standardGeneric("param_value"))
 
-#' @rdname param_value 
+#' @rdname param_value
 #' @export
 setGeneric("param_value<-",
     function(obj,name,value)standardGeneric("param_value<-"))
@@ -234,7 +234,7 @@ setGeneric("output_list<-",function(obj,value)standardGeneric("output_list<-"))
 #' type as an input.
 #'
 #' @param obj An object derived from the struct_class object
-#' @param ret A string indicating whether a list of objects ('obj') or a list of chart 
+#' @param ret A string indicating whether a list of objects ('obj') or a list of chart
 #' names ('char') is returned. 'char' is default.
 #' @return list of chart names, or a list of chart objects
 #' @examples
@@ -248,8 +248,8 @@ setGeneric("chart_names",function(obj,ret='char')standardGeneric("chart_names"))
 #' chart_plot
 #'
 #' Plots a chart object
-#' 
-#' The optional optional inputs depend on the input object/chart, but might 
+#'
+#' The optional optional inputs depend on the input object/chart, but might
 #' include an additional dataset object or a second model object, for example.
 #' @param obj A chart object
 #' @param dobj An object derived from struct_class
@@ -273,13 +273,14 @@ setGeneric("chart_plot",function(obj, dobj, ...)standardGeneric("chart_plot"))
 #' Applies a method to the input dataset
 #' @param M a `method` object
 #' @param D another object used by the first
+#' @param ... other optional inputs
 #' @return Returns a modified method object
 #' @rdname model_apply
 #' @examples
 #' M = example_model()
 #' M = model_apply(M,iris_DatasetExperiment())
 #' @export
-setGeneric("model_apply",function(M,D)standardGeneric("model_apply"))
+setGeneric("model_apply",function(M,D,...)standardGeneric("model_apply"))
 
 
 #' Train a model
@@ -287,13 +288,14 @@ setGeneric("model_apply",function(M,D)standardGeneric("model_apply"))
 #' Trains a model using the input dataset
 #' @param M a model object
 #' @param D a dataset object
+#' @param ... other optional inputs
 #' @return Returns a modified model object
 #' @rdname train
 #' @examples
 #' M = example_model()
 #' M = model_train(M,iris_DatasetExperiment())
 #' @export
-setGeneric("model_train",function(M,D)standardGeneric("model_train"))
+setGeneric("model_train",function(M,D,...)standardGeneric("model_train"))
 
 #' Model prediction
 #'
@@ -301,26 +303,28 @@ setGeneric("model_train",function(M,D)standardGeneric("model_train"))
 #' first.
 #' @param M a model object
 #' @param D a dataset object
+#' @param ... other optional inputs
 #' @return Returns a modified model object
 #' @rdname predict
 #' @examples
 #' M = example_model()
 #' M = model_predict(M,iris_DatasetExperiment())
 #' @export
-setGeneric("model_predict",function(M,D)standardGeneric("model_predict"))
+setGeneric("model_predict",function(M,D,...)standardGeneric("model_predict"))
 
 #' Reverse preprocessing
 #'
 #' Reverse the effect of a preprocessing step on a dataset_
 #' @param M a model object
 #' @param D a dataset object
+#' @param ... other optional inputs
 #' @return Returns a modified dataset object
 #' @rdname model_reverse
 #' @examples
 #' M = example_model()
 #' D = model_reverse(M,iris_DatasetExperiment())
 #' @export
-setGeneric("model_reverse",function(M,D)standardGeneric("model_reverse"))
+setGeneric("model_reverse",function(M,D,...)standardGeneric("model_reverse"))
 
 #' Predicted output name
 #'
@@ -347,16 +351,16 @@ setGeneric("predicted_name<-",
 
 #' Sequence input
 #'
-#' get/set the input parameter replaced by the output of the previous model in 
+#' get/set the input parameter replaced by the output of the previous model in
 #' a model sequence. Default is "data" which passes the output as the data input
 #' for methods such as \code{model_train} and \code{model_apply}.
 #' @param M a model object
 #' @param value name of an output for this model
 #' @return
 #' \describe{
-#' \item{\code{seq_in}}{returns the name of the input parameter replaced 
+#' \item{\code{seq_in}}{returns the name of the input parameter replaced
 #' when used in a model sequence}
-#' \item{\code{seq_in<-}}{sets the name of the input parameter replaced 
+#' \item{\code{seq_in<-}}{sets the name of the input parameter replaced
 #' when used in a model sequence}
 #' }
 #' @rdname seq_in
@@ -584,8 +588,8 @@ setGeneric("stato_definition",function(obj)standardGeneric("stato_definition"))
 setGeneric("stato_summary",function(obj)standardGeneric("stato_summary"))
 
 #' Convert a DatasetExperiment to a SummarizedExperiment
-#' 
-#' Converts a DatasetExperiment to SummarizedExperiment. The assay data is 
+#'
+#' Converts a DatasetExperiment to SummarizedExperiment. The assay data is
 #' transposed, and colData and rowData switched to match. struct specific
 #' slots such as "name" and "description" are stored in the metaData.
 #' @param obj a DatasetExperiment object
@@ -594,8 +598,8 @@ setGeneric("stato_summary",function(obj)standardGeneric("stato_summary"))
 setGeneric("as.SummarizedExperiment",function(obj)standardGeneric("as.SummarizedExperiment"))
 
 #' Convert a SummarizedExperiment to DatasetExperiment
-#' 
-#' Converts a SummarizedExperiment to DatasetExperiment. The assay data is 
+#'
+#' Converts a SummarizedExperiment to DatasetExperiment. The assay data is
 #' transposed, and colData and rowData switched to match. struct specific
 #' slots such as "name" and "description" are extracted from the metaData.
 #' @param obj a SummarizedExperiment object
@@ -604,9 +608,9 @@ setGeneric("as.SummarizedExperiment",function(obj)standardGeneric("as.Summarized
 setGeneric("as.DatasetExperiment",function(obj)standardGeneric("as.DatasetExperiment"))
 
 #' Convert to code
-#' 
+#'
 #' Prints a block of code that can be used to replicate the input object.
-#' 
+#'
 #' @param M a struct model, model_seq or iterator object
 #' @param start text prepended to the code. Default is "M = "
 #' @param mode "compact" will use the least amount of lines, "expanded" will
@@ -616,7 +620,7 @@ setGeneric("as.DatasetExperiment",function(obj)standardGeneric("as.DatasetExperi
 #' @return A string of code to reproduce the input object.
 #' @export
 #' @rdname as.code
-#' @examples 
+#' @examples
 #' M = example_model(value_1 = 10)
 #' as.code(M)
 setGeneric('as.code',function(M,start='M = ',mode='compact',quiet=FALSE)standardGeneric("as.code"))
@@ -624,7 +628,7 @@ setGeneric('as.code',function(M,start='M = ',mode='compact',quiet=FALSE)standard
 #' convert to data.frame
 #'
 #' Most often used with univariate statistics to gather all the different outputs in a consistent format.
-#' 
+#'
 #' @param M a struct object
 #' @param ... other inputs passed through this function
 #' @return a data.frame containing outputs from an object
@@ -633,14 +637,14 @@ setGeneric("as_data_frame",function(M,...)standardGeneric("as_data_frame"))
 
 
 #' Citations for an object
-#' 
+#'
 #' All \code{struct} objects have a "citations" slot, which is a list of
 #' references in bibtex format. The \code{citations} method gathers
 #' citations from an object and all \code{struct} objects that it inherits to generate
 #' a complete list.
 #' @param obj a struct object
 #' @return a character array of citations
-#' @examples 
+#' @examples
 #' D = iris_DatasetExperiment()
 #' D$citations # the list specifically defined for this object
 #' citations(D) # the list for this object and all inherited ones
@@ -649,14 +653,14 @@ setGeneric("as_data_frame",function(M,...)standardGeneric("as_data_frame"))
 setGeneric("citations",function(obj)standardGeneric("citations"))
 
 #' Libraries for an object
-#' 
+#'
 #' All \code{struct} objects have a "libraries" slot, which is a character array of
 #' libraries required to use the object. The \code{libraries} method gathers
 #' libraries from an object and all \code{struct} objects that it inherits to generate
 #' a complete list.
 #' @param obj a struct object
 #' @return a character array of R packages needed by the object
-#' @examples 
+#' @examples
 #' M = example_model()
 #' libraries(M)
 #' @rdname libraries
@@ -664,15 +668,15 @@ setGeneric("citations",function(obj)standardGeneric("citations"))
 setGeneric("libraries",function(obj)standardGeneric("libraries"))
 
 #' Ontology for an object
-#' 
+#'
 #' All \code{struct} objects have an "ontology" slot, which is a list of
 #' ontology items for the object. The \code{ontology} method gathers
 #' ontology items from an object and all \code{struct} objects that it inherits to generate
 #' a complete list.
 #' @param obj a struct object
-#' @param cache a named list of ontology_terms for offline use. Terms from the cache are search 
+#' @param cache a named list of ontology_terms for offline use. Terms from the cache are search
 #' based on the name of the list items matching the ontology id. If cache=NULL then the OLS API is used to lookup terms.
-#' @examples 
+#' @examples
 #' M = example_model()
 #' ontology(M,cache=NULL)
 #' @rdname ontology

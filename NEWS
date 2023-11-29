@@ -1,3 +1,10 @@
+Changes 1.15.2
++ add ellipsis to model methods
+
+Changes 1.15.1
++ remove duplicates when using param_ids for objects with inherited params
++ set check.names = FALSE in DatasetExperiment
+
 Changes 1.7.1
 + fix as.code generic
 + improve as.code for all objects
@@ -11,6 +18,7 @@ Changes in 1.5.2
 Changes in 1.1.2
 + improved 'show' output for objects
 + allow ANY for entities
+
 Changes in 1.1.1
 + added citations slot to struct classes
 + added corresponding citations method
@@ -27,7 +35,7 @@ Changes in 0.99.10
 + add 'signature' input to struct_obj_method
 
 Changes in 0.99.9
-+ subsetting of iterators with a single model now converts to a model sequence 
++ subsetting of iterators with a single model now converts to a model sequence
   with 1 step
 
 Changes in 0.99.8
