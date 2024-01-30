@@ -18,11 +18,6 @@ list of output ids
 \description{
 return a list of valid output ids for an object
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{struct_class}: 
-}}
-
 \examples{
 M = example_model()
 output_ids(M)

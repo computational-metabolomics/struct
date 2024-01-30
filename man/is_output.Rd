@@ -20,11 +20,6 @@ TRUE if output name is valid, FALSE if not
 \description{
 Verify that the name of a output is valid for an object
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{struct_class}: 
-}}
-
 \examples{
 M = example_model()
 is_output(M,'result_1') # TRUE

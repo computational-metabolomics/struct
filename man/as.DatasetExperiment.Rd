@@ -13,7 +13,7 @@ as.DatasetExperiment(obj)
 a DatasetExperiment object
 }
 \description{
-Converts a SummarizedExperiment to DatasetExperiment. The assay data is 
+Converts a SummarizedExperiment to DatasetExperiment. The assay data is
 transposed, and colData and rowData switched to match. struct specific
 slots such as "name" and "description" are extracted from the metaData.
 }

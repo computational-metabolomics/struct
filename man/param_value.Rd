@@ -28,13 +28,6 @@ Value of parameter
 \description{
 get/set the values for a parameter.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{obj = struct_class,name = character}: 
-
-\item \code{obj = struct_class,name = character}: 
-}}
-
 \examples{
 M = example_model()
 param_value(M,'value_1')

@@ -28,13 +28,6 @@ struct object
 \description{
 get/set a named list of outputs and their current value for an object
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{struct_class}: 
-
-\item \code{obj = struct_class,value = list}: 
-}}
-
 \examples{
 M = example_model()
 L = output_list(M)

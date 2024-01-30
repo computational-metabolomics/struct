@@ -18,11 +18,6 @@ list of parameter ids
 \description{
 return a list of valid parameter ids for an object
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{struct_class}: 
-}}
-
 \examples{
 M = example_model()
 param_ids(M)

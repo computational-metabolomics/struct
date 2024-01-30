@@ -12,7 +12,7 @@ chart_names(obj, ret = "char")
 \arguments{
 \item{obj}{An object derived from the struct_class object}
 
-\item{ret}{A string indicating whether a list of objects ('obj') or a list of chart 
+\item{ret}{A string indicating whether a list of objects ('obj') or a list of chart
 names ('char') is returned. 'char' is default.}
 }
 \value{
@@ -22,14 +22,8 @@ list of chart names, or a list of chart objects
 Returns a list of valid charts for a struct object
 }
 \details{
-The chart_names method searches chart objects that specify the input object
-type as an input.
+The chart_names method searches for chart objects associated with the unput object.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{struct_class}: 
-}}
-
 \examples{
 M = example_model()
 chart_names(M) # 'example_chart'

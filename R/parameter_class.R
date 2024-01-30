@@ -25,7 +25,7 @@ setMethod(f = "param_obj",
 
 
 #' @export
-#' @describeIn is_param
+#' @rdname is_param
 setMethod(f = "is_param",
     signature = c("struct_class"),
     definition = function(obj,name) {
@@ -39,7 +39,7 @@ setMethod(f = "is_param",
 )
 
 #' @export
-#' @describeIn param_ids
+#' @rdname param_ids
 setMethod(f = "param_ids",
     signature = c("struct_class"),
     definition = function(obj) {
@@ -65,7 +65,7 @@ setMethod(f = "param_ids",
 
 
 #' @export
-#' @describeIn param_name
+#' @rdname param_name
 setMethod(f = "param_name",
     signature = c("struct_class",'character'),
     definition = function(obj,name) {
@@ -82,7 +82,7 @@ setMethod(f = "param_name",
 )
 
 #' @export
-#' @describeIn param_list
+#' @rdname param_list
 setMethod(f = 'param_list',
     signature = c('struct_class'),
     definition = function(obj) {
@@ -96,7 +96,7 @@ setMethod(f = 'param_list',
 )
 
 #' @export
-#' @describeIn param_list
+#' @rdname param_list
 setMethod(f = 'param_list<-',
     signature = c('struct_class','list'),
     definition = function(obj,value) {
@@ -109,7 +109,7 @@ setMethod(f = 'param_list<-',
 )
 
 #' @export
-#' @describeIn param_value
+#' @rdname param_value
 setMethod(f = "param_value",
     signature = c("struct_class","character"),
     definition = function(obj,name) {
@@ -128,7 +128,7 @@ setMethod(f = "param_value",
 )
 
 #' @export
-#' @describeIn param_value
+#' @rdname param_value
 setMethod(f = "param_value<-",
     signature = c("struct_class","character","ANY"),
     definition = function(obj,name,value) {

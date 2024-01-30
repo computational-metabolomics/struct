@@ -20,11 +20,6 @@ TRUE if parameter name is valid, FALSE if not
 \description{
 Verify that the input name is a valid input parameter for an object
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{struct_class}: 
-}}
-
 \examples{
 M = example_model()
 is_param(M,'value_1') # TRUE

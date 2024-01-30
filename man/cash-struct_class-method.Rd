@@ -15,7 +15,7 @@
 Parameter/output value
 }
 \description{
-Dollar syntax can be used to as a shortcut for getting/setting input parameter 
+Dollar syntax can be used to as a shortcut for getting/setting input parameter
 and output values for struct objects.
 }
 \examples{

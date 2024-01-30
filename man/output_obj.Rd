@@ -33,13 +33,6 @@ the modified object
 \description{
 Gets or sets the object of an output e.g. to an entity() object.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{obj = struct_class,name = character}: 
-
-\item \code{obj = struct_class,name = character}: 
-}}
-
 \examples{
 # get the output as an object
 M = example_model()

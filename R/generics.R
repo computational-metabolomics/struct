@@ -230,8 +230,7 @@ setGeneric("output_list<-",function(obj,value)standardGeneric("output_list<-"))
 #'
 #' Returns a list of valid charts for a struct object
 #'
-#' The chart_names method searches chart objects that specify the input object
-#' type as an input.
+#' The chart_names method searches for chart objects associated with the unput object.
 #'
 #' @param obj An object derived from the struct_class object
 #' @param ret A string indicating whether a list of objects ('obj') or a list of chart

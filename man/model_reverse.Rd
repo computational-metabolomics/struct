@@ -4,12 +4,14 @@
 \alias{model_reverse}
 \title{Reverse preprocessing}
 \usage{
-model_reverse(M, D)
+model_reverse(M, D, ...)
 }
 \arguments{
 \item{M}{a model object}
 
 \item{D}{a dataset object}
+
+\item{...}{other optional inputs}
 }
 \value{
 Returns a modified dataset object

@@ -26,13 +26,6 @@ A named list of parameters names and corresponding values
 \description{
 get/set a named list of parameters and thier current value for an object
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{struct_class}: 
-
-\item \code{obj = struct_class,value = list}: 
-}}
-
 \examples{
 M = example_model()
 L = param_list(M)

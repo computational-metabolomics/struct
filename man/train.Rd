@@ -4,12 +4,14 @@
 \alias{model_train}
 \title{Train a model}
 \usage{
-model_train(M, D)
+model_train(M, D, ...)
 }
 \arguments{
 \item{M}{a model object}
 
 \item{D}{a dataset object}
+
+\item{...}{other optional inputs}
 }
 \value{
 Returns a modified model object

@@ -20,11 +20,6 @@ name of parameter
 \description{
 Returns the name for a parameter, if available
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{obj = struct_class,name = character}: 
-}}
-
 \examples{
 M = example_model()
 param_name(M,'value_1')

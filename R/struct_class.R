@@ -226,8 +226,8 @@ setMethod(f = "$<-",
     }
 )
 
-#' @describeIn chart_names
 #' @export
+#' @rdname chart_names
 setMethod(f = "chart_names",
     signature = c("struct_class"),
     definition = function(obj,ret = 'char') {
@@ -647,7 +647,7 @@ setMethod('.DollarNames','struct_class',.DollarNames.struct_class)
 setMethod(f = 'as.code',
     signature = c('struct_class'),
     definition = function(M,start = 'M = ',mode = 'compact',quiet=FALSE) {
-        str=.as_code(M,start,mode)
+        str=struct:::.as_code(M,start,mode)
 
         if (!quiet) {
             cat(str)
@@ -664,9 +664,9 @@ setMethod(f = 'as.code',
     if (!(mode %in% c('compact','neat','expanded','full'))) {
         stop(paste0('unknown option "', mode , '" for as.code()'))
     }
-    str=start
+    str = start
     # model object name
-    str=paste0(str,class(M)[1],'(')
+    str = paste0(str,class(M)[1],'(')
 
     # parameters
     P = param_ids(M)
@@ -679,9 +679,13 @@ setMethod(f = 'as.code',
     }
     # add predicted if its not the default
     if (is(M,'model')) {
-        N=new_struct(class(M)[1])
+        N = new_struct(class(M)[1])
+
         if (length(predicted_name(N))==0) {
-            N@predicted='cake'
+            N@predicted='not specified'
+        }
+        if (length(predicted_name(M))==0) {
+            M@predicted='not specified'
         }
 
         if  (predicted_name(N) != predicted_name(M) | mode=='full') {
@@ -689,7 +693,10 @@ setMethod(f = 'as.code',
         }
     }
 
-    if (mode != "compact") {
+    if ((mode=='neat' | mode=='expanded') & length(P)==0) {
+        str=paste0(str)
+        indent=nchar(start)+2
+    } else if (mode != "compact") {
         str=paste0(str,'\n')
         indent=nchar(start)+2
     } else {
@@ -751,6 +758,10 @@ setMethod(f = 'as.code',
         } else {
             str=paste0(str,',\n')
         }
+    }
+
+    if (length(P)==0) {
+        str=paste0(str,')')
     }
 
    return(str)

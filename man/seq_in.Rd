@@ -16,14 +16,14 @@ seq_in(M) <- value
 }
 \value{
 \describe{
-\item{\code{seq_in}}{returns the name of the input parameter replaced 
+\item{\code{seq_in}}{returns the name of the input parameter replaced
 when used in a model sequence}
-\item{\code{seq_in<-}}{sets the name of the input parameter replaced 
+\item{\code{seq_in<-}}{sets the name of the input parameter replaced
 when used in a model sequence}
 }
 }
 \description{
-get/set the input parameter replaced by the output of the previous model in 
+get/set the input parameter replaced by the output of the previous model in
 a model sequence. Default is "data" which passes the output as the data input
 for methods such as \code{model_train} and \code{model_apply}.
 }

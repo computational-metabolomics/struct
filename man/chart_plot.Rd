@@ -23,14 +23,14 @@ a plot object
 Plots a chart object
 }
 \details{
-The optional optional inputs depend on the input object/chart, but might 
+The optional optional inputs depend on the input object/chart, but might
 include an additional dataset object or a second model object, for example.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{obj = chart,dobj = ANY}: 
-}}
+\item \code{chart_plot(obj = chart, dobj = ANY)}: 
 
+}}
 \examples{
 C = example_chart()
 chart_plot(C,iris_DatasetExperiment())

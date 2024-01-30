@@ -20,11 +20,6 @@ name of output
 \description{
 return a the name for a output, if available
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{obj = struct_class,name = character}: 
-}}
-
 \examples{
 M = example_model()
 output_name(M,'result_1')

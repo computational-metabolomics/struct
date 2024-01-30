@@ -35,7 +35,7 @@ ontology_list(terms = list())
 \arguments{
 \item{obj}{a struct object}
 
-\item{cache}{a named list of ontology_terms for offline use. Terms from the cache are search 
+\item{cache}{a named list of ontology_terms for offline use. Terms from the cache are search
 based on the name of the list items matching the ontology id. If cache=NULL then the OLS API is used to lookup terms.}
 
 \item{id}{(character) The ontology term id e.g. 'STATO:0000555'}

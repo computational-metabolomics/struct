@@ -1,6 +1,6 @@
 #' @include generics.R struct_class.R
 #'
-#' @describeIn output_obj
+#' @rdname output_obj
 #' @export
 setMethod(f = "output_obj",
     signature = c("struct_class","character"),
@@ -10,7 +10,7 @@ setMethod(f = "output_obj",
     }
 )
 
-#' @describeIn output_obj
+#' @rdname output_obj
 #' @export
 #' @return the modified object
 setMethod(f = "output_obj<-",
@@ -24,7 +24,7 @@ setMethod(f = "output_obj<-",
     }
 )
 
-#' @describeIn is_output
+#' @rdname is_output
 #' @export
 setMethod(f = "is_output",
     signature = c("struct_class"),
@@ -38,7 +38,7 @@ setMethod(f = "is_output",
     }
 )
 
-#' @describeIn output_ids
+#' @rdname output_ids
 #' @export
 setMethod(f = "output_ids",
     signature = c("struct_class"),
@@ -62,7 +62,7 @@ setMethod(f = "output_ids",
     }
 )
 
-#' @describeIn output_name
+#' @rdname output_name
 #' @export
 setMethod(f = "output_name",
     signature = c("struct_class",'character'),
@@ -79,7 +79,7 @@ setMethod(f = "output_name",
     }
 )
 
-#' @describeIn output_list
+#' @rdname output_list
 #' @export
 setMethod(f = 'output_list',
     signature = c('struct_class'),
@@ -93,7 +93,7 @@ setMethod(f = 'output_list',
     }
 )
 
-#' @describeIn output_list
+#' @rdname output_list
 #' @export
 setMethod(f = 'output_list<-',
     signature = c('struct_class','list'),
@@ -106,7 +106,7 @@ setMethod(f = 'output_list<-',
     }
 )
 
-#' @describeIn output_value
+#' @rdname output_value
 #' @export
 setMethod(f = "output_value",
     signature = c("struct_class","character"),
@@ -125,7 +125,7 @@ setMethod(f = "output_value",
 )
 
 
-#' @describeIn output_value
+#' @rdname output_value
 #' @export
 setMethod(f = "output_value<-",
     signature = c("struct_class","character"),

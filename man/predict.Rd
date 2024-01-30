@@ -4,12 +4,14 @@
 \alias{model_predict}
 \title{Model prediction}
 \usage{
-model_predict(M, D)
+model_predict(M, D, ...)
 }
 \arguments{
 \item{M}{a model object}
 
 \item{D}{a dataset object}
+
+\item{...}{other optional inputs}
 }
 \value{
 Returns a modified model object

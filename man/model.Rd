@@ -16,7 +16,9 @@
 model(
   predicted = character(0),
   seq_in = "data",
-  seq_fcn = function(x) {     return(x) },
+  seq_fcn = function(x) {
+     return(x)
+ },
   ...
 )
 
@@ -41,10 +43,10 @@ model(
 \arguments{
 \item{predicted}{The name of an output slot to return when using \code{predicted()} (see details)}
 
-\item{seq_in}{the name of an output slot to connect with the "predicted" output 
+\item{seq_in}{the name of an output slot to connect with the "predicted" output
 of another model (see details)}
 
-\item{seq_fcn}{a function to apply to seq_in before inputting into the next model. 
+\item{seq_fcn}{a function to apply to seq_in before inputting into the next model.
 Typically used to extract a single column, or convert from factor to char etc.}
 
 \item{...}{named slots and their values.}
@@ -66,9 +68,9 @@ dataset dataset object with the reverse model applied
 
 the predicted output, as specified by predicted_name
 
-the id of the input parameter to be replaced by the \code{predicted} 
-output of the previous model in a model sequence. Reserved keyword 'data' 
-means that the input data used by \code{model_train}, \code{model_apply} etc is used. 
+the id of the input parameter to be replaced by the \code{predicted}
+output of the previous model in a model sequence. Reserved keyword 'data'
+means that the input data used by \code{model_train}, \code{model_apply} etc is used.
 \code{seq_in = 'data'} is the default setting.
 
 the modified model object
@@ -93,11 +95,11 @@ into the next model in a sequence as the data for that model.
 
 \section{\code{seq_in} slot}{
 
-In a sequence of models (see model_seq) the "predicted" slot is connected to the 
+In a sequence of models (see model_seq) the "predicted" slot is connected to the
 DatasetExperiment input of the next model. \code{seq_in} can be used to control
 flow and connect the "predicted" output to the input parameter of the next model.
-Default is the keyword 'data', and can otherwise be replaced by any input slot 
-from the model. The slot \code{seq_fcn} can be used to apply a transformation to 
+Default is the keyword 'data', and can otherwise be replaced by any input slot
+from the model. The slot \code{seq_fcn} can be used to apply a transformation to
 the output before it is used as an input. This allows you to e.g. convert between types,
 extract a single column from a data.frame etc.
 }

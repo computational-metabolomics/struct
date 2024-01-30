@@ -4,12 +4,14 @@
 \alias{model_apply}
 \title{Apply a model}
 \usage{
-model_apply(M, D)
+model_apply(M, D, ...)
 }
 \arguments{
 \item{M}{a `method` object}
 
 \item{D}{another object used by the first}
+
+\item{...}{other optional inputs}
 }
 \value{
 Returns a modified method object

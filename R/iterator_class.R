@@ -229,7 +229,7 @@ setMethod(f = 'show',
     signature = c('iterator'),
     definition = function(object) {
         callNextMethod()
-        
+
         if (is(models(object),'model_seq')) {
             cat('models:        ','a model_seq with ', length(models(object)),' steps\n',sep='')
         } else {
@@ -251,9 +251,11 @@ setMethod(f = 'as.code',
   definition = function(M,start='M = ',mode='compact',quiet=FALSE) {
     str=.as_code(M,start,mode)
     # get models
-    m=models(M)
-    # if iterator then multiply
-    str=paste0(str,' * \n')
+    m = models(M)
+    # if iterator then multiply, if not default model
+    if (class(m)[1]!='model') {
+        str=paste0(str,' * \n')
+    }
     if (is(m,'model_seq') & length(m) > 1) {
       if (mode=='expanded') {
         str=paste0(str,paste0(paste0(rep(' ',nchar(start)),collapse=''),'(\n'))
@@ -266,14 +268,14 @@ setMethod(f = 'as.code',
       }
 
       str=paste0(str,')')
-    } else {
+    } else if (class(m)[1]!='model') {
       str=paste0(str,as.code(m,start=paste0(rep(' ',nchar(start)),collapse=''),mode,quiet=TRUE))
     }
-    
+
     if (!quiet){
         cat(str)
     }
-    
+
     invisible(str)
   }
 )
@@ -288,7 +290,7 @@ setMethod(f = 'as.code',
   .DollarNames.struct_class(x,pattern)
 }
 
-#' @export 
+#' @export
 #' @rdname autocompletion
 setMethod('.DollarNames','iterator',.DollarNames.iterator)
 

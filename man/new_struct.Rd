@@ -15,10 +15,10 @@ new_struct(class, ...)
 An object derived from struct_class
 }
 \description{
-This function creates a newly allocated object from the class identified by 
-the first argument. It works almost identically to \code{new} but is specific 
-to objects from the \pkg{struct} package and ensures that \code{entity} slots have 
-their values assigned correctly. This function is usually called by class 
+This function creates a newly allocated object from the class identified by
+the first argument. It works almost identically to \code{new} but is specific
+to objects from the \pkg{struct} package and ensures that \code{entity} slots have
+their values assigned correctly. This function is usually called by class
 constructors and not used directly.
 }
 \examples{

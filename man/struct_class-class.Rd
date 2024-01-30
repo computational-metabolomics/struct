@@ -15,9 +15,9 @@ and not intended for direct use. It defines slots and methods common to all
 }
 \section{Public slots}{
 
-Public slots can be accessed using shorthand $ notation and are intended for 
+Public slots can be accessed using shorthand $ notation and are intended for
 users building workflows.
- 
+
 \describe{
   \item{\code{name}}{\code{character()} A short descriptive name of the struct object}
   \item{\code{description}}{\code{character()} A longer description of the struct object and what it does}
@@ -31,7 +31,7 @@ users building workflows.
 \section{Private slots}{
 
 Private slots are not readily accessible to users and are intended for developers
-creating their own struct objects. Any slot not listed within `.params` or 
+creating their own struct objects. Any slot not listed within `.params` or
 `.outputs` is considered a private slot.
 
 \describe{

@@ -30,13 +30,6 @@ struct object
 \description{
 get/set the values for an output_
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{obj = struct_class,name = character}: 
-
-\item \code{obj = struct_class,name = character}: 
-}}
-
 \examples{
 M = example_model()
 output_value(M,'result_1')
