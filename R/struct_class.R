@@ -736,7 +736,7 @@ setMethod(f = 'as.code',
                 str=paste0(str,P[p], ' = ', val)
 
             } else if (is(val,'formula')) {
-                str=paste0(str,P[p], ' = ',capture.output(print(val)))
+                str=paste0(str,P[p], ' = ',deparse1(val))
             } else if (is.null(val)) {
                 str=paste0(str,P[p], ' = ','NULL')
             } else {

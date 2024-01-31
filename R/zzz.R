@@ -184,9 +184,12 @@ stringify_params = function(M,P,type='param',val=NULL) {
             } else if (is(val,'character')) {
                 d=paste0(d,'\\code{"',val,'"}.')
             } else if (is.function(val) | is.call(val)) {
-                d=paste0(d,'\\code{',gsub('}','\\}',
-                                          paste0(trimws(deparse(val)),collapse='')),'}.')
+                d=paste0(d,
+                         '\\code{',gsub('}','\\}',
+                         paste0(trimws(deparse1(val)),collapse='')),'}.')
                 #d=paste0(d,'\\code{some_function()}.')
+            } else if (is(val,'formula')) {
+                d = paste0('\\code{',deparse1(val),'}.')
             } else {
 
                 d=paste0(d,'\\code{',val,'}.\\cr')
