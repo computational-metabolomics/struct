@@ -31,7 +31,7 @@ get_description=function(id) {
             '@section ','Inheritance: ',
             paste0('A `', class(M),
                    '` object inherits the following `struct` classes: \\cr\\cr'),
-            paste0('`',i[1:w],'()`',collapse = ' \U2B62 '))
+            paste0('`[',i[1:w],']`',collapse = ' >> '))
 
 
     # citations

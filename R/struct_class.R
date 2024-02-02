@@ -647,7 +647,7 @@ setMethod('.DollarNames','struct_class',.DollarNames.struct_class)
 setMethod(f = 'as.code',
     signature = c('struct_class'),
     definition = function(M,start = 'M = ',mode = 'compact',quiet=FALSE) {
-        str=struct:::.as_code(M,start,mode)
+        str = .as_code(M,start,mode)
 
         if (!quiet) {
             cat(str)
