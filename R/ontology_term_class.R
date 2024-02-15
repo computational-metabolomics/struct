@@ -12,7 +12,7 @@
 #' @param description (character) The description of the term
 #' @param iri (character) The Internationalized Resource Identifier for the term
 #' @param rols (logical) TRUE or FALSE to query the Ontology Lookup Service for
-#' missing label, description or iri if not provided as input. 
+#' missing label, description or iri if not provided as input.
 #' Default rols = TRUE
 #' @include generics.R
 #' @examples
@@ -28,28 +28,28 @@ ontology_term = function(
     iri=character(),
     rols=TRUE
 ) {
-    
+
     # ensure we have a colon separator
     id=gsub('[ :_-]',id,replacement = ':',perl=TRUE)
-    
+
     if (length(ontology)==0){
         # split the id and use that as basis for ontology
         ontology=regmatches(id,regexpr('^[^: _-]+[^: _-]',id))
         ontology=tolower(ontology)
     }
-    
+
     if (length(label)==0 | length(description)==0 | length(iri)==0 | length(ontology)==0) {
-        
+
             # do rols query
             db=rols::Ontology(ontology)
-            tm=rols::term(db,id)
-            
+            tm=rols::Term(db,id)
+
             label=rols::termLabel(tm)
             description=rols::termDesc(tm)
             iri=tm@iri
-        
+
     }
-    
+
     # new object
     out = .ontology_term(
         id=id,
@@ -72,24 +72,24 @@ ontology_term = function(
 )
 
 .ontology_slot = function(x,name) {
-    
+
     if (!(name %in% slotNames(x))) {
         stop('"',name,'" is not a valid slot name for ',
-            class(x)[1],'  objects.')    
+            class(x)[1],'  objects.')
     }
-    
+
     return(slot(x,name))
-    
+
 }
 
 #' Get/set ontology term slots
-#' 
-#' Dollar syntax can be used to as a shortcut for getting 
+#'
+#' Dollar syntax can be used to as a shortcut for getting
 #' values for ontology_term objects.
 #' @return Slot value
 #' @param x An ontology_term object
 #' @param name The name of the slot to access
-#' @examples 
+#' @examples
 #' \dontrun{
 #' OT = ontology_term(ontology='stato',id='STATO:0000555')
 #' }
@@ -104,7 +104,7 @@ setMethod(f = "$",
 setMethod(f = 'show',
     signature = c('ontology_term'),
     definition = function(object) {
-        
+
         # padding for long descriptions and names
         pad = '\n               '
         desc=paste0(strwrap(object$description,width=95,exdent = 2),collapse=pad)
@@ -114,7 +114,7 @@ setMethod(f = 'show',
         cat('label:         ',label,'\n',sep='')
         cat('description:   ',desc,'\n',sep='')
         cat('iri:           ',object$iri,'\n',sep='')
-        
+
     }
 )
 
@@ -122,8 +122,8 @@ setMethod(f = 'show',
 setAs("ontology_term", "data.frame",
     function(from)
         data.frame(
-            id=from@id, 
-            label=from@label, 
+            id=from@id,
+            label=from@label,
             description=from@description,
             ontology=from@ontology,
             iri=from@iri
@@ -151,24 +151,24 @@ setAs("ontology_term", "data.frame",
 #' }
 #' @rdname ontology
 ontology_list = function(terms=list()) {
-    
+
     if (is.null(terms) | length(terms)==0) {
         # empty list
         terms=list()
     }
-    
+
     if (is(terms,'character')){
         # try and convert to terms
         terms=lapply(terms,function(x){
             ontology_term(id=x)
         })
     }
-    
+
     # if ontology_item is provided convert to a list
     if (is(terms,'ontology_term')){
         terms=list(terms)
     }
-    
+
     # check all terms are ontology_item
     if (length(terms)>0) {
         ok=lapply(terms,is,class='ontology_term')
@@ -176,7 +176,7 @@ ontology_list = function(terms=list()) {
             stop('all ontologies must be in "ontology_term" format')
         }
     }
-    
+
     # new object
     out = .ontology_list(
         terms = terms)
@@ -191,13 +191,13 @@ ontology_list = function(terms=list()) {
 )
 
 #' Get/set ontology_list slots
-#' 
-#' Dollar syntax can be used to as a shortcut for getting 
+#'
+#' Dollar syntax can be used to as a shortcut for getting
 #' values for ontology_list objects.
 #' @return Slot value
 #' @param x An ontology_term object
 #' @param name The name of the slot to access
-#' @examples 
+#' @examples
 #' \dontrun{
 #' OL = ontology_list('STATO:0000555')
 #' OL$terms
@@ -271,7 +271,7 @@ setAs("ontology_list", "data.frame",
 )
 
 #' catenate ontology_lists
-#' 
+#'
 #' ontology_lists can be catenated with other ontology lists or with ontology_items.
 #' @param x an ontology_list()
 #' @param ... any number of ontology_list() or ontology_item() objects to catenate
@@ -282,15 +282,15 @@ setMethod(f = "c",
         y=list(...)
         check=all(unlist(lapply(y,is,class2='ontology_list')))
         if (!check) {stop('can only combine ontology_list objects')}
-        
+
         x=x@terms
         y=lapply(y,function(x){
             return(x@terms)
         })
-        
+
         terms=c(x,unlist(y))
         out=ontology_list(terms)
-        
+
         return(out)
     }
 )

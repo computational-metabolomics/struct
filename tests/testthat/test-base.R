@@ -2,7 +2,7 @@
 test_that('struct objects can be created and modified',{
     # a test object
     test_object=struct_class(
-        name = 'test_name', 
+        name = 'test_name',
         description=c(
             'A'='test_desc_A',
             'B'='test_desc_B'),
@@ -15,14 +15,14 @@ test_that('struct objects can be created and modified',{
             pages = '122-128',
             author = as.person("Nestor F. Perez and Joan Ferre and Ricard Boque"),
             title = paste0('Calculation of the reliability of ',
-                'classification in discriminant partial least-squares ',
-                'binary classification'),
+                           'classification in discriminant partial least-squares ',
+                           'binary classification'),
             journal = "Chemometrics and Intelligent Laboratory Systems"
         ),
         ontology='STATO:0000572'
-        
-        )
-    
+
+    )
+
     # name
     expect_equal({test_object$name},'test_name') # get
     expect_equal({test_object$name='cabbage';test_object$name},'cabbage') # set
@@ -37,26 +37,30 @@ test_that('struct objects can be created and modified',{
     expect_equal({test_object$description='cabbage';test_object$description},'cabbage') #set
     # show
     expect_output(show(test_object),'A "struct_class" object')
-    
+
     expect_error({
-        test_object=struct_class(name = 'test_name', description='test_desc','type' = 'test_type',
-            citations= list(bibentry(
-                bibtype ='Article',
-                year = 2009,
-                volume = 95,
-                number = 2,
-                pages = '122-128',
-                author = as.person("Nestor F. Perez and Joan Ferre and Ricard Boque"),
-                title = paste0('Calculation of the reliability of ',
-                    'classification in discriminant partial least-squares ',
-                    'binary classification'),
-                journal = "Chemometrics and Intelligent Laboratory Systems"
-            ),
+        test_object=struct_class(
+            name = 'test_name',
+            description='test_desc',
+            type = 'test_type',
+            citations= list(
+                bibentry(
+                    bibtype ='Article',
+                    year = 2009,
+                    volume = 95,
+                    number = 2,
+                    pages = '122-128',
+                    author = as.person("Nestor F. Perez and Joan Ferre and Ricard Boque"),
+                    title = paste0('Calculation of the reliability of ',
+                                   'classification in discriminant partial least-squares ',
+                                   'binary classification'),
+                    journal = "Chemometrics and Intelligent Laboratory Systems"
+                ),
                 'cake'
-                
+
             ))
     })
-    
+
     cit=citations(test_object)
     expect_true(length(cit)==2)
     lib=libraries(test_object)
@@ -69,12 +73,12 @@ test_that('struct objects can be created and modified',{
             description = 'test_ontology',
             iri = 'test_ontology',
             rols=FALSE
-            )
         )
     )
+    )
     expect_true(length(ont)==1)
-    
-    
+
+
 })
 
 # test metric object
