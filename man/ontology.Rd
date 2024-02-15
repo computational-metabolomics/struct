@@ -49,7 +49,7 @@ based on the name of the list items matching the ontology id. If cache=NULL then
 \item{iri}{(character) The Internationalized Resource Identifier for the term}
 
 \item{rols}{(logical) TRUE or FALSE to query the Ontology Lookup Service for
-missing label, description or iri if not provided as input. 
+missing label, description or iri if not provided as input.
 Default rols = TRUE}
 
 \item{terms}{A list of ontology_term objects.}

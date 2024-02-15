@@ -15,7 +15,7 @@
 Slot value
 }
 \description{
-Dollar syntax can be used to as a shortcut for getting 
+Dollar syntax can be used to as a shortcut for getting
 values for ontology_term objects.
 }
 \examples{
