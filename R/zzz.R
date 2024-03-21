@@ -104,8 +104,10 @@ get_description=function(id) {
     cd = gsub('[a annotation_database]','annotation_database()',cd,fixed = TRUE)
     cd = gsub('[a logical]','FALSE',cd,fixed = TRUE)
     cd = gsub('[a data.frame]','data.frame(id=NA)',cd,fixed = TRUE)
-    str=c(str,eg,cd,'')
+    cd = gsub('[a call]','call("example")',cd,fixed = TRUE)
+    cd = gsub('[a ANY]','"ANY"',cd,fixed = TRUE)
 
+    str=c(str,eg,cd,'')
 
     return(unlist(str))
 }
