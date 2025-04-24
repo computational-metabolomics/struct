@@ -47,7 +47,7 @@ test_that('ontology works as expected',{
 
     expect_error(O$cake)
 
-    expect_output(show(O[1]),"STATO:0000555",regexp = 'STATO:0000555')
+    expect_output(show(O[1]),regexp = 'STATO:0000555')
 
     O=ontology_list()
     expect_equal(length(O),0)
