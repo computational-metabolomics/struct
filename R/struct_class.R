@@ -77,12 +77,12 @@ struct_class = function(
     }
 
     # check all citations are Bibtex
-    if (length(citations>0)) {
-        ok=unlist(lapply(citations,is,class='bibentry'))
-        if (!(all(ok))){
-            stop('all citations must be in "bibentry" format')
-        }
-    }
+    #if (length(citations>0)) {
+    #    ok=unlist(lapply(citations,is,class='bibentry'))
+    #    if (!(all(ok))){
+    #        stop('all citations must be in "bibentry" format')
+    #    }
+    #}
 
     # new object
     out = .struct_class(
@@ -123,10 +123,10 @@ setValidity('struct_class', method = function(object) {
 
     citations=object$citations
     # check all citations are Bibtex
-    if (length(citations>0)) {
+    if (length(citations)>0) {
         ok=unlist(lapply(citations,is,class='bibentry'))
         if (!(all(ok))){
-            str=c(str,('All citations must be in "bibentry" format'))
+            str=c(str,('All citations must be in "bibentry" format.'))
         }
     }
 
