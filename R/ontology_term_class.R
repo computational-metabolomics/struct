@@ -14,7 +14,7 @@
 #' @param rols (logical) TRUE or FALSE to query the Ontology Lookup Service for
 #' missing label, description or iri if not provided as input.
 #' Default rols = TRUE
-#' @include generics.R
+#' @include generics.R parameter_class.R
 #' @examples
 #' \dontrun{
 #' OT = ontology_term(id='STATO:0000555')

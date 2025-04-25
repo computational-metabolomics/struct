@@ -15,7 +15,7 @@
 #' @param max_length Maximum length of value vector (default 1)
 #' @param value The value of the parameter/outputs
 #' @param ... additional inputs to the struct_class object
-#' @include generics.R struct_class.R
+#' @include generics.R struct_class.R parameter_class.R constraint_class.R
 #' @return An entity object
 #' @examples
 #' # Create a new entity object
@@ -31,22 +31,27 @@
 #' value(E) = 10
 #' @rdname entity
 entity = function(
-    name, 
-    description=character(0), 
+    name,
+    description=character(0),
     type='character',
     value=NULL,
     max_length=Inf,
+    constraints=list(
+        constraint.type(),   # check type by default
+        constraint.max_len()  # check max length by default
+    ),
     ...) {
-    
+
     value=check_init_val(value,type)
-    
+
     # new object
     out = .entity(
-        name=name, 
+        name=name,
         description=description,
         type=type,
         value=value,
         max_length=max_length,
+        constraints=constraints,
         ...
     )
     return(out)
@@ -54,7 +59,7 @@ entity = function(
 
 .entity<-setClass(
     "entity",
-    slots = c(value = 'ANY',max_length = 'numeric'),
+    slots = c(value = 'ANY',max_length = 'numeric',constraints='list'),
     contains = 'struct_class',
     prototype = list(
         name = 'name not provided',
@@ -62,29 +67,29 @@ entity = function(
         value = character(0),
         type = 'character',
         max_length = Inf,
-        ontology=character()
+        ontology=character(),
+        constraints = list(
+            constraint.type(),   # check type by default
+            constraint.max_len()  # check max length by default
+        )
     ),
     validity = function(object) {
-        check_length = length(value(object)) <= max_length(object)
-        check_type = any(
-            unlist(
-                lapply(object$type,function(x){
-                    is(value(object),x)
-                })
-            )
-        )
-        check_max_length = length(max_length(object)) == 1
-        msg = TRUE
-        if (!check_length) {
-            msg = paste0(object$name,': number of values must be less than "max_length"')
+
+        # loop over all constraints
+        msg=character(0)
+        for (k in object@constraints) {
+            # test constraint
+            check = k@test(object)
+            if (!check) {
+                msg=c(msg,k@message(object))
+            }
         }
-        if (!check_type) {
-            msg = paste0(object$type,': class of value must match "type"')
+        # if no messages the all checks passed
+        if (length(msg)==0) {
+            return(TRUE)
+        } else {  # otherwise return message
+            return(msg)
         }
-        if (!check_max_length) {
-            msg = paste0(object$max_length,': ', ' max_length must be of length 1')
-        }
-        return(msg)
     }
 )
 
@@ -149,7 +154,7 @@ setMethod(f = 'show',
     signature = c('entity'),
     definition = function(object) {
         callNextMethod() # force the default output
-        
+
         V=value(object)
         if (is(V,'DatasetExperiment') | is(V,'SummarizedExperiment') | is(V,'matrix')) {
             V=paste0(nrow(V), ' rows x ', ncol(V), ' columns (',class(V),')')
@@ -158,7 +163,7 @@ setMethod(f = 'show',
         } else {
             V=class(V)
         }
-        
+
         # add extra info
         cat('value:         ', V, '\n',sep='')
         cat('type:          ', paste0(object$type,collapse=', '), '\n',sep='')

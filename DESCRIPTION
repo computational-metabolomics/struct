@@ -32,13 +32,14 @@ Collate:
     'struct_class.R'
     'parameter_class.R'
     'chart_class.R'
-    'stato_class.R'
+    'output_class.R'
     'DatasetExperiment_class.R'
+    'constraint_class.R'
     'entity_class.R'
+    'stato_class.R'
     'entity_stato_class.R'
     'enum_class.R'
     'enum_stato_class.R'
-    'output_class.R'
     'model_class.R'
     'example_objects.R'
     'model_list_class.R'
@@ -50,7 +51,7 @@ Collate:
     'struct-package.R'
     'struct_templates.R'
     'zzz.R'
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Depends: R (>= 4.0)
 Suggests: 
  testthat,

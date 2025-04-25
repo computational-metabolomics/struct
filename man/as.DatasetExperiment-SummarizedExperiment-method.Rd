@@ -13,7 +13,7 @@
 a DatasetExperiment object
 }
 \description{
-The assay data is transposed, and colData and rowData switched to match. 
-struct specific slots such as "name" and "description" are extracted from the 
+The assay data is transposed, and colData and rowData switched to match.
+struct specific slots such as "name" and "description" are extracted from the
 metaData if available. NB Any additional metadata will be lost during this conversion.
 }

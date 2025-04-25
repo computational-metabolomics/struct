@@ -17,6 +17,7 @@ entity(
   type = "character",
   value = NULL,
   max_length = Inf,
+  constraints = list(constraint.type(), constraint.max_len()),
   ...
 )
 
