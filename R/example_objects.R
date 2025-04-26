@@ -45,7 +45,7 @@ iris_DatasetExperiment = function () {
 #' @param value_0 a numeric value
 #' @param value_1 a numeric value
 #' @param value_2 a numeric value
-#' @param ... additional slots and values to pass to struct_class 
+#' @param ... additional slots and values to pass to struct_class
 #' @rdname example_model
 #' @include model_class.R
 #' @examples

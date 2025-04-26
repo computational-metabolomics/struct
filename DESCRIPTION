@@ -34,7 +34,6 @@ Collate:
     'chart_class.R'
     'output_class.R'
     'DatasetExperiment_class.R'
-    'constraint_class.R'
     'entity_class.R'
     'stato_class.R'
     'entity_stato_class.R'
@@ -65,5 +64,5 @@ Suggests:
 VignetteBuilder: knitr
 Imports: methods,ontologyIndex,
     datasets, graphics, stats, utils, knitr, 
-    SummarizedExperiment, S4Vectors, rols
+    SummarizedExperiment, S4Vectors, rols,rlang
 biocViews: WorkflowStep
