@@ -77,7 +77,7 @@ entity = function(
             if (!check) {
                 msg=c(
                     msg,
-                    paste0('Entity "',object$name,
+                    paste0('"',object$name,
                            '" is not valid because ',
                            eval(k$msg,env=list2env(slots(object)))
                     )
@@ -211,7 +211,7 @@ slots=function(object){
 
 # function to expand inherits to vectors/lists
 elements_inherit = function(x, class_name) {
-    sapply(x, function(el) inherits(el, class_name))
+    sapply(x, function(el) inherits(el, class_name,which=TRUE))
 }
 
 # check that all elements of a vector inherit one of the classes in 'type' INCLUDES LISTS
@@ -221,7 +221,7 @@ vector_type_equals = entity_constraint(
 
 # check that the value is of the correct type
 type_equals = entity_constraint(
-    ex = inherits(value,type) | ('ANY' %in% type),
+    ex = inherits(value,type,which = TRUE) | ('ANY' %in% type),
     msg = paste0('"value" must be ', paste0('"',type,'"',collapse=' or '),'.')
 )
 
