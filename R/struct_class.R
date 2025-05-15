@@ -479,7 +479,7 @@ new_struct = function(class, ...) {
     # convert to entity if req
     L=list(...)
     for (k in seq_len(length(L))) {
-        isEntity = is(param_obj(obj,names(L[k])),'entity')
+        isEntity = is(param_obj(obj,names(L)[k]),'entity')
 
         # if entity and entity is not provided, replace input value with
         # entity and assign value
