@@ -684,3 +684,50 @@ setGeneric("ontology",function(obj,cache=NULL)standardGeneric("ontology"))
 
 #' @importFrom utils .DollarNames
 setGeneric('.DollarNames', package='utils')
+
+####################################
+###### ggplot chart generics #####
+####################################
+
+#' Build a chart
+#'
+#' @param obj a chart object
+#' @param dobj a DatasetExperiment object
+#' @return the chart object with built data
+#' @export
+setGeneric("chart_build", function(obj, dobj) standardGeneric("chart_build"))
+
+#' Get preset from layer entity or chart object
+#'
+#' @param obj a layer_entity or chart object
+#' @param preset_name character string naming the preset (for layer_entity)
+#' @param slot_name character string naming the slot containing a layer_entity (for chart)
+#' @return the preset configuration
+#' @export
+setGeneric("get_preset", function(obj, preset_name, slot_name) standardGeneric("get_preset"))
+
+#' Register a preset for a layer entity
+#'
+#' @param obj a layer_entity object
+#' @param preset_name character string naming the preset
+#' @param value list containing the preset configuration
+#' @param force logical, whether to force overwrite existing preset
+#' @return the layer_entity object
+#' @export
+setGeneric("register_preset<-", function(obj, preset_name, value, force = TRUE) standardGeneric("register_preset<-"))
+
+#' Get available presets for a chart
+#'
+#' @param obj a chart object
+#' @param name character string naming the slot to check
+#' @return character vector of available preset names
+#' @export
+setGeneric("available_presets", function(obj, name) standardGeneric("available_presets"))
+
+#' Convert layer entity to ggplot2 layer
+#'
+#' @param obj a layer_entity object
+#' @param ... additional arguments
+#' @return a ggplot2 layer object
+#' @export
+setGeneric("as_layer", function(obj, ...) standardGeneric("as_layer"))

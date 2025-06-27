@@ -41,16 +41,21 @@ Collate:
     'output_class.R'
     'model_class.R'
     'example_objects.R'
+    'typed_list_class.R'
+    'struct_preset_class.R'
+    'layer_entity_class.R'
+    'ggplot_chart_class.R'
     'model_list_class.R'
     'metric_class.R'
     'iterator_class.R'
     'optimiser_class.R'
     'preprocess_class.R'
     'resampler_class.R'
+    'scatter_chart_class.R'
     'struct-package.R'
     'struct_templates.R'
     'zzz.R'
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Depends: R (>= 4.0)
 Suggests: 
  testthat,

@@ -45,6 +45,39 @@ setMethod(f = "chart_plot",
     }
 )
 
+#' Get preset from chart object
+#'
+#' @param obj A chart object
+#' @param preset_name Character string naming the preset to retrieve
+#' @param slot_name Character string naming the slot containing a layer_entity
+#' @return The preset configuration
+#' @export
+#' @examples
+#' # Get a preset from a chart object
+#' C = new_scatter_chart()
+#' get_preset(C, 'default', 'points')
+#' @rdname get_preset
+setMethod(f = "get_preset",
+    signature = c('chart','character','character'),
+    definition = function(obj, preset_name, slot_name) {
+        
+        # Check if the slot exists
+        if (!slot_name %in% slotNames(obj)) {
+            stop('Slot "', slot_name, '" does not exist in chart object of class "', class(obj), '"')
+        }
+        
+        # Get the slot value
+        slot_value = slot(obj, slot_name)
+        
+        # Check if it's a layer_entity
+        if (!is(slot_value, 'layer_entity')) {
+            stop('Slot "', slot_name, '" is not a layer_entity. It is a "', class(slot_value), '"')
+        }
+        
+        # Get the preset from the layer_entity
+        return(get_preset(slot_value, preset_name))
+    }
+)
 
 setMethod(f = "show",
     signature = c("chart"),
