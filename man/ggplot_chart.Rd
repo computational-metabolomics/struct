@@ -11,7 +11,7 @@ ggplot_chart(...)
 
 \S4method{chart_build}{ggplot_chart,DatasetExperiment}(obj, dobj)
 
-\S4method{chart_plot}{ggplot_chart,DatasetExperiment}(obj, dobj)
+\S4method{chart_plot}{ggplot_chart,DatasetExperiment}(obj, dobj, rebuild = NULL)
 
 \S4method{show}{ggplot_chart}(object)
 }

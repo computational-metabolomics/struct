@@ -19,7 +19,7 @@
 #' # Create a ggplot chart (not typically called directly)
 #' gc = ggplot_chart()
 #' @rdname ggplot_chart
-#' @include chart_class.R layer_entity_class.R struct_preset_class.R typed_list_class.R global_preset_registry.R
+#' @include chart_class.R layer_entity_class.R struct_preset_class.R typed_list_class.R
 ggplot_chart = function(...) {
     # new object
     out = new_struct('ggplot_chart', ...)
@@ -45,7 +45,8 @@ ggplot_chart = function(...) {
             description = 'A list of plot aesthetics and their mapping to the data',
             value = NULL,
             type = c('typed_list.uneval', 'uneval', 'NULL')
-        )
+        ),
+        .outputs = c('data','layers','mapping')
     )
 )
 
@@ -64,13 +65,26 @@ setMethod(f = "chart_build",
 #' @export
 setMethod(f = "chart_plot",
     signature = c("ggplot_chart", 'DatasetExperiment'),
-    definition = function(obj, dobj) {
-        # Build the chart
-        obj = chart_build(obj, dobj)
+    definition = function(obj, dobj, rebuild = NULL) {
+        # Determine whether to rebuild based on rebuild parameter and data state
+        should_rebuild = FALSE
         
+        if (!is.null(rebuild)) {
+            # If rebuild parameter is explicitly set, use it
+            should_rebuild = rebuild
+        } else {
+            # Default behavior: only rebuild if data is empty (not already built)
+            should_rebuild = (nrow(obj@data) == 0)
+        }
+        
+        # Build the chart if needed
+        if (should_rebuild) {
+            obj = chart_build(obj, dobj)
+        }
+
         # Create the ggplot object
         p = ggplot2::ggplot(data = obj@data, mapping = obj@mapping@value)
-        
+
         # Add all layers (geoms, stats, scales, themes, labels, facets, etc.)
         if (length(obj@layers) > 0) {
             for (i in seq_along(obj@layers)) {
@@ -80,7 +94,7 @@ setMethod(f = "chart_plot",
                 }
             }
         }
-        
+
         return(p)
     }
 )
