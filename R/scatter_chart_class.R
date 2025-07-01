@@ -243,11 +243,6 @@ setMethod(f = "chart_build",
         # Store the prepared data
         obj@data = plot_data
         
-        # Update the mapping to use the prepared data
-        obj@mapping@value = aes(
-            x = .data[['x']],
-            y = .data[['y']]
-        )
         
         # Build all layers and add them to the unified layers slot
         layers_list = list()

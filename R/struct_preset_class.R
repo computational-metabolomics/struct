@@ -20,10 +20,4 @@ preset = function(name, ...) {
     return(L)
 }
 
-# Helper function to standardise aesthetic names (similar to ggplot2::standardise_aes_names)
-standardise_aes_names = function(names) {
-    # This is a simplified version - in practice, this would match ggplot2's implementation
-    # For now, just return the names as-is
-    return(names)
-}
 

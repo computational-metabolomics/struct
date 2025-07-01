@@ -68,7 +68,7 @@ setMethod(f = "chart_plot",
     definition = function(obj, dobj, rebuild = NULL) {
         # Determine whether to rebuild based on rebuild parameter and data state
         should_rebuild = FALSE
-        
+
         if (!is.null(rebuild)) {
             # If rebuild parameter is explicitly set, use it
             should_rebuild = rebuild
@@ -76,7 +76,7 @@ setMethod(f = "chart_plot",
             # Default behavior: only rebuild if data is empty (not already built)
             should_rebuild = (nrow(obj@data) == 0)
         }
-        
+
         # Build the chart if needed
         if (should_rebuild) {
             obj = chart_build(obj, dobj)
@@ -110,11 +110,4 @@ setMethod(f = 'show',
     }
 )
 
-# Helper functions for common ggplot operations
-xlab = function(label) {
-    return(ggplot2::xlab(label))
-}
 
-ylab = function(label) {
-    return(ggplot2::ylab(label))
-}
