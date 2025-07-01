@@ -273,9 +273,14 @@ setMethod(f = "get_preset",
     }
 )
 
-# Helper function to modify aesthetics (simplified version)
+# Helper function to modify aesthetics using modifyList
 .modify_aes = function(a, b) {
-    # This is a simplified version - in practice, this would properly merge ggplot2 aesthetics
-    # For now, just return the first argument
-    return(a)
+    # Use modifyList to merge ggplot2 aesthetics
+    # This properly handles nested aesthetic mappings
+    if (is.null(a)) return(b)
+    if (is.null(b)) return(a)
+    
+    # modifyList will recursively merge the aesthetic mappings
+    # where b takes precedence over a for overlapping elements
+    return(modifyList(a, b))
 }
