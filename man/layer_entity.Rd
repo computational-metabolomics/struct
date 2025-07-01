@@ -15,7 +15,6 @@
 layer_entity(
   layer = "geom_point",
   presets = list(),
-  preset_default = "default",
   value = preset("default"),
   ...
 )
@@ -41,8 +40,6 @@ as_layer(obj, ...)
 
 \item{presets}{List of preset configurations}
 
-\item{preset_default}{Character string naming the default preset}
-
 \item{value}{The value of the layer entity}
 
 \item{...}{Additional parameters passed to entity constructor}
@@ -63,7 +60,6 @@ le = layer_entity(
         default = list(color = 'red'),
         blue = list(color = 'blue')
     ),
-    preset_default = 'default',
     value = preset('default')
 )
 }

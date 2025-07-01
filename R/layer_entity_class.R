@@ -7,7 +7,6 @@
 #' @export
 #' @param layer Character string naming the ggplot2 layer function (e.g., 'geom_point')
 #' @param presets List of preset configurations
-#' @param preset_default Character string naming the default preset
 #' @param value The value of the layer entity
 #' @param ... Additional parameters passed to entity constructor
 #' @return A layer_entity object
@@ -19,18 +18,17 @@
 #'         default = list(color = 'red'),
 #'         blue = list(color = 'blue')
 #'     ),
-#'     preset_default = 'default',
 #'     value = preset('default')
 #' )
 #' @rdname layer_entity
 #' @include entity_class.R struct_preset_class.R
-layer_entity = function(layer = 'geom_point', presets = list(), preset_default = 'default', value = preset('default'), ...) {
-    
+layer_entity = function(layer = 'geom_point', presets = list(), value = preset('default'), ...) {
+
     # If value is a character string, convert it to a preset
     if (is.character(value) && length(value) == 1) {
         value = preset(value)
     }
-    
+
     # NEW: If value is a direct ggplot2 layer object, create a custom preset
     if (is(value, 'Layer') || is(value, 'theme') || is(value, 'Scale') || is(value, 'Facet')) {
         # Create a custom preset with the provided layer
@@ -38,17 +36,12 @@ layer_entity = function(layer = 'geom_point', presets = list(), preset_default =
         presets = c(presets, custom_presets)
         # Set the value to use the custom preset
         value = preset('custom')
-        # Update preset_default to use custom if no default specified
-        if (preset_default == 'default' && !'default' %in% names(presets)) {
-            preset_default = 'custom'
-        }
     }
-    
+
     # new object
     out = .layer_entity(
         layer = layer,
         presets = presets,
-        preset_default = preset_default,
         value = value,
         ...
     )
@@ -60,8 +53,7 @@ layer_entity = function(layer = 'geom_point', presets = list(), preset_default =
     contains = 'entity',
     slots = c(
         layer = 'character',
-        presets = 'list',
-        preset_default = 'character'
+        presets = 'list'
     ),
     prototype = list(
         name = 'ggplot2 layer',
@@ -70,15 +62,9 @@ layer_entity = function(layer = 'geom_point', presets = list(), preset_default =
         value = list(),
         layer = 'geom_point',
         presets = list(),
-        preset_default = 'default',
         .params = 'layer'
     ),
     validity = function(object) {
-        # Check that preset_default exists in presets
-        if (length(object@preset_default) > 0 && 
-            !object@preset_default %in% c(names(object@presets), 'default')) {
-            return("preset_default must be 'default' or a name in presets")
-        }
         return(TRUE)
     }
 )
@@ -90,12 +76,12 @@ setGeneric("register_preset<-", function(obj, preset_name, value, force = TRUE) 
 setMethod(f = 'register_preset<-',
     signature = c('layer_entity','character','list'),
     definition = function(obj, preset_name, value, force = TRUE) {
-        
+
         check = preset_name %in% c(names(obj@presets), 'default')
         if (check && !force) {
             stop('This preset already exists. To replace it use "force = TRUE".')
         }
-        
+
         obj@presets[[preset_name]] = value
         return(obj)
     }
@@ -117,12 +103,12 @@ setMethod(f = 'available_presets',
 setMethod(f = "value<-",
     signature = c("layer_entity"),
     definition = function(obj, value) {
-        
+
         # If value is a character string, convert it to a preset
         if (is.character(value) && length(value) == 1) {
             value = preset(value)
         }
-        
+
         # If value is a direct ggplot2 layer object, create a custom preset
         if (is(value, 'Layer') || is(value, 'theme') || is(value, 'Scale') || is(value, 'Facet')) {
             # Create a custom preset with the provided layer
@@ -131,25 +117,24 @@ setMethod(f = "value<-",
             # Set the value to use the custom preset
             value = preset('custom')
         }
-        
+
         if (is(value, 'struct_preset')) {
             # check for valid preset (local only)
-            local_check = value$preset %in% c(names(obj@presets), 'default')
-            
+            local_check = value$preset %in% c(names(obj@presets))
+
             if (!local_check) {
                 available_local = names(obj@presets)
-                stop('"', value$preset, '" is not a valid preset for layer_entity "', 
-                     obj@layer, '". Choose one of: ', paste(available_local, collapse = ', '), 
-                     '. The default is "', obj@preset_default, '"')
+                stop('"', value$preset, '" is not a valid preset for layer_entity "',
+                     obj@layer, '". Choose one of: ', paste(available_local, collapse = ', '))
             }
         }
-        
+
         # standardise names
         if (is.list(value)) {
             names(value) = ggplot2::standardise_aes_names(names(value))
         }
         obj = callNextMethod(obj, value)
-        
+
         return(obj)
     }
 )
@@ -159,29 +144,28 @@ setMethod(f = "value<-",
 setMethod(f = "$<-",
     signature = c("layer_entity"),
     definition = function(x, name, value) {
-        
+
         # If value is a ggplot2 layer object, store it directly
         if (is(value, 'Layer') || is(value, 'theme') || is(value, 'Scale') || is(value, 'Facet')) {
             name = ggplot2::standardise_aes_names(name)
             x[[name]] = value
             return(x)
         }
-        
+
         if (is(value, 'struct_preset')) {
             # check for valid preset (local only)
-            local_check = value$preset %in% c(names(x@presets), 'default')
-            
+            local_check = value$preset %in% c(names(x@presets))
+
             if (!local_check) {
                 available_local = names(x@presets)
-                stop('"', value$preset, '" is not a valid preset for layer_entity "', 
-                     name, '". Choose one of: ', paste(available_local, collapse = ', '), 
-                     '. The default is "', x@preset_default, '"')
+                stop('"', value$preset, '" is not a valid preset for layer_entity "',
+                     name, '". Choose one of: ', paste(available_local, collapse = ', '))
             }
         }
-        
+
         name = ggplot2::standardise_aes_names(name)
         x[[name]] = value
-        
+
         return(x)
     }
 )
@@ -193,7 +177,6 @@ setMethod(f = 'show',
     definition = function(object) {
         callNextMethod() # force the default output
         cat('layer:         ', object@layer, '\n', sep = '')
-        cat('preset default:', object@preset_default, '\n', sep = '')
         cat('available presets:', paste(names(object@presets), collapse = ', '), '\n', sep = '')
     }
 )
@@ -205,29 +188,25 @@ setGeneric("as_layer", function(obj, ...) standardGeneric("as_layer"))
 setMethod(f = 'as_layer',
     signature = c('layer_entity'),
     definition = function(obj) {
-        
+
         # If the value is already a ggplot2 layer object, return it directly
         if (is(obj@value, 'Layer') || is(obj@value, 'theme') || is(obj@value, 'Scale') || is(obj@value, 'Facet')) {
             return(obj@value)
         }
-        
+
         # If value is NULL, return NULL
         if (is.null(obj@value)) {
             return(NULL)
         }
-        
+
         # get preset
         check = any(names(obj@value) == "preset")
         if (check) {
-            # substitute default
-            if (obj@value$preset == 'default') {
-                obj@value$preset = obj@preset_default
-            }
             # get preset
             P = get_preset(obj, obj@value$preset)
             # remove preset label
             obj@value$preset = NULL
-            
+
             if (!is.null(P)) {
                 # If P is already a ggplot2 layer object, return it directly
                 if (is(P, 'Layer') || is(P, 'theme') || is(P, 'Scale') || is(P, 'Facet')) {
@@ -239,16 +218,16 @@ setMethod(f = 'as_layer',
                 obj@value = NULL
             }
         }
-        
+
         # return NULL if specified; this layer not to be plotted
         if (is.null(obj@value)) {
             return(NULL)
         }
-        
+
         if (length(obj@value) > 0) {
-            
+
             L = obj@value
-            
+
             # get mappings
             z = which(unlist(lapply(L, is, class2 = 'uneval')))
             # join all mappings
@@ -279,19 +258,18 @@ setMethod(f = "value",
 setMethod(f = "get_preset",
     signature = c('layer_entity','character','missing'),
     definition = function(obj, preset_name, slot_name) {
-        
+
         # Check local presets only
-        check = preset_name %in% c(names(obj@presets), 'default')
+        check = preset_name %in% c(names(obj@presets))
         if (check) {
             return(obj@presets[[preset_name]])
         }
-        
+
         # If we get here, the preset doesn't exist
         available_local = names(obj@presets)
-        
-        stop('"', preset_name, '" is not a valid preset for layer_entity "', 
-             obj@layer, '". Choose one of: ', paste(available_local, collapse = ', '), 
-             '. The default is "', obj@preset_default, '"')
+
+        stop('"', preset_name, '" is not a valid preset for layer_entity "',
+             obj@layer, '". Choose one of: ', paste(available_local, collapse = ', '))
     }
 )
 
@@ -300,4 +278,4 @@ setMethod(f = "get_preset",
     # This is a simplified version - in practice, this would properly merge ggplot2 aesthetics
     # For now, just return the first argument
     return(a)
-} 
+}

@@ -10,18 +10,17 @@ new_scatter_chart(
   xcol = "Petal.Width",
   ycol = "Sepal.Width",
   factor_name = "Species",
-  points = layer_entity(layer = "geom_point", value = preset("default"), preset_default =
-    "default", presets = list(none = NULL, default = list(mapping = aes(colour =
-    .data[["colour"]], shape = .data[["shape"]])))),
-  ellipse = layer_entity(layer = "stat_ellipse", value = preset("none"), preset_default =
-    "none", presets = list(none = NULL, sample_ellipse = list(mapping = aes(x =
-    .data[["x"]], y = .data[["y"]]), colour = "grey", type = "norm"), group_ellipse =
-    list(mapping = aes(x = .data[["x"]], y = .data[["y"]], color = .data[["colour"]]),
-    type = "norm"))),
-  point_labels = layer_entity(layer = "geom_text", value = preset("none"), preset_default
-    = "none", presets = list(none = NULL, all_points = list(mapping = aes(x =
-    .data[["x"]], y = .data[["y"]], color = .data[["colour"]], label = .data[["label"]]),
-    hjust = "outward", vjust = "outward"))),
+  points = layer_entity(layer = "geom_point", value = preset("default"), presets =
+    list(none = NULL, default = list(mapping = aes(colour = .data[["colour"]], shape =
+    .data[["shape"]])))),
+  ellipse = layer_entity(layer = "stat_ellipse", value = preset("none"), presets =
+    list(none = NULL, sample_ellipse = list(mapping = aes(x = .data[["x"]], y =
+    .data[["y"]]), colour = "grey", type = "norm"), group_ellipse = list(mapping = aes(x
+    = .data[["x"]], y = .data[["y"]], color = .data[["colour"]]), type = "norm"))),
+  point_labels = layer_entity(layer = "geom_text", value = preset("none"), presets =
+    list(none = NULL, all_points = list(mapping = aes(x = .data[["x"]], y = .data[["y"]],
+    color = .data[["colour"]], label = .data[["label"]]), hjust = "outward", vjust =
+    "outward"))),
   ...
 )
 
