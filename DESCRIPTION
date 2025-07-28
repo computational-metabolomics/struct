@@ -47,6 +47,7 @@ Collate:
     'model_list_class.R'
     'metric_class.R'
     'iterator_class.R'
+    'model_dag_chart_class.R'
     'model_dag_class.R'
     'model_node_class.R'
     'optimiser_class.R'
@@ -70,5 +71,5 @@ Suggests:
 VignetteBuilder: knitr
 Imports: methods,ontologyIndex,
     datasets, graphics, stats, utils, knitr, 
-    SummarizedExperiment, S4Vectors, rols
+    SummarizedExperiment, S4Vectors, rols, igraph
 biocViews: WorkflowStep

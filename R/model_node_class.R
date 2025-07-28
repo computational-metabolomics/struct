@@ -31,10 +31,12 @@ model_node = function(name = character(0), description = character(0), model = N
     "model_node",
     contains = c('struct_node'),
     slots = c(
-        model = 'struct_class'
+        model = 'struct_class',
+        input_data = 'ANY'
     ),
     prototype = list(
-        model = NULL
+        model = NULL,
+        input_data = NULL
     )
 )
 

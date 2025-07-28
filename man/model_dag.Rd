@@ -4,7 +4,14 @@
 \alias{model_dag}
 \title{model_dag class}
 \usage{
-model_dag(name = character(0), description = character(0), edges = list(), ...)
+model_dag(
+  name = character(0),
+  description = character(0),
+  edges = list(),
+  nodes = list(),
+  results = list(),
+  ...
+)
 }
 \arguments{
 \item{name}{the name of the DAG}

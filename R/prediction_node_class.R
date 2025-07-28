@@ -22,7 +22,15 @@ prediction_node = function(name = character(0), description = character(0), ...)
 
 .prediction_node <- setClass(
     "prediction_node",
-    contains = c('struct_node')
+    contains = c('struct_node'),
+    slots = c(
+        input_data = 'ANY',
+        input_model = 'ANY'
+    ),
+    prototype = list(
+        input_data = NULL,
+        input_model = NULL
+    )
 )
 
 

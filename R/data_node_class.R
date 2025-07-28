@@ -31,10 +31,12 @@ data_node = function(name = character(0), description = character(0), data = NUL
     "data_node",
     contains = c('struct_node'),
     slots = c(
-        data = 'DatasetExperiment'
+        data = 'DatasetExperiment',
+        input_data = 'ANY'
     ),
     prototype = list(
-        data = NULL
+        data = NULL,
+        input_data = NULL
     )
 )
 
