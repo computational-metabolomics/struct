@@ -34,6 +34,9 @@ Collate:
     'chart_class.R'
     'stato_class.R'
     'DatasetExperiment_class.R'
+    'dag_execute.R'
+    'struct_node_class.R'
+    'data_node_class.R'
     'entity_class.R'
     'entity_stato_class.R'
     'enum_class.R'
@@ -44,13 +47,16 @@ Collate:
     'model_list_class.R'
     'metric_class.R'
     'iterator_class.R'
+    'model_dag_class.R'
+    'model_node_class.R'
     'optimiser_class.R'
+    'prediction_node_class.R'
     'preprocess_class.R'
     'resampler_class.R'
     'struct-package.R'
     'struct_templates.R'
     'zzz.R'
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Depends: R (>= 4.0)
 Suggests: 
  testthat,

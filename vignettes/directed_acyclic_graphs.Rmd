@@ -1,0 +1,298 @@
+---
+title: "Directed Acyclic Graphs (DAGs) for struct Models"
+author: 
+- name: Gavin R Lloyd
+  affiliation: Phenome Centre Birmingham, University of Birmingham, UK
+  email: g.r.lloyd@bham.ac.uk
+- name: Ralf J Weber
+  affiliation: Phenome Centre Birmingham, University of Birmingham, UK
+  email: r.j.weber@bham.ac.uk
+output:
+  BiocStyle::html_document:
+    toc: true
+    toc_depth: 2  
+    number_sections: true  
+    toc_float: true
+package: struct
+vignette: >
+  %\VignetteIndexEntry{Directed Acyclic Graphs (DAGs) for struct Models}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+    dpi=72,fig.width=5,fig.height=5.5
+)
+set.seed(57475)
+```
+
+# Introduction
+
+This vignette demonstrates the Directed Acyclic Graph (DAG) functionality in the `struct` package. DAGs provide a flexible way to create complex workflows by connecting nodes that represent data, models, and operations.
+
+## Key Concepts
+
+The DAG functionality consists of five main classes:
+
+1. **`model_dag`** - Represents a directed acyclic graph with edges defining the workflow
+2. **`struct_node`** - Base class for all node types (data_node, model_node, prediction_node)
+3. **`model_node`** - Represents a node containing a struct model (uses `model_apply`)
+4. **`prediction_node`** - Represents a node that receives a trained model via an edge and uses `model_predict`
+5. **`data_node`** - Represents a node containing a DatasetExperiment object
+
+## Getting Started
+
+```{r, message=FALSE,warning=FALSE}
+suppressPackageStartupMessages({
+  # load the package
+  library(struct)
+  
+  # load ggplot for plotting
+  library(ggplot2)
+})
+```
+
+# Simple DAG Workflow
+
+Let's start with a simple preprocessing workflow: Data → Mean Centering → PCA
+
+```{r}
+# Load example data
+D = iris_DatasetExperiment()
+
+# Create a simple preprocessing workflow:
+# Data -> Mean Center -> PCA
+
+# Step 1: Create data node
+data_node1 = data_node(
+    name = 'Raw Data',
+    description = 'Iris dataset',
+    data = D
+)
+
+# Step 2: Create mean centering node
+mean_center_model = mean_centre()
+mean_center_node = model_node(
+    name = 'Mean Centering',
+    description = 'Center the data by subtracting the mean',
+    model = mean_center_model
+)
+
+# Step 3: Create PCA node
+pca_model = PCA()
+pca_node = model_node(
+    name = 'PCA',
+    description = 'Principal Component Analysis',
+    model = pca_model
+)
+
+# Create the DAG
+dag = model_dag(
+    name = 'Preprocessing Workflow',
+    description = 'A simple preprocessing workflow: Mean centering followed by PCA',
+    edges = list(
+        list(from = 'Raw Data', to = 'Mean Centering'),
+        list(from = 'Mean Centering', to = 'PCA')
+    )
+)
+
+# Create named list of nodes
+nodes = list(
+    'Raw Data' = data_node1,
+    'Mean Centering' = mean_center_node,
+    'PCA' = pca_node
+)
+
+# Execute the DAG
+cat('Executing DAG workflow...\n')
+results = dag_execute(dag, nodes, verbose = TRUE)
+```
+
+Now let's visualize the PCA results:
+
+```{r}
+# Create a PCA scores plot
+C = pca_scores_plot(factor_name = 'Species')
+chart_plot(C, results$PCA)
+```
+
+# Complex DAG with Parallel Paths
+
+This example demonstrates a more complex workflow with parallel paths and different model modes:
+
+```{r}
+# Create a more complex workflow:
+# Data -> [Mean Center, autoscale] -> [PCA, PLS] -> Results
+
+# Step 1: Create data node
+input_node = data_node(
+    name = 'Raw Data',
+    description = 'Iris dataset',
+    data = iris_DatasetExperiment()
+)
+
+# Step 2: Create mean centering node
+mean_center_node = model_node(
+    name = 'Mean Centering',
+    description = 'Center the data by subtracting the mean',
+    model = mean_centre()
+)
+
+autoscale_node = model_node(
+    name = 'Autoscaling',
+    description = 'Center the data by subtracting the mean and then divide by the standard deviation',
+    model = autoscale()
+)
+
+# Step 3: Create PCA node
+pca_node = model_node(
+    name = 'PCA',
+    description = 'PCA',
+    model = PCA()
+)
+
+# Step 5: Create PLS node
+pls_node = model_node(
+    name = 'PLS Train',
+    description = 'Train PLS model',
+    model = PLSDA(factor_name='Species')
+)
+
+# Create the DAG with parallel paths
+dag = model_dag(
+    name = 'Complex Analysis Workflow',
+    description = 'A complex workflow with parallel PCA and PLS analysis',
+    edges = list(
+        list(from = 'Raw Data', to = 'Mean Centering'),
+        list(from = 'Mean Centering', to = 'PCA'),
+        list(from = 'Raw Data', to = 'Autoscale'),
+        list(from = 'Autoscale', to = 'PLS')
+    )
+)
+
+# Create named list of nodes
+nodes = list(
+    'Raw Data' = input_node,
+    'Mean Centering' = mean_center_node,
+    'PCA' = pca_node,
+    'PLS' = pls_node,
+    'Autoscale' = autoscale_node
+)
+
+# Execute the DAG
+cat('Executing complex DAG workflow...\n')
+results = dag_execute(dag, nodes, verbose = TRUE)
+```
+
+```{r}
+# Create a PCA scores plot
+C = pca_scores_plot(factor_name = 'Species')
+g1=chart_plot(C, results$PCA)
+
+# Create a PLS scores plot
+C = plsda_scores_plot(factor_name = 'Species')
+g2=chart_plot(C, results$PLS)
+
+cowplot::plot_grid(g1,g2)
+```
+
+# Model Apply Emulation
+
+This example demonstrates how to emulate `model_apply` using separate `model_train` and `model_predict` nodes:
+
+```{r}
+# Load example data
+D = iris_DatasetExperiment()
+
+# Create a workflow that emulates model_apply using separate train and predict steps:
+# Data -> PCA Train -> PCA Predict (equivalent to model_apply)
+
+# Step 1: Create data node
+data_node1 = data_node(
+    name = 'Raw Data',
+    description = 'Iris dataset',
+    data = D
+)
+
+# Step 2: Create PCA train node
+pca_model_train = PCA()
+pca_train_node = model_node(
+    name = 'PCA Train',
+    description = 'Train PCA model (first step of model_apply)',
+    model = pca_model_train
+)
+
+# Step 3: Create PCA predict node (model will be provided via edge)
+pca_predict_node = prediction_node(
+    name = 'PCA Predict',
+    description = 'Apply trained PCA model (second step of model_apply)'
+)
+
+# Create the DAG that emulates model_apply
+dag = model_dag(
+    name = 'Model Apply Emulation',
+    description = 'Emulating model_apply using separate train and predict nodes',
+    edges = list(
+        list(from = 'Raw Data', to = 'PCA Train'),
+        list(from = 'Raw Data', to = 'PCA Predict'),  # Data input
+        list(from = 'PCA Train', to = 'PCA Predict')  # Trained model input
+    )
+)
+
+# Create named list of nodes
+nodes = list(
+    'Raw Data' = data_node1,
+    'PCA Train' = pca_train_node,
+    'PCA Predict' = pca_predict_node
+)
+
+# Execute the DAG
+cat('Executing model_apply emulation DAG...\n')
+cat('This demonstrates how model_apply = model_train + model_predict\n')
+results = dag_execute(dag, nodes, verbose = TRUE)
+```
+
+# Node Types and Execution Logic
+
+The DAG system uses different node types with specific execution logic:
+
+## Node Types
+
+All node types inherit from `struct_node`:
+
+- **`data_node`** - Contains a DatasetExperiment object
+- **`model_node`** - Contains a struct model (uses `model_apply`)
+- **`prediction_node`** - Receives a trained model via an edge and uses `model_predict`
+
+## Execution Logic
+
+1. **Data nodes**: Pass through their DatasetExperiment data to connected nodes
+2. **Model nodes**: Use `model_apply` with input data (DatasetExperiment or predicted output from previous models)
+3. **Prediction nodes**: Use `model_predict` with trained models and input data
+   - **Requires two inputs**: One edge providing a trained model, one edge providing input data
+
+# Benefits of DAGs
+
+The DAG functionality provides several benefits:
+
+1. **Modularity** - Each step is encapsulated in its own node
+2. **Reusability** - Nodes can be reused in different workflows
+3. **Clarity** - The workflow structure is explicitly defined
+4. **Validation** - Automatic validation of workflow structure
+5. **Flexibility** - Support for complex workflows with parallel paths
+6. **Simplicity** - Clear separation between training (`model_node`) and prediction (`prediction_node`) operations
+7. **Automatic Data Flow** - Intelligent handling of data flow between nodes
+
+# Conclusion
+
+Directed Acyclic Graphs provide a powerful and flexible way to create complex workflows in the `struct` package. They allow you to:
+
+- Break down complex operations into their constituent parts
+- Create parallel processing paths
+- Inspect intermediate model states
+- Reuse components across different workflows
+- Maintain clear workflow documentation
+- Automatically handle train/predict workflows with dedicated node types
+
+The DAG approach complements the existing `model_seq` functionality while providing additional flexibility for complex workflows. The simplified node types (`model_node` for training, `prediction_node` for prediction) make it easy to create and understand workflows. 
