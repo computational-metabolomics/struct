@@ -27,12 +27,12 @@
 #' @param allowed A list of allowed values
 #' @inheritParams entity
 #' @rdname enum
-enum = function(name, description=character(0), type='character', 
+enum = function(name, description=character(0), type='character',
     value=character(0),max_length=1,allowed,...) {
-    
+
     # new object
     out = .enum(
-        name=name, 
+        name=name,
         description=description,
         type=type,
         value=value,
@@ -50,8 +50,8 @@ enum = function(name, description=character(0), type='character',
     prototype = list(name = 'name not provided',
         description = 'no description provided'),
     validity = function(object) {
-        check_list = object@value %in% object@allowed
-        
+        check_list = (all(object@value %in% object@allowed))
+
         # check enum validity
         msg = TRUE
         if (!check_list) {
@@ -70,7 +70,7 @@ enum = function(name, description=character(0), type='character',
 setMethod(f = "value<-",
     signature = c("enum"),
     definition = function(obj,value) {
-        if (value %in% obj@allowed) {
+        if (all(value %in% obj@allowed)) {
             obj@value = value
         } else {
             stop(value,' is not a valid choice for this enum.')
@@ -84,7 +84,7 @@ setMethod(f = 'show',
     signature = c('enum'),
     definition = function(object) {
         callNextMethod()
-        
+
         cat('allowed:      ',paste0(object@allowed,collapse=', '))
         cat('\n')
     }
