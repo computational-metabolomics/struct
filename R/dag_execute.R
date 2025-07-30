@@ -65,8 +65,8 @@ setMethod(f = "dag_execute",
         # Check that all nodes are valid
         for (node_name in names(nodes)) {
             node = nodes[[node_name]]
-            if (!is(node, 'model_node') && !is(node, 'data_node') && !is(node, 'prediction_node')) {
-                stop('Node "', node_name, '" must be a model_node, data_node, or prediction_node object')
+            if (!is(node, 'model_node') && !is(node, 'data_node') && !is(node, 'prediction_node') && !is(node, 'chart_node')) {
+                stop('Node "', node_name, '" must be a model_node, data_node, prediction_node, or chart_node object')
             }
         }
         
@@ -332,6 +332,93 @@ setMethod(f = "dag_execute",
                     } else {
                         cat('  Model output: ', class(result)[1], '\n')
                     }
+                }
+            } else if (is(current_node, 'chart_node')) {
+                # Chart nodes: execute chart_plot
+                
+                # Find all input objects for this node
+                input_objects = list()
+                
+                # Look for edges pointing to this node
+                for (edge in dag$edges) {
+                    if (edge$to == current) {
+                        from_node = edge$from
+                        from_param = edge$from_param
+                        to_param = edge$to_param
+                        
+                        if (from_node %in% names(results)) {
+                            from_output = results[[from_node]]
+                            from_node_obj = nodes[[from_node]]
+                            
+                            # Handle different from_param values
+                            if (from_param == "asis" || is.null(from_param)) {
+                                # Pass the object as-is (for data nodes)
+                                input_value = from_output
+                            } else if (from_param == "predicted") {
+                                # Use predicted() output (for model nodes to other model nodes)
+                                if (is(from_output, 'struct_class') && is(from_output, 'model')) {
+                                    tryCatch({
+                                        input_value = predicted(from_output)
+                                    }, error = function(e) {
+                                        stop('Failed to get predicted output from ', from_node, ': ', e$message)
+                                    })
+                                } else {
+                                    stop('Cannot get predicted output from non-model node: ', from_node)
+                                }
+                            } else {
+                                # Use named slot/parameter
+                                if (is(from_output, 'struct_class')) {
+                                    tryCatch({
+                                        input_value = from_output[[from_param]]
+                                    }, error = function(e) {
+                                        stop('Failed to get parameter "', from_param, '" from ', from_node, ': ', e$message)
+                                    })
+                                } else {
+                                    stop('Cannot get parameter from non-struct object: ', from_node)
+                                }
+                            }
+                            
+                            # Handle different to_param values for chart nodes
+                            if (to_param == "input_object" || is.null(to_param)) {
+                                # Add to input_objects list in order
+                                input_objects = c(input_objects, list(input_value))
+                            } else {
+                                # Set named parameter for the chart
+                                chart_obj = chart(current_node)
+                                chart_obj[[to_param]] = input_value
+                                current_node@chart = chart_obj
+                            }
+                        }
+                    }
+                }
+                
+                # Set the input_objects for the current node
+                current_node@input_objects = input_objects
+                
+                if (verbose) {
+                    cat('  Executing chart: ', class(chart(current_node))[1], ' with chart_plot\n')
+                }
+                
+                # Execute the chart using chart_plot
+                chart_obj = chart(current_node)
+                
+                # Call chart_plot with the chart object and input objects
+                if (length(input_objects) == 0) {
+                    # No input objects, just call chart_plot with the chart
+                    result = chart_plot(chart_obj)
+                } else if (length(input_objects) == 1) {
+                    # Single input object
+                    result = chart_plot(chart_obj, input_objects[[1]])
+                } else {
+                    # Multiple input objects - use do.call to pass them as arguments
+                    result = do.call(chart_plot, c(list(chart_obj), input_objects))
+                }
+                
+                # Store the result (chart_plot returns a plot object)
+                results[[current]] = result
+                
+                if (verbose) {
+                    cat('  Chart output: plot object of class ', class(result)[1], '\n')
                 }
             }
             

@@ -15,6 +15,7 @@ model_dag_chart(
   show_parameters = TRUE,
   parameter_text_size = 3,
   box_width = 0.5,
+  layout_scale = 2,
   ...
 )
 }
@@ -38,6 +39,8 @@ model_dag_chart(
 \item{parameter_text_size}{(numeric) Size of the parameter text in node boxes. The default is \code{3}.\cr}
 
 \item{box_width}{(numeric) Width of the node boxes. The default is \code{0.5}.\cr}
+
+\item{layout_scale}{(numeric) Scale factor for node spacing in the layout. The default is \code{2}.\cr}
 
 \item{...}{Additional slots and values passed to \code{struct_class}.}
 }
@@ -67,7 +70,8 @@ M = model_dag_chart(
       show_labels = FALSE,
       show_parameters = FALSE,
       parameter_text_size = 3,
-      box_width = 0.5)
+      box_width = 0.5,
+      layout_scale = 2)
 
 # Create a simple DAG with nodes
 D = iris_DatasetExperiment()

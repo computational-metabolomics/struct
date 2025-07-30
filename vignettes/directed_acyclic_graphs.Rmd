@@ -142,6 +142,77 @@ C = model_dag_chart()
 chart_plot(C, dag)
 ```
 
+# Simple DAG with Chart Node
+
+This example demonstrates how to add a chart node to automatically generate plots within the DAG workflow:
+
+```{r}
+# Load example data
+D = iris_DatasetExperiment()
+
+# Create a preprocessing workflow with chart node:
+# Data -> Mean Center -> PCA -> Chart (PCA scores plot)
+
+# Step 1: Create data node
+data_node1 = data_node(
+    name = 'Raw Data',
+    description = 'Iris dataset',
+    data = D
+)
+
+# Step 2: Create mean centering node
+mean_center_model = mean_centre()
+mean_center_node = model_node(
+    name = 'Mean Centering',
+    description = 'Center the data by subtracting the mean',
+    model = mean_center_model
+)
+
+# Step 3: Create PCA node
+pca_model = PCA()
+pca_node = model_node(
+    name = 'PCA',
+    description = 'Principal Component Analysis',
+    model = pca_model
+)
+
+# Step 4: Create chart node for PCA scores plot
+pca_scores_chart = pca_scores_plot(factor_name = 'Species')
+chart_node1 = chart_node(
+    name = 'PCA Scores Plot',
+    description = 'PCA scores plot colored by Species',
+    chart = pca_scores_chart
+)
+
+# Create the DAG with chart node
+dag = model_dag(
+    name = 'Preprocessing with Chart',
+    description = 'A preprocessing workflow with automatic PCA scores plot generation',
+    edges = list(
+        list(from = 'Raw Data', from_param = 'asis', to = 'Mean Centering', to_param = 'input_data'),
+        list(from = 'Mean Centering', from_param = 'predicted', to = 'PCA', to_param = 'input_data'),
+        list(from = 'PCA', from_param = 'asis', to = 'PCA Scores Plot', to_param = 'input_object'),
+        list(from = 'Raw Data', from_param = 'asis', to = 'PCA Scores Plot', to_param = 'input_object')
+    ),
+    nodes = list(
+        'Raw Data' = data_node1,
+        'Mean Centering' = mean_center_node,
+        'PCA' = pca_node,
+        'PCA Scores Plot' = chart_node1
+    )
+)
+
+# Execute DAG
+dag = dag_execute(dag, verbose = FALSE)
+
+# Display the DAG structure with chart node
+C = model_dag_chart()
+chart_plot(C, dag)
+
+# The chart output is now available in the results
+cat('Chart output class:', class(dag$results$`PCA Scores Plot`), '\n')
+```
+
 
 # Complex DAG with Parallel Paths
 
@@ -224,6 +295,82 @@ g2=chart_plot(C, dag$results$PLS)
 cowplot::plot_grid(g1,g2)
 ```
 
+# DAG with Chart Nodes
+
+This example demonstrates how to use the new `chart_node` functionality to create plots within DAG workflows. Chart nodes can have multiple input objects (e.g., a model and a dataset) and use `chart_plot` to generate visualizations.
+
+## PCA Scores Plot Example
+
+```{r}
+# Create a workflow with a chart node that creates a PCA scores plot
+# Data -> PCA -> Chart (PCA scores plot)
+
+# Step 1: Create data node
+data_node1 = data_node(
+    name = 'Raw Data',
+    description = 'Iris dataset',
+    data = iris_DatasetExperiment()
+)
+
+# Step 2: Create PCA node
+pca_model = PCA()
+pca_node = model_node(
+    name = 'PCA',
+    description = 'Principal Component Analysis',
+    model = pca_model
+)
+
+# Step 3: Create chart node for PCA scores plot
+pca_scores_chart = pca_scores_plot(factor_name = 'Species')
+chart_node1 = chart_node(
+    name = 'PCA Scores Plot',
+    description = 'PCA scores plot colored by Species',
+    chart = pca_scores_chart
+)
+
+# Create the DAG with chart node
+dag = model_dag(
+    name = 'PCA with Chart',
+    description = 'PCA analysis with automatic scores plot generation',
+    edges = list(
+        list(from = 'Raw Data', from_param = 'asis', to = 'PCA', to_param = 'input_data'),
+        list(from = 'PCA', from_param = 'asis', to = 'PCA Scores Plot', to_param = 'input_object')
+    ),
+    nodes = list(
+        'Raw Data' = data_node1,
+        'PCA' = pca_node,
+        'PCA Scores Plot' = chart_node1
+    )
+)
+
+# Execute DAG
+cat('Executing DAG with chart node...\n')
+dag = dag_execute(dag, verbose = TRUE)
+
+# Display the DAG structure
+C = model_dag_chart()
+chart_plot(C, dag)
+
+# The chart output is now available in the results
+cat('Chart output class:', class(dag$results$`PCA Scores Plot`), '\n')
+```
+
+
+## Chart Node Features
+
+Chart nodes provide several benefits:
+
+1. **Multiple Input Support** - Can accept multiple input objects (e.g., model + dataset)
+2. **Automatic Plot Generation** - Uses `chart_plot` to create visualizations
+3. **Integrated Workflows** - Plots are generated as part of the DAG execution
+4. **Flexible Input Handling** - Supports different input parameter patterns
+5. **Result Storage** - Chart outputs are stored in the DAG results
+
+The chart node execution logic:
+- Collects all input objects from connected edges
+- Calls `chart_plot` with the chart object and input objects
+- Stores the resulting plot object in the DAG results
+
 # Model Apply Emulation
 
 This example demonstrates how to emulate `model_apply` using separate `model_train` and `model_predict` nodes:
@@ -232,8 +379,8 @@ This example demonstrates how to emulate `model_apply` using separate `model_tra
 # Load example data
 D = iris_DatasetExperiment()
 
-# Create a workflow that emulates model_apply using separate train and predict steps:
-# Data -> PCA Train -> PCA Predict (equivalent to model_apply)
+# Create a simple preprocessing workflow:
+# Data -> Mean Center -> PCA
 
 # Step 1: Create data node
 data_node1 = data_node(
@@ -242,40 +389,50 @@ data_node1 = data_node(
     data = D
 )
 
-# Step 2: Create PCA train node
-pca_model_train = PCA()
-pca_train_node = model_node(
-    name = 'PCA Train',
-    description = 'Train PCA model (first step of model_apply)',
-    model = pca_model_train
+# Step 2: Create mean centering node
+mean_center_model = mean_centre()
+mean_center_node = model_node(
+    name = 'Mean Centering',
+    description = 'Center the data by subtracting the mean',
+    model = mean_center_model
 )
 
-# Step 3: Create PCA predict node (model will be provided via edge)
-pca_predict_node = prediction_node(
-    name = 'PCA Predict',
-    description = 'Apply trained PCA model (second step of model_apply)'
+# Step 3: Create PCA node
+pca_model = PCA()
+pca_node = model_node(
+    name = 'PCA',
+    description = 'Principal Component Analysis',
+    model = pca_model
 )
 
-# Create the DAG that emulates model_apply with nodes included
+# Step 4: PCA plot
+cn = chart_node(
+  name = 'ScoresPlot',
+  chart = pca_scores_plot(factor_name='Species')
+)
+
+# Create the DAG with nodes included
 dag = model_dag(
-    name = 'Model Apply Emulation',
-    description = 'Emulating model_apply using separate train and predict nodes',
+    name = 'Preprocessing Workflow',
+    description = 'A simple preprocessing workflow: Mean centering followed by PCA',
     edges = list(
-        list(from = 'Raw Data', from_param = 'asis', to = 'PCA Train', to_param = 'input_data'),
-        list(from = 'Raw Data', from_param = 'asis', to = 'PCA Predict', to_param = 'input_data'),  # Data input
-        list(from = 'PCA Train', from_param = 'asis', to = 'PCA Predict', to_param = 'input_model')  # Trained model input
+        list(from = 'Raw Data', from_param = 'asis', to = 'Mean Centering', to_param = 'input_data'),
+        list(from = 'Mean Centering', from_param = 'predicted', to = 'PCA', to_param = 'input_data'),
+        list(from = 'PCA', from_param = 'predicted', to = 'ScoresPlot', to_param = 'input_object')
     ),
     nodes = list(
         'Raw Data' = data_node1,
-        'PCA Train' = pca_train_node,
-        'PCA Predict' = pca_predict_node
+        'Mean Centering' = mean_center_node,
+        'PCA' = pca_node,
+        'ScoresPlot' = cn
     )
 )
 
-# Execute the DAG
-cat('Executing model_apply emulation DAG...\n')
-cat('This demonstrates how model_apply = model_train + model_predict\n')
+# Execute DAG (much simpler!)
 dag = dag_execute(dag, verbose = TRUE)
+
+# Plot the scores plot
+dag$results$ScoresPlot
 
 C = model_dag_chart()
 chart_plot(C, dag)
@@ -292,6 +449,7 @@ All node types inherit from `struct_node` and include an `input_data` slot:
 - **`data_node`** - Contains a DatasetExperiment object with `input_data` slot
 - **`model_node`** - Contains a struct model with `input_data` slot (uses `model_apply`)
 - **`prediction_node`** - Has `input_data` and `input_model` slots (uses `model_predict`)
+- **`chart_node`** - Contains a struct chart object with `input_objects` slot (uses `chart_plot`)
 
 ## Execution Logic
 
@@ -299,6 +457,8 @@ All node types inherit from `struct_node` and include an `input_data` slot:
 2. **Model nodes**: Use `model_apply` with input data from the `input_data` slot
 3. **Prediction nodes**: Use `model_predict` with trained models and input data
    - **Requires two inputs**: One edge providing a trained model to `input_model`, one edge providing input data to `input_data`
+4. **Chart nodes**: Use `chart_plot` with input objects from the `input_objects` slot
+   - **Supports multiple inputs**: Can accept multiple input objects (e.g., model + dataset)
 
 ## Input Data Flow
 
@@ -306,6 +466,8 @@ All node types inherit from `struct_node` and include an `input_data` slot:
 - **Model → Model**: Predicted output passed to next model's `input_data` slot  
 - **Model → Prediction**: Trained model passed to prediction node's `input_model` slot
 - **Data → Prediction**: DatasetExperiment passed to prediction node's `input_data` slot
+- **Data → Chart**: DatasetExperiment passed to chart node's `input_objects` slot
+- **Model → Chart**: Model object passed to chart node's `input_objects` slot
 
 # Benefits of DAGs
 
@@ -321,6 +483,8 @@ The DAG functionality provides several benefits:
 8. **Automatic Data Flow** - Intelligent handling of data flow between nodes
 9. **Object-oriented Design** - `dag_execute` is a method of the DAG class
 10. **Integrated Results** - Results are stored within the DAG object for easy access
+11. **Integrated Visualization** - Chart nodes provide automatic plot generation within workflows
+12. **Multiple Input Support** - Chart nodes can handle multiple input objects for complex visualizations
 
 # Conclusion
 
@@ -335,4 +499,4 @@ Directed Acyclic Graphs provide a powerful and flexible way to create complex wo
 - Automatically handle train/predict workflows with dedicated node types
 - Access results directly from the DAG object
 
-The DAG approach complements the existing `model_seq` functionality while providing additional flexibility for complex workflows. The object-oriented design with integrated nodes and results makes DAGs easy to create, execute, and analyze. The simplified node types (`model_node` for training, `prediction_node` for prediction) make it easy to create and understand workflows. 
+The DAG approach complements the existing `model_seq` functionality while providing additional flexibility for complex workflows. The object-oriented design with integrated nodes and results makes DAGs easy to create, execute, and analyze. The simplified node types (`model_node` for training, `prediction_node` for prediction, `chart_node` for visualization) make it easy to create and understand workflows. Chart nodes provide integrated visualization capabilities, allowing plots to be generated automatically as part of the workflow execution. 

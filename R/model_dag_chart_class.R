@@ -32,7 +32,8 @@ model_dag_chart = function(
         show_labels = TRUE,
         show_parameters = TRUE,
         parameter_text_size = 3,
-                    box_width = 0.5,
+        box_width = 0.5,
+        layout_scale = 2.0,
         ...) {
     out = struct::new_struct('model_dag_chart',
                              node_size = node_size,
@@ -43,8 +44,9 @@ model_dag_chart = function(
                              layout_type = layout_type,
                              show_labels = show_labels,
                              show_parameters = show_parameters,
-                             parameter_text_size = parameter_text_size,
-                                                        box_width = box_width,
+                                                          parameter_text_size = parameter_text_size,
+                             box_width = box_width,
+                             layout_scale = layout_scale,
                              ...)
     return(out)
 }
@@ -63,7 +65,8 @@ model_dag_chart = function(
         show_labels = 'entity',
         show_parameters = 'entity',
         parameter_text_size = 'entity',
-        box_width = 'entity'
+        box_width = 'entity',
+        layout_scale = 'entity'
     ),
 
     prototype = list(
@@ -72,7 +75,7 @@ model_dag_chart = function(
         type = "dag",
         .params = c('node_size', 'node_color', 'edge_color', 'edge_width',
                     'text_size', 'layout_type', 'show_labels', 'show_parameters',
-                    'parameter_text_size', 'box_width'),
+                    'parameter_text_size', 'box_width', 'layout_scale'),
 
         node_size = entity(
             name = 'Node size',
@@ -157,6 +160,14 @@ model_dag_chart = function(
             type = 'numeric',
             description = 'Width of the node boxes',
             max_length = 1
+        ),
+        
+        layout_scale = entity(
+            name = 'Layout scale',
+            value = 2.0,
+            type = 'numeric',
+            description = 'Scale factor for node spacing in the layout',
+            max_length = 1
         )
 
 
@@ -204,6 +215,9 @@ setMethod(f = "chart_plot",
               } else {
                   layout_coords = layout_func(g)
               }
+              
+              # Scale layout to provide more space between nodes
+              layout_coords = layout_coords * obj$layout_scale
 
               # Create node data frame
               nodes_df = data.frame(
@@ -223,6 +237,8 @@ setMethod(f = "chart_plot",
                           'model'
                       } else if (is(node, 'prediction_node')) {
                           'prediction'
+                      } else if (is(node, 'chart_node')) {
+                          'chart'
                       } else {
                           'unknown'
                       }
@@ -236,6 +252,7 @@ setMethod(f = "chart_plot",
                   'data' = '#4A90E2',      # Blue for data nodes
                   'model' = '#7ED321',     # Green for model nodes
                   'prediction' = '#F5A623', # Orange for prediction nodes
+                  'chart' = '#9B59B6',     # Purple for chart nodes
                   'unknown' = '#D0021B'     # Red for unknown nodes
               )
 
@@ -254,18 +271,39 @@ setMethod(f = "chart_plot",
                               # For model nodes, extract parameters from the model
                               model_obj = model(node)
                               param_names = param_ids(model_obj)
-                              if (length(param_names) > 0) {
-                                  param_values = sapply(param_names, param_value, obj = model_obj)
-                                  # Create parameter string with title
-                                  param_strings = paste(param_names, param_values, sep = " = ")
-                                  full_text = paste0(param_strings,collapse='\n')
-                                  list(parameters = full_text, lines = length(param_names) + 1)
-                              } else {
-                                  list(parameters = paste(node_name, "no parameters", sep = "\n"), lines = 2)
-                              }
+                                                             if (length(param_names) > 0) {
+                                   param_values = sapply(param_names, param_value, obj = model_obj)
+                                   # Create parameter string with title
+                                   param_strings = paste(param_names, param_values, sep = " = ")
+                                   # Limit to first 3 parameters to prevent box overflow
+                                   if (length(param_strings) > 3) {
+                                       param_strings = c(param_strings[1:3], "...")
+                                   }
+                                   full_text = paste0(param_strings, collapse='\n')
+                                   list(parameters = full_text, lines = min(length(param_strings) + 1, 4))
+                               } else {
+                                   list(parameters = paste(node_name, "no parameters", sep = "\n"), lines = 2)
+                               }
                           } else if (is(node, 'prediction_node')) {
                               # For prediction nodes, show the node name
                               list(parameters = node_name, lines = 1)
+                          } else if (is(node, 'chart_node')) {
+                              # For chart nodes, extract parameters from the chart
+                              chart_obj = chart(node)
+                              param_names = param_ids(chart_obj)
+                                                             if (length(param_names) > 0) {
+                                   param_values = sapply(param_names, param_value, obj = chart_obj)
+                                   # Create parameter string with title
+                                   param_strings = paste(param_names, param_values, sep = " = ")
+                                   # Limit to first 3 parameters to prevent box overflow
+                                   if (length(param_strings) > 3) {
+                                       param_strings = c(param_strings[1:3], "...")
+                                   }
+                                   full_text = paste0(param_strings, collapse='\n')
+                                   list(parameters = full_text, lines = min(length(param_strings) + 1, 4))
+                               } else {
+                                   list(parameters = paste(node_name, "no parameters", sep = "\n"), lines = 2)
+                               }
                           } else {
                               list(parameters = "unknown node type", lines = 1)
                           }
@@ -280,7 +318,9 @@ setMethod(f = "chart_plot",
 
                   # Calculate dynamic box height based on max lines with scale factor
                   line_height = 0.3  # Height per line
-                  dynamic_box_height = max_lines * line_height * 0.5  # Scale factor of 0.5
+                  # Limit box height to prevent overlap - max 3 lines
+                  max_lines_capped = min(max_lines, 3)
+                  dynamic_box_height = max_lines_capped * line_height * 0.5  # Scale factor of 0.5
               }
 
               # Create edge data frame for plotting with arrows touching box edges

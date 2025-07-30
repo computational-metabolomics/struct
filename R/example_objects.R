@@ -165,6 +165,42 @@ setMethod(f = "chart_plot",
     }
 )
 
+#' @export
+#' @examples
+#' # Example of using chart_node with multiple inputs
+#' # This shows how to create a chart node that takes both a model and a dataset
+#' D = iris_DatasetExperiment()
+#' M = structToolbox::glog_transform(qc_label='versicolor',factor_name='Species')
+#' M = model_apply(M,D)
+#' C = structToolbox::glog_opt_plot()
+#' 
+#' # Create chart node
+#' chart_node1 = chart_node(name = 'Glog Chart', description = 'Glog optimization plot', chart = C)
+#' 
+#' # Create DAG with chart node
+#' dag = model_dag(
+#'     name = 'Chart Example DAG',
+#'     description = 'Example DAG with chart node',
+#'     edges = list(
+#'         list(from = 'Data', from_param = 'asis', to = 'Model', to_param = 'input_data'),
+#'         list(from = 'Model', from_param = 'asis', to = 'Chart', to_param = 'input_object'),
+#'         list(from = 'Data', from_param = 'asis', to = 'Chart', to_param = 'input_object')
+#'     ),
+#'     nodes = list(
+#'         'Data' = data_node(name = 'Data', data = D),
+#'         'Model' = model_node(name = 'Model', model = M),
+#'         'Chart' = chart_node1
+#'     )
+#' )
+#' 
+#' # Execute DAG
+#' dag = dag_execute(dag)
+chart_node_example = function() {
+    # This is a placeholder for the example
+    # The actual example is in the documentation above
+    return(NULL)
+}
+
 
 
 
