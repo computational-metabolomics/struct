@@ -36,7 +36,8 @@ model_node = function(name = character(0), description = character(0), model = N
     ),
     prototype = list(
         model = NULL,
-        input_data = NULL
+        input_data = NULL,
+        .params=c('model','input_data')
     )
 )
 
@@ -102,4 +103,4 @@ setMethod(f = "show",
 
 #' @export
 #' @rdname autocompletion
-setMethod('.DollarNames','model_node',.DollarNames.model_node) 
+setMethod('.DollarNames','model_node',.DollarNames.model_node)

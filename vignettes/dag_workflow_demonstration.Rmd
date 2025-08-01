@@ -1,0 +1,545 @@
+---
+title: "Directed Acyclic Graph (DAG) Workflow Demonstration"
+author: 
+- name: Gavin R Lloyd
+  affiliation: Phenome Centre Birmingham, University of Birmingham, UK
+  email: g.r.lloyd@bham.ac.uk
+- name: Ralf J Weber
+  affiliation: Phenome Centre Birmingham, University of Birmingham, UK
+  email: r.j.weber@bham.ac.uk
+output:
+  BiocStyle::html_document:
+    toc: true
+    toc_depth: 2  
+    number_sections: true  
+    toc_float: true
+package: struct
+vignette: >
+%\VignetteIndexEntry{Directed Acyclic Graph (DAG) Workflow Demonstration}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+  ---
+  
+  ```{r, include=FALSE}
+knitr::opts_chunk$set(
+dpi=72,fig.width=8,fig.height=6
+)
+set.seed(57475)
+```
+
+# Introduction
+
+This vignette demonstrates how to use the Directed Acyclic Graph (DAG) system in the `struct` package to create and execute complex workflows. We'll use the classic Fisher's Iris dataset to demonstrate a typical data analysis pipeline: mean centering, Principal Component Analysis (PCA), and visualization of the results.
+
+The DAG system allows you to:
+- Define complex workflows as directed acyclic graphs
+- Execute workflows step-by-step with proper data flow
+- Visualize the workflow structure using the `model_dag_chart`
+- Handle different types of nodes (data, model, chart, prediction)
+
+# Prerequisites
+
+```{r, eval=FALSE, include=TRUE}
+# Install required packages
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# Install struct and structToolbox
+BiocManager::install(c("struct", "structToolbox"))
+
+# Install DiagrammeR for DAG visualization
+if (!requireNamespace("DiagrammeR", quietly = TRUE))
+    install.packages("DiagrammeR")
+```
+
+```{r, message=FALSE, warning=FALSE}
+suppressPackageStartupMessages({
+    library(struct)
+    library(structToolbox)
+    library(DiagrammeR)
+})
+```
+
+# Loading the Data
+
+We'll use the Fisher's Iris dataset, which contains measurements of sepal and petal dimensions for three species of iris flowers.
+
+```{r}
+# Load the iris dataset
+D = iris_DatasetExperiment()
+print(D)
+```
+
+The dataset contains 150 samples with 4 features (sepal length, sepal width, petal length, petal width) and a factor indicating the species (setosa, versicolor, virginica).
+
+# Creating the Workflow Components
+
+Before building the DAG, let's create the individual components of our workflow:
+
+## 1. Mean Centering
+
+Mean centering is a preprocessing step that subtracts the mean from each feature, centering the data around zero.
+
+```{r}
+# Create mean centering model
+mean_centre_model = mean_centre(mode = 'data')
+print(mean_centre_model)
+```
+
+## 2. Principal Component Analysis (PCA)
+
+PCA is a dimensionality reduction technique that finds the principal components (directions of maximum variance) in the data.
+
+```{r}
+# Create PCA model
+pca_model = PCA(number_components = 2)
+print(pca_model)
+```
+
+## 3. PCA Scores Plot
+
+We'll create a chart to visualize the PCA scores, showing how the samples are distributed in the principal component space.
+
+```{r}
+# Create PCA scores plot
+pca_plot = pca_scores_plot(factor_name = 'Species')
+print(pca_plot)
+```
+
+# Building the DAG Workflow
+
+Now we'll create a DAG that connects these components in sequence: Data → Mean Centering → PCA → PCA Scores Plot.
+
+## Creating the Nodes
+
+```{r}
+# Create data node
+data_node = data_node(
+    name = "Iris Data",
+    description = "Fisher's Iris dataset",
+    data = D
+)
+
+# Create model nodes
+mean_centre_node = model_node(
+    name = "Mean Centering",
+    description = "Center the data by subtracting column means",
+    model = mean_centre_model
+)
+
+pca_node = model_node(
+    name = "PCA",
+    description = "Principal Component Analysis with 2 components",
+    model = pca_model
+)
+
+# Create chart node
+pca_chart_node = chart_node(
+    name = "PCA Scores Plot",
+    description = "Visualize PCA scores colored by species",
+    chart = pca_plot)
+
+autoscale_node = model_node(
+    name='Autoscale',
+    description='Autoscale',
+    model=autoscale())
+
+pls_node = model_node(
+    mode = PLSDA(factor_name = 'Species')
+)
+
+pls_chart_node = chart_node(
+    chart = pls_scores_plot(factor_name = 'chart')
+)
+
+scree_node = chart_node(
+    chart = pca_scree_plot()
+)
+```
+
+## Defining the Edges
+
+The edges define the flow of data between nodes:
+
+```{r}
+# Define edges (connections between nodes)
+edges = list(
+    # Data flows to mean centering
+    list(from = "Iris Data", from_param = "asis", 
+         to = "Mean Centering", to_param = "input_data"),
+    
+    # Mean centered data flows to PCA
+    list(from = "Mean Centering", from_param = "predicted", 
+         to = "PCA", to_param = "input_data"),
+    
+    # PCA model flows to chart
+    list(from = "PCA", from_param = "asis", 
+         to = "PCA Scores Plot", to_param = "input_object"),
+    
+    list(from = "PCA", from_param = "asis", 
+         to = "Scree Plot", to_param = "input_object"),
+    
+    list(from = "Mean Centering", from_param = "predicted", 
+         to = "PLS", to_param = "input_object"),
+    
+    # PCA model flows to chart
+    list(from = "PLS", from_param = "asis", 
+         to = "PLS Scores Plot", to_param = "input_object")
+)
+```
+
+## Creating the DAG
+
+```{r}
+# Create the DAG
+iris_dag = model_dag(
+    name = "Iris Analysis Workflow",
+    description = "Mean centering followed by PCA and visualization",
+    edges = edges,
+    nodes = list(
+        "Iris Data" = data_node,
+        "Mean Centering" = mean_centre_node,
+        "PCA" = pca_node,
+        "PCA Scores Plot" = pca_chart_node,
+        "PLS" = pls_node,
+        "PLS Scores Plot" = pls_chart_node,
+        "Scree Plot" = scree_node
+    )
+)
+
+print(iris_dag)
+```
+
+# Visualizing the DAG Structure
+
+We can visualize the DAG structure using the `model_dag_chart`:
+
+```{r}
+# Create DAG chart
+dag_chart = model_dag_chart(
+    name = "Iris Workflow Chart",
+    description = "Visualization of the iris analysis workflow",
+    node_width = 'auto',
+    node_height = 'auto',
+    font_size = 6,
+    show_params = 'changed',
+    arrow_size = 0.5,
+    arrow_shape = 'normal',
+    max_param_length = Inf,
+    layout='tree'
+)
+
+# Plot the DAG
+chart_plot(dag_chart, iris_dag)
+```
+
+The visualization shows:
+- **Iris Data**: The input dataset
+- **Mean Centering**: The preprocessing step with its parameters
+- **PCA**: The dimensionality reduction step with number of components
+- **PCA Scores Plot**: The visualization step
+
+The arrows show the data flow between the nodes.
+
+# Executing the DAG
+
+Now let's execute the DAG to perform the analysis:
+
+```{r}
+# Execute the DAG
+results = dag_execute(iris_dag,verbose=FALSE)
+```
+
+The execution process:
+1. **Data Node**: Provides the iris dataset
+2. **Mean Centering**: Centers the data by subtracting column means
+3. **PCA**: Performs principal component analysis on the centered data
+4. **Chart Node**: Creates the PCA scores plot
+
+# Examining the Results
+
+Let's examine what was produced by each step:
+
+## Mean Centering Results
+
+```{r}
+# Get the mean centered data
+mean_centered_data = results$results$`Mean Centering`
+print(mean_centered_data)
+```
+
+## PCA Results
+
+```{r}
+# Get the PCA results
+pca_results = results$results$`PCA`
+print(pca_results)
+```
+
+## PCA Scores Plot
+
+```{r}
+# Get the PCA scores plot
+pca_plot_result = results$results$`PCA Scores Plot`
+print(pca_plot_result)
+```
+
+# Understanding the Data Flow
+
+The DAG system ensures that data flows correctly between steps:
+
+1. **Raw Data** → **Mean Centering**: The original iris data is passed to the mean centering step
+2. **Mean Centered Data** → **PCA**: The centered data is used as input for PCA
+3. **PCA Model** → **Chart**: The trained PCA model is passed to the plotting function
+4. **Mean Centered Data** → **Chart**: The centered data is also passed to the chart for visualization
+
+This ensures that:
+- The PCA is performed on properly preprocessed data
+- The visualization uses the correct data and model
+- All steps are executed in the correct order
+
+# Customizing the Workflow
+
+You can easily modify the workflow by changing parameters or adding new steps:
+
+## Example: Adding More Components
+
+```{r}
+# Create a more complex workflow with additional preprocessing
+# Add log transformation
+log_transform_model = log_transform()
+log_node = model_node(
+    name = "Log Transform",
+    description = "Log transform the data",
+    model = log_transform_model
+)
+
+# Create a new DAG with log transformation
+complex_edges = list(
+    list(from = "Iris Data", from_param = "asis", 
+         to = "Log Transform", to_param = "input_data"),
+    list(from = "Log Transform", from_param = "predicted", 
+         to = "Mean Centering", to_param = "input_data"),
+    list(from = "Mean Centering", from_param = "predicted", 
+         to = "PCA", to_param = "input_data"),
+    list(from = "PCA", from_param = "asis", 
+         to = "PCA Scores Plot", to_param = "input_object")
+)
+
+complex_dag = model_dag(
+    name = "Complex Iris Analysis",
+    description = "Log transform + mean centering + PCA",
+    edges = complex_edges,
+    nodes = list(
+        "Iris Data" = data_node,
+        "Log Transform" = log_node,
+        "Mean Centering" = mean_centre_node,
+        "PCA" = pca_node,
+        "PCA Scores Plot" = pca_chart_node
+    )
+)
+
+# Visualize the complex workflow
+chart_plot(dag_chart, complex_dag)
+```
+
+## Example: Different PCA Parameters
+
+```{r}
+# Create PCA with different number of components
+pca_3comp = PCA(number_components = 3)
+pca_3comp_node = model_node(
+    name = "PCA (3 components)",
+    description = "PCA with 3 principal components",
+    model = pca_3comp
+)
+
+# Create a DAG with 3-component PCA
+pca3_edges = list(
+    list(from = "Iris Data", from_param = "asis", 
+         to = "Mean Centering", to_param = "input_data"),
+    list(from = "Mean Centering", from_param = "predicted", 
+         to = "PCA (3 components)", to_param = "input_data")
+)
+
+pca3_dag = model_dag(
+    name = "Iris Analysis with 3 PCA Components",
+    description = "Mean centering followed by 3-component PCA",
+    edges = pca3_edges,
+    nodes = list(
+        "Iris Data" = data_node,
+        "Mean Centering" = mean_centre_node,
+        "PCA (3 components)" = pca_3comp_node
+    )
+)
+
+# Visualize
+chart_plot(dag_chart, pca3_dag)
+```
+
+# Advanced DAG Features
+
+## Conditional Execution
+
+You can create more complex workflows with conditional execution:
+
+```{r}
+# Example: Create a workflow that can handle different preprocessing options
+# This is a conceptual example showing how you might structure conditional workflows
+
+# Create multiple preprocessing options
+autoscale_model = autoscale()
+pareto_model = pareto_scale()
+
+# Create nodes for different preprocessing methods
+autoscale_node = model_node(
+    name = "Autoscaling",
+    description = "Autoscale the data (mean=0, std=1)",
+    model = autoscale_model
+)
+
+pareto_node = model_node(
+    name = "Pareto Scaling",
+    description = "Pareto scale the data",
+    model = pareto_model
+)
+
+# Note: In practice, you would use conditional logic or separate DAGs
+# for different preprocessing strategies
+```
+
+## Error Handling
+
+The DAG system includes error handling to ensure robust execution:
+
+```{r}
+# Example: What happens if a step fails
+# The DAG execution will stop and provide informative error messages
+# This helps identify and fix issues in the workflow
+
+# Try executing with invalid parameters
+tryCatch({
+    invalid_pca = PCA(number_components = 10)  # More components than features
+    invalid_node = model_node(
+        name = "Invalid PCA",
+        description = "PCA with too many components",
+        model = invalid_pca
+    )
+    
+    invalid_edges = list(
+        list(from = "Iris Data", from_param = "asis", 
+             to = "Invalid PCA", to_param = "input_data")
+    )
+    
+    invalid_dag = model_dag(
+        name = "Invalid Workflow",
+        description = "Workflow with invalid parameters",
+        edges = invalid_edges,
+        nodes = list(
+            "Iris Data" = data_node,
+            "Invalid PCA" = invalid_node
+        )
+    )
+    
+    # This would fail during execution
+    # dag_execute(invalid_dag)
+    
+}, error = function(e) {
+    cat("Error caught:", e$message, "\n")
+})
+```
+
+# Best Practices for DAG Workflows
+
+## 1. Clear Naming
+
+Use descriptive names for nodes and parameters:
+
+```{r}
+# Good naming
+good_node = model_node(
+    name = "PCA with 2 Components",
+    description = "Principal Component Analysis retaining 2 components",
+    model = pca_model
+)
+
+# Avoid vague names
+# bad_node = model_node(name = "Model1", ...)
+```
+
+## 2. Proper Documentation
+
+Include descriptions for all nodes and the overall workflow:
+
+```{r}
+# Well-documented DAG
+well_documented_dag = model_dag(
+    name = "Iris Species Classification Pipeline",
+    description = "Complete workflow for iris species classification including preprocessing, dimensionality reduction, and visualization",
+    edges = edges,
+    nodes = list(...)
+)
+```
+
+## 3. Modular Design
+
+Break complex workflows into smaller, reusable components:
+
+```{r}
+# Create reusable preprocessing module
+preprocessing_dag = model_dag(
+    name = "Standard Preprocessing",
+    description = "Common preprocessing steps: mean centering and scaling",
+    edges = list(
+        list(from = "Input Data", from_param = "asis", 
+             to = "Mean Centering", to_param = "input_data"),
+        list(from = "Mean Centering", from_param = "asis", 
+             to = "Autoscaling", to_param = "input_data")
+    ),
+    nodes = list(
+        "Input Data" = data_node,
+        "Mean Centering" = mean_centre_node,
+        "Autoscaling" = autoscale_node
+    )
+)
+```
+
+## 4. Validation
+
+Always validate your DAG before execution:
+
+```{r}
+# Check that all nodes are properly connected
+# Verify that required parameters are set
+# Ensure the workflow makes logical sense
+
+# Example validation checks
+cat("Number of nodes:", length(iris_dag$nodes), "\n")
+cat("Number of edges:", length(iris_dag$edges), "\n")
+cat("All nodes have names:", all(!is.null(names(iris_dag$nodes))), "\n")
+```
+
+# Conclusion
+
+The DAG system in the `struct` package provides a powerful and flexible way to create complex data analysis workflows. Key benefits include:
+
+- **Reproducibility**: Workflows are explicitly defined and can be re-executed
+- **Modularity**: Components can be reused and combined in different ways
+- **Visualization**: The workflow structure can be visualized using `model_dag_chart`
+- **Error Handling**: Robust execution with informative error messages
+- **Flexibility**: Easy to modify and extend workflows
+
+The iris dataset example demonstrates a typical workflow, but the same principles apply to any data analysis pipeline. The DAG system is particularly useful for:
+
+- Metabolomics data analysis
+- Machine learning pipelines
+- Quality control workflows
+- Multi-step statistical analyses
+
+By using the DAG system, you can create complex, reproducible workflows that are easy to understand, modify, and share with others.
+
+# Session Information
+
+```{r}
+sessionInfo()
+``` 

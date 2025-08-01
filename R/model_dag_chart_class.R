@@ -1,461 +1,512 @@
-#' @eval get_description('model_dag_chart')
-#' @import struct
-#' @import ggplot2
-#' @importFrom igraph graph_from_data_frame layout_with_sugiyama
-#' @export model_dag_chart
-#' @examples
-#' # Create a simple DAG with nodes
-#' D = iris_DatasetExperiment()
-#' dag = model_dag(
-#'     name = 'Example DAG',
-#'     description = 'A simple example DAG',
-#'     edges = list(
-#'         list(from = 'Raw Data', from_param = 'asis', to = 'PCA', to_param = 'input_data')
-#'     ),
-#'     nodes = list(
-#'         'Raw Data' = data_node(name = 'Raw Data', data = D),
-#'         'PCA' = model_node(name = 'PCA', model = PCA())
-#'     )
-#' )
-#' # Execute the DAG to get results
-#' dag = dag_execute(dag)
-#' C = model_dag_chart()
-#' chart_plot(C, dag)
+#' model_dag_chart class
 #'
-model_dag_chart = function(
-        node_size = 5,
-        node_color = '#4A90E2',
-        edge_color = '#666666',
-        edge_width = 1,
-        text_size = 4,
-        layout_type = 'sugiyama',
-        show_labels = TRUE,
-        show_parameters = TRUE,
-        parameter_text_size = 3,
-        box_width = 0.5,
-        layout_scale = 2.0,
-        ...) {
-    out = struct::new_struct('model_dag_chart',
-                             node_size = node_size,
-                             node_color = node_color,
-                             edge_color = edge_color,
-                             edge_width = edge_width,
-                             text_size = text_size,
-                             layout_type = layout_type,
-                             show_labels = show_labels,
-                             show_parameters = show_parameters,
-                                                          parameter_text_size = parameter_text_size,
-                             box_width = box_width,
-                             layout_scale = layout_scale,
-                             ...)
+#' A chart class for visualizing model_dag objects using DiagrammeR.
+#' This chart creates a directed acyclic graph visualization showing
+#' the nodes and their connections, including node names and model parameters.
+#'
+#' @export model_dag_chart
+#' @param name the name of the chart
+#' @param description a description of the chart
+#' @param node_width the width of nodes in the graph (default: 2)
+#' @param node_height the height of nodes in the graph (default: 1)
+#' @param font_size the font size for node labels (default: 8)
+#' @param show_params which parameters to show in nodes: "all", "changed", "connected", or "none" (default: "all")
+#' @param max_param_length maximum length of parameter text before truncation (default: 50)
+#' @param layout the layout algorithm to use (default: "dot")
+#' @param rankdir the direction for ranking nodes (default: "LR" for left-to-right)
+#' @param node_color the color of nodes (default: "lightblue")
+#' @param edge_color the color of edges (default: "darkblue")
+#' @param edge_width the width of edges (default: 2)
+#' @param arrow_size the size of arrowheads (default: 1.5)
+#' @param arrow_shape the shape of arrowheads (default: "normal")
+#' @param ... additional parameters to pass to chart
+#' @import DiagrammeR
+#' @include generics.R struct_class.R chart_class.R
+#' @examples
+#' C = model_dag_chart()
+#' @rdname model_dag_chart
+model_dag_chart = function(name = character(0), description = character(0),
+                           node_width = 'auto', node_height = 'auto', font_size = 8,
+                           show_params = "all",
+                           max_param_length = 50, layout = "tree", rankdir = "LR",
+                           node_color = "lightblue", edge_color = "darkblue",
+                           edge_width = 2, arrow_size = 1.5, arrow_shape = "normal", ...) {
+    # new object
+    out = new_struct('model_dag_chart',
+                     name = name,
+                     description = description,
+                     node_width = node_width,
+                     node_height = node_height,
+                     font_size = font_size,
+                     show_params = show_params,
+                     max_param_length = max_param_length,
+                     layout = layout,
+                     rankdir = rankdir,
+                     node_color = node_color,
+                     edge_color = edge_color,
+                     edge_width = edge_width,
+                     arrow_size = arrow_size,
+                     arrow_shape = arrow_shape,
+                     ...)
     return(out)
 }
 
 .model_dag_chart <- setClass(
     "model_dag_chart",
-    contains = 'chart',
+    contains = c('chart'),
     slots = c(
-        # INPUTS
-        node_size = 'entity',
+        node_width = 'entity',
+        node_height = 'entity',
+        font_size = 'entity',
+        show_params = 'entity',
+        max_param_length = 'entity',
+        layout = 'entity',
+        rankdir = 'entity',
         node_color = 'entity',
         edge_color = 'entity',
         edge_width = 'entity',
-        text_size = 'entity',
-        layout_type = 'enum',
-        show_labels = 'entity',
-        show_parameters = 'entity',
-        parameter_text_size = 'entity',
-        box_width = 'entity',
-        layout_scale = 'entity'
+        arrow_size = 'entity',
+        arrow_shape = 'entity'
     ),
-
     prototype = list(
         name = 'Model DAG Chart',
-        description = 'Plots a directed acyclic graph (DAG) structure of model objects.',
-        type = "dag",
-        .params = c('node_size', 'node_color', 'edge_color', 'edge_width',
-                    'text_size', 'layout_type', 'show_labels', 'show_parameters',
-                    'parameter_text_size', 'box_width', 'layout_scale'),
+        description = 'A chart for visualizing model DAGs using DiagrammeR',
+        type = 'chart',
+        .params = c('node_width', 'node_height', 'font_size',
+                    'show_params', 'max_param_length', 'layout', 'rankdir',
+                    'node_color', 'edge_color', 'edge_width', 'arrow_size',
+                    'arrow_shape'),
 
-        node_size = entity(
-            name = 'Node size',
-            value = 5,
-            type = 'numeric',
-            description = 'Size of the nodes in the DAG plot',
+        node_width = entity(
+            name = 'Node Width',
+            value = 'auto',
+            type = c('numeric', 'character'),
+            description = paste0(
+                'Width of nodes in the graph. Use "auto" for auto-sizing or ',
+                'a numeric value for fixed width'),
             max_length = 1
         ),
 
-        node_color = entity(
-            name = 'Node color',
-            value = '#4A90E2',
+        node_height = entity(
+            name = 'Node Height',
+            value = 'auto',
+            type = c('numeric', 'character'),
+            description = paste0(
+                'Height of nodes in the graph. Use "auto" for auto-sizing or ',
+                'a numeric value for fixed height'),
+            max_length = 1
+        ),
+
+        font_size = entity(
+            name = 'Font Size',
+            value = 8,
+            type = 'numeric',
+            description = 'Font size for node labels',
+            max_length = 1
+        ),
+
+        show_params = enum(
+            name = 'Show Parameters',
+            value = 'all',
+            description = c(
+                'Which parameters to show in nodes:',
+                all = 'all parameters',
+                changed = "non-default values only",
+                connected ="to_param/from_param only",
+                none ="no parameters"),
+            allowed = c('all', 'changed', 'connected', 'none')
+        ),
+
+        max_param_length = entity(
+            name = 'Max Parameter Length',
+            value = 50,
+            type = 'numeric',
+            description = 'Maximum length of parameter text before truncation',
+            max_length = 1
+        ),
+
+        layout = enum(
+            name = 'Layout Algorithm',
+            value = 'tree',
             type = 'character',
-            description = 'Color of the nodes in the DAG plot',
+            description = 'The layout algorithm to use for graph positioning',
+            max_length = 1,
+            allowed = c('circle', 'tree', 'kk', 'fr', 'nicely', 'neato')
+        ),
+
+        rankdir = enum(
+            name = 'Rank Direction',
+            value = 'LR',
+            description = 'The direction for ranking nodes',
+            allowed = c('LR', 'TB', 'RL', 'BT')
+        ),
+
+        node_color = entity(
+            name = 'Node Color',
+            value = 'lightblue',
+            type = 'character',
+            description = 'The color of nodes in the graph',
             max_length = 1
         ),
 
         edge_color = entity(
-            name = 'Edge color',
-            value = '#666666',
+            name = 'Edge Color',
+            value = 'darkblue',
             type = 'character',
-            description = 'Color of the edges in the DAG plot',
+            description = 'The color of edges in the graph',
             max_length = 1
         ),
 
         edge_width = entity(
-            name = 'Edge width',
+            name = 'Edge Width',
             value = 1,
             type = 'numeric',
-            description = 'Width of the edges in the DAG plot',
+            description = 'The width of edges in the graph',
             max_length = 1
         ),
 
-        text_size = entity(
-            name = 'Text size',
-            value = 4,
-            type = 'numeric',
-            description = 'Size of the text labels in the DAG plot',
-            max_length = 1
-        ),
-
-        layout_type = enum(
-            name = 'Layout type',
-            value = 'sugiyama',
-            type = 'character',
-            description = c(
-                'sugiyama' = 'Hierarchical layout optimized for DAGs',
-                'tree' = 'Tree layout',
-                'circle' = 'Circular layout',
-                'random' = 'Random layout'
-            ),
-            allowed = c('sugiyama', 'tree', 'circle', 'random')
-        ),
-
-        show_labels = entity(
-            name = 'Show labels',
-            value = TRUE,
-            type = 'logical',
-            description = 'Whether to show node labels on the plot',
-            max_length = 1
-        ),
-
-        show_parameters = entity(
-            name = 'Show parameters',
-            value = TRUE,
-            type = 'logical',
-            description = 'Whether to show model parameters in node boxes',
-            max_length = 1
-        ),
-
-        parameter_text_size = entity(
-            name = 'Parameter text size',
-            value = 3,
-            type = 'numeric',
-            description = 'Size of the parameter text in node boxes',
-            max_length = 1
-        ),
-
-        box_width = entity(
-            name = 'Box width',
+        arrow_size = entity(
+            name = 'Arrow Size',
             value = 0.5,
             type = 'numeric',
-            description = 'Width of the node boxes',
+            description = 'The size of arrowheads on edges',
             max_length = 1
         ),
-        
-        layout_scale = entity(
-            name = 'Layout scale',
-            value = 2.0,
-            type = 'numeric',
-            description = 'Scale factor for node spacing in the layout',
-            max_length = 1
+
+        arrow_shape = enum(
+            name = 'Arrow Shape',
+            value = 'normal',
+            description = 'The shape of arrowheads',
+            allowed = c('normal', 'box', 'crow', 'diamond', 'dot', 'inv',
+                        'none', 'tee', 'vee')
         )
-
-
     )
 )
 
-#' @importFrom igraph graph_from_data_frame layout_with_sugiyama layout_as_tree layout_in_circle layout_randomly
+#' @importFrom DiagrammeR create_graph add_node add_edge render_graph set_node_attrs set_edge_attrs
+#' @importFrom struct param_ids param_value new_struct
+#'
+# Helper function to filter parameters based on show_params setting
+.filter_params <- function(obj, param_names, param_values, struct_obj, node_type = NULL) {
+    if (obj$show_params == "none") {
+        return(character(0))
+    }
+
+    if (obj$show_params == "all") {
+        return(param_names)
+    }
+
+    if (obj$show_params == "changed") {
+        # Get default values using formals() for the constructor function
+        class_name <- class(struct_obj)[1]
+        constructor_name <- tolower(class_name)  # e.g., "pca_scores_plot" for "pca_scores_plot"
+
+        # Try to get the constructor function
+        constructor_func <- tryCatch({
+            get(constructor_name, mode = "function")
+        }, error = function(e) NULL)
+
+        if (!is.null(constructor_func)) {
+            # Get default values from formals
+            default_formals <- formals(constructor_func)
+
+            # Compare current values with defaults
+            changed_params_list <- lapply(seq_along(param_names), function(i) {
+                param_name <- param_names[i]
+                current_val <- param_values[[i]]
+                return(!identical(current_val, default_formals[[param_name]]))
+            })
+
+                         # Convert list to logical vector
+             changed_params <- unlist(changed_params_list)
+             return(param_names[changed_params])
+        }
+        return(param_names)  # If we can't get defaults, show all
+    }
+
+    if (obj$show_params == "connected") {
+        # Check for to_param and from_param in the struct object
+        connected_params <- c()
+        if ("to_param" %in% param_names) {
+            to_val <- param_value(struct_obj, "to_param")
+            if (!is.null(to_val) && to_val != "") {
+                connected_params <- c(connected_params, "to_param")
+            }
+        }
+        if ("from_param" %in% param_names) {
+            from_val <- param_value(struct_obj, "from_param")
+            if (!is.null(from_val) && from_val != "") {
+                connected_params <- c(connected_params, "from_param")
+            }
+        }
+        return(connected_params)
+    }
+
+    return(character(0))
+}
+#'
 #' @export
 setMethod(f = "chart_plot",
           signature = c("model_dag_chart", "model_dag"),
           definition = function(obj, dobj) {
 
-              # Extract edges from the DAG
-              edges_list = dobj$edges
+              # Get nodes and edges from the DAG
+              nodes <- dobj$nodes
+              edges <- dobj$edges
 
-              if (length(edges_list) == 0) {
-                  # Create a simple plot for empty DAG
-                  p = ggplot() +
-                      annotate("text", x = 0.5, y = 0.5,
-                               label = "Empty DAG\nNo edges defined",
-                               size = obj$text_size) +
-                      xlim(0, 1) + ylim(0, 1) +
-                      theme_void() +
-                      ggtitle(dobj$name)
-                  return(p)
+              if (length(nodes) == 0) {
+                  warning("No nodes found in the DAG")
+                  return(NULL)
               }
 
-              # Convert edges list to data frame
-              edges_df = do.call(rbind, lapply(edges_list, function(edge) {
-                  data.frame(from = edge$from, to = edge$to, stringsAsFactors = FALSE)
-              }))
-
-              # Create igraph object
-              g = igraph::graph_from_data_frame(edges_df, directed = TRUE)
-
-              # Get layout based on type
-              layout_func = switch(obj$layout_type,
-                                   'sugiyama' = igraph::layout_with_sugiyama,
-                                   'tree' = igraph::layout_as_tree,
-                                   'circle' = igraph::layout_in_circle,
-                                   'random' = igraph::layout_randomly)
-
-              if (obj$layout_type == 'sugiyama') {
-                  layout_coords = layout_func(g)$layout
-              } else {
-                  layout_coords = layout_func(g)
+              # Create node data frame for DiagrammeR
+              node_ids <- names(nodes)
+              if (is.null(node_ids)) {
+                  node_ids <- paste0("node_", seq_along(nodes))
               }
-              
-              # Scale layout to provide more space between nodes
-              layout_coords = layout_coords * obj$layout_scale
+              # Ensure node_ids are character strings
+              node_ids <- as.character(node_ids)
 
-              # Create node data frame
-              nodes_df = data.frame(
-                  name = igraph::V(g)$name,
-                  x = layout_coords[, 1],
-                  y = layout_coords[, 2],
-                  stringsAsFactors = FALSE
-              )
+              # Create node labels and determine node types for coloring
+              node_labels <- sapply(seq_along(nodes), function(i) {
+                  node <- nodes[[i]]
+                  node_name <- node_ids[i]
 
-              # Add node type and color information
-              nodes_df$node_type = sapply(nodes_df$name, function(node_name) {
-                  if (node_name %in% names(dobj$nodes)) {
-                      node = dobj$nodes[[node_name]]
-                      if (is(node, 'data_node')) {
-                          'data'
-                      } else if (is(node, 'model_node')) {
-                          'model'
-                      } else if (is(node, 'prediction_node')) {
-                          'prediction'
-                      } else if (is(node, 'chart_node')) {
-                          'chart'
+                  if (obj$show_params != "none" && !is.null(node)) {
+                      # Handle different node types
+                      params <- if (is(node, "model_node")) {
+                          # For model nodes, get the actual model parameters
+                          model_obj <- node$model
+                          if (!is.null(model_obj) && is(model_obj, "struct_class")) {
+                              param_names <- param_ids(model_obj)
+                              param_values <- lapply(param_names, function(p) {
+                                  val <- param_value(model_obj, p)
+                                  if (is.null(val)) return("NULL")
+                                  if (length(val) > 1) return('...')
+                                  as.character(val)
+                              })
+
+                              # Filter parameters based on show_params setting
+                              filtered_params <- .filter_params(obj, param_names, param_values, model_obj, "model")
+
+                              if (length(filtered_params) > 0) {
+                                  # Get values for filtered parameters
+                                  filtered_values <- sapply(filtered_params, function(p) {
+                                      idx <- which(param_names == p)
+                                      param_values[idx]
+                                  })
+                                  # Format parameters as "param = value" on separate lines
+                                  param_lines <- paste(filtered_params, filtered_values, sep = " = ", collapse = "\n")
+                                  paste0(node_name, "\n", param_lines)
+                              } else {
+                                  paste0(node_name, "\n", class(model_obj)[1])
+                              }
+                          } else {
+                              paste0(node_name, "\n", class(model_obj)[1])
+                          }
+                      } else if (is(node, "data_node")) {
+                          # For data nodes, show dimensions
+                          if (!is.null(node$data) && is(node$data, "DatasetExperiment")) {
+                              dims <- dim(node$data$data)
+                              paste0(node_name, "\n", dims[1], " x ", dims[2])
+                          } else {
+                              paste0(node_name, "\n", "NULL data")
+                          }
+                      } else if (is(node, "chart_node")) {
+                          # For chart nodes, show chart info
+                          if (!is.null(node$chart)) {
+                              chart_obj <- node$chart
+                              if (is(chart_obj, "struct_class")) {
+                                  param_names <- param_ids(chart_obj)
+                                  if (length(param_names) > 0) {
+                                      param_values <- sapply(param_names, function(p) {
+                                          val <- param_value(chart_obj, p)
+                                          if (is.null(val)) return("NULL")
+                                          if (length(val) > 1) return(paste(val, collapse = ", "))
+                                          as.character(val)
+                                      })
+
+                                      # Filter parameters based on show_params setting
+                                      filtered_params <- .filter_params(obj, param_names, param_values, chart_obj, "chart")
+
+                                      if (length(filtered_params) > 0) {
+                                          # Get values for filtered parameters
+                                          filtered_values <- sapply(filtered_params, function(p) {
+                                              idx <- which(param_names == p)
+                                              param_values[idx]
+                                          })
+                                          # Format parameters as "param = value" on separate lines
+                                          param_lines <- paste(filtered_params, filtered_values, sep = " = ", collapse = "\n")
+                                          paste0(node_name, "\n", param_lines)
+                                      } else {
+                                          paste0(node_name, "\n", class(chart_obj)[1])
+                                      }
+                                  } else {
+                                      paste0(node_name, "\n", class(chart_obj)[1])
+                                  }
+                              } else {
+                                  paste0(node_name, "\n", class(chart_obj)[1])
+                              }
+                          } else {
+                              paste0(node_name, "\n", "NULL chart")
+                          }
+                      } else if (is(node, "struct_class")) {
+                          # For other struct objects, get their parameters
+                          param_names <- param_ids(node)
+                          param_values <- sapply(param_names, function(p) {
+                              val <- param_value(node, p)
+                              if (is.null(val)) return("NULL")
+                              if (length(val) > 1) return(paste(val, collapse = ", "))
+                              as.character(val)
+                          })
+
+                          # Filter parameters based on show_params setting
+                          filtered_params <- .filter_params(obj, param_names, param_values, node, "struct")
+
+                          if (length(filtered_params) > 0) {
+                              # Get values for filtered parameters
+                              filtered_values <- sapply(filtered_params, function(p) {
+                                  idx <- which(param_names == p)
+                                  param_values[idx]
+                              })
+                              # Format parameters as "param = value" on separate lines
+                              param_lines <- paste(filtered_params, filtered_values, sep = " = ", collapse = "\n")
+                              paste0(node_name, "\n", param_lines)
+                          } else {
+                              paste0(node_name, "\n", class(node)[1])
+                          }
                       } else {
-                          'unknown'
+                          paste0(node_name, "\n", class(node)[1])
                       }
+
+                      # Truncate if too long
+                      if (nchar(params) > obj$max_param_length) {
+                          params <- paste0(substr(params, 1, obj$max_param_length), "...")
+                      }
+
+                      params
                   } else {
-                      'unknown'
+                      node_name
                   }
               })
 
-              # Define colors for different node types
-              node_colors = c(
-                  'data' = '#4A90E2',      # Blue for data nodes
-                  'model' = '#7ED321',     # Green for model nodes
-                  'prediction' = '#F5A623', # Orange for prediction nodes
-                  'chart' = '#9B59B6',     # Purple for chart nodes
-                  'unknown' = '#D0021B'     # Red for unknown nodes
-              )
+              # Determine node types for coloring
+              node_types <- sapply(seq_along(nodes), function(i) {
+                  node <- nodes[[i]]
+                  if (is(node, "data_node")) {
+                      "data"
+                  } else if (is(node, "model_node")) {
+                      "model"
+                  } else if (is(node, "chart_node")) {
+                      "chart"
+                  } else {
+                      "other"
+                  }
+              })
 
-              nodes_df$color = node_colors[nodes_df$node_type]
+              # Create an empty graph first
+              graph <- create_graph(directed = TRUE)
 
-              # Add parameter information if requested
-              if (obj$show_parameters) {
-                  # Calculate parameters and line counts for each node
-                  node_info = sapply(nodes_df$name, function(node_name) {
-                      if (node_name %in% names(dobj$nodes)) {
-                          node = dobj$nodes[[node_name]]
-                          if (is(node, 'data_node')) {
-                              # For data nodes, just show the node name
-                              list(parameters = node_name, lines = 1)
-                          } else if (is(node, 'model_node')) {
-                              # For model nodes, extract parameters from the model
-                              model_obj = model(node)
-                              param_names = param_ids(model_obj)
-                                                             if (length(param_names) > 0) {
-                                   param_values = sapply(param_names, param_value, obj = model_obj)
-                                   # Create parameter string with title
-                                   param_strings = paste(param_names, param_values, sep = " = ")
-                                   # Limit to first 3 parameters to prevent box overflow
-                                   if (length(param_strings) > 3) {
-                                       param_strings = c(param_strings[1:3], "...")
-                                   }
-                                   full_text = paste0(param_strings, collapse='\n')
-                                   list(parameters = full_text, lines = min(length(param_strings) + 1, 4))
-                               } else {
-                                   list(parameters = paste(node_name, "no parameters", sep = "\n"), lines = 2)
-                               }
-                          } else if (is(node, 'prediction_node')) {
-                              # For prediction nodes, show the node name
-                              list(parameters = node_name, lines = 1)
-                          } else if (is(node, 'chart_node')) {
-                              # For chart nodes, extract parameters from the chart
-                              chart_obj = chart(node)
-                              param_names = param_ids(chart_obj)
-                                                             if (length(param_names) > 0) {
-                                   param_values = sapply(param_names, param_value, obj = chart_obj)
-                                   # Create parameter string with title
-                                   param_strings = paste(param_names, param_values, sep = " = ")
-                                   # Limit to first 3 parameters to prevent box overflow
-                                   if (length(param_strings) > 3) {
-                                       param_strings = c(param_strings[1:3], "...")
-                                   }
-                                   full_text = paste0(param_strings, collapse='\n')
-                                   list(parameters = full_text, lines = min(length(param_strings) + 1, 4))
-                               } else {
-                                   list(parameters = paste(node_name, "no parameters", sep = "\n"), lines = 2)
-                               }
-                          } else {
-                              list(parameters = "unknown node type", lines = 1)
-                          }
-                      } else {
-                          list(parameters = "node not found", lines = 1)
-                      }
-                  }, simplify = FALSE)
-
-                  # Extract parameters and calculate max lines
-                  nodes_df$parameters = sapply(node_info, function(x) x$parameters)
-                  max_lines = max(sapply(node_info, function(x) x$lines))
-
-                  # Calculate dynamic box height based on max lines with scale factor
-                  line_height = 0.3  # Height per line
-                  # Limit box height to prevent overlap - max 3 lines
-                  max_lines_capped = min(max_lines, 3)
-                  dynamic_box_height = max_lines_capped * line_height * 0.5  # Scale factor of 0.5
+              # Add nodes one by one with proper labels
+              for (i in seq_along(node_ids)) {
+                  graph <- add_node(graph,
+                                    type = "default",
+                                    label = as.character(node_labels[i]))
               }
 
-              # Create edge data frame for plotting with arrows touching box edges
-              edge_coords = data.frame()
-              for (i in 1:nrow(edges_df)) {
-                  from_node = edges_df$from[i]
-                  to_node = edges_df$to[i]
+              # Add edges one by one using node IDs
+              if (length(edges) > 0) {
+                  for (edge in edges) {
+                      if (is.list(edge) && "from" %in% names(edge) && "to" %in% names(edge)) {
+                          from_val <- as.character(edge$from)
+                          to_val <- as.character(edge$to)
 
-                  from_coords = nodes_df[nodes_df$name == from_node, c('x', 'y')]
-                  to_coords = nodes_df[nodes_df$name == to_node, c('x', 'y')]
+                          # Find the node indices for the edge
+                          from_idx <- which(node_ids == from_val)
+                          to_idx <- which(node_ids == to_val)
 
-                                        # Calculate direction vector
-                      dx = to_coords$x - from_coords$x
-                      dy = to_coords$y - from_coords$y
-                      length = sqrt(dx^2 + dy^2)
-
-                      if (length > 0) {
-                          # Normalize direction vector
-                          dx = dx / length
-                          dy = dy / length
-
-                          # Use dynamic box height if available, otherwise use default
-                          box_height = if (exists('dynamic_box_height')) dynamic_box_height else 0.5
-
-                          # Calculate box dimensions
-                          box_width = obj$box_width
-                          box_height_actual = box_height
-
-                          # Calculate intersection points with box edges
-                          # For horizontal edges (dx > dy)
-                          if (abs(dx) > abs(dy)) {
-                              # Start point: edge of from box
-                              if (dx > 0) {
-                                  start_x = from_coords$x + box_width/2
-                                  start_y = from_coords$y + dy * box_height_actual/2
-                              } else {
-                                  start_x = from_coords$x - box_width/2
-                                  start_y = from_coords$y + dy * box_height_actual/2
-                              }
-
-                              # End point: edge of to box
-                              if (dx > 0) {
-                                  end_x = to_coords$x - box_width/2
-                                  end_y = to_coords$y + dy * box_height_actual/2
-                              } else {
-                                  end_x = to_coords$x + box_width/2
-                                  end_y = to_coords$y + dy * box_height_actual/2
-                              }
-                          } else {
-                              # For vertical edges (dy >= dx)
-                              # Start point: edge of from box
-                              if (dy > 0) {
-                                  start_x = from_coords$x + dx * box_width/2
-                                  start_y = from_coords$y + box_height_actual/2
-                              } else {
-                                  start_x = from_coords$x + dx * box_width/2
-                                  start_y = from_coords$y - box_height_actual/2
-                              }
-
-                              # End point: edge of to box
-                              if (dy > 0) {
-                                  end_x = to_coords$x + dx * box_width/2
-                                  end_y = to_coords$y - box_height_actual/2
-                              } else {
-                                  end_x = to_coords$x + dx * box_width/2
-                                  end_y = to_coords$y + box_height_actual/2
-                              }
+                          if (length(from_idx) > 0 && length(to_idx) > 0) {
+                              # Add edge using node indices (DiagrammeR uses 1-based indexing)
+                              graph <- add_edge(graph,
+                                                from = from_idx,
+                                                to = to_idx,
+                                                rel = "to")
                           }
-                      } else {
-                          # If nodes are at same position, use original coordinates
-                          start_x = from_coords$x
-                          start_y = from_coords$y
-                          end_x = to_coords$x
-                          end_y = to_coords$y
                       }
-
-                  edge_coords = rbind(edge_coords,
-                                      data.frame(x = start_x, y = start_y,
-                                                 xend = end_x, yend = end_y,
-                                                 group = i))
+                  }
               }
 
-              # Create the plot
-              p = ggplot() +
-                  # Add edges
-                  geom_segment(data = edge_coords,
-                               aes(x = x, y = y, xend = xend, yend = yend),
-                               color = obj$edge_color,
-                               size = obj$edge_width,
-                               arrow = arrow(length = unit(0.2, "cm"), type = "closed")) +
-                                                      # Add node boxes
-                  geom_rect(data = nodes_df,
-                            aes(xmin = x - obj$box_width/2,
-                                xmax = x + obj$box_width/2,
-                                ymin = y - (if (exists('dynamic_box_height')) dynamic_box_height else 0.5)/2,
-                                ymax = y + (if (exists('dynamic_box_height')) dynamic_box_height else 0.5)/2,
-                                fill = node_type),
-                            color = "black",
-                            alpha = 0.8) +
+              # Set node attributes for better appearance
+              # Handle auto-sizing vs fixed sizing for nodes
 
-                  # Add bold node titles
-                  {if (obj$show_labels) {
-                      geom_text(data = nodes_df,
-                               aes(x = x, y = y + (if (exists('dynamic_box_height')) dynamic_box_height else 0.5)/2 - 0.05, label = name),
-                               size = obj$text_size,
-                               hjust = 0.5,
-                               vjust = 0.5,
-                               fontface = "bold",
-                               check_overlap = TRUE)
-                  } else {
-                      NULL
-                  }} +
+              if (obj$node_width != 'auto') {
+                  graph <- set_node_attrs(graph, "width", obj$node_width)
+              } else {
+                  graph <- remove_node_attrs(graph, "height")
+              }
+              if (obj$node_height != 'auto') {
+                  graph <- set_node_attrs(graph, "height", obj$node_height)
+              } else {
+                  graph <- remove_node_attrs(graph, "height")
+              }
+              if (obj$node_width == 'auto' || obj$node_height == 'auto') {
+                  graph <- add_global_graph_attrs(graph, "fixedsize", "false", "node")
+              } else {
+                  graph <- add_global_graph_attrs(graph, "fixedsize", "true", "node")
+              }
+              graph <- set_node_attrs(graph, "fontsize", obj$font_size)
+              graph <- set_node_attrs(graph, "shape", "rectangle")
+              graph <- set_node_attrs(graph, "style", "filled")
+              graph <- set_node_attrs(graph, "color", "black")
+              graph <- set_node_attrs(graph, "penwidth", 2)
 
-                  # Add parameter text
-                  {if (obj$show_parameters) {
-                      geom_text(data = nodes_df,
-                               aes(x = x, y = y, label = parameters),
-                               size = obj$parameter_text_size,
-                               hjust = 0.5,
-                               vjust = 0.5,
-                               check_overlap = TRUE)
-                  } else {
-                      NULL
-                  }} +
-                  # Theme and styling
-                  theme_void() +
-                  theme(plot.title = element_text(hjust = 0.5, size = 12),
-                        plot.subtitle = element_text(hjust = 0.5, size = 10),
-                        plot.margin = margin(20, 20, 20, 20)) +
-                  guides(fill = "none") +
-                  ggtitle(dobj$name, subtitle = dobj$description) +
-                  scale_fill_manual(values=node_colors)
-              # Equal aspect ratio with proper expansion
-              #coord_fixed(ratio = 1, expand = TRUE)
+                             # Set node colors based on type using structToolbox theme colors
+               # The node_types vector is in the same order as the nodes list
+               # and DiagrammeR nodes are added in the same order as node_ids
+               for (i in seq_along(node_types)) {
+                   node_color <- switch(node_types[i],
+                                        "data" = "#7fc97f",      # Green from structToolbox palette
+                                        "model" = "#386cb0",     # Blue from structToolbox palette
+                                        "chart" = "#fdb462",     # Orange from structToolbox palette
+                                        "other" = "#a6cee3"      # Light blue from structToolbox palette
+                   )
+                   # Use the node index (i) to set the color - this matches the order in DiagrammeR
+                   graph <- set_node_attrs(graph, "fillcolor", node_color, nodes = i)
+               }
 
-              return(p)
+              # Set edge attributes for arrows and styling
+              if (length(edges) > 0) {
+                  graph <- set_edge_attrs(graph, "arrowsize", obj$arrow_size)
+                  graph <- set_edge_attrs(graph, "color", obj$edge_color)
+                  graph <- set_edge_attrs(graph, "penwidth", obj$edge_width)
+                  graph <- set_edge_attrs(graph, "arrowhead", obj$arrow_shape)
+              }
+
+              # Render the graph with layout options
+              rendered_graph <- render_graph(graph, layout = obj$layout)
+
+              return(rendered_graph)
           }
 )
+
+# autocompletion
+#' @export
+#' @rdname autocompletion
+#' @method .DollarNames model_dag_chart
+.DollarNames.model_dag_chart <- function(x, pattern = "") {
+    .DollarNames.chart(x, pattern)
+}
+
+#' @export
+#' @rdname autocompletion
+setMethod('.DollarNames','model_dag_chart',.DollarNames.model_dag_chart)
+
+remove_node_attrs <- function(graph, attrs) {
+    ndf <- graph$nodes_df
+    w <- which(colnames(ndf) %in% attrs)
+    if (length(w) > 0) {
+        ndf <- ndf[, -w, drop = FALSE]
+    }
+    graph$nodes_df <- ndf
+    graph
+}

@@ -201,13 +201,39 @@ chart_node_example = function() {
     return(NULL)
 }
 
-
-
-
-
-
-
-
-
-
-
+#' Example DAG
+#'
+#' An example model_dag for testing the DAG chart functionality.
+#' Creates a simple DAG with two connected nodes.
+#' @export
+#' @return model_dag object
+#' @examples
+#' DAG = example_dag()
+#' C = model_dag_chart()
+#' chart_plot(C, DAG)
+example_dag = function() {
+    # Create example nodes
+    node1 = example_model(value_1 = 5, value_2 = 10)
+    node2 = example_model(value_1 = 15, value_2 = 25)
+    
+    # Create edges
+    edges = list(
+        list(from = "node1", to = "node2")
+    )
+    
+    # Create nodes list
+    nodes = list(
+        node1 = node1,
+        node2 = node2
+    )
+    
+    # Create the DAG
+    dag = model_dag(
+        name = "Example DAG",
+        description = "A simple example DAG with two connected nodes",
+        edges = edges,
+        nodes = nodes
+    )
+    
+    return(dag)
+}

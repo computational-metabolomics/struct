@@ -2,93 +2,62 @@
 % Please edit documentation in R/model_dag_chart_class.R
 \name{model_dag_chart}
 \alias{model_dag_chart}
-\title{Model DAG Chart}
+\title{model_dag_chart class}
 \usage{
 model_dag_chart(
-  node_size = 5,
-  node_color = "#4A90E2",
-  edge_color = "#666666",
-  edge_width = 1,
-  text_size = 4,
-  layout_type = "sugiyama",
-  show_labels = TRUE,
-  show_parameters = TRUE,
-  parameter_text_size = 3,
-  box_width = 0.5,
-  layout_scale = 2,
+  name = character(0),
+  description = character(0),
+  node_width = "auto",
+  node_height = "auto",
+  font_size = 8,
+  show_params = "all",
+  max_param_length = 50,
+  layout = "tree",
+  rankdir = "LR",
+  node_color = "lightblue",
+  edge_color = "darkblue",
+  edge_width = 2,
+  arrow_size = 1.5,
+  arrow_shape = "normal",
   ...
 )
 }
 \arguments{
-\item{node_size}{(numeric) Size of the nodes in the DAG plot. The default is \code{5}.\cr}
+\item{name}{the name of the chart}
 
-\item{node_color}{(character) Color of the nodes in the DAG plot. The default is \code{"#4A90E2"}.}
+\item{description}{a description of the chart}
 
-\item{edge_color}{(character) Color of the edges in the DAG plot. The default is \code{"#666666"}.}
+\item{node_width}{the width of nodes in the graph (default: 2)}
 
-\item{edge_width}{(numeric) Width of the edges in the DAG plot. The default is \code{1}.\cr}
+\item{node_height}{the height of nodes in the graph (default: 1)}
 
-\item{text_size}{(numeric) Size of the text labels in the DAG plot. The default is \code{4}.\cr}
+\item{font_size}{the font size for node labels (default: 8)}
 
-\item{layout_type}{(character) Layout type. Allowed values are limited to the following: \itemize{ \item{\code{"sugiyama"}: Hierarchical layout optimized for DAGs.}\item{\code{"tree"}: Tree layout.}\item{\code{"circle"}: Circular layout.}\item{\code{"random"}: Random layout.}} The default is \code{"sugiyama"}.}
+\item{show_params}{which parameters to show in nodes: "all", "changed", "connected", or "none" (default: "all")}
 
-\item{show_labels}{(logical) Whether to show node labels on the plot. The default is \code{TRUE}.\cr}
+\item{max_param_length}{maximum length of parameter text before truncation (default: 50)}
 
-\item{show_parameters}{(logical) Whether to show model parameters in node boxes. The default is \code{TRUE}.\cr}
+\item{layout}{the layout algorithm to use (default: "dot")}
 
-\item{parameter_text_size}{(numeric) Size of the parameter text in node boxes. The default is \code{3}.\cr}
+\item{rankdir}{the direction for ranking nodes (default: "LR" for left-to-right)}
 
-\item{box_width}{(numeric) Width of the node boxes. The default is \code{0.5}.\cr}
+\item{node_color}{the color of nodes (default: "lightblue")}
 
-\item{layout_scale}{(numeric) Scale factor for node spacing in the layout. The default is \code{2}.\cr}
+\item{edge_color}{the color of edges (default: "darkblue")}
 
-\item{...}{Additional slots and values passed to \code{struct_class}.}
-}
-\value{
-A  \code{
-model_dag_chart
-} object. This object has no \code{output} slots.
-See \code{\link[struct]{chart_plot}} in the \code{struct} package to plot this chart object.
+\item{edge_width}{the width of edges (default: 2)}
+
+\item{arrow_size}{the size of arrowheads (default: 1.5)}
+
+\item{arrow_shape}{the shape of arrowheads (default: "normal")}
+
+\item{...}{additional parameters to pass to chart}
 }
 \description{
-Plots a directed acyclic graph (DAG) structure of model objects.
+A chart class for visualizing model_dag objects using DiagrammeR.
+This chart creates a directed acyclic graph visualization showing
+the nodes and their connections, including node names and model parameters.
 }
-\section{Inheritance}{
- 
-A `model_dag_chart` object inherits the following `struct` classes: \cr\cr
-`[model_dag_chart]` >> `[chart]` >> `[struct_class]`
-}
-
 \examples{
-M = model_dag_chart(
-      node_size = 5,
-      node_color = "#4A90E2",
-      edge_color = "#666666",
-      edge_width = 1,
-      text_size = 4,
-      layout_type = "sugiyama",
-      show_labels = FALSE,
-      show_parameters = FALSE,
-      parameter_text_size = 3,
-      box_width = 0.5,
-      layout_scale = 2)
-
-# Create a simple DAG with nodes
-D = iris_DatasetExperiment()
-dag = model_dag(
-    name = 'Example DAG',
-    description = 'A simple example DAG',
-    edges = list(
-        list(from = 'Raw Data', from_param = 'asis', to = 'PCA', to_param = 'input_data')
-    ),
-    nodes = list(
-        'Raw Data' = data_node(name = 'Raw Data', data = D),
-        'PCA' = model_node(name = 'PCA', model = PCA())
-    )
-)
-# Execute the DAG to get results
-dag = dag_execute(dag)
 C = model_dag_chart()
-chart_plot(C, dag)
-
 }

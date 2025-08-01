@@ -14,7 +14,7 @@
 #' @param description a description of the DAG
 #' @param edges a list of edges defining the DAG structure
 #' @param ... additional parameters to pass to struct_class
-#' @include generics.R struct_class.R
+#' @include generics.R struct_class.R entity_class.R output_class.R
 #' @examples
 #' DAG = model_dag(name = 'Example DAG', description = 'A simple example DAG')
 #' @rdname model_dag

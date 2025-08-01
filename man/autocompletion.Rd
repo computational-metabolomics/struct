@@ -2,8 +2,9 @@
 % Please edit documentation in R/struct_class.R, R/chart_class.R,
 %   R/DatasetExperiment_class.R, R/struct_node_class.R, R/chart_node_class.R,
 %   R/data_node_class.R, R/model_class.R, R/metric_class.R, R/iterator_class.R,
-%   R/model_dag_class.R, R/model_node_class.R, R/optimiser_class.R,
-%   R/prediction_node_class.R, R/preprocess_class.R, R/resampler_class.R
+%   R/model_dag_chart_class.R, R/model_dag_class.R, R/model_node_class.R,
+%   R/optimiser_class.R, R/prediction_node_class.R, R/preprocess_class.R,
+%   R/resampler_class.R
 \name{.DollarNames.struct_class}
 \alias{.DollarNames.struct_class}
 \alias{.DollarNames,struct_class-method}
@@ -23,6 +24,8 @@
 \alias{.DollarNames,metric-method}
 \alias{.DollarNames.iterator}
 \alias{.DollarNames,iterator-method}
+\alias{.DollarNames.model_dag_chart}
+\alias{.DollarNames,model_dag_chart-method}
 \alias{.DollarNames.model_dag}
 \alias{.DollarNames,model_dag-method}
 \alias{.DollarNames.model_node}
@@ -72,6 +75,10 @@
 \method{.DollarNames}{iterator}(x, pattern = "")
 
 \S4method{.DollarNames}{iterator}(x, pattern = "")
+
+\method{.DollarNames}{model_dag_chart}(x, pattern = "")
+
+\S4method{.DollarNames}{model_dag_chart}(x, pattern = "")
 
 \method{.DollarNames}{model_dag}(x, pattern = "")
 

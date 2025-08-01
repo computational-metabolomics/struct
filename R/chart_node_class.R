@@ -40,7 +40,8 @@ chart_node = function(name = character(0), description = character(0), chart = N
     ),
     prototype = list(
         chart = NULL,
-        input_objects = list()
+        input_objects = list(),
+        .params=c('chart','input_objects')
     )
 )
 
@@ -109,4 +110,4 @@ setMethod(f = "show",
 
 #' @export
 #' @rdname autocompletion
-setMethod('.DollarNames','chart_node',.DollarNames.chart_node) 
+setMethod('.DollarNames','chart_node',.DollarNames.chart_node)
