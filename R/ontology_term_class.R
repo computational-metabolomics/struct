@@ -41,8 +41,8 @@ ontology_term = function(
     if (length(label)==0 | length(description)==0 | length(iri)==0 | length(ontology)==0) {
 
             # do rols query
-            db=rols::Ontology(ontology)
-            tm=rols::Term(db,id)
+            db=rols::olsOntology(ontology)
+            tm=rols::olsTerm(db,id)
 
             label=rols::termLabel(tm)
             description=rols::termDesc(tm)
