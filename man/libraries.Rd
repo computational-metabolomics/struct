@@ -18,8 +18,8 @@ a character array of R packages needed by the object
 \description{
 All \code{struct} objects have a "libraries" slot, which is a character array of
 libraries required to use the object. The \code{libraries} method gathers
-libraries from an object and all \code{struct} objects that it inherits to generate
-a complete list.
+libraries from an object and all \code{struct} objects that it inherits to
+generate a complete list.
 }
 \examples{
 M = example_model()

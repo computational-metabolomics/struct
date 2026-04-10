@@ -65,20 +65,6 @@ test_that('struct objects can be created and modified',{
     expect_true(length(cit)==2)
     lib=libraries(test_object)
     expect_true(length(lib)==0)
-    ont=ontology(test_object,cache = list(
-        'STATO:0000572'=ontology_term(
-            id='STATO:0000572',
-            ontology = 'stato',
-            label = 'test_ontology',
-            description = 'test_ontology',
-            iri = 'test_ontology',
-            rols=FALSE
-        )
-    )
-    )
-    expect_true(length(ont)==1)
-
-
 })
 
 # test metric object

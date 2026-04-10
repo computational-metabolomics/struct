@@ -6,72 +6,57 @@
 \alias{ontology_term}
 \alias{ontology_list}
 \alias{[,ontology_list,ANY,ANY,ANY-method}
+\alias{[[,ontology_list,ANY,ANY-method}
 \alias{[<-,ontology_list,ANY,ANY,ANY-method}
 \alias{length,ontology_list-method}
 \alias{ontology,struct_class-method}
 \title{Ontology for an object}
 \usage{
-ontology(obj, cache = NULL)
+ontology(obj, ...)
 
-ontology_term(
-  id,
-  ontology = character(),
-  label = character(),
-  description = character(),
-  iri = character(),
-  rols = TRUE
-)
+ontology_term(id)
 
-ontology_list(terms = list())
+ontology_list(...)
 
 \S4method{[}{ontology_list,ANY,ANY,ANY}(x, i)
+
+\S4method{[[}{ontology_list,ANY,ANY}(x, i)
 
 \S4method{[}{ontology_list,ANY,ANY,ANY}(x, i) <- value
 
 \S4method{length}{ontology_list}(x)
 
-\S4method{ontology}{struct_class}(obj, cache = NULL)
+\S4method{ontology}{struct_class}(obj, ...)
 }
 \arguments{
 \item{obj}{a struct object}
 
-\item{cache}{a named list of ontology_terms for offline use. Terms from the cache are search
-based on the name of the list items matching the ontology id. If cache=NULL then the OLS API is used to lookup terms.}
+\item{...}{(not used)}
 
-\item{id}{(character) The ontology term id e.g. 'STATO:0000555'}
-
-\item{ontology}{(character) The ontology the term is a member of e.g. 'stato'}
-
-\item{label}{(character) The label for the ontology term}
-
-\item{description}{(character) The description of the term}
-
-\item{iri}{(character) The Internationalized Resource Identifier for the term}
-
-\item{rols}{(logical) TRUE or FALSE to query the Ontology Lookup Service for
-missing label, description or iri if not provided as input.
-Default rols = TRUE}
-
-\item{terms}{A list of ontology_term objects.}
+\item{id}{(character) The ontology term id e.g. 'STATO:0000046'}
 
 \item{x}{the list}
 
 \item{i}{The list item index}
 
 \item{value}{an ontology_term() object}
+
+\item{terms}{A list of ontology_term objects.}
 }
 \value{
-model at the given index in the sequence
+\code{x[i]} returns a subset of list \code{x}
 
-model sequence with the model at index i replaced
+\code{x[[i]]} returns the ontology_term at index \code{i}.
 
-the number of models in the sequence
+\code{x[i] <-} replaces the list item at index \code{i}
+
+\code{length(x)} returns the number of items in the list.
 }
 \description{
 All \code{struct} objects have an "ontology" slot, which is a list of
 ontology items for the object. The \code{ontology} method gathers
-ontology items from an object and all \code{struct} objects that it inherits to generate
-a complete list.
+ontology items from an object and all \code{struct} objects that it inherits
+to generate a complete list.
 
 A base class in the \pkg{struct} package. Stores
 ontology information e.g. term, description, id etc for struct objects
@@ -83,23 +68,28 @@ multiple `ontology_term` objects.
 }
 \examples{
 M = example_model()
-ontology(M,cache=NULL)
+ontology(M)
 \dontrun{
-OT = ontology_term(id='STATO:0000555')
+OT = ontology_term(id='STATO:0000046')
 }
 \dontrun{
 OT = ontology_list(terms=list(
-    ontology_term(ontology='obi',id =  'OBI:0200051'),
-    ontology_term(ontology='stato',id ='STATO:0000555')
+    ontology_term(id =  'OBI:0200051'),
+    ontology_term(id ='STATO:0000046')
 )
 }
 \dontrun{
-OL = ontology_list('STATO:0000555')
-OL[1]
+OL = ontology_list('STATO:0000046')
+OL[1] # an ontology list
 }
 
 \dontrun{
-OL = ontology_list('STATO:0000555')
+OL = ontology_list('STATO:0000046')
+OL[[1]] # an ontology_item
+}
+
+\dontrun{
+OL = ontology_list('STATO:0000046')
 OL[1] = ontology_term('STATO:0000302')
 }
 \dontrun{

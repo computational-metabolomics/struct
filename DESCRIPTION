@@ -61,5 +61,5 @@ Suggests:
 VignetteBuilder: knitr
 Imports: methods,
     datasets, graphics, stats, utils, knitr, 
-    SummarizedExperiment, S4Vectors, rols
+    SummarizedExperiment, S4Vectors
 biocViews: WorkflowStep

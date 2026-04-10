@@ -568,24 +568,34 @@ setMethod(f = "libraries",
 #' @export
 setMethod(f = "ontology",
     signature = c("struct_class"),
-    definition = function(obj,cache=NULL) {
+    definition = function(obj,...) {
+
+        dots <- list(...)
+        nm <- names(dots)
+        if (!is.null(nm) && "cache" %in% nm) {
+            warning(
+                "The `cache` argument to ontology() is deprecated and ignored;",
+                " ontology terms are resolved via OLS when IDs are present.",
+                call. = FALSE
+            )
+        }
 
         # ontology for object and inherited
         ont = .extended_list_by_slot(obj,'ontology')
 
         # ontology for params and outputs
-        p=param_ids(obj)
-        pont=lapply(p,function(x){
-            ent=param_obj(obj,x)
+        p = param_ids(obj)
+        pont = lapply(p,function(x){
+            ent = param_obj(obj,x)
             if (is(ent,'struct_class')) {
                 return(ent$ontology)
             } else {
                 return(character(0))
             }
         })
-        o=output_ids(obj)
-        oont=lapply(o,function(x){
-            ent=output_obj(obj,x)
+        o = output_ids(obj)
+        oont = lapply(o,function(x){
+            ent = output_obj(obj,x)
             if (is(ent,'struct_class')) {
                 return(ent$ontology)
             } else {
@@ -596,18 +606,10 @@ setMethod(f = "ontology",
         ont = c(ont,unlist(pont),unlist(oont))
 
         # remove duplicates
-        ont=ont[!(duplicated(ont))]
+        ont = ont[!(duplicated(ont))]
 
-        # get definitions
-        if (!is.null(cache)) {
-            # use cache
-            ont=lapply(ont,function(x){
-                ontology_list(cache[[x]])
-            })
-        } else {
-            # use api
-            ont=ontology_list(ont)
-        }
+        # use api
+        ont = ontology_list(ont)
 
         return(ont)
     }
