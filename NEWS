@@ -1,3 +1,6 @@
+Changes 1.23.2
++ remove stato classes; these were deprected since 1.5.2 and are no longer used. Ontology is still available via ontology slots.
+
 Changes 1.21.2
 + fix renamed functions in rols
 

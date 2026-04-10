@@ -2,18 +2,18 @@
 #'
 #' An object for holding raw data and associated meta data
 #'
-#' The DatasetExperiment object is an extension of the SummarizedExperiment object 
-#' from the SummarizedExperiment package (found on Bioconductor). 
-#' It incorporates the basic functionality of struct objects, containing fields such as 
+#' The DatasetExperiment object is an extension of the SummarizedExperiment object
+#' from the SummarizedExperiment package (found on Bioconductor).
+#' It incorporates the basic functionality of struct objects, containing fields such as
 #' Description, Name and Type with features of SummarizedExperiment such as subsetting.
-#' 
+#'
 #' There are some important differences between DatasetExperiment and SummarizedExperiment:
 #' \itemize{
 #' \item In DatasetExperiment data is stored as Samples (rows) x Features (columns)
 #' \item DatasetExperiment currently only supports a single assay
 #' \item length(DatasetExperiment) returns the number of samples
 #' }
-#'  
+#'
 #' @export
 #' @slot name Name of the dataset
 #' @slot description Brief description of the dataset
@@ -27,7 +27,7 @@
 #' @param ... named slot values to pass through to struct_class
 #' @import SummarizedExperiment
 #' @import S4Vectors
-#' @include generics.R struct_class.R stato_class.R chart_class.R
+#' @include generics.R struct_class.R chart_class.R
 #' @return DatasetExperiment
 #' @rdname struct_DatasetExperiment
 DatasetExperiment = function(
@@ -35,23 +35,23 @@ DatasetExperiment = function(
   sample_meta=data.frame(),
   variable_meta=data.frame(),
   ...){
-  
+
   # convert data set to list
   assays=list(data)
-  
+
   # sample_meta
-  
+
   out=.DatasetExperiment(SummarizedExperiment(
     assays=assays,
     colData=variable_meta,
     rowData=sample_meta),
     ...)
-  
+
   return(out)
 }
 
 .DatasetExperiment <- setClass(
-  "DatasetExperiment", 
+  "DatasetExperiment",
   contains = c("struct_class","SummarizedExperiment"),
   prototype=list('libraries'='SummarizedExperiment')
 )
@@ -61,9 +61,9 @@ DatasetExperiment = function(
 setMethod(f = "$",
   signature = c("DatasetExperiment"),
   definition = function(x,name) {
-    
+
     s = c('data','sample_meta','variable_meta')
-    
+
     if (name %in% s) {
       if (name == 'data') {
         if (length(assays(x))==0) {
@@ -72,23 +72,23 @@ setMethod(f = "$",
           value = assay(x,1)
         }
       } else if (name == 'sample_meta') {
-        value = S4Vectors::DataFrame(rowData(x),check.names = FALSE) 
+        value = S4Vectors::DataFrame(rowData(x),check.names = FALSE)
       } else if (name == 'variable_meta') {
         value = S4Vectors::DataFrame(colData(x),check.names = FALSE)
-      } 
-      
+      }
+
       if (name %in% s) {
         # convert to data.frame if using the original struct definitions
         value=as.data.frame(value)
       }
-      
+
       return(value)
-      
+
     } else {
       # for name,description etc
       return(callNextMethod())
     }
-    
+
   }
 )
 
@@ -117,10 +117,10 @@ setMethod(f = "$<-",
 setMethod(f = 'show',
   signature = c('DatasetExperiment'),
   definition = function(object) {
-    
+
     # print struct generic info
     callNextMethod()
-    
+
     # number of assays
     nms <- length(assays(object))
     if (is.null(nms)) {
@@ -135,8 +135,8 @@ setMethod(f = 'show',
 )
 
 #' Convert a DatasetExperiment to SummarizedExperiment
-#' 
-#' Converts a DatasetExperiment to SummarizedExperiment. The assay data is 
+#'
+#' Converts a DatasetExperiment to SummarizedExperiment. The assay data is
 #' transposed, and colData and rowData switched to match. struct specific
 #' slots such as "name" and "description" are stored in the metaData.
 #' @param obj a DatasetExperiment object
@@ -155,16 +155,16 @@ setMethod (f = 'as.SummarizedExperiment',
         'type'=obj$type,
         'libraries'=obj$libraries)
     )
-    
+
     return(out)
   }
 )
 
 
 #' Convert a SummarizedExperiment to DatasetExperiment
-#' 
-#' The assay data is transposed, and colData and rowData switched to match. 
-#' struct specific slots such as "name" and "description" are extracted from the 
+#'
+#' The assay data is transposed, and colData and rowData switched to match.
+#' struct specific slots such as "name" and "description" are extracted from the
 #' metaData if available. NB Any additional metadata will be lost during this conversion.
 #' @param obj a SummarizedExperiment object
 #' @return a DatasetExperiment object
@@ -177,7 +177,7 @@ setMethod (f = 'as.DatasetExperiment',
     B = as.data.frame(t(A))
     colnames(B) = rownames(A)
     rownames(B) = colnames(A)
-    
+
     out=DatasetExperiment(
       data=B,
       variable_meta=as.data.frame(rowData(obj)),
@@ -187,7 +187,7 @@ setMethod (f = 'as.DatasetExperiment',
       type=as.character(metadata(obj)$type),
       libraries=as.character(metadata(obj)$libraries)
     )
-    
+
     return(out)
   }
 )
@@ -195,7 +195,7 @@ setMethod (f = 'as.DatasetExperiment',
 
 
 #' Export a dataset to an excel file
-#' 
+#'
 #' Exports a dataset object to an excel file with sheets for data, sample_meta and variable_meta
 #' @param object a dataset object
 #' @param outfile the filename (including path) to write the data to
@@ -211,19 +211,19 @@ setMethod (f = 'as.DatasetExperiment',
 setMethod(f = "export_xlsx",
   signature = c("DatasetExperiment"),
   definition = function(object,outfile,transpose = TRUE) {
-    
+
     # check for openxlsx
     if (!requireNamespace('openxlsx', quietly = TRUE)) {
       stop('package "openxlsx" was not found. Please install it to use "export.xlsx()".')
     }
-    
-    
+
+
     if (transpose) {
       X = as.data.frame(t(object$data))
     } else {
       X = object$data
     }
-    
+
     OUT = list(
       'data' = X,
       'sample_meta' = object$sample_meta,
@@ -242,7 +242,7 @@ setMethod(f = "export_xlsx",
     return(IN)
 }
 
-#' @export 
+#' @export
 #' @rdname autocompletion
 setMethod('.DollarNames','DatasetExperiment',.DollarNames.DatasetExperiment)
 

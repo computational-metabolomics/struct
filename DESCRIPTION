@@ -32,12 +32,9 @@ Collate:
     'struct_class.R'
     'parameter_class.R'
     'chart_class.R'
-    'stato_class.R'
     'DatasetExperiment_class.R'
     'entity_class.R'
-    'entity_stato_class.R'
     'enum_class.R'
-    'enum_stato_class.R'
     'output_class.R'
     'model_class.R'
     'example_objects.R'
@@ -62,7 +59,7 @@ Suggests:
  ggplot2,
  magick
 VignetteBuilder: knitr
-Imports: methods,ontologyIndex,
+Imports: methods,
     datasets, graphics, stats, utils, knitr, 
     SummarizedExperiment, S4Vectors, rols
 biocViews: WorkflowStep
