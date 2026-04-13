@@ -192,7 +192,7 @@ setMethod(f = 'show',
 #' multiple `ontology_term` objects.
 #'
 #' @export ontology_list
-#' @param terms A list of ontology_term objects.
+#' @param ... character ontology IDs (e.g. STATO:0000046) or NULL for an empty list
 #' @include generics.R
 #' @examples
 #' \dontrun{
