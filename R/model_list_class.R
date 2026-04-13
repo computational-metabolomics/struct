@@ -352,28 +352,17 @@ setMethod(f = 'as.code',
 
 
 
-
-
+#' @rdname ontology
+#' @export
 setMethod(
     f = "ontology",
     signature = c("model_seq"),
-    definition = function(obj) {
-        # get ontology for model_seq
+    definition = function(obj, ...) {
         MS = callNextMethod()
-
-        # now get ontology for all models
-        M = lapply(obj@models,ontology)
-
-        # get names of models
-        N = lapply(obj@models,slot,name='name')
-
-        # bind with sequence ontology
-        M = c(MS,M)
-
-        # set names
-        names(M) = c('model_seq',unlist(N))
-
-        # return
+        M = lapply(obj@models, ontology)
+        N = lapply(obj@models, slot, name = "name")
+        M = c(MS, M)
+        names(M) = c("model_seq", unlist(N))
         return(M)
     }
 )
