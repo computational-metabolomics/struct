@@ -253,7 +253,7 @@ setMethod(f = 'as.code',
     # get models
     m = models(M)
     # if iterator then multiply, if not default model
-    if (class(m)[1]!='model') {
+    if (!is(m, 'model')) {
         str=paste0(str,' * \n')
     }
     if (is(m,'model_seq') & length(m) > 1) {
@@ -268,7 +268,7 @@ setMethod(f = 'as.code',
       }
 
       str=paste0(str,')')
-    } else if (class(m)[1]!='model') {
+    } else if (!is(m, 'model')) {
       str=paste0(str,as.code(m,start=paste0(rep(' ',nchar(start)),collapse=''),mode,quiet=TRUE))
     }
 

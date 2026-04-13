@@ -404,8 +404,10 @@ set_obj_method = function(class_name, method_name, definition, where = topenv(pa
 #' a helper function to update the show method for a struct object
 #' @export
 #' @param class_name the name of the to update the method for
-#' @param extra_string a function that returns an extra string using the input object as an input e.g. function(object){return = 'extra_string'}
-#' @param where the environment to create the object in. default where = topenv(parent.frame())
+#' @param extra_string a function that returns an extra string using the input
+#' object as an input e.g. \code{function(object)\{return = 'extra_string'\}}
+#' @param where the environment to create the object in.
+#' default where = topenv(parent.frame())
 #' @return a method is created in the specified environment
 #' @examples
 #' # create an example object first
@@ -664,7 +666,7 @@ setMethod(f = 'as.code',
 .as_code = function(M,start='M = ',mode = 'compact') {
 
     if (!(mode %in% c('compact','neat','expanded','full'))) {
-        stop(paste0('unknown option "', mode , '" for as.code()'))
+        stop('unknown option "', mode , '" for as.code()')
     }
     str = start
     # model object name

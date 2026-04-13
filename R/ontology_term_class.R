@@ -54,8 +54,7 @@
             iri = if (!is.null(terms$iri)) terms$iri else character()
         )
     }, error = function(e) {
-        warning("Could not fetch ontology term from OLS API for ID: ", obo_id,
-                ". Error: ", e$message)
+        warning("Could not fetch ontology term from OLS API for ID: ", obo_id)
         NULL
     })
 }
