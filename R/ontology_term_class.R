@@ -213,6 +213,14 @@ ontology_list = function(...) {
             'format: PREFIX:DIGITS e.g. STATO:0000046')
     }
 
+    # combine
+    terms = do.call('c',terms)
+
+    # if no terms then empty list
+    if (length(terms)==0) {
+        return(.ontology_list(terms=list()))
+    }
+
     # convert all terms to ontology items
     # NB this also checks expected format for terms
     if (length(terms)>0) {
