@@ -19,6 +19,7 @@
 #'
 #' @keywords internal
 #' @import jsonlite
+#' @importFrom utils URLencode
 .query_ols_api = function(
         obo_id,
         api_url = "https://www.ebi.ac.uk/ols4/api"
