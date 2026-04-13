@@ -19,6 +19,7 @@
 #'
 #' @keywords internal
 #' @import jsonlite
+#' @import httr2
 #' @importFrom utils URLencode
 .query_ols_api = function(
         obo_id,
