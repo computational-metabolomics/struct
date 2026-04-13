@@ -21,7 +21,7 @@ struct_class(
 
 \item{citations}{a list of citations for the object in "bibentry" format}
 
-\item{ontology}{a list of ontology items for the object in "ontology_item" format}
+\item{ontology}{a list of ontology ids for the object}
 }
 \value{
 a struct_class object

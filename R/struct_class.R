@@ -61,7 +61,7 @@
 #' @param description a description of the object
 #' @param type the type of the struct object
 #' @param citations a list of citations for the object in "bibentry" format
-#' @param ontology a list of ontology items for the object in "ontology_item" format
+#' @param ontology a list of ontology ids for the object
 #' @return a struct_class object
 #' @export
 struct_class = function(
