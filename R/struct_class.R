@@ -61,7 +61,7 @@
 #' @param description a description of the object
 #' @param type the type of the struct object
 #' @param citations a list of citations for the object in "bibentry" format
-#' @param ontology a list of ontology items for the object in "ontology_item" format
+#' @param ontology a list of ontology ids for the object
 #' @return a struct_class object
 #' @export
 struct_class = function(
@@ -404,8 +404,10 @@ set_obj_method = function(class_name, method_name, definition, where = topenv(pa
 #' a helper function to update the show method for a struct object
 #' @export
 #' @param class_name the name of the to update the method for
-#' @param extra_string a function that returns an extra string using the input object as an input e.g. function(object){return = 'extra_string'}
-#' @param where the environment to create the object in. default where = topenv(parent.frame())
+#' @param extra_string a function that returns an extra string using the input
+#' object as an input e.g. \code{function(object)\{return = 'extra_string'\}}
+#' @param where the environment to create the object in.
+#' default where = topenv(parent.frame())
 #' @return a method is created in the specified environment
 #' @examples
 #' # create an example object first
@@ -568,24 +570,34 @@ setMethod(f = "libraries",
 #' @export
 setMethod(f = "ontology",
     signature = c("struct_class"),
-    definition = function(obj,cache=NULL) {
+    definition = function(obj,...) {
+
+        dots <- list(...)
+        nm <- names(dots)
+        if (!is.null(nm) && "cache" %in% nm) {
+            warning(
+                "The `cache` argument to ontology() is deprecated and ignored;",
+                " ontology terms are resolved via OLS when IDs are present.",
+                call. = FALSE
+            )
+        }
 
         # ontology for object and inherited
         ont = .extended_list_by_slot(obj,'ontology')
 
         # ontology for params and outputs
-        p=param_ids(obj)
-        pont=lapply(p,function(x){
-            ent=param_obj(obj,x)
+        p = param_ids(obj)
+        pont = lapply(p,function(x){
+            ent = param_obj(obj,x)
             if (is(ent,'struct_class')) {
                 return(ent$ontology)
             } else {
                 return(character(0))
             }
         })
-        o=output_ids(obj)
-        oont=lapply(o,function(x){
-            ent=output_obj(obj,x)
+        o = output_ids(obj)
+        oont = lapply(o,function(x){
+            ent = output_obj(obj,x)
             if (is(ent,'struct_class')) {
                 return(ent$ontology)
             } else {
@@ -596,18 +608,10 @@ setMethod(f = "ontology",
         ont = c(ont,unlist(pont),unlist(oont))
 
         # remove duplicates
-        ont=ont[!(duplicated(ont))]
+        ont = ont[!(duplicated(ont))]
 
-        # get definitions
-        if (!is.null(cache)) {
-            # use cache
-            ont=lapply(ont,function(x){
-                ontology_list(cache[[x]])
-            })
-        } else {
-            # use api
-            ont=ontology_list(ont)
-        }
+        # use api
+        ont = ontology_list(ont)
 
         return(ont)
     }
@@ -662,7 +666,7 @@ setMethod(f = 'as.code',
 .as_code = function(M,start='M = ',mode = 'compact') {
 
     if (!(mode %in% c('compact','neat','expanded','full'))) {
-        stop(paste0('unknown option "', mode , '" for as.code()'))
+        stop('unknown option "', mode , '" for as.code()')
     }
     str = start
     # model object name

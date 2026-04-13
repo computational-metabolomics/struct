@@ -39,9 +39,9 @@ DatasetExperiment
 An object for holding raw data and associated meta data
 }
 \details{
-The DatasetExperiment object is an extension of the SummarizedExperiment object 
-from the SummarizedExperiment package (found on Bioconductor). 
-It incorporates the basic functionality of struct objects, containing fields such as 
+The DatasetExperiment object is an extension of the SummarizedExperiment object
+from the SummarizedExperiment package (found on Bioconductor).
+It incorporates the basic functionality of struct objects, containing fields such as
 Description, Name and Type with features of SummarizedExperiment such as subsetting.
 
 There are some important differences between DatasetExperiment and SummarizedExperiment:

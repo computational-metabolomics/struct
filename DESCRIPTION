@@ -1,7 +1,7 @@
 Package: struct
 Type: Package
 Title: Statistics in R Using Class-based Templates
-Version: 1.23.1
+Version: 1.23.2
 Authors@R: c(
     person(
         c("Gavin","Rhys"),
@@ -32,12 +32,9 @@ Collate:
     'struct_class.R'
     'parameter_class.R'
     'chart_class.R'
-    'stato_class.R'
     'DatasetExperiment_class.R'
     'entity_class.R'
-    'entity_stato_class.R'
     'enum_class.R'
-    'enum_stato_class.R'
     'output_class.R'
     'model_class.R'
     'example_objects.R'
@@ -62,7 +59,7 @@ Suggests:
  ggplot2,
  magick
 VignetteBuilder: knitr
-Imports: methods,ontologyIndex,
+Imports: methods,
     datasets, graphics, stats, utils, knitr, 
-    SummarizedExperiment, S4Vectors, rols
+    SummarizedExperiment, S4Vectors, httr2, jsonlite
 biocViews: WorkflowStep

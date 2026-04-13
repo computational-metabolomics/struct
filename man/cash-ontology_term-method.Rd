@@ -20,6 +20,7 @@ values for ontology_term objects.
 }
 \examples{
 \dontrun{
-OT = ontology_term(ontology='stato',id='STATO:0000555')
+OT = ontology_term(id='STATO:0000046')
+OT$ontology # returns "STATO"
 }
 }

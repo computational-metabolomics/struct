@@ -45,7 +45,7 @@ iris_DatasetExperiment = function () {
 #' @param value_0 a numeric value
 #' @param value_1 a numeric value
 #' @param value_2 a numeric value
-#' @param ... additional slots and values to pass to struct_class 
+#' @param ... additional slots and values to pass to struct_class
 #' @rdname example_model
 #' @include model_class.R
 #' @examples
@@ -59,10 +59,10 @@ example_model = function(value_0=0,value_1=10,value_2=20,...) {
 }
 
 .example_model = setClass('example_model',
-    contains = c('model','stato'),
+    contains = c('model'),
     slots = c(
         'value_0' = 'entity',
-        'value_1' = 'entity_stato',
+        'value_1' = 'entity',
         'value_2' = 'numeric',
         'result_1' = 'entity',
         'result_2' = 'DatasetExperiment'
@@ -72,11 +72,8 @@ example_model = function(value_0=0,value_1=10,value_2=20,...) {
         description = 'An example model object. Training adds value_1 counts to
         a dataset, while prediction adds value_2 counts.',
         type = 'test',
-        stato_id = 'OBI:0000011',
         value_0 = entity(name = 'Value 0',value = 0,type = 'numeric'),
-        value_1 = entity_stato(value = 10,name = 'Value 1',type = 'numeric',
-            description = 'An example entity_stato object',
-            stato_id = 'STATO:0000047'),
+        value_1 = entity(value = 10,name = 'Value 1',type = 'numeric'),
         value_2 = 20,
         result_1 = entity(name = 'Result 1',type = 'DatasetExperiment',
             description = 'An example entity object',value = DatasetExperiment()),

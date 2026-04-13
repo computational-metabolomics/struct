@@ -20,7 +20,7 @@ values for ontology_list objects.
 }
 \examples{
 \dontrun{
-OL = ontology_list('STATO:0000555')
+OL = ontology_list('STATO:0000046')
 OL$terms
 }
 }

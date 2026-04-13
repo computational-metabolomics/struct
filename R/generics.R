@@ -548,43 +548,6 @@ setGeneric("max_length",function(obj)standardGeneric("max_length"))
 #' @rdname metric
 setGeneric("max_length<-",function(obj,value)standardGeneric("max_length<-"))
 
-####################################
-###### stato class generics #####
-####################################
-
-#' get the stato_id for an object
-#'
-#' @return id the stato id
-#' @param obj stato_class object
-#' @rdname stato
-#' @examples
-#' M = example_model()
-#' stato_id(M)
-#' stato_name(M)
-#' stato_definition(M)
-#' stato_summary(M)
-#' @export
-setGeneric("stato_id",function(obj)standardGeneric("stato_id"))
-
-#' get the stato name for an object
-#'
-#' @return name the stato name
-#' @rdname stato
-#' @export
-setGeneric("stato_name",function(obj)standardGeneric("stato_name"))
-
-#' get the stato name for an object
-#'
-#' @return def the stato description
-#' @rdname stato
-#' @export
-setGeneric("stato_definition",function(obj)standardGeneric("stato_definition"))
-
-#' display a stato summary of the object
-#'
-#' @rdname stato
-#' @export
-setGeneric("stato_summary",function(obj)standardGeneric("stato_summary"))
 
 #' Convert a DatasetExperiment to a SummarizedExperiment
 #'
@@ -655,8 +618,8 @@ setGeneric("citations",function(obj)standardGeneric("citations"))
 #'
 #' All \code{struct} objects have a "libraries" slot, which is a character array of
 #' libraries required to use the object. The \code{libraries} method gathers
-#' libraries from an object and all \code{struct} objects that it inherits to generate
-#' a complete list.
+#' libraries from an object and all \code{struct} objects that it inherits to
+#' generate a complete list.
 #' @param obj a struct object
 #' @return a character array of R packages needed by the object
 #' @examples
@@ -670,17 +633,16 @@ setGeneric("libraries",function(obj)standardGeneric("libraries"))
 #'
 #' All \code{struct} objects have an "ontology" slot, which is a list of
 #' ontology items for the object. The \code{ontology} method gathers
-#' ontology items from an object and all \code{struct} objects that it inherits to generate
-#' a complete list.
+#' ontology items from an object and all \code{struct} objects that it inherits
+#' to generate a complete list.
 #' @param obj a struct object
-#' @param cache a named list of ontology_terms for offline use. Terms from the cache are search
-#' based on the name of the list items matching the ontology id. If cache=NULL then the OLS API is used to lookup terms.
+#' @param ... (not used)
 #' @examples
 #' M = example_model()
-#' ontology(M,cache=NULL)
+#' ontology(M)
 #' @rdname ontology
 #' @export
-setGeneric("ontology",function(obj,cache=NULL)standardGeneric("ontology"))
+setGeneric("ontology",function(obj,...)standardGeneric("ontology"))
 
 #' @importFrom utils .DollarNames
 setGeneric('.DollarNames', package='utils')

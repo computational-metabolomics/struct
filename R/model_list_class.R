@@ -50,14 +50,14 @@ setMethod(f = "model_train",
                 # set
                 param_value(M[i],M[i]@seq_in)=S
             }
-            
+
             # train the model on the output of the previous model
             M[i] = model_train(M[i],D)
             # apply the model to the output of the previous model
             M[i] = model_predict(M[i],D)
             # set the output of this model as the input for the next model
             S = predicted(M[i])
-            
+
             if (is(S,'DatasetExperiment')) {
                 # if its a dataset then update current D
                 D = predicted(M[i])
@@ -89,13 +89,13 @@ setMethod(f = "model_predict",
             S = predicted(M[i])
             if (is(S,'DatasetExperiment')) {
                 # keep the previous output
-                penultimate = D                
+                penultimate = D
                 # update data for the next model
                 D = S
                 # otherwise the previous data output is used
             }
         }
-        
+
         # if regression, reverse the processing to get predictions
         # on the same scale as the input data
         if (M[L]$type == 'regression') {
@@ -195,7 +195,7 @@ setMethod(f = 'length',
     }
 )
 
-#' 
+#'
 
 setMethod(f = 'show',
     signature = 'model_seq',
@@ -299,7 +299,7 @@ setMethod(f = "model_apply",
     definition = function(M,D) {
         # for each method in the list
         S = D # for first in list the input D is the data object
-        
+
         for (i in seq_len(length(M))) {
             if (M[i]@seq_in != 'data') {
                 # apply transformation
@@ -309,7 +309,7 @@ setMethod(f = "model_apply",
             }
             # use current data
             M[i] = model_apply(M[i],D)
-            
+
             # set the output of this method as the input for the next method
             S = predicted(M[i])
             if (is(S,'DatasetExperiment')) {
@@ -341,11 +341,29 @@ setMethod(f = 'as.code',
                 str=paste0(str,' +\n')
             }
         }
-        
+
         if (!quiet) {
             cat(str)
         }
-        
+
         invisible(str)
     }
 )
+
+
+
+#' @rdname ontology
+#' @export
+setMethod(
+    f = "ontology",
+    signature = c("model_seq"),
+    definition = function(obj, ...) {
+        MS = callNextMethod()
+        M = lapply(obj@models, ontology)
+        N = lapply(obj@models, slot, name = "name")
+        M = c(MS, M)
+        names(M) = c("model_seq", unlist(N))
+        return(M)
+    }
+)
+

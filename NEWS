@@ -1,3 +1,10 @@
+Changes 1.23.2
++ remove stato classes; these were deprecated since 1.5.2 and are no longer used.
++ ontology is still available via ontology slots.
++ rols package is deprecated; using internal functions instead.
++ replaced ontology cache with online/offline mode
++ added ontology output for model sequences
+
 Changes 1.21.2
 + fix renamed functions in rols
 

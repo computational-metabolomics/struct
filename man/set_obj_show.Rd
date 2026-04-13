@@ -9,9 +9,11 @@ set_obj_show(class_name, extra_string, where = topenv(parent.frame()))
 \arguments{
 \item{class_name}{the name of the to update the method for}
 
-\item{extra_string}{a function that returns an extra string using the input object as an input e.g. function(object){return = 'extra_string'}}
+\item{extra_string}{a function that returns an extra string using the input
+object as an input e.g. \code{function(object)\{return = 'extra_string'\}}}
 
-\item{where}{the environment to create the object in. default where = topenv(parent.frame())}
+\item{where}{the environment to create the object in.
+default where = topenv(parent.frame())}
 }
 \value{
 a method is created in the specified environment

@@ -664,8 +664,8 @@ param_obj(P,'number_components')$description
 
 ```
 
-## Ontology.
-All `struct` objects have an `ontology` slot that can be assigned ontology term identifiers. `struct` makes use of the `rols` bioconductor package to access the Ontology lookup Service API and obtain names and definitions based on the provided identifiers. 
+# Ontology
+All `struct` objects have an `ontology` slot that can be assigned ontology term identifiers. `struct` accesses the Ontology lookup Service API (https://www.ebi.ac.uk/ols4/index) and obtains names and definitions based on the provided identifiers. 
 
 ```{r}
 P = PCA()
@@ -673,7 +673,7 @@ P = PCA()
 # return a list of ontologies for PCA, including the input parameters and outputs
 ontology(P)
 
-# return the ontology id'd for PCA only (not inputs/outputs)
+# return the ontology id's for PCA only (not inputs/outputs)
 P$ontology
 
 # get the ontology for a specific input
@@ -682,6 +682,19 @@ IN$ontology
 ```
 
 NOTE: in versions prior to v1.5.1 `stato` classes were used. This has now been deprecated in favour of `ontology` and will be removed in a future release.
+
+The helper function `ontology_online()` can be used to set `options('struct.ontology.online')` to FALSE for offline use. In offline mode the API will not be queried and ontology lookup will not be available.
+
+```{r}
+# disable ontology lookup
+ontology_online(FALSE)
+
+# request ontology for PCA model
+P = PCA()
+ontology(P)
+
+```
+
 
 # Session Info
 ```{r}
