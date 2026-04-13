@@ -211,21 +211,19 @@ stringify_params = function(M,P,type='param',val=NULL) {
 
 # handle online/offline ontology api
 .onLoad <- function(libname, pkgname) {
-    # Respect user/session override if already set
-    if (!is.null(getOption("struct.ontology.online"))) {
-        return(invisible(NULL))
+    if (is.null(getOption("struct.ontology.online"))) {
+        options(struct.ontology.online = .struct_detect_ontology_online())
     }
-
-    online <- .struct_detect_ontology_online()
-    options(struct.ontology.online = online)
-
-    if (!online) {
+    invisible(NULL)
+}
+.onAttach <- function(libname, pkgname) {
+    online <- getOption("struct.ontology.online", TRUE)
+    if (!isTRUE(online)) {
         packageStartupMessage(
             "struct: OLS API appears offline; ontology lookups disabled ",
             "(options(struct.ontology.online = FALSE))."
         )
     }
-
     invisible(NULL)
 }
 
