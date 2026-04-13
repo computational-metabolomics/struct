@@ -207,3 +207,41 @@ stringify_params = function(M,P,type='param',val=NULL) {
     }
 }
 
+
+
+# handle online/offline ontology api
+.onLoad <- function(libname, pkgname) {
+    # Respect user/session override if already set
+    if (!is.null(getOption("struct.ontology.online"))) {
+        return(invisible(NULL))
+    }
+
+    online <- .struct_detect_ontology_online()
+    options(struct.ontology.online = online)
+
+    if (!online) {
+        packageStartupMessage(
+            "struct: OLS API appears offline; ontology lookups disabled ",
+            "(options(struct.ontology.online = FALSE))."
+        )
+    }
+
+    invisible(NULL)
+}
+
+.struct_detect_ontology_online <- function(timeout_sec = 2) {
+    # Fast, low-cost reachability check to OLS host
+    con <- NULL
+    ok <- FALSE
+    tryCatch({
+        con <- url("https://www.ebi.ac.uk", open = "rb", blocking = TRUE)
+        suppressWarnings(readBin(con, what = "raw", n = 1L))
+        ok <- TRUE
+    }, error = function(e) {
+        ok <- FALSE
+    }, finally = {
+        if (!is.null(con)) try(close(con), silent = TRUE)
+    })
+    ok
+}
+
