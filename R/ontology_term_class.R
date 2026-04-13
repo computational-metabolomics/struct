@@ -18,6 +18,7 @@
 #' Returns NULL if the query fails.
 #'
 #' @keywords internal
+#' @import jsonlite
 .query_ols_api = function(
         obo_id,
         api_url = "https://www.ebi.ac.uk/ols4/api"
