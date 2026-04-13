@@ -214,7 +214,7 @@ test_that('ontology method on struct objects', {
     expect_equal(M$ontology, 'STATO:0000046')
 })
 
-test_that("ontology_set_online(FALSE) skips OLS without warning", {
+test_that("ontology_online(FALSE) skips OLS without warning", {
     op <- options(struct.ontology.online = FALSE)
     on.exit(options(op), add = TRUE)
     expect_silent(
@@ -228,11 +228,11 @@ test_that("ontology_set_online(FALSE) skips OLS without warning", {
     expect_identical(O$iri, character())
 })
 
-test_that("ontology_set_online sets option and returns invisibly", {
+test_that("ontology_online sets option and returns invisibly", {
     op <- options(struct.ontology.online = TRUE)
     on.exit(options(op), add = TRUE)
-    expect_invisible(ontology_set_online(FALSE))
+    expect_invisible(ontology_online(FALSE))
     expect_false(isTRUE(getOption("struct.ontology.online", TRUE)))
-    expect_invisible(ontology_set_online(TRUE))
+    expect_invisible(ontology_online(TRUE))
     expect_true(isTRUE(getOption("struct.ontology.online", TRUE)))
 })
