@@ -548,43 +548,6 @@ setGeneric("max_length",function(obj)standardGeneric("max_length"))
 #' @rdname metric
 setGeneric("max_length<-",function(obj,value)standardGeneric("max_length<-"))
 
-####################################
-###### stato class generics #####
-####################################
-
-#' get the stato_id for an object
-#'
-#' @return id the stato id
-#' @param obj stato_class object
-#' @rdname stato
-#' @examples
-#' M = example_model()
-#' stato_id(M)
-#' stato_name(M)
-#' stato_definition(M)
-#' stato_summary(M)
-#' @export
-setGeneric("stato_id",function(obj)standardGeneric("stato_id"))
-
-#' get the stato name for an object
-#'
-#' @return name the stato name
-#' @rdname stato
-#' @export
-setGeneric("stato_name",function(obj)standardGeneric("stato_name"))
-
-#' get the stato name for an object
-#'
-#' @return def the stato description
-#' @rdname stato
-#' @export
-setGeneric("stato_definition",function(obj)standardGeneric("stato_definition"))
-
-#' display a stato summary of the object
-#'
-#' @rdname stato
-#' @export
-setGeneric("stato_summary",function(obj)standardGeneric("stato_summary"))
 
 #' Convert a DatasetExperiment to a SummarizedExperiment
 #'
