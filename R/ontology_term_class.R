@@ -364,11 +364,11 @@ setMethod(f = 'length',
 #'   \code{\link{ontology}}
 #'
 #' @examples
-#' ontology_set_online(FALSE)
-#' ontology_set_online(TRUE)
+#' ontology_online(FALSE)
+#' ontology_online(TRUE)
 #'
 #' @export
-ontology_set_online = function(online = TRUE) {
+ontology_online = function(online = TRUE) {
     options(struct.ontology.online = online)
     invisible(online)
 }
